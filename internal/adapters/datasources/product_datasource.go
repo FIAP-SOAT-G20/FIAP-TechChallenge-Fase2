@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 
 	"tech-challenge-2-app-example/internal/core/domain/entity"
@@ -98,7 +99,7 @@ func (ds *productDataSource) Delete(ctx context.Context, id uint64) error {
 func (ds *productDataSource) Transaction(ctx context.Context, fn func(ctx context.Context) error) error {
 	return ds.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		// Create a new context with the transaction
-		txCtx := context.WithValue(ctx, "tx", tx)
+		txCtx := context.WithValue(ctx, uuid.NewString(), tx)
 		return fn(txCtx)
 	})
 }
