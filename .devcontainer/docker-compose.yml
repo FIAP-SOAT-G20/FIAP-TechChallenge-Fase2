@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VARIANT: "1.23-bookworm"
+        NODE_VERSION: "none"
+    volumes:
+      - ..:/workspace:cached
+      - go-cache:/go
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=products
+    command: sleep infinity
+    network_mode: service:postgres
+
+  postgres:
+    image: postgres:17-alpine3.21
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: products
+
+volumes:
+  postgres-data:
+  go-cache:

@@ -1,0 +1,191 @@
+basePath: /api/v1
+definitions:
+  dto.ErrorResponse:
+    properties:
+      code:
+        example: 400
+        type: integer
+      errors: {}
+      message:
+        example: Erro de validação
+        type: string
+    type: object
+  dto.PaginatedResponse:
+    properties:
+      limit:
+        example: 10
+        type: integer
+      page:
+        example: 1
+        type: integer
+      products:
+        items:
+          $ref: '#/definitions/dto.ProductResponse'
+        type: array
+      total:
+        example: 100
+        type: integer
+    type: object
+  dto.ProductRequest:
+    properties:
+      category_id:
+        example: 1
+        type: integer
+      description:
+        example: Descrição do Produto A
+        type: string
+      name:
+        example: Produto A
+        type: string
+      price:
+        example: 99.99
+        type: number
+    type: object
+  dto.ProductResponse:
+    properties:
+      category_id:
+        example: 1
+        type: integer
+      created_at:
+        example: "2024-02-09T10:00:00Z"
+        type: string
+      description:
+        example: Descrição do Produto A
+        type: string
+      id:
+        example: 1
+        type: integer
+      name:
+        example: Produto A
+        type: string
+      price:
+        example: 99.99
+        type: number
+      updated_at:
+        example: "2024-02-09T10:00:00Z"
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: seu-email@email.com
+    name: Seu Nome
+    url: http://seu-site.com
+  description: API em Go usando Clean Architecture.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://swagger.io/terms/
+  title: Clean Architecture API
+  version: "1.0"
+paths:
+  /api/v1/products:
+    get:
+      consumes:
+      - application/json
+      description: Retorna uma lista paginada de produtos
+      parameters:
+      - default: 1
+        description: Número da página
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Itens por página
+        in: query
+        name: limit
+        type: integer
+      - description: Filtrar por nome
+        in: query
+        name: name
+        type: string
+      - description: Filtrar por categoria
+        in: query
+        name: category_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.PaginatedResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Listar produtos
+      tags:
+      - produtos
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo produto
+      parameters:
+      - description: Dados do produto
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ProductRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.ProductResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Criar produto
+      tags:
+      - produtos
+  /api/v1/products/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Busca um produto pelo ID
+      parameters:
+      - description: ID do produto
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ProductResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Buscar produto
+      tags:
+      - produtos
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
