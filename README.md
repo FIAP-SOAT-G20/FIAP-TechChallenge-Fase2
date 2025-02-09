@@ -35,7 +35,7 @@ O projeto segue a Clean Architecture, dividida em camadas:
 
 ## 📋 Pré-requisitos
 
-- Go 1.21 ou superior
+- Go 1.23 ou superior
 - PostgreSQL
 - Make (opcional, para usar os comandos do Makefile)
 
@@ -132,7 +132,7 @@ go tool cover -html=coverage.out
 ```
 .
 ├── cmd/
-│   └── api/              # Ponto de entrada da aplicação
+│   └── server/              # Ponto de entrada da aplicação
 ├── internal/
 │   ├── core/
 │   │   ├── domain/      # Entidades e regras de negócio
