@@ -3,6 +3,8 @@ MAIN_FILE=cmd/server/main.go
 DOCKER_REGISTRY=your-registry
 VERSION=$(shell git describe --tags --always --dirty)
 NAMESPACE=tech-challenge-system
+TEST_PATH=./internal/...
+TEST_COVERAGE_FILE_NAME=coverage.out
 
 GOCMD=go
 GOBUILD=$(GOCMD) build
@@ -58,13 +60,15 @@ run-air:
 .PHONY: test
 test:
 	@echo  "🟢 Running tests..."
-	$(GOTEST) ./... -v
+	$(GOTEST) $(TEST_PATH) -v
 
 .PHONY: coverage
 coverage:
 	@echo  "🟢 Running tests with coverage..."
-	$(GOTEST) ./... -coverprofile=coverage.out
-	$(GOCMD) tool cover -html=coverage.out
+	$(GOTEST) $(TEST_PATH) -coverprofile=$(TEST_COVERAGE_FILE_NAME).tmp
+	@cat $(TEST_COVERAGE_FILE_NAME).tmp | grep -v "_mock.go" > $(TEST_COVERAGE_FILE_NAME)
+	@rm $(TEST_COVERAGE_FILE_NAME).tmp
+	$(GOCMD) tool cover -html=$(TEST_COVERAGE_FILE_NAME)
 
 .PHONY: clean
 clean:
