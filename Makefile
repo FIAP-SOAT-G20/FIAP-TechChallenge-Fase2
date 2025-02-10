@@ -1,18 +1,15 @@
-# Variáveis
 APP_NAME=app
 MAIN_FILE=cmd/server/main.go
 DOCKER_REGISTRY=your-registry
 VERSION=$(shell git describe --tags --always --dirty)
 NAMESPACE=tech-challenge-system
 
-# Go comandos
 GOCMD=go
 GOBUILD=$(GOCMD) build
 GORUN=$(GOCMD) run
 GOTEST=$(GOCMD) test
 GOCLEAN=$(GOCMD) clean
 
-# Ajuda
 help:
 	@echo "Usage: make <command>"
 	@echo "  make build         - Build the application"
@@ -27,6 +24,9 @@ help:
 	@echo "  make migrate-up    - Run migrations"
 	@echo "  make migrate-down  - Roll back migrations"
 	@echo "  make install       - Install dependencies"
+	@echo "  make scan          - Run security scan"
+	@echo "  make new-branch    - Create new branch"
+	@echo "  make pull-request  - Create pull request"
 	@echo "  make docker-build  - Build Docker image"
 	@echo "  make docker-push   - Push Docker image"
 	@echo "  make compose-build - Build the application with Docker Compose"
@@ -180,3 +180,13 @@ scan:
 	@echo  "🟢 Running security scan..."
 	govulncheck -show verbose ./...
 #	trivy image $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) # TODO: Enable when the image is available
+
+.PHONY: new-branch
+new-branch:
+	@echo "🟢 Creating new branch..."
+	./scripts/new-branch.sh -c
+
+.PHONY: pull-request
+pull-request:
+	@echo "🟢 Creating pull request..."
+	./scripts/pull-request.sh
