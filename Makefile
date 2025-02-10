@@ -14,104 +14,114 @@ GOCLEAN=$(GOCMD) clean
 
 # Ajuda
 help:
-	@echo "Comandos disponíveis:"
-	@echo "  make build        - Compila o projeto"
-	@echo "  make run          - Executa o projeto"
-	@echo "  make test         - Executa os testes"
-	@echo "  make coverage     - Executa os testes com cobertura"
-	@echo "  make clean        - Remove arquivos de build"
-	@echo "  make mock         - Gera os mocks"
-	@echo "  make swagger      - Gera a documentação Swagger"
-	@echo "  make lint         - Executa o linter"
-	@echo "  make migrate-up   - Executa as migrações"
-	@echo "  make migrate-down - Desfaz as migrações"
-	@echo "  make install      - Instala as dependências"
-	@echo "  make docker-build - Builda a imagem Docker"
-	@echo "  make docker-push  - Publica a imagem no registry"
-	@echo "  make k8s-apply    - Aplica manifestos Kubernetes"
-	@echo "  make k8s-delete   - Remove recursos Kubernetes"
-	@echo "  make k8s-logs     - Mostra logs da aplicação"
-	@echo "  make k8s-status   - Mostra status dos recursos"
+	@echo "Usage: make <command>"
+	@echo "  make build        - Build the application"
+	@echo "  make run          - Run the application"
+	@echo "  make run-air      - Run the application with Air"
+	@echo "  make test         - Run tests"
+	@echo "  make coverage     - Run tests with coverage"
+	@echo "  make clean        - Clean up"
+	@echo "  make mock         - Generate mocks"
+	@echo "  make swagger      - Generate Swagger documentation"
+	@echo "  make lint         - Run linter"
+	@echo "  make migrate-up   - Run migrations"
+	@echo "  make migrate-down - Roll back migrations"
+	@echo "  make install      - Install dependencies"
+	@echo "  make docker-build - Build Docker image"
+	@echo "  make docker-push  - Push Docker image"
+	@echo "  make k8s-apply    - Apply Kubernetes manifests"
+	@echo "  make k8s-delete   - Delete Kubernetes resources"
+	@echo "  make k8s-logs     - Show application logs"
+	@echo "  make k8s-status   - Show Kubernetes resources status"
 
-# Build
 build:
+	@echo  "🟢 Building the application..."
 	$(GOBUILD) -o $(APP_NAME) $(MAIN_FILE)
 
-# Run
 run:
+	@echo  "🟢 Running the application..."
 	$(GORUN) $(MAIN_FILE)
 
-# Test
+run-air:
+	@echo  "🟢 Running the application with Air..."
+	air
+
 test:
+	@echo  "🟢 Running tests..."
 	$(GOTEST) ./... -v
 
-# Test com cobertura
 coverage:
+	@echo  "🟢 Running tests with coverage..."
 	$(GOTEST) ./... -coverprofile=coverage.out
 	$(GOCMD) tool cover -html=coverage.out
 
-# Clean
 clean:
+	@echo "🔴 Cleaning up..."
 	$(GOCLEAN)
 	rm -f $(APP_NAME)
 	rm -f coverage.out
 
-# Mockgen
 mock:
+	@echo  "🟢 Generating mocks..."
 	mockgen -source=internal/core/port/product_gateway_port.go -destination=internal/core/port/mocks/product_gateway_mock.go
 	mockgen -source=internal/core/port/product_presenter_port.go -destination=internal/core/port/mocks/product_presenter_mock.go
 	mockgen -source=internal/core/port/product_usecase_port.go -destination=internal/core/port/mocks/product_usecase_mock.go
 
-# Swagger
 swagger:
+	@echo  "🟢 Generating Swagger documentation..."
 	swag fmt ./...
 	swag init -g ${MAIN_FILE} --parseInternal true
 
-# Lint
 lint:
+	@echo  "🟢 Running linter..."
 	golangci-lint run
 
-# Migrate
 migrate-up:
+	@echo  "🟢 Running migrations..."
 	migrate -path database/migrations -database "postgresql://postgres:postgres@localhost:5432/products?sslmode=disable" up
 
 migrate-down:
+	@echo  "🔴 Rolling back migrations..."
 	migrate -path database/migrations -database "postgresql://postgres:postgres@localhost:5432/products?sslmode=disable" down
 
-# Install
 install:
+	@echo  "🟢 Installing dependencies..."
 	go mod download
 	go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 	go install golang.org/x/vuln/cmd/govulncheck@latest
 	go install github.com/swaggo/swag/cmd/swag@latest
 	go install go.uber.org/mock/mockgen@latest
 
-# Docker
 docker-build:
+	@echo  "🟢 Building Docker image..."
 	docker build -t $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) .
 	docker tag $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) $(DOCKER_REGISTRY)/$(APP_NAME):latest
 
 docker-push:
+	@echo  "🟢 Pushing Docker image..."
 	docker push $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION)
 	docker push $(DOCKER_REGISTRY)/$(APP_NAME):latest
 
-# Kubernetes
 k8s-apply:
+	@echo  "🟢 Applying Kubernetes manifests..."
 	kubectl apply -f k8s/namespace.yaml
 	kubectl apply -f k8s/config/
 	kubectl apply -f k8s/postgres/
 	kubectl apply -f k8s/app/
 
 k8s-delete:
+	@echo  "🔴 Deleting Kubernetes resources..."
 	kubectl delete -f k8s/app/
 	kubectl delete -f k8s/postgres/
 	kubectl delete -f k8s/config/
 	kubectl delete -f k8s/namespace.yaml
 
 k8s-logs:
+	@echo  "🟢 Showing application logs..."
 	kubectl logs -f -l app=product-api -n $(NAMESPACE)
 
 k8s-status:
+	@echo  "🟢 Showing Kubernetes resources status..."
 	@echo "=== Pods ==="
 	kubectl get pods -n $(NAMESPACE)
 	@echo "\n=== Services ==="
@@ -121,14 +131,15 @@ k8s-status:
 	@echo "\n=== HPA ==="
 	kubectl get hpa -n $(NAMESPACE)
 
-# Dev environment
 dev-up:
+	@echo  "🟢 Starting development environment..."
 	docker-compose up -d
 
 dev-down:
+	@echo  "🔴 Stopping development environment..."
 	docker-compose down
 
-# Security
 scan:
+	@echo  "🟢 Running security scan..."
 	govulncheck ./...
 	trivy image $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION)
