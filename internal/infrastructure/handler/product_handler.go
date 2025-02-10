@@ -6,9 +6,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"tech-challenge-2-app-example/internal/adapters/controller"
-	"tech-challenge-2-app-example/internal/adapters/dto"
-	"tech-challenge-2-app-example/internal/core/domain/errors"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/controller"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/errors"
 )
 
 type ProductHandler struct {

@@ -3,9 +3,9 @@ package product
 import (
 	"context"
 
-	"tech-challenge-2-app-example/internal/core/domain/errors"
-	"tech-challenge-2-app-example/internal/core/port"
-	"tech-challenge-2-app-example/internal/core/usecase"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/errors"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
 
 type updateProductUseCase struct {

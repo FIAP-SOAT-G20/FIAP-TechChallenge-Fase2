@@ -3,7 +3,7 @@ package port
 import (
 	"context"
 
-	"tech-challenge-2-app-example/internal/core/usecase"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
 
 type ListProductsUseCase interface {

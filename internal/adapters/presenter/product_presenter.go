@@ -1,9 +1,9 @@
 package presenter
 
 import (
-	"tech-challenge-2-app-example/internal/core/domain/entity"
-	"tech-challenge-2-app-example/internal/core/port"
-	"tech-challenge-2-app-example/internal/core/usecase"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
 
 type productPresenter struct{}

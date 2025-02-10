@@ -9,16 +9,16 @@ import (
 
 	"github.com/joho/godotenv"
 
-	"tech-challenge-2-app-example/internal/adapters/controller"
-	"tech-challenge-2-app-example/internal/adapters/datasources"
-	"tech-challenge-2-app-example/internal/adapters/gateway"
-	"tech-challenge-2-app-example/internal/adapters/presenter"
-	"tech-challenge-2-app-example/internal/core/usecase/product"
-	"tech-challenge-2-app-example/internal/infrastructure/config"
-	"tech-challenge-2-app-example/internal/infrastructure/database"
-	"tech-challenge-2-app-example/internal/infrastructure/handler"
-	"tech-challenge-2-app-example/internal/infrastructure/routes"
-	"tech-challenge-2-app-example/internal/infrastructure/server"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/controller"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/datasources"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/gateway"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/presenter"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/product"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/database"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/routes"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/server"
 )
 
 //	@title			Clean Architecture API

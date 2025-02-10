@@ -7,9 +7,9 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
-	"tech-challenge-2-app-example/docs"
-	"tech-challenge-2-app-example/internal/infrastructure/handler"
-	"tech-challenge-2-app-example/internal/infrastructure/middleware"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/docs"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/middleware"
 )
 
 type Router struct {

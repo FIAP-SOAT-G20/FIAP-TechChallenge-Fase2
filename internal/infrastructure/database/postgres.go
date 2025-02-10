@@ -10,8 +10,8 @@ import (
 	"gorm.io/gorm"
 	gormlogger "gorm.io/gorm/logger"
 
-	"tech-challenge-2-app-example/internal/core/domain/entity"
-	"tech-challenge-2-app-example/internal/infrastructure/config"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 )
 
 type Database struct {

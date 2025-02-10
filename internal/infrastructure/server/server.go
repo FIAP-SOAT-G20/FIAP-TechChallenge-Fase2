@@ -11,8 +11,8 @@ import (
 	"syscall"
 	"time"
 
-	"tech-challenge-2-app-example/internal/infrastructure/config"
-	"tech-challenge-2-app-example/internal/infrastructure/routes"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/routes"
 )
 
 type Server struct {

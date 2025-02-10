@@ -3,7 +3,7 @@ package port
 import (
 	"context"
 
-	"tech-challenge-2-app-example/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 )
 
 type ProductDataSource interface {

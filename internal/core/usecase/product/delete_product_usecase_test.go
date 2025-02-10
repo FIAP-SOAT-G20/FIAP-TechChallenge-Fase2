@@ -7,9 +7,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 
-	"tech-challenge-2-app-example/internal/core/domain/entity"
-	"tech-challenge-2-app-example/internal/core/domain/errors"
-	mockport "tech-challenge-2-app-example/internal/core/port/mocks"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/errors"
+	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 )
 
 func TestDeleteProductUseCase_Execute(t *testing.T) {

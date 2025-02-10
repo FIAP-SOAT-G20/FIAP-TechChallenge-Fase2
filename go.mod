@@ -1,4 +1,4 @@
-module tech-challenge-2-app-example
+module github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2
 
 go 1.23
 

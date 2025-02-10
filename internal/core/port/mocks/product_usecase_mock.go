@@ -11,8 +11,8 @@ package mock_port
 
 import (
 	context "context"
+	usecase "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 	reflect "reflect"
-	usecase "tech-challenge-2-app-example/internal/core/usecase"
 
 	gomock "go.uber.org/mock/gomock"
 )

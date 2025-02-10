@@ -3,7 +3,7 @@ package entity
 import (
 	"time"
 
-	"tech-challenge-2-app-example/internal/core/domain/validator"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/validator"
 )
 
 type Product struct {
