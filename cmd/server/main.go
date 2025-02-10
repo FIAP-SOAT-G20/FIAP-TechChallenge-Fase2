@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log/slog"
 	"os"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/controller"
@@ -12,6 +11,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/database"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/routes"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/server"
 )
@@ -32,18 +32,18 @@ func main() {
 	cfg := config.LoadConfig()
 
 	// Inicializa o logger
-	logger := setupLogger()
+	loggerInstance := logger.NewLogger(cfg)
 
 	// Inicializa o banco de dados
-	db, err := database.NewPostgresConnection(cfg, logger)
+	db, err := database.NewPostgresConnection(cfg, loggerInstance.Logger)
 	if err != nil {
-		logger.Error("failed to connect to database", "error", err)
+		loggerInstance.Error("failed to connect to database", "error", err)
 		os.Exit(1)
 	}
 
 	// Roda as migrações
 	if err := db.Migrate(); err != nil {
-		logger.Error("failed to run migrations", "error", err)
+		loggerInstance.Error("failed to run migrations", "error", err)
 		os.Exit(1)
 	}
 
@@ -51,9 +51,9 @@ func main() {
 	handlers := setupHandlers(db)
 
 	// Inicializa e inicia o servidor
-	srv := server.NewServer(cfg, logger, handlers)
+	srv := server.NewServer(cfg, loggerInstance.Logger, handlers)
 	if err := srv.Start(); err != nil {
-		logger.Error("server failed to start", "error", err)
+		loggerInstance.Error("server failed to start", "error", err)
 		os.Exit(1)
 	}
 }
@@ -90,17 +90,4 @@ func setupHandlers(db *database.Database) *routes.Handlers {
 	return &routes.Handlers{
 		Product: productHandler,
 	}
-}
-
-func setupLogger() *slog.Logger {
-	var slogHandler slog.Handler
-
-	opts := &slog.HandlerOptions{
-		Level:     slog.LevelDebug,
-		AddSource: true,
-	}
-
-	slogHandler = slog.NewJSONHandler(os.Stdout, opts)
-
-	return slog.New(slogHandler)
 }

@@ -22,7 +22,7 @@ type GormLogger struct {
 	*slog.Logger
 }
 
-func (l *GormLogger) LogMode(level gormlogger.LogLevel) gormlogger.Interface {
+func (l *GormLogger) LogMode(gormlogger.LogLevel) gormlogger.Interface {
 	return l
 }
 
