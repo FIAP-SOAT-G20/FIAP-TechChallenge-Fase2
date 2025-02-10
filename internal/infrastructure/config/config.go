@@ -30,8 +30,8 @@ type Config struct {
 	Environment string
 }
 
-func LoadConfig(envFile string) *Config {
-	if err := godotenv.Load(envFile); err != nil {
+func LoadConfig() *Config {
+	if err := godotenv.Load(); err != nil && !os.IsNotExist(err) {
 		log.Printf("Warning: .env file not found or error loading it: %v", err)
 	}
 

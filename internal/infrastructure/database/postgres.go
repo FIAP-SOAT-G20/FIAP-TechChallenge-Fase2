@@ -70,7 +70,8 @@ func NewPostgresConnection(cfg *config.Config, logger *slog.Logger) (*Database, 
 
 	// Configure GORM with slog logger
 	gormConfig := &gorm.Config{
-		Logger: &GormLogger{Logger: logger},
+		Logger:      &GormLogger{Logger: logger},
+		PrepareStmt: true,
 	}
 
 	db, err := gorm.Open(postgres.Open(dsn), gormConfig)
