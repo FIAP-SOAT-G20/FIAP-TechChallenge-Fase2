@@ -132,6 +132,3 @@ dev-down:
 scan:
 	govulncheck ./...
 	trivy image $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION)
-
-# All
-all: lint test build docker-build
