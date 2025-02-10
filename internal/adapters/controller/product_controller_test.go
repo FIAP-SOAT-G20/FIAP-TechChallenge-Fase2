@@ -8,8 +8,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 
+	"tech-challenge-2-app-example/internal/adapters/dto"
 	"tech-challenge-2-app-example/internal/core/domain/errors"
-	"tech-challenge-2-app-example/internal/core/dto"
 	mockport "tech-challenge-2-app-example/internal/core/port/mocks"
 	"tech-challenge-2-app-example/internal/core/usecase"
 )
