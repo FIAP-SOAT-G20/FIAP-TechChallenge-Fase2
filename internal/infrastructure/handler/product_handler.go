@@ -56,7 +56,7 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 
 	response, err := h.controller.ListProducts(c.Request.Context(), req)
 	if err != nil {
-		c.Error(err)
+		_ = c.Error(err)
 		return
 	}
 
@@ -84,7 +84,7 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 
 	response, err := h.controller.CreateProduct(c.Request.Context(), req)
 	if err != nil {
-		c.Error(err)
+		_ = c.Error(err)
 		return
 	}
 
@@ -107,13 +107,13 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 func (h *ProductHandler) GetProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
-		c.Error(errors.NewInvalidInputError("ID inválido"))
+		_ = c.Error(errors.NewInvalidInputError("ID inválido"))
 		return
 	}
 
 	response, err := h.controller.GetProduct(c.Request.Context(), id)
 	if err != nil {
-		c.Error(err)
+		_ = c.Error(err)
 		return
 	}
 
@@ -137,19 +137,19 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
-		c.Error(errors.NewInvalidInputError("ID inválido"))
+		_ = c.Error(errors.NewInvalidInputError("ID inválido"))
 		return
 	}
 
 	var req dto.ProductRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.Error(errors.NewInvalidInputError("corpo da requisição inválido"))
+		_ = c.Error(errors.NewInvalidInputError("corpo da requisição inválido"))
 		return
 	}
 
 	response, err := h.controller.UpdateProduct(c.Request.Context(), id, req)
 	if err != nil {
-		c.Error(err)
+		_ = c.Error(err)
 		return
 	}
 
@@ -171,12 +171,12 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 func (h *ProductHandler) DeleteProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
-		c.Error(errors.NewInvalidInputError("ID inválido"))
+		_ = c.Error(errors.NewInvalidInputError("ID inválido"))
 		return
 	}
 
 	if err := h.controller.DeleteProduct(c.Request.Context(), id); err != nil {
-		c.Error(err)
+		_ = c.Error(err)
 		return
 	}
 
