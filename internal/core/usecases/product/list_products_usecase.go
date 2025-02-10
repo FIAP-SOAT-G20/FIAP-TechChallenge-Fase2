@@ -21,7 +21,6 @@ func NewListProductsUseCase(repo port.ProductRepository, presenter port.ProductP
 }
 
 func (uc *listProductsUseCase) Execute(ctx context.Context, req dto.ProductListRequest) (*dto.PaginatedResponse, error) {
-	// Validações adicionais podem ser feitas aqui
 	if req.Page < 1 {
 		return nil, errors.NewInvalidInputError("Página deve ser maior que zero")
 	}
@@ -33,10 +32,6 @@ func (uc *listProductsUseCase) Execute(ctx context.Context, req dto.ProductListR
 	products, total, err := uc.repository.FindAll(ctx, req.Name, req.CategoryID, req.Page, req.Limit)
 	if err != nil {
 		return nil, errors.NewInternalError(err)
-	}
-
-	if len(products) == 0 {
-		return nil, errors.NewNotFoundError("Nenhum produto encontrado")
 	}
 
 	response := uc.presenter.ToPaginatedResponse(products, total, req.Page, req.Limit)
