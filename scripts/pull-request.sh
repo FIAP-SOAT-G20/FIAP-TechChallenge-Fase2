@@ -49,15 +49,9 @@ if [[ -z $description ]]; then
     description=$(echo "$description" | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)}1')
 fi
 
-echo "✨ Description: 📱"
-echo "Description: $description"
-echo "\n"
-
 Join title
 title="[$app] $type: $description"
 echo "\n$title\n"
-
-exit 0
 
 # Open pull request with gh CLI
 gh pr create --title "$title" --base main --body-file $template --web
