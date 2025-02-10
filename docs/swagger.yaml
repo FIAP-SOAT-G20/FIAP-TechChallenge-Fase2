@@ -1,4 +1,3 @@
-basePath: /api/v1
 definitions:
   dto.ErrorResponse:
     properties:
@@ -64,19 +63,15 @@ definitions:
         example: "2024-02-09T10:00:00Z"
         type: string
     type: object
-host: localhost:8080
+externalDocs:
+  description: GitHub Repository
+  url: https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2
 info:
-  contact:
-    email: seu-email@email.com
-    name: Seu Nome
-    url: http://seu-site.com
-  description: API em Go usando Clean Architecture.
-  license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
-  termsOfService: http://swagger.io/terms/
-  title: Clean Architecture API
-  version: "1.0"
+  contact: {}
+  description: '### API de um Fast Food para o Tech Challenge da FIAP - Fase 2 - 10SOAT
+    - G18'
+  title: FIAP Tech Challenge Fase 2 - 10SOAT - G18
+  version: "1"
 paths:
   /products:
     get:
@@ -249,7 +244,8 @@ paths:
       tags:
       - produtos
 securityDefinitions:
-  ApiKeyAuth:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and the access token.
     in: header
     name: Authorization
     type: apiKey

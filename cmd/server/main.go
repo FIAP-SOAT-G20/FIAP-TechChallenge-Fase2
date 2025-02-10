@@ -21,24 +21,17 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/server"
 )
 
-//	@title			Clean Architecture API
-//	@version		1.0
-//	@description	API em Go usando Clean Architecture.
-//	@termsOfService	http://swagger.io/terms/
+//	@title			FIAP Tech Challenge Fase 2 - 10SOAT - G18
+//	@version		1
+//	@description	### API de um Fast Food para o Tech Challenge da FIAP - Fase 2 - 10SOAT - G18
 
-//	@contact.name	Seu Nome
-//	@contact.url	http://seu-site.com
-//	@contact.email	seu-email@email.com
+//	@externalDocs.description	GitHub Repository
+//	@externalDocs.url			https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2
 
-//	@license.name	MIT
-//	@license.url	https://opensource.org/licenses/MIT
-
-//	@host		localhost:8080
-//	@BasePath	/api/v1
-
-// @securityDefinitions.apikey	ApiKeyAuth
+// @securityDefinitions.apikey	BearerAuth
 // @in							header
 // @name						Authorization
+// @description				Type "Bearer" followed by a space and the access token.
 func main() {
 	// Carrega as variáveis de ambiente
 	envFile := getEnvFile()

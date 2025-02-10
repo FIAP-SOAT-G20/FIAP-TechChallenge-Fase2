@@ -9,16 +9,7 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "termsOfService": "http://swagger.io/terms/",
-        "contact": {
-            "name": "Seu Nome",
-            "url": "http://seu-site.com",
-            "email": "seu-email@email.com"
-        },
-        "license": {
-            "name": "MIT",
-            "url": "https://opensource.org/licenses/MIT"
-        },
+        "contact": {},
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -374,22 +365,27 @@ const docTemplate = `{
         }
     },
     "securityDefinitions": {
-        "ApiKeyAuth": {
+        "BearerAuth": {
+            "description": "Type \"Bearer\" followed by a space and the access token.",
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
         }
+    },
+    "externalDocs": {
+        "description": "GitHub Repository",
+        "url": "https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2"
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0",
-	Host:             "localhost:8080",
-	BasePath:         "/api/v1",
+	Version:          "1",
+	Host:             "",
+	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Clean Architecture API",
-	Description:      "API em Go usando Clean Architecture.",
+	Title:            "FIAP Tech Challenge Fase 2 - 10SOAT - G18",
+	Description:      "### API de um Fast Food para o Tech Challenge da FIAP - Fase 2 - 10SOAT - G18",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

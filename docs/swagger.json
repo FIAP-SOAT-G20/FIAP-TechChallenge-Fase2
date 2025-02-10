@@ -1,22 +1,11 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "API em Go usando Clean Architecture.",
-        "title": "Clean Architecture API",
-        "termsOfService": "http://swagger.io/terms/",
-        "contact": {
-            "name": "Seu Nome",
-            "url": "http://seu-site.com",
-            "email": "seu-email@email.com"
-        },
-        "license": {
-            "name": "MIT",
-            "url": "https://opensource.org/licenses/MIT"
-        },
-        "version": "1.0"
+        "description": "### API de um Fast Food para o Tech Challenge da FIAP - Fase 2 - 10SOAT - G18",
+        "title": "FIAP Tech Challenge Fase 2 - 10SOAT - G18",
+        "contact": {},
+        "version": "1"
     },
-    "host": "localhost:8080",
-    "basePath": "/api/v1",
     "paths": {
         "/products": {
             "get": {
@@ -368,10 +357,15 @@
         }
     },
     "securityDefinitions": {
-        "ApiKeyAuth": {
+        "BearerAuth": {
+            "description": "Type \"Bearer\" followed by a space and the access token.",
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
         }
+    },
+    "externalDocs": {
+        "description": "GitHub Repository",
+        "url": "https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2"
     }
 }
