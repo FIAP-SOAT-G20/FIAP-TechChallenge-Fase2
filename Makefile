@@ -180,3 +180,11 @@ scan:
 	@echo  "🟢 Running security scan..."
 	govulncheck -show verbose ./...
 #	trivy image $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) # TODO: Enable when the image is available
+
+new-branch:
+	@echo "🟢 Creating new branch..."
+	./scripts/new-branch.sh -c
+
+pull-request:
+	@echo "🟢 Creating pull request..."
+	./scripts/pull-request.sh
