@@ -22,7 +22,3 @@ func GetValidator() *validator.Validate {
 
 	return instance
 }
-
-func ResetValidator() {
-	instance = nil
-}
