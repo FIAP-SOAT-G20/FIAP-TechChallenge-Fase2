@@ -12,11 +12,11 @@ import (
 	"tech-challenge-2-app-example/internal/adapters/controller"
 	"tech-challenge-2-app-example/internal/adapters/datasources"
 	"tech-challenge-2-app-example/internal/adapters/gateway"
-	"tech-challenge-2-app-example/internal/adapters/handler"
 	"tech-challenge-2-app-example/internal/adapters/presenter"
 	"tech-challenge-2-app-example/internal/core/usecases/product"
 	"tech-challenge-2-app-example/internal/infrastructure/config"
 	"tech-challenge-2-app-example/internal/infrastructure/database"
+	"tech-challenge-2-app-example/internal/infrastructure/handler"
 	"tech-challenge-2-app-example/internal/infrastructure/routes"
 	"tech-challenge-2-app-example/internal/infrastructure/server"
 )

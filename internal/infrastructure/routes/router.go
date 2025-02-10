@@ -8,7 +8,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"tech-challenge-2-app-example/docs"
-	"tech-challenge-2-app-example/internal/adapters/handler"
+	"tech-challenge-2-app-example/internal/infrastructure/handler"
 	"tech-challenge-2-app-example/internal/infrastructure/middleware"
 )
 
