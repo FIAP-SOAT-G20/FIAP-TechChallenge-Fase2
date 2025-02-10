@@ -1,8 +1,8 @@
-// internal/infrastructure/server/server.go
 package server
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -64,7 +64,7 @@ func (s *Server) Start() error {
 	}()
 
 	s.logger.Info("server is running", "port", s.config.ServerPort)
-	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+	if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		return fmt.Errorf("failed to start server: %w", err)
 	}
 
