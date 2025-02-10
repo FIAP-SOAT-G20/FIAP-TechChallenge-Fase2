@@ -1,4 +1,3 @@
-// cmd/api/main.go
 package main
 
 import (
@@ -33,7 +32,7 @@ func main() {
 	cfg := config.LoadConfig()
 
 	// Inicializa o logger
-	logger := setupLogger(cfg.Environment)
+	logger := setupLogger()
 
 	// Inicializa o banco de dados
 	db, err := database.NewPostgresConnection(cfg, logger)
@@ -93,7 +92,7 @@ func setupHandlers(db *database.Database) *routes.Handlers {
 	}
 }
 
-func setupLogger(environment string) *slog.Logger {
+func setupLogger() *slog.Logger {
 	var slogHandler slog.Handler
 
 	opts := &slog.HandlerOptions{
@@ -101,11 +100,7 @@ func setupLogger(environment string) *slog.Logger {
 		AddSource: true,
 	}
 
-	if environment == "production" {
-		slogHandler = slog.NewJSONHandler(os.Stdout, opts)
-	} else {
-		slogHandler = slog.NewTextHandler(os.Stdout, opts)
-	}
+	slogHandler = slog.NewJSONHandler(os.Stdout, opts)
 
 	return slog.New(slogHandler)
 }
