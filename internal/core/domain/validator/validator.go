@@ -1,4 +1,3 @@
-// internal/core/domain/validator/validator.go
 package validator
 
 import (
