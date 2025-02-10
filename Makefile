@@ -21,6 +21,7 @@ help:
 	@echo "  make coverage     - Executa os testes com cobertura"
 	@echo "  make clean        - Remove arquivos de build"
 	@echo "  make mock         - Gera os mocks"
+	@echo "  make swagger      - Gera a documentação Swagger"
 	@echo "  make lint         - Executa o linter"
 	@echo "  make migrate-up   - Executa as migrações"
 	@echo "  make migrate-down - Desfaz as migrações"
@@ -61,6 +62,7 @@ mock:
 	mockgen -source=internal/core/port/product_presenter_port.go -destination=internal/core/port/mocks/product_presenter_mock.go
 	mockgen -source=internal/core/port/product_usecase_port.go -destination=internal/core/port/mocks/product_usecase_mock.go
 
+# Swagger
 swagger:
 	swag fmt ./...
 	swag init -g ${MAIN_FILE} --parseInternal true
