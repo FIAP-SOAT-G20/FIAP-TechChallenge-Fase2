@@ -1,4 +1,4 @@
-name: Run security checks
+name: ci/security-checks
 on:
   push:
     branches:
