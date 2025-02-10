@@ -60,29 +60,29 @@ func main() {
 }
 
 func setupHandlers(db *database.Database) *routes.Handlers {
-	// Datasources
+	// Datasource's
 	productDS := datasources.NewProductDataSource(db.DB)
 
-	// Repositories
-	productRepo := gateway.NewProductGateway(productDS)
+	// Gateways
+	productGateway := gateway.NewProductGateway(productDS)
 
 	// Presenters
 	productPresenter := presenter.NewProductPresenter()
 
 	// Use cases
-	listProductsUC := product.NewListProductsUseCase(productRepo, productPresenter)
-	createProductUC := product.NewCreateProductUseCase(productRepo, productPresenter)
-	getProductUC := product.NewGetProductUseCase(productRepo, productPresenter)
-	updateProduct := product.NewUpdateProductUseCase(productRepo, productPresenter)
-	deleteProduct := product.NewDeleteProductUseCase(productRepo)
+	listProductsUC := product.NewListProductsUseCase(productGateway, productPresenter)
+	createProductUC := product.NewCreateProductUseCase(productGateway, productPresenter)
+	getProductUC := product.NewGetProductUseCase(productGateway, productPresenter)
+	updateProductUC := product.NewUpdateProductUseCase(productGateway, productPresenter)
+	deleteProductUC := product.NewDeleteProductUseCase(productGateway)
 
 	// Controllers
 	productController := controller.NewProductController(
 		listProductsUC,
 		createProductUC,
 		getProductUC,
-		updateProduct,
-		deleteProduct,
+		updateProductUC,
+		deleteProductUC,
 	)
 
 	// Handlers
@@ -94,7 +94,7 @@ func setupHandlers(db *database.Database) *routes.Handlers {
 }
 
 func setupLogger(environment string) *slog.Logger {
-	var handler slog.Handler
+	var slogHandler slog.Handler
 
 	opts := &slog.HandlerOptions{
 		Level:     slog.LevelDebug,
@@ -102,10 +102,10 @@ func setupLogger(environment string) *slog.Logger {
 	}
 
 	if environment == "production" {
-		handler = slog.NewJSONHandler(os.Stdout, opts)
+		slogHandler = slog.NewJSONHandler(os.Stdout, opts)
 	} else {
-		handler = slog.NewTextHandler(os.Stdout, opts)
+		slogHandler = slog.NewTextHandler(os.Stdout, opts)
 	}
 
-	return slog.New(handler)
+	return slog.New(slogHandler)
 }
