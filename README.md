@@ -1,4 +1,6 @@
-# <p align="center">FIAP Tech Challenge 2 - G20 Fast Food</p>
+<a name="readme-top"></a>
+
+# <p align="center">FIAP Tech Challenge 2 - G18 Fast Food</p>
 
 <p align="center">
     <img src="https://img.shields.io/badge/Code-Go-informational?style=flat-square&logo=go&color=00ADD8" alt="Go" />
@@ -36,12 +38,13 @@
 - [Gin Web Framework](https://gin-gonic.com/)
 - [GORM](https://gorm.io/)
 - [PostgreSQL](https://www.postgresql.org/)
-- [slog](https://pkg.go.dev/log/slog) para logs estruturados
-- [godotenv](https://github.com/joho/godotenv) para gerenciamento de variáveis de ambiente
-- [go-playground/validator](https://github.com/go-playground/validator) para validações estruturadas
-- [Docker](https://www.docker.com/) para containerização
-- [Kubernetes](https://kubernetes.io/) para orquestração
-- [Swagger](https://swagger.io/) para documentação da API
+- [slog](https://pkg.go.dev/log/slog)
+- [godotenv](https://github.com/joho/godotenv)
+- [go-playground/validator](https://github.com/go-playground/validator)
+- [gomock](https://github.com/uber-go/mock)
+- [Docker](https://www.docker.com/)
+- [Kubernetes](https://kubernetes.io/)
+- [Swagger](https://swagger.io/)
 
 ## 📋 Pré-requisitos
 
