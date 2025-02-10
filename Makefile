@@ -36,15 +36,17 @@ help:
 
 build:
 	@echo  "🟢 Building the application..."
+	$(GOBUILD) fmt ./...
 	$(GOBUILD) -o $(APP_NAME) $(MAIN_FILE)
 
 run:
 	@echo  "🟢 Running the application..."
+	docker-compose up -d postgres
 	$(GORUN) $(MAIN_FILE)
 
 run-air:
 	@echo  "🟢 Running the application with Air..."
-	air
+	air -c air.toml
 
 test:
 	@echo  "🟢 Running tests..."
@@ -131,13 +133,21 @@ k8s-status:
 	@echo "\n=== HPA ==="
 	kubectl get hpa -n $(NAMESPACE)
 
+dev-build:
+	@echo "🟢 Building the application with docker compose..."
+	docker compose build
+
 dev-up:
 	@echo  "🟢 Starting development environment..."
-	docker-compose up -d
+	docker-compose up -d --wait
 
 dev-down:
 	@echo  "🔴 Stopping development environment..."
 	docker-compose down
+
+dev-clean:
+	echo "🔴 Cleaning the application ..."
+	docker compose down --volumes --rmi all
 
 scan:
 	@echo  "🟢 Running security scan..."
