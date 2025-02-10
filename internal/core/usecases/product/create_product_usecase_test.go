@@ -16,9 +16,9 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockRepo := mockport.NewMockProductRepository(ctrl)
+	mockGateway := mockport.NewMockProductGateway(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	useCase := NewCreateProductUseCase(mockRepo, mockPresenter)
+	useCase := NewCreateProductUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
 	expectedProduct := &entity.Product{
@@ -43,7 +43,7 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 				CategoryID:  1,
 			},
 			setupMocks: func() {
-				mockRepo.EXPECT().
+				mockGateway.EXPECT().
 					Create(ctx, gomock.Any()).
 					Return(nil)
 
@@ -62,7 +62,7 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 		{
 			name: "should return error when validation fails",
 			request: dto.ProductRequest{
-				Name:        "", // invalid empty name
+				Name:        "",
 				Description: "Test Description",
 				Price:       99.99,
 				CategoryID:  1,
@@ -71,7 +71,7 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 			expectError: true,
 		},
 		{
-			name: "should return error when repository fails",
+			name: "should return error when gateway fails",
 			request: dto.ProductRequest{
 				Name:        "Test Product",
 				Description: "Test Description",
@@ -79,7 +79,7 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 				CategoryID:  1,
 			},
 			setupMocks: func() {
-				mockRepo.EXPECT().
+				mockGateway.EXPECT().
 					Create(ctx, gomock.Any()).
 					Return(assert.AnError)
 			},

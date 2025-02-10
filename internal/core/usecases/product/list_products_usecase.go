@@ -9,14 +9,14 @@ import (
 )
 
 type listProductsUseCase struct {
-	repository port.ProductRepository
-	presenter  port.ProductPresenter
+	gateway   port.ProductGateway
+	presenter port.ProductPresenter
 }
 
-func NewListProductsUseCase(repo port.ProductRepository, presenter port.ProductPresenter) port.ListProductsUseCase {
+func NewListProductsUseCase(gateway port.ProductGateway, presenter port.ProductPresenter) port.ListProductsUseCase {
 	return &listProductsUseCase{
-		repository: repo,
-		presenter:  presenter,
+		gateway:   gateway,
+		presenter: presenter,
 	}
 }
 
@@ -29,7 +29,7 @@ func (uc *listProductsUseCase) Execute(ctx context.Context, req dto.ProductListR
 		return nil, errors.NewInvalidInputError("Limite deve estar entre 1 e 100")
 	}
 
-	products, total, err := uc.repository.FindAll(ctx, req.Name, req.CategoryID, req.Page, req.Limit)
+	products, total, err := uc.gateway.FindAll(ctx, req.Name, req.CategoryID, req.Page, req.Limit)
 	if err != nil {
 		return nil, errors.NewInternalError(err)
 	}

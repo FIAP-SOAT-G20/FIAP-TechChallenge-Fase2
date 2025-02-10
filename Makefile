@@ -50,7 +50,7 @@ clean:
 
 # Mockgen
 mock:
-	mockgen -source=internal/core/port/product_repository_port.go -destination=internal/core/port/mocks/product_repository_mock.go
+	mockgen -source=internal/core/port/product_gateway_port.go -destination=internal/core/port/mocks/product_gateway_mock.go
 	mockgen -source=internal/core/port/product_presenter_port.go -destination=internal/core/port/mocks/product_presenter_mock.go
 	mockgen -source=internal/core/port/product_usecase_port.go -destination=internal/core/port/mocks/product_usecase_mock.go
 

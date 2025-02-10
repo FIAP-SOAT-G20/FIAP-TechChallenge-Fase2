@@ -10,14 +10,14 @@ import (
 )
 
 type createProductUseCase struct {
-	repository port.ProductRepository
-	presenter  port.ProductPresenter
+	gateway   port.ProductGateway
+	presenter port.ProductPresenter
 }
 
-func NewCreateProductUseCase(repo port.ProductRepository, presenter port.ProductPresenter) port.CreateProductUseCase {
+func NewCreateProductUseCase(gateway port.ProductGateway, presenter port.ProductPresenter) port.CreateProductUseCase {
 	return &createProductUseCase{
-		repository: repo,
-		presenter:  presenter,
+		gateway:   gateway,
+		presenter: presenter,
 	}
 }
 
@@ -29,7 +29,7 @@ func (uc *createProductUseCase) Execute(ctx context.Context, req dto.ProductRequ
 	}
 
 	// Persiste o produto
-	if err := uc.repository.Create(ctx, product); err != nil {
+	if err := uc.gateway.Create(ctx, product); err != nil {
 		return nil, errors.NewInternalError(err)
 	}
 

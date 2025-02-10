@@ -9,19 +9,19 @@ import (
 )
 
 type getProductUseCase struct {
-	repository port.ProductRepository
-	presenter  port.ProductPresenter
+	gateway   port.ProductGateway
+	presenter port.ProductPresenter
 }
 
-func NewGetProductUseCase(repo port.ProductRepository, presenter port.ProductPresenter) port.GetProductUseCase {
+func NewGetProductUseCase(gateway port.ProductGateway, presenter port.ProductPresenter) port.GetProductUseCase {
 	return &getProductUseCase{
-		repository: repo,
-		presenter:  presenter,
+		gateway:   gateway,
+		presenter: presenter,
 	}
 }
 
 func (uc *getProductUseCase) Execute(ctx context.Context, id uint64) (*dto.ProductResponse, error) {
-	product, err := uc.repository.FindByID(ctx, id)
+	product, err := uc.gateway.FindByID(ctx, id)
 	if err != nil {
 		return nil, errors.NewInternalError(err)
 	}

@@ -6,7 +6,7 @@ import (
 	"tech-challenge-2-app-example/internal/core/domain/entity"
 )
 
-type ProductRepository interface {
+type ProductGateway interface {
 	FindByID(ctx context.Context, id uint64) (*entity.Product, error)
 	FindAll(ctx context.Context, name string, categoryID uint64, page, limit int) ([]*entity.Product, int64, error)
 	Create(ctx context.Context, product *entity.Product) error

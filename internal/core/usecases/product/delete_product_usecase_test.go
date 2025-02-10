@@ -16,8 +16,8 @@ func TestDeleteProductUseCase_Execute(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockRepo := mockport.NewMockProductRepository(ctrl)
-	useCase := NewDeleteProductUseCase(mockRepo)
+	mockGateway := mockport.NewMockProductGateway(ctrl)
+	useCase := NewDeleteProductUseCase(mockGateway)
 
 	tests := []struct {
 		name        string
@@ -29,8 +29,8 @@ func TestDeleteProductUseCase_Execute(t *testing.T) {
 			name: "should delete product successfully",
 			id:   1,
 			setupMocks: func() {
-				mockRepo.EXPECT().FindByID(gomock.Any(), uint64(1)).Return(&entity.Product{}, nil)
-				mockRepo.EXPECT().Delete(gomock.Any(), uint64(1)).Return(nil)
+				mockGateway.EXPECT().FindByID(gomock.Any(), uint64(1)).Return(&entity.Product{}, nil)
+				mockGateway.EXPECT().Delete(gomock.Any(), uint64(1)).Return(nil)
 			},
 			expectError: false,
 		},
@@ -38,15 +38,15 @@ func TestDeleteProductUseCase_Execute(t *testing.T) {
 			name: "should fail when product not found",
 			id:   1,
 			setupMocks: func() {
-				mockRepo.EXPECT().FindByID(gomock.Any(), uint64(1)).Return(nil, nil)
+				mockGateway.EXPECT().FindByID(gomock.Any(), uint64(1)).Return(nil, nil)
 			},
 			expectError: true,
 		},
 		{
-			name: "should fail when repository fails",
+			name: "should fail when gateway fails",
 			id:   1,
 			setupMocks: func() {
-				mockRepo.EXPECT().FindByID(gomock.Any(), uint64(1)).Return(nil, errors.New("database error"))
+				mockGateway.EXPECT().FindByID(gomock.Any(), uint64(1)).Return(nil, errors.New("database error"))
 			},
 			expectError: true,
 		},

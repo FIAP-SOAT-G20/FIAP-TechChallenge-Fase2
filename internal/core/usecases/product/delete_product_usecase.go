@@ -8,18 +8,18 @@ import (
 )
 
 type deleteProductUseCase struct {
-	repository port.ProductRepository
+	gateway port.ProductGateway
 }
 
-func NewDeleteProductUseCase(repo port.ProductRepository) port.DeleteProductUseCase {
+func NewDeleteProductUseCase(gateway port.ProductGateway) port.DeleteProductUseCase {
 	return &deleteProductUseCase{
-		repository: repo,
+		gateway: gateway,
 	}
 }
 
 func (uc *deleteProductUseCase) Execute(ctx context.Context, id uint64) error {
 	// Verifica se o produto existe
-	product, err := uc.repository.FindByID(ctx, id)
+	product, err := uc.gateway.FindByID(ctx, id)
 	if err != nil {
 		return errors.NewInternalError(err)
 	}
@@ -28,7 +28,7 @@ func (uc *deleteProductUseCase) Execute(ctx context.Context, id uint64) error {
 	}
 
 	// Deleta o produto
-	if err := uc.repository.Delete(ctx, id); err != nil {
+	if err := uc.gateway.Delete(ctx, id); err != nil {
 		return errors.NewInternalError(err)
 	}
 

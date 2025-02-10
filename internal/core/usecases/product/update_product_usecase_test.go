@@ -18,10 +18,10 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockRepo := mockport.NewMockProductRepository(ctrl)
+	mockGateway := mockport.NewMockProductGateway(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
 
-	useCase := NewUpdateProductUseCase(mockRepo, mockPresenter)
+	useCase := NewUpdateProductUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
 	existingProduct := &entity.Product{
@@ -52,11 +52,11 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 				CategoryID:  2,
 			},
 			setupMocks: func() {
-				mockRepo.EXPECT().
+				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
 					Return(existingProduct, nil)
 
-				mockRepo.EXPECT().
+				mockGateway.EXPECT().
 					Update(ctx, gomock.Any()).
 					DoAndReturn(func(_ context.Context, p *entity.Product) error {
 						assert.Equal(t, "New Name", p.Name)
@@ -88,7 +88,7 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 				CategoryID:  2,
 			},
 			setupMocks: func() {
-				mockRepo.EXPECT().
+				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
 					Return(nil, nil)
 			},
@@ -105,7 +105,7 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 				CategoryID:  2,
 			},
 			setupMocks: func() {
-				mockRepo.EXPECT().
+				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
 					Return(existingProduct, nil)
 			},

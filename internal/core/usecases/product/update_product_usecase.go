@@ -9,20 +9,20 @@ import (
 )
 
 type updateProductUseCase struct {
-	repository port.ProductRepository
-	presenter  port.ProductPresenter
+	gateway   port.ProductGateway
+	presenter port.ProductPresenter
 }
 
-func NewUpdateProductUseCase(repo port.ProductRepository, presenter port.ProductPresenter) port.UpdateProductUseCase {
+func NewUpdateProductUseCase(gateway port.ProductGateway, presenter port.ProductPresenter) port.UpdateProductUseCase {
 	return &updateProductUseCase{
-		repository: repo,
-		presenter:  presenter,
+		gateway:   gateway,
+		presenter: presenter,
 	}
 }
 
 func (uc *updateProductUseCase) Execute(ctx context.Context, id uint64, req dto.ProductRequest) (*dto.ProductResponse, error) {
 	// Busca o produto existente
-	product, err := uc.repository.FindByID(ctx, id)
+	product, err := uc.gateway.FindByID(ctx, id)
 	if err != nil {
 		return nil, errors.NewInternalError(err)
 	}
@@ -36,7 +36,7 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id uint64, req dto.
 	}
 
 	// Persiste as alterações
-	if err := uc.repository.Update(ctx, product); err != nil {
+	if err := uc.gateway.Update(ctx, product); err != nil {
 		return nil, errors.NewInternalError(err)
 	}
 

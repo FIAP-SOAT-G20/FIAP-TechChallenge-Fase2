@@ -18,9 +18,9 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockRepo := mockport.NewMockProductRepository(ctrl)
+	mockGateway := mockport.NewMockProductGateway(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	useCase := NewGetProductUseCase(mockRepo, mockPresenter)
+	useCase := NewGetProductUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
 	mockProduct := &entity.Product{
@@ -44,7 +44,7 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 			name: "should get product successfully",
 			id:   1,
 			setupMocks: func() {
-				mockRepo.EXPECT().
+				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
 					Return(mockProduct, nil)
 
@@ -64,7 +64,7 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 			name: "should return not found error when product doesn't exist",
 			id:   1,
 			setupMocks: func() {
-				mockRepo.EXPECT().
+				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
 					Return(nil, nil)
 			},
@@ -72,10 +72,10 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 			errorType:   &errors.NotFoundError{},
 		},
 		{
-			name: "should return internal error when repository fails",
+			name: "should return internal error when gateway fails",
 			id:   1,
 			setupMocks: func() {
-				mockRepo.EXPECT().
+				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
 					Return(nil, assert.AnError)
 			},

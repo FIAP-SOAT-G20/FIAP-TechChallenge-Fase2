@@ -11,9 +11,9 @@ import (
 
 	"tech-challenge-2-app-example/internal/adapters/controller"
 	"tech-challenge-2-app-example/internal/adapters/datasources"
+	"tech-challenge-2-app-example/internal/adapters/gateway"
 	"tech-challenge-2-app-example/internal/adapters/handler"
 	"tech-challenge-2-app-example/internal/adapters/presenter"
-	"tech-challenge-2-app-example/internal/adapters/repository"
 	"tech-challenge-2-app-example/internal/core/usecases/product"
 	"tech-challenge-2-app-example/internal/infrastructure/config"
 	"tech-challenge-2-app-example/internal/infrastructure/database"
@@ -117,7 +117,7 @@ func setupHandlers(db *database.Database) *routes.Handlers {
 	productDS := datasources.NewProductDataSource(db.DB)
 
 	// Repositories
-	productRepo := repository.NewProductRepository(productDS)
+	productRepo := gateway.NewProductGateway(productDS)
 
 	// Presenters
 	productPresenter := presenter.NewProductPresenter()

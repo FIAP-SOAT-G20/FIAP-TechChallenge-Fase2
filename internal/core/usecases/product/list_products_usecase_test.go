@@ -17,9 +17,9 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockRepo := mockport.NewMockProductRepository(ctrl)
+	mockGateway := mockport.NewMockProductGateway(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	useCase := NewListProductsUseCase(mockRepo, mockPresenter)
+	useCase := NewListProductsUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
 	products := []*entity.Product{
@@ -47,7 +47,7 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 				Limit: 10,
 			},
 			setupMocks: func() {
-				mockRepo.EXPECT().
+				mockGateway.EXPECT().
 					FindAll(ctx, "", uint64(0), 1, 10).
 					Return(products, int64(1), nil)
 
@@ -81,13 +81,13 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 			expectError: true,
 		},
 		{
-			name: "should return error when repository fails",
+			name: "should return error when gateway fails",
 			request: dto.ProductListRequest{
 				Page:  1,
 				Limit: 10,
 			},
 			setupMocks: func() {
-				mockRepo.EXPECT().
+				mockGateway.EXPECT().
 					FindAll(ctx, "", uint64(0), 1, 10).
 					Return(nil, int64(0), assert.AnError)
 			},
