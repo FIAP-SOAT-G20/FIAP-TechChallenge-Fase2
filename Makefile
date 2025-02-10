@@ -27,10 +27,10 @@ help:
 	@echo "  make install      - Instala as dependências"
 	@echo "  make docker-build - Builda a imagem Docker"
 	@echo "  make docker-push  - Publica a imagem no registry"
-	@echo "  make k8s-apply   - Aplica manifestos Kubernetes"
-	@echo "  make k8s-delete  - Remove recursos Kubernetes"
-	@echo "  make k8s-logs    - Mostra logs da aplicação"
-	@echo "  make k8s-status  - Mostra status dos recursos"
+	@echo "  make k8s-apply    - Aplica manifestos Kubernetes"
+	@echo "  make k8s-delete   - Remove recursos Kubernetes"
+	@echo "  make k8s-logs     - Mostra logs da aplicação"
+	@echo "  make k8s-status   - Mostra status dos recursos"
 
 # Build
 build:
@@ -60,6 +60,10 @@ mock:
 	mockgen -source=internal/core/port/product_gateway_port.go -destination=internal/core/port/mocks/product_gateway_mock.go
 	mockgen -source=internal/core/port/product_presenter_port.go -destination=internal/core/port/mocks/product_presenter_mock.go
 	mockgen -source=internal/core/port/product_usecase_port.go -destination=internal/core/port/mocks/product_usecase_mock.go
+
+swagger:
+	swag fmt ./...
+	swag init -g ${MAIN_FILE} --parseInternal true
 
 # Lint
 lint:

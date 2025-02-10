@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
@@ -10,6 +11,7 @@ import (
 	"tech-challenge-2-app-example/internal/core/domain/errors"
 	"tech-challenge-2-app-example/internal/core/dto"
 	mockport "tech-challenge-2-app-example/internal/core/port/mocks"
+	"tech-challenge-2-app-example/internal/core/usecase"
 )
 
 func TestProductController_ListProducts(t *testing.T) {
@@ -19,6 +21,26 @@ func TestProductController_ListProducts(t *testing.T) {
 	mockUseCase := mockport.NewMockListProductsUseCase(ctrl)
 	controller := NewProductController(mockUseCase, nil, nil, nil, nil)
 	ctx := context.Background()
+
+	currentTime := time.Now().Format("2006-01-02T15:04:05Z07:00")
+	mockOutput := &usecase.ListProductPaginatedOutput{
+		PaginatedOutput: usecase.PaginatedOutput{
+			Total: 1,
+			Page:  1,
+			Limit: 10,
+		},
+		Products: []usecase.ProductOutput{
+			{
+				ID:          1,
+				Name:        "Test Product",
+				Description: "Test Description",
+				Price:       99.99,
+				CategoryID:  1,
+				CreatedAt:   currentTime,
+				UpdatedAt:   currentTime,
+			},
+		},
+	}
 
 	tests := []struct {
 		name        string
@@ -34,15 +56,8 @@ func TestProductController_ListProducts(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockUseCase.EXPECT().
-					Execute(ctx, dto.ProductListRequest{Page: 1, Limit: 10}).
-					Return(&dto.PaginatedResponse{
-						Total: 1,
-						Page:  1,
-						Limit: 10,
-						Products: []dto.ProductResponse{
-							{ID: 1, Name: "Test Product"},
-						},
-					}, nil)
+					Execute(ctx, usecase.ListProductsInput{Page: 1, Limit: 10}).
+					Return(mockOutput, nil)
 			},
 			expectError: false,
 		},
@@ -54,7 +69,7 @@ func TestProductController_ListProducts(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockUseCase.EXPECT().
-					Execute(ctx, dto.ProductListRequest{Page: 1, Limit: 10}).
+					Execute(ctx, usecase.ListProductsInput{Page: 1, Limit: 10}).
 					Return(nil, errors.NewInternalError(assert.AnError))
 			},
 			expectError: true,
@@ -73,9 +88,11 @@ func TestProductController_ListProducts(t *testing.T) {
 			} else {
 				assert.NoError(t, err)
 				assert.NotNil(t, response)
-				assert.Equal(t, 1, response.Page)
-				assert.Equal(t, 10, response.Limit)
-				assert.Len(t, response.Products, 1)
+				assert.Equal(t, mockOutput.Page, response.Page)
+				assert.Equal(t, mockOutput.Limit, response.Limit)
+				assert.Equal(t, mockOutput.Total, response.Total)
+				assert.Len(t, response.Products, len(mockOutput.Products))
+				assert.Equal(t, mockOutput.Products[0].Name, response.Products[0].Name)
 			}
 		})
 	}
@@ -88,6 +105,17 @@ func TestProductController_CreateProduct(t *testing.T) {
 	mockUseCase := mockport.NewMockCreateProductUseCase(ctrl)
 	controller := NewProductController(nil, mockUseCase, nil, nil, nil)
 	ctx := context.Background()
+
+	currentTime := time.Now().Format("2006-01-02T15:04:05Z07:00")
+	mockOutput := &usecase.ProductOutput{
+		ID:          1,
+		Name:        "Test Product",
+		Description: "Test Description",
+		Price:       99.99,
+		CategoryID:  1,
+		CreatedAt:   currentTime,
+		UpdatedAt:   currentTime,
+	}
 
 	tests := []struct {
 		name        string
@@ -105,14 +133,13 @@ func TestProductController_CreateProduct(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockUseCase.EXPECT().
-					Execute(ctx, gomock.Any()).
-					Return(&dto.ProductResponse{
-						ID:          1,
+					Execute(ctx, usecase.CreateProductInput{
 						Name:        "Test Product",
 						Description: "Test Description",
 						Price:       99.99,
 						CategoryID:  1,
-					}, nil)
+					}).
+					Return(mockOutput, nil)
 			},
 			expectError: false,
 		},
@@ -145,10 +172,13 @@ func TestProductController_CreateProduct(t *testing.T) {
 			} else {
 				assert.NoError(t, err)
 				assert.NotNil(t, response)
-				assert.Equal(t, tt.request.Name, response.Name)
-				assert.Equal(t, tt.request.Description, response.Description)
-				assert.Equal(t, tt.request.Price, response.Price)
-				assert.Equal(t, tt.request.CategoryID, response.CategoryID)
+				assert.Equal(t, mockOutput.ID, response.ID)
+				assert.Equal(t, mockOutput.Name, response.Name)
+				assert.Equal(t, mockOutput.Description, response.Description)
+				assert.Equal(t, mockOutput.Price, response.Price)
+				assert.Equal(t, mockOutput.CategoryID, response.CategoryID)
+				assert.Equal(t, mockOutput.CreatedAt, response.CreatedAt)
+				assert.Equal(t, mockOutput.UpdatedAt, response.UpdatedAt)
 			}
 		})
 	}
@@ -162,6 +192,17 @@ func TestProductController_GetProduct(t *testing.T) {
 	controller := NewProductController(nil, nil, mockUseCase, nil, nil)
 	ctx := context.Background()
 
+	currentTime := time.Now().Format("2006-01-02T15:04:05Z07:00")
+	mockOutput := &usecase.ProductOutput{
+		ID:          1,
+		Name:        "Test Product",
+		Description: "Test Description",
+		Price:       99.99,
+		CategoryID:  1,
+		CreatedAt:   currentTime,
+		UpdatedAt:   currentTime,
+	}
+
 	tests := []struct {
 		name        string
 		id          uint64
@@ -174,13 +215,7 @@ func TestProductController_GetProduct(t *testing.T) {
 			setupMocks: func() {
 				mockUseCase.EXPECT().
 					Execute(ctx, uint64(1)).
-					Return(&dto.ProductResponse{
-						ID:          1,
-						Name:        "Test Product",
-						Description: "Test Description",
-						Price:       99.99,
-						CategoryID:  1,
-					}, nil)
+					Return(mockOutput, nil)
 			},
 			expectError: false,
 		},
@@ -190,7 +225,7 @@ func TestProductController_GetProduct(t *testing.T) {
 			setupMocks: func() {
 				mockUseCase.EXPECT().
 					Execute(ctx, uint64(1)).
-					Return(nil, errors.NewNotFoundError("Produto não encontrado"))
+					Return(nil, errors.NewNotFoundError("produto não encontrado"))
 			},
 			expectError: true,
 		},
@@ -208,7 +243,13 @@ func TestProductController_GetProduct(t *testing.T) {
 			} else {
 				assert.NoError(t, err)
 				assert.NotNil(t, response)
-				assert.Equal(t, tt.id, response.ID)
+				assert.Equal(t, mockOutput.ID, response.ID)
+				assert.Equal(t, mockOutput.Name, response.Name)
+				assert.Equal(t, mockOutput.Description, response.Description)
+				assert.Equal(t, mockOutput.Price, response.Price)
+				assert.Equal(t, mockOutput.CategoryID, response.CategoryID)
+				assert.Equal(t, mockOutput.CreatedAt, response.CreatedAt)
+				assert.Equal(t, mockOutput.UpdatedAt, response.UpdatedAt)
 			}
 		})
 	}
@@ -221,6 +262,17 @@ func TestProductController_UpdateProduct(t *testing.T) {
 	mockUseCase := mockport.NewMockUpdateProductUseCase(ctrl)
 	controller := NewProductController(nil, nil, nil, mockUseCase, nil)
 	ctx := context.Background()
+
+	currentTime := time.Now().Format("2006-01-02T15:04:05Z07:00")
+	mockOutput := &usecase.ProductOutput{
+		ID:          1,
+		Name:        "Updated Product",
+		Description: "Updated Description",
+		Price:       199.99,
+		CategoryID:  2,
+		CreatedAt:   currentTime,
+		UpdatedAt:   currentTime,
+	}
 
 	tests := []struct {
 		name        string
@@ -240,14 +292,13 @@ func TestProductController_UpdateProduct(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockUseCase.EXPECT().
-					Execute(ctx, uint64(1), gomock.Any()).
-					Return(&dto.ProductResponse{
-						ID:          1,
+					Execute(ctx, uint64(1), usecase.UpdateProductInput{
 						Name:        "Updated Product",
 						Description: "Updated Description",
 						Price:       199.99,
 						CategoryID:  2,
-					}, nil)
+					}).
+					Return(mockOutput, nil)
 			},
 			expectError: false,
 		},
@@ -263,7 +314,7 @@ func TestProductController_UpdateProduct(t *testing.T) {
 			setupMocks: func() {
 				mockUseCase.EXPECT().
 					Execute(ctx, uint64(1), gomock.Any()).
-					Return(nil, errors.NewNotFoundError("Produto não encontrado"))
+					Return(nil, errors.NewNotFoundError("produto não encontrado"))
 			},
 			expectError: true,
 		},
@@ -281,10 +332,13 @@ func TestProductController_UpdateProduct(t *testing.T) {
 			} else {
 				assert.NoError(t, err)
 				assert.NotNil(t, response)
-				assert.Equal(t, tt.request.Name, response.Name)
-				assert.Equal(t, tt.request.Description, response.Description)
-				assert.Equal(t, tt.request.Price, response.Price)
-				assert.Equal(t, tt.request.CategoryID, response.CategoryID)
+				assert.Equal(t, mockOutput.ID, response.ID)
+				assert.Equal(t, mockOutput.Name, response.Name)
+				assert.Equal(t, mockOutput.Description, response.Description)
+				assert.Equal(t, mockOutput.Price, response.Price)
+				assert.Equal(t, mockOutput.CategoryID, response.CategoryID)
+				assert.Equal(t, mockOutput.CreatedAt, response.CreatedAt)
+				assert.Equal(t, mockOutput.UpdatedAt, response.UpdatedAt)
 			}
 		})
 	}
@@ -320,7 +374,7 @@ func TestProductController_DeleteProduct(t *testing.T) {
 			setupMocks: func() {
 				mockUseCase.EXPECT().
 					Execute(ctx, uint64(1)).
-					Return(errors.NewNotFoundError("Produto não encontrado"))
+					Return(errors.NewNotFoundError("produto não encontrado"))
 			},
 			expectError: true,
 		},

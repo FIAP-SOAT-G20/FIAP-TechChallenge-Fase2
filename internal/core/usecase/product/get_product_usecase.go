@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"tech-challenge-2-app-example/internal/core/domain/errors"
-	"tech-challenge-2-app-example/internal/core/dto"
 	"tech-challenge-2-app-example/internal/core/port"
+	"tech-challenge-2-app-example/internal/core/usecase"
 )
 
 type getProductUseCase struct {
@@ -20,7 +20,7 @@ func NewGetProductUseCase(gateway port.ProductGateway, presenter port.ProductPre
 	}
 }
 
-func (uc *getProductUseCase) Execute(ctx context.Context, id uint64) (*dto.ProductResponse, error) {
+func (uc *getProductUseCase) Execute(ctx context.Context, id uint64) (*usecase.ProductOutput, error) {
 	product, err := uc.gateway.FindByID(ctx, id)
 	if err != nil {
 		return nil, errors.NewInternalError(err)
@@ -30,6 +30,6 @@ func (uc *getProductUseCase) Execute(ctx context.Context, id uint64) (*dto.Produ
 		return nil, errors.NewNotFoundError("Produto não encontrado")
 	}
 
-	response := uc.presenter.ToResponse(product)
-	return &response, nil
+	output := uc.presenter.ToOutput(product)
+	return output, nil
 }

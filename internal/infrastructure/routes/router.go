@@ -34,7 +34,7 @@ func NewRouter(logger *slog.Logger, environment string) *Router {
 		middleware.CORS(),
 	)
 
-	docs.SwaggerInfo.BasePath = ""
+	docs.SwaggerInfo.BasePath = "/api/v1"
 	engine.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return &Router{

@@ -12,7 +12,7 @@ package mock_port
 import (
 	context "context"
 	reflect "reflect"
-	dto "tech-challenge-2-app-example/internal/core/dto"
+	usecase "tech-challenge-2-app-example/internal/core/usecase"
 
 	gomock "go.uber.org/mock/gomock"
 )
@@ -42,18 +42,18 @@ func (m *MockListProductsUseCase) EXPECT() *MockListProductsUseCaseMockRecorder 
 }
 
 // Execute mocks base method.
-func (m *MockListProductsUseCase) Execute(ctx context.Context, req dto.ProductListRequest) (*dto.PaginatedResponse, error) {
+func (m *MockListProductsUseCase) Execute(ctx context.Context, input usecase.ListProductsInput) (*usecase.ListProductPaginatedOutput, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Execute", ctx, req)
-	ret0, _ := ret[0].(*dto.PaginatedResponse)
+	ret := m.ctrl.Call(m, "Execute", ctx, input)
+	ret0, _ := ret[0].(*usecase.ListProductPaginatedOutput)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Execute indicates an expected call of Execute.
-func (mr *MockListProductsUseCaseMockRecorder) Execute(ctx, req any) *gomock.Call {
+func (mr *MockListProductsUseCaseMockRecorder) Execute(ctx, input any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockListProductsUseCase)(nil).Execute), ctx, req)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockListProductsUseCase)(nil).Execute), ctx, input)
 }
 
 // MockCreateProductUseCase is a mock of CreateProductUseCase interface.
@@ -81,18 +81,18 @@ func (m *MockCreateProductUseCase) EXPECT() *MockCreateProductUseCaseMockRecorde
 }
 
 // Execute mocks base method.
-func (m *MockCreateProductUseCase) Execute(ctx context.Context, req dto.ProductRequest) (*dto.ProductResponse, error) {
+func (m *MockCreateProductUseCase) Execute(ctx context.Context, input usecase.CreateProductInput) (*usecase.ProductOutput, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Execute", ctx, req)
-	ret0, _ := ret[0].(*dto.ProductResponse)
+	ret := m.ctrl.Call(m, "Execute", ctx, input)
+	ret0, _ := ret[0].(*usecase.ProductOutput)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Execute indicates an expected call of Execute.
-func (mr *MockCreateProductUseCaseMockRecorder) Execute(ctx, req any) *gomock.Call {
+func (mr *MockCreateProductUseCaseMockRecorder) Execute(ctx, input any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockCreateProductUseCase)(nil).Execute), ctx, req)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockCreateProductUseCase)(nil).Execute), ctx, input)
 }
 
 // MockGetProductUseCase is a mock of GetProductUseCase interface.
@@ -120,10 +120,10 @@ func (m *MockGetProductUseCase) EXPECT() *MockGetProductUseCaseMockRecorder {
 }
 
 // Execute mocks base method.
-func (m *MockGetProductUseCase) Execute(ctx context.Context, id uint64) (*dto.ProductResponse, error) {
+func (m *MockGetProductUseCase) Execute(ctx context.Context, id uint64) (*usecase.ProductOutput, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Execute", ctx, id)
-	ret0, _ := ret[0].(*dto.ProductResponse)
+	ret0, _ := ret[0].(*usecase.ProductOutput)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -159,18 +159,18 @@ func (m *MockUpdateProductUseCase) EXPECT() *MockUpdateProductUseCaseMockRecorde
 }
 
 // Execute mocks base method.
-func (m *MockUpdateProductUseCase) Execute(ctx context.Context, id uint64, req dto.ProductRequest) (*dto.ProductResponse, error) {
+func (m *MockUpdateProductUseCase) Execute(ctx context.Context, id uint64, input usecase.UpdateProductInput) (*usecase.ProductOutput, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Execute", ctx, id, req)
-	ret0, _ := ret[0].(*dto.ProductResponse)
+	ret := m.ctrl.Call(m, "Execute", ctx, id, input)
+	ret0, _ := ret[0].(*usecase.ProductOutput)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Execute indicates an expected call of Execute.
-func (mr *MockUpdateProductUseCaseMockRecorder) Execute(ctx, id, req any) *gomock.Call {
+func (mr *MockUpdateProductUseCaseMockRecorder) Execute(ctx, id, input any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockUpdateProductUseCase)(nil).Execute), ctx, id, req)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockUpdateProductUseCase)(nil).Execute), ctx, id, input)
 }
 
 // MockDeleteProductUseCase is a mock of DeleteProductUseCase interface.

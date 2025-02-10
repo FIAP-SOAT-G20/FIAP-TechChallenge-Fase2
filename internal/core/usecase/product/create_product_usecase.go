@@ -5,8 +5,8 @@ import (
 
 	"tech-challenge-2-app-example/internal/core/domain/entity"
 	"tech-challenge-2-app-example/internal/core/domain/errors"
-	"tech-challenge-2-app-example/internal/core/dto"
 	"tech-challenge-2-app-example/internal/core/port"
+	"tech-challenge-2-app-example/internal/core/usecase"
 )
 
 type createProductUseCase struct {
@@ -21,9 +21,9 @@ func NewCreateProductUseCase(gateway port.ProductGateway, presenter port.Product
 	}
 }
 
-func (uc *createProductUseCase) Execute(ctx context.Context, req dto.ProductRequest) (*dto.ProductResponse, error) {
+func (uc *createProductUseCase) Execute(ctx context.Context, input usecase.CreateProductInput) (*usecase.ProductOutput, error) {
 	// Cria e valida o produto usando as regras de domínio
-	product, err := entity.NewProduct(req.Name, req.Description, req.Price, req.CategoryID)
+	product, err := entity.NewProduct(input.Name, input.Description, input.Price, input.CategoryID)
 	if err != nil {
 		return nil, errors.NewValidationError(err)
 	}
@@ -33,7 +33,7 @@ func (uc *createProductUseCase) Execute(ctx context.Context, req dto.ProductRequ
 		return nil, errors.NewInternalError(err)
 	}
 
-	// Formata a resposta
-	response := uc.presenter.ToResponse(product)
-	return &response, nil
+	// Formata a resposta usando o presenter
+	output := uc.presenter.ToOutput(product)
+	return output, nil
 }

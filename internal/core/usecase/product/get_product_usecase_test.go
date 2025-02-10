@@ -10,8 +10,8 @@ import (
 
 	"tech-challenge-2-app-example/internal/core/domain/entity"
 	"tech-challenge-2-app-example/internal/core/domain/errors"
-	"tech-challenge-2-app-example/internal/core/dto"
 	mockport "tech-challenge-2-app-example/internal/core/port/mocks"
+	"tech-challenge-2-app-example/internal/core/usecase"
 )
 
 func TestGetProductUseCase_Execute(t *testing.T) {
@@ -23,14 +23,25 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 	useCase := NewGetProductUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
+	currentTime := time.Now()
 	mockProduct := &entity.Product{
 		ID:          1,
 		Name:        "Test Product",
 		Description: "Test Description",
 		Price:       99.99,
 		CategoryID:  1,
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
+		CreatedAt:   currentTime,
+		UpdatedAt:   currentTime,
+	}
+
+	mockOutput := &usecase.ProductOutput{
+		ID:          1,
+		Name:        "Test Product",
+		Description: "Test Description",
+		Price:       99.99,
+		CategoryID:  1,
+		CreatedAt:   currentTime.Format("2006-01-02T15:04:05Z07:00"),
+		UpdatedAt:   currentTime.Format("2006-01-02T15:04:05Z07:00"),
 	}
 
 	tests := []struct {
@@ -49,14 +60,8 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 					Return(mockProduct, nil)
 
 				mockPresenter.EXPECT().
-					ToResponse(mockProduct).
-					Return(dto.ProductResponse{
-						ID:          mockProduct.ID,
-						Name:        mockProduct.Name,
-						Description: mockProduct.Description,
-						Price:       mockProduct.Price,
-						CategoryID:  mockProduct.CategoryID,
-					})
+					ToOutput(mockProduct).
+					Return(mockOutput)
 			},
 			expectError: false,
 		},
@@ -88,22 +93,18 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			response, err := useCase.Execute(ctx, tt.id)
+			output, err := useCase.Execute(ctx, tt.id)
 
 			if tt.expectError {
 				assert.Error(t, err)
-				assert.Nil(t, response)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
+				assert.Nil(t, output)
 			} else {
 				assert.NoError(t, err)
-				assert.NotNil(t, response)
-				assert.Equal(t, mockProduct.ID, response.ID)
-				assert.Equal(t, mockProduct.Name, response.Name)
-				assert.Equal(t, mockProduct.Description, response.Description)
-				assert.Equal(t, mockProduct.Price, response.Price)
-				assert.Equal(t, mockProduct.CategoryID, response.CategoryID)
+				assert.NotNil(t, output)
+				assert.Equal(t, mockOutput, output)
 			}
 		})
 	}

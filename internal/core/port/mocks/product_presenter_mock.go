@@ -12,7 +12,7 @@ package mock_port
 import (
 	reflect "reflect"
 	entity "tech-challenge-2-app-example/internal/core/domain/entity"
-	dto "tech-challenge-2-app-example/internal/core/dto"
+	usecase "tech-challenge-2-app-example/internal/core/usecase"
 
 	gomock "go.uber.org/mock/gomock"
 )
@@ -41,30 +41,30 @@ func (m *MockProductPresenter) EXPECT() *MockProductPresenterMockRecorder {
 	return m.recorder
 }
 
-// ToPaginatedResponse mocks base method.
-func (m *MockProductPresenter) ToPaginatedResponse(products []*entity.Product, total int64, page, limit int) dto.PaginatedResponse {
+// ToOutput mocks base method.
+func (m *MockProductPresenter) ToOutput(product *entity.Product) *usecase.ProductOutput {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ToPaginatedResponse", products, total, page, limit)
-	ret0, _ := ret[0].(dto.PaginatedResponse)
+	ret := m.ctrl.Call(m, "ToOutput", product)
+	ret0, _ := ret[0].(*usecase.ProductOutput)
 	return ret0
 }
 
-// ToPaginatedResponse indicates an expected call of ToPaginatedResponse.
-func (mr *MockProductPresenterMockRecorder) ToPaginatedResponse(products, total, page, limit any) *gomock.Call {
+// ToOutput indicates an expected call of ToOutput.
+func (mr *MockProductPresenterMockRecorder) ToOutput(product any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ToPaginatedResponse", reflect.TypeOf((*MockProductPresenter)(nil).ToPaginatedResponse), products, total, page, limit)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ToOutput", reflect.TypeOf((*MockProductPresenter)(nil).ToOutput), product)
 }
 
-// ToResponse mocks base method.
-func (m *MockProductPresenter) ToResponse(product *entity.Product) dto.ProductResponse {
+// ToPaginatedOutput mocks base method.
+func (m *MockProductPresenter) ToPaginatedOutput(products []*entity.Product, total int64, page, limit int) *usecase.ListProductPaginatedOutput {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ToResponse", product)
-	ret0, _ := ret[0].(dto.ProductResponse)
+	ret := m.ctrl.Call(m, "ToPaginatedOutput", products, total, page, limit)
+	ret0, _ := ret[0].(*usecase.ListProductPaginatedOutput)
 	return ret0
 }
 
-// ToResponse indicates an expected call of ToResponse.
-func (mr *MockProductPresenterMockRecorder) ToResponse(product any) *gomock.Call {
+// ToPaginatedOutput indicates an expected call of ToPaginatedOutput.
+func (mr *MockProductPresenterMockRecorder) ToPaginatedOutput(products, total, page, limit any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ToResponse", reflect.TypeOf((*MockProductPresenter)(nil).ToResponse), product)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ToPaginatedOutput", reflect.TypeOf((*MockProductPresenter)(nil).ToPaginatedOutput), products, total, page, limit)
 }

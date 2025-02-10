@@ -1,6 +1,5 @@
 package dto
 
-// ProductRequest representa a requisição para criar um produto
 type ProductRequest struct {
 	Name        string  `json:"name" example:"Produto A"`
 	Description string  `json:"description" example:"Descrição do Produto A"`
@@ -26,14 +25,6 @@ type ProductListRequest struct {
 }
 
 type PaginatedResponse struct {
-	Total    int64             `json:"total" example:"100"`
-	Page     int               `json:"page" example:"1"`
-	Limit    int               `json:"limit" example:"10"`
+	Pagination
 	Products []ProductResponse `json:"products"`
-}
-
-type ErrorResponse struct {
-	Code    int         `json:"code" example:"400"`
-	Message string      `json:"message" example:"Erro de validação"`
-	Errors  interface{} `json:"errors,omitempty"`
 }

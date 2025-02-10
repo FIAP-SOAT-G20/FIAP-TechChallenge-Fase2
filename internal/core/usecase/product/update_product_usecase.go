@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"tech-challenge-2-app-example/internal/core/domain/errors"
-	"tech-challenge-2-app-example/internal/core/dto"
 	"tech-challenge-2-app-example/internal/core/port"
+	"tech-challenge-2-app-example/internal/core/usecase"
 )
 
 type updateProductUseCase struct {
@@ -20,7 +20,7 @@ func NewUpdateProductUseCase(gateway port.ProductGateway, presenter port.Product
 	}
 }
 
-func (uc *updateProductUseCase) Execute(ctx context.Context, id uint64, req dto.ProductRequest) (*dto.ProductResponse, error) {
+func (uc *updateProductUseCase) Execute(ctx context.Context, id uint64, input usecase.UpdateProductInput) (*usecase.ProductOutput, error) {
 	// Busca o produto existente
 	product, err := uc.gateway.FindByID(ctx, id)
 	if err != nil {
@@ -31,7 +31,7 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id uint64, req dto.
 	}
 
 	// Atualiza o produto
-	if err := product.Update(req.Name, req.Description, req.Price, req.CategoryID); err != nil {
+	if err := product.Update(input.Name, input.Description, input.Price, input.CategoryID); err != nil {
 		return nil, errors.NewValidationError(err)
 	}
 
@@ -40,6 +40,6 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id uint64, req dto.
 		return nil, errors.NewInternalError(err)
 	}
 
-	response := uc.presenter.ToResponse(product)
-	return &response, nil
+	output := uc.presenter.ToOutput(product)
+	return output, nil
 }

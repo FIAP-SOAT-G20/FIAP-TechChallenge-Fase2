@@ -10,8 +10,8 @@ import (
 
 	"tech-challenge-2-app-example/internal/core/domain/entity"
 	"tech-challenge-2-app-example/internal/core/domain/errors"
-	"tech-challenge-2-app-example/internal/core/dto"
 	mockport "tech-challenge-2-app-example/internal/core/port/mocks"
+	"tech-challenge-2-app-example/internal/core/usecase"
 )
 
 func TestUpdateProductUseCase_Execute(t *testing.T) {
@@ -24,20 +24,31 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 	useCase := NewUpdateProductUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
+	currentTime := time.Now()
 	existingProduct := &entity.Product{
 		ID:          1,
 		Name:        "Old Name",
 		Description: "Old Description",
 		Price:       10.0,
 		CategoryID:  1,
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
+		CreatedAt:   currentTime,
+		UpdatedAt:   currentTime,
+	}
+
+	mockOutput := &usecase.ProductOutput{
+		ID:          1,
+		Name:        "New Name",
+		Description: "New Description",
+		Price:       20.0,
+		CategoryID:  2,
+		CreatedAt:   currentTime.Format("2006-01-02T15:04:05Z07:00"),
+		UpdatedAt:   currentTime.Format("2006-01-02T15:04:05Z07:00"),
 	}
 
 	tests := []struct {
 		name        string
 		id          uint64
-		input       dto.ProductRequest
+		input       usecase.UpdateProductInput
 		setupMocks  func()
 		expectError bool
 		errorType   error
@@ -45,7 +56,7 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 		{
 			name: "should update product successfully",
 			id:   1,
-			input: dto.ProductRequest{
+			input: usecase.UpdateProductInput{
 				Name:        "New Name",
 				Description: "New Description",
 				Price:       20.0,
@@ -67,21 +78,15 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 					})
 
 				mockPresenter.EXPECT().
-					ToResponse(gomock.Any()).
-					Return(dto.ProductResponse{
-						ID:          1,
-						Name:        "New Name",
-						Description: "New Description",
-						Price:       20.0,
-						CategoryID:  2,
-					})
+					ToOutput(gomock.Any()).
+					Return(mockOutput)
 			},
 			expectError: false,
 		},
 		{
 			name: "should return error when product not found",
 			id:   1,
-			input: dto.ProductRequest{
+			input: usecase.UpdateProductInput{
 				Name:        "New Name",
 				Description: "New Description",
 				Price:       20.0,
@@ -93,13 +98,13 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 					Return(nil, nil)
 			},
 			expectError: true,
-			errorType:   errors.NewNotFoundError("produto não encontrado"),
+			errorType:   &errors.NotFoundError{},
 		},
 		{
 			name: "should return error when validation fails",
 			id:   1,
-			input: dto.ProductRequest{
-				Name:        "", // invalid empty name
+			input: usecase.UpdateProductInput{
+				Name:        "", // Nome vazio deve falhar na validação
 				Description: "New Description",
 				Price:       20.0,
 				CategoryID:  2,
@@ -112,27 +117,45 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 			expectError: true,
 			errorType:   &errors.ValidationError{},
 		},
+		{
+			name: "should return error when gateway update fails",
+			id:   1,
+			input: usecase.UpdateProductInput{
+				Name:        "New Name",
+				Description: "New Description",
+				Price:       20.0,
+				CategoryID:  2,
+			},
+			setupMocks: func() {
+				mockGateway.EXPECT().
+					FindByID(ctx, uint64(1)).
+					Return(existingProduct, nil)
+
+				mockGateway.EXPECT().
+					Update(ctx, gomock.Any()).
+					Return(assert.AnError)
+			},
+			expectError: true,
+			errorType:   &errors.InternalError{},
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			response, err := useCase.Execute(ctx, tt.id, tt.input)
+			output, err := useCase.Execute(ctx, tt.id, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
-				assert.Nil(t, response)
+				assert.Nil(t, output)
 			} else {
 				assert.NoError(t, err)
-				assert.NotNil(t, response)
-				assert.Equal(t, tt.input.Name, response.Name)
-				assert.Equal(t, tt.input.Description, response.Description)
-				assert.Equal(t, tt.input.Price, response.Price)
-				assert.Equal(t, tt.input.CategoryID, response.CategoryID)
+				assert.NotNil(t, output)
+				assert.Equal(t, mockOutput, output)
 			}
 		})
 	}

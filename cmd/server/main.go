@@ -13,7 +13,7 @@ import (
 	"tech-challenge-2-app-example/internal/adapters/datasources"
 	"tech-challenge-2-app-example/internal/adapters/gateway"
 	"tech-challenge-2-app-example/internal/adapters/presenter"
-	"tech-challenge-2-app-example/internal/core/usecases/product"
+	"tech-challenge-2-app-example/internal/core/usecase/product"
 	"tech-challenge-2-app-example/internal/infrastructure/config"
 	"tech-challenge-2-app-example/internal/infrastructure/database"
 	"tech-challenge-2-app-example/internal/infrastructure/handler"
@@ -21,24 +21,24 @@ import (
 	"tech-challenge-2-app-example/internal/infrastructure/server"
 )
 
-// @title           Clean Architecture API
-// @version         1.0
-// @description     API em Go usando Clean Architecture.
-// @termsOfService  http://swagger.io/terms/
+//	@title			Clean Architecture API
+//	@version		1.0
+//	@description	API em Go usando Clean Architecture.
+//	@termsOfService	http://swagger.io/terms/
 
-// @contact.name   Seu Nome
-// @contact.url    http://seu-site.com
-// @contact.email  seu-email@email.com
+//	@contact.name	Seu Nome
+//	@contact.url	http://seu-site.com
+//	@contact.email	seu-email@email.com
 
-// @license.name  MIT
-// @license.url   https://opensource.org/licenses/MIT
+//	@license.name	MIT
+//	@license.url	https://opensource.org/licenses/MIT
 
-// @host      localhost:8080
-// @BasePath  /api/v1
+//	@host		localhost:8080
+//	@BasePath	/api/v1
 
-// @securityDefinitions.apikey ApiKeyAuth
-// @in header
-// @name Authorization
+// @securityDefinitions.apikey	ApiKeyAuth
+// @in							header
+// @name						Authorization
 func main() {
 	// Carrega as variáveis de ambiente
 	envFile := getEnvFile()

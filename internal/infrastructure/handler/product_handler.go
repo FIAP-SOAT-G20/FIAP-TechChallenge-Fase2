@@ -7,8 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"tech-challenge-2-app-example/internal/adapters/controller"
+	"tech-challenge-2-app-example/internal/adapters/dto"
 	"tech-challenge-2-app-example/internal/core/domain/errors"
-	"tech-challenge-2-app-example/internal/core/dto"
 )
 
 type ProductHandler struct {
@@ -28,19 +28,20 @@ func (h *ProductHandler) Register(router *gin.RouterGroup) {
 }
 
 // ListProducts lista os produtos
-// @Summary     Listar produtos
-// @Description Retorna uma lista paginada de produtos
-// @Tags        produtos
-// @Accept      json
-// @Produce     json
-// @Param       page        query    int     false  "Número da página"     default(1)
-// @Param       limit       query    int     false  "Itens por página"     default(10)
-// @Param       name        query    string  false  "Filtrar por nome"
-// @Param       category_id query    int     false  "Filtrar por categoria"
-// @Success     200         {object} dto.PaginatedResponse
-// @Failure     400         {object} dto.ErrorResponse
-// @Failure     500         {object} dto.ErrorResponse
-// @Router      /api/v1/products [get]
+//
+//	@Summary		Listar produtos
+//	@Description	Retorna uma lista paginada de produtos
+//	@Tags			produtos
+//	@Accept			json
+//	@Produce		json
+//	@Param			page		query		int		false	"Número da página"	default(1)
+//	@Param			limit		query		int		false	"Itens por página"	default(10)
+//	@Param			name		query		string	false	"Filtrar por nome"
+//	@Param			category_id	query		int		false	"Filtrar por categoria"
+//	@Success		200			{object}	dto.PaginatedResponse
+//	@Failure		400			{object}	dto.ErrorResponse
+//	@Failure		500			{object}	dto.ErrorResponse
+//	@Router			/products [get]
 func (h *ProductHandler) ListProducts(c *gin.Context) {
 	var req dto.ProductListRequest
 
@@ -63,16 +64,17 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 }
 
 // CreateProduct cria um novo produto
-// @Summary     Criar produto
-// @Description Cria um novo produto
-// @Tags        produtos
-// @Accept      json
-// @Produce     json
-// @Param       product body     dto.ProductRequest true "Dados do produto"
-// @Success     201     {object} dto.ProductResponse
-// @Failure     400     {object} dto.ErrorResponse
-// @Failure     500     {object} dto.ErrorResponse
-// @Router      /api/v1/products [post]
+//
+//	@Summary		Criar produto
+//	@Description	Cria um novo produto
+//	@Tags			produtos
+//	@Accept			json
+//	@Produce		json
+//	@Param			product	body		dto.ProductRequest	true	"Dados do produto"
+//	@Success		201		{object}	dto.ProductResponse
+//	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		500		{object}	dto.ErrorResponse
+//	@Router			/products [post]
 func (h *ProductHandler) CreateProduct(c *gin.Context) {
 	var req dto.ProductRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -90,17 +92,18 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 }
 
 // GetProduct busca um produto pelo ID
-// @Summary     Buscar produto
-// @Description Busca um produto pelo ID
-// @Tags        produtos
-// @Accept      json
-// @Produce     json
-// @Param       id path int true "ID do produto"
-// @Success     200 {object} dto.ProductResponse
-// @Failure     400 {object} dto.ErrorResponse
-// @Failure     404 {object} dto.ErrorResponse
-// @Failure     500 {object} dto.ErrorResponse
-// @Router      /api/v1/products/{id} [get]
+//
+//	@Summary		Buscar produto
+//	@Description	Busca um produto pelo ID
+//	@Tags			produtos
+//	@Accept			json
+//	@Produce		json
+//	@Param			id	path		int	true	"ID do produto"
+//	@Success		200	{object}	dto.ProductResponse
+//	@Failure		400	{object}	dto.ErrorResponse
+//	@Failure		404	{object}	dto.ErrorResponse
+//	@Failure		500	{object}	dto.ErrorResponse
+//	@Router			/products/{id} [get]
 func (h *ProductHandler) GetProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
@@ -118,18 +121,19 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 }
 
 // UpdateProduct atualiza um produto
-// @Summary     Atualizar produto
-// @Description Atualiza um produto existente
-// @Tags        produtos
-// @Accept      json
-// @Produce     json
-// @Param       id      path     int  true  "ID do produto"
-// @Param       product body     dto.ProductRequest true "Dados do produto"
-// @Success     200     {object} dto.ProductResponse
-// @Failure     400     {object} dto.ErrorResponse
-// @Failure     404     {object} dto.ErrorResponse
-// @Failure     500     {object} dto.ErrorResponse
-// @Router      /products/{id} [put]
+//
+//	@Summary		Atualizar produto
+//	@Description	Atualiza um produto existente
+//	@Tags			produtos
+//	@Accept			json
+//	@Produce		json
+//	@Param			id		path		int					true	"ID do produto"
+//	@Param			product	body		dto.ProductRequest	true	"Dados do produto"
+//	@Success		200		{object}	dto.ProductResponse
+//	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		404		{object}	dto.ErrorResponse
+//	@Failure		500		{object}	dto.ErrorResponse
+//	@Router			/products/{id} [put]
 func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
@@ -153,16 +157,17 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 }
 
 // DeleteProduct deleta um produto
-// @Summary     Deletar produto
-// @Description Remove um produto existente
-// @Tags        produtos
-// @Produce     json
-// @Param       id  path     int  true  "ID do produto"
-// @Success     204 {object} nil
-// @Failure     400 {object} dto.ErrorResponse
-// @Failure     404 {object} dto.ErrorResponse
-// @Failure     500 {object} dto.ErrorResponse
-// @Router      /products/{id} [delete]
+//
+//	@Summary		Deletar produto
+//	@Description	Remove um produto existente
+//	@Tags			produtos
+//	@Produce		json
+//	@Param			id	path		int	true	"ID do produto"
+//	@Success		204	{object}	nil
+//	@Failure		400	{object}	dto.ErrorResponse
+//	@Failure		404	{object}	dto.ErrorResponse
+//	@Failure		500	{object}	dto.ErrorResponse
+//	@Router			/products/{id} [delete]
 func (h *ProductHandler) DeleteProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
