@@ -3,7 +3,7 @@ package product
 import (
 	"context"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/errors"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
@@ -21,15 +21,15 @@ func (uc *deleteProductUseCase) Execute(ctx context.Context, id uint64) error {
 	// Verifica se o produto existe
 	product, err := uc.gateway.FindByID(ctx, id)
 	if err != nil {
-		return errors.NewInternalError(err)
+		return domain.NewInternalError(err)
 	}
 	if product == nil {
-		return errors.NewNotFoundError("produto não encontrado")
+		return domain.NewNotFoundError("produto não encontrado")
 	}
 
 	// Deleta o produto
 	if err := uc.gateway.Delete(ctx, id); err != nil {
-		return errors.NewInternalError(err)
+		return domain.NewInternalError(err)
 	}
 
 	return nil

@@ -9,7 +9,7 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/errors"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
@@ -120,7 +120,7 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 			},
 			setupMocks:  func() {},
 			expectError: true,
-			errorType:   &errors.InvalidInputError{},
+			errorType:   &domain.InvalidInputError{},
 		},
 		{
 			name: "should return error when limit is too high",
@@ -130,7 +130,7 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 			},
 			setupMocks:  func() {},
 			expectError: true,
-			errorType:   &errors.InvalidInputError{},
+			errorType:   &domain.InvalidInputError{},
 		},
 		{
 			name: "should return error when repository fails",
@@ -144,7 +144,7 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 					Return(nil, int64(0), assert.AnError)
 			},
 			expectError: true,
-			errorType:   &errors.InternalError{},
+			errorType:   &domain.InternalError{},
 		},
 		{
 			name: "should filter by name",

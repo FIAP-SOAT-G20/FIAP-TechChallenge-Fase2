@@ -1,4 +1,26 @@
-package errors
+package domain
+
+var (
+	ErrConflict           = "data conflicts with existing data"
+	ErrNotFound           = "data not found"
+	ErrInvalidParam       = "invalid parameter"
+	ErrInvalidQueryParams = "invalid query parameters"
+	ErrInvalidBody        = "invalid body"
+
+	ErrTokenDuration = "invalid token duration format"
+	ErrTokenCreation = "error creating token"
+	ErrExpiredToken  = "access token has expired"
+	ErrInvalidToken  = "access token is invalid"
+
+	ErrOrderInvalidStatusTransition = "invalid status transition"
+	ErrOrderWithoutProducts         = "order without products"
+	ErrOrderMandatoryStaffId        = "order mandatory staff id"
+	ErrOrderIdMandatory             = "order id mandatory"
+	ErrOrderIsNotOnStatusOpen       = "order is not on status open"
+
+	ErrProductIdMandatory = "product id mandatory"
+)
+
 
 type ValidationError struct {
 	Message string

@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/errors"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
@@ -69,7 +69,7 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 			},
 			setupMocks:  func() {},
 			expectError: true,
-			errorType:   &errors.ValidationError{},
+			errorType:   &domain.ValidationError{},
 		},
 		{
 			name: "should return error when gateway fails",
@@ -85,7 +85,7 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 					Return(assert.AnError)
 			},
 			expectError: true,
-			errorType:   &errors.InternalError{},
+			errorType:   &domain.InternalError{},
 		},
 	}
 

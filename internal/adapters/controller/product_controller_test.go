@@ -9,7 +9,7 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/dto"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/errors"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
@@ -70,7 +70,7 @@ func TestProductController_ListProducts(t *testing.T) {
 			setupMocks: func() {
 				mockUseCase.EXPECT().
 					Execute(ctx, usecase.ListProductsInput{Page: 1, Limit: 10}).
-					Return(nil, errors.NewInternalError(assert.AnError))
+					Return(nil, domain.NewInternalError(assert.AnError))
 			},
 			expectError: true,
 		},
@@ -154,7 +154,7 @@ func TestProductController_CreateProduct(t *testing.T) {
 			setupMocks: func() {
 				mockUseCase.EXPECT().
 					Execute(ctx, gomock.Any()).
-					Return(nil, errors.NewInternalError(assert.AnError))
+					Return(nil, domain.NewInternalError(assert.AnError))
 			},
 			expectError: true,
 		},
@@ -225,7 +225,7 @@ func TestProductController_GetProduct(t *testing.T) {
 			setupMocks: func() {
 				mockUseCase.EXPECT().
 					Execute(ctx, uint64(1)).
-					Return(nil, errors.NewNotFoundError("produto não encontrado"))
+					Return(nil, domain.NewNotFoundError("produto não encontrado"))
 			},
 			expectError: true,
 		},
@@ -314,7 +314,7 @@ func TestProductController_UpdateProduct(t *testing.T) {
 			setupMocks: func() {
 				mockUseCase.EXPECT().
 					Execute(ctx, uint64(1), gomock.Any()).
-					Return(nil, errors.NewNotFoundError("produto não encontrado"))
+					Return(nil, domain.NewNotFoundError("produto não encontrado"))
 			},
 			expectError: true,
 		},
@@ -374,7 +374,7 @@ func TestProductController_DeleteProduct(t *testing.T) {
 			setupMocks: func() {
 				mockUseCase.EXPECT().
 					Execute(ctx, uint64(1)).
-					Return(errors.NewNotFoundError("produto não encontrado"))
+					Return(domain.NewNotFoundError("produto não encontrado"))
 			},
 			expectError: true,
 		},

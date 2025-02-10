@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/errors"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 )
 
 type ErrorResponse struct {
@@ -28,25 +28,25 @@ func ErrorHandler(logger *slog.Logger) gin.HandlerFunc {
 
 func handleError(c *gin.Context, err error, logger *slog.Logger) {
 	switch e := err.(type) {
-	case *errors.ValidationError:
+	case *domain.ValidationError:
 		c.JSON(http.StatusBadRequest, ErrorResponse{
 			Code:    http.StatusBadRequest,
 			Message: e.Error(),
 		})
 
-	case *errors.NotFoundError:
+	case *domain.NotFoundError:
 		c.JSON(http.StatusNotFound, ErrorResponse{
 			Code:    http.StatusNotFound,
 			Message: e.Error(),
 		})
 
-	case *errors.InvalidInputError:
+	case *domain.InvalidInputError:
 		c.JSON(http.StatusBadRequest, ErrorResponse{
 			Code:    http.StatusBadRequest,
 			Message: e.Error(),
 		})
 
-	case *errors.InternalError:
+	case *domain.InternalError:
 		logger.Error("internal server error",
 			"error", e.Error(),
 			"path", c.Request.URL.Path,

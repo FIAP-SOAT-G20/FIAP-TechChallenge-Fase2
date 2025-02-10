@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/errors"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
@@ -25,12 +25,12 @@ func (uc *createProductUseCase) Execute(ctx context.Context, input usecase.Creat
 	// Cria e valida o produto usando as regras de domínio
 	product, err := entity.NewProduct(input.Name, input.Description, input.Price, input.CategoryID)
 	if err != nil {
-		return nil, errors.NewValidationError(err)
+		return nil, domain.NewValidationError(err)
 	}
 
 	// Persiste o produto
 	if err := uc.gateway.Create(ctx, product); err != nil {
-		return nil, errors.NewInternalError(err)
+		return nil, domain.NewInternalError(err)
 	}
 
 	// Formata a resposta usando o presenter

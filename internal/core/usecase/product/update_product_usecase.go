@@ -3,7 +3,7 @@ package product
 import (
 	"context"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/errors"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
@@ -24,20 +24,20 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id uint64, input us
 	// Busca o produto existente
 	product, err := uc.gateway.FindByID(ctx, id)
 	if err != nil {
-		return nil, errors.NewInternalError(err)
+		return nil, domain.NewInternalError(err)
 	}
 	if product == nil {
-		return nil, errors.NewNotFoundError("produto não encontrado")
+		return nil, domain.NewNotFoundError("produto não encontrado")
 	}
 
 	// Atualiza o produto
 	if err := product.Update(input.Name, input.Description, input.Price, input.CategoryID); err != nil {
-		return nil, errors.NewValidationError(err)
+		return nil, domain.NewValidationError(err)
 	}
 
 	// Persiste as alterações
 	if err := uc.gateway.Update(ctx, product); err != nil {
-		return nil, errors.NewInternalError(err)
+		return nil, domain.NewInternalError(err)
 	}
 
 	output := uc.presenter.ToOutput(product)

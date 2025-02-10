@@ -9,7 +9,7 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/errors"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
@@ -98,7 +98,7 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 					Return(nil, nil)
 			},
 			expectError: true,
-			errorType:   &errors.NotFoundError{},
+			errorType:   &domain.NotFoundError{},
 		},
 		{
 			name: "should return error when validation fails",
@@ -115,7 +115,7 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 					Return(existingProduct, nil)
 			},
 			expectError: true,
-			errorType:   &errors.ValidationError{},
+			errorType:   &domain.ValidationError{},
 		},
 		{
 			name: "should return error when gateway update fails",
@@ -136,7 +136,7 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 					Return(assert.AnError)
 			},
 			expectError: true,
-			errorType:   &errors.InternalError{},
+			errorType:   &domain.InternalError{},
 		},
 	}
 
