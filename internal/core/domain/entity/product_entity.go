@@ -7,13 +7,13 @@ import (
 )
 
 type Product struct {
-	ID          uint64    `json:"id"`
-	Name        string    `json:"name" validate:"required,min=3,max=100"`
-	Description string    `json:"description" validate:"max=500"`
-	Price       float64   `json:"price" validate:"required,gt=0"`
-	CategoryID  uint64    `json:"category_id" validate:"required,gt=0"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at"`
+	ID          uint64
+	Name        string  `validate:"required,min=3,max=100"`
+	Description string  `validate:"max=500"`
+	Price       float64 `validate:"required,gt=0"`
+	CategoryID  uint64  `validate:"required,gt=0"`
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
 
 func NewProduct(name string, description string, price float64, categoryID uint64) (*Product, error) {
