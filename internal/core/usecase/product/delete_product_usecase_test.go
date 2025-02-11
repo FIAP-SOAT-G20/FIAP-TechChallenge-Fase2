@@ -7,8 +7,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 )
 
@@ -17,7 +18,8 @@ func TestDeleteProductUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockProductGateway(ctrl)
-	useCase := NewDeleteProductUseCase(mockGateway)
+	mockPresenter := mockport.NewMockProductPresenter(ctrl)
+	useCase := NewDeleteProductUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
 	tests := []struct {
@@ -38,6 +40,9 @@ func TestDeleteProductUseCase_Execute(t *testing.T) {
 				mockGateway.EXPECT().
 					Delete(ctx, uint64(1)).
 					Return(nil)
+
+				mockPresenter.EXPECT().
+					Present(gomock.Any())
 			},
 			expectError: false,
 		},
@@ -84,7 +89,7 @@ func TestDeleteProductUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, tt.id)
+			err := useCase.Execute(ctx, dto.DeleteProductInput{ID: tt.id})
 
 			if tt.expectError {
 				assert.Error(t, err)

@@ -5,7 +5,6 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
 
 type ProductController struct {
@@ -32,107 +31,75 @@ func NewProductController(
 	}
 }
 
-func (c *ProductController) ListProducts(ctx context.Context, req dto.ProductListRequest) (*dto.PaginatedResponse, error) {
-	input := usecase.ListProductsInput{
+func (c *ProductController) ListProducts(ctx context.Context, rw dto.ResponseWriter, req dto.ProductListRequest) error {
+	input := dto.ListProductsInput{
 		Name:       req.Name,
 		CategoryID: req.CategoryID,
 		Page:       req.Page,
 		Limit:      req.Limit,
+		Writer:     rw,
 	}
 
-	output, err := c.listProductsUseCase.Execute(ctx, input)
+	err := c.listProductsUseCase.Execute(ctx, input)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	products := make([]dto.ProductResponse, len(output.Products))
-	for i, p := range output.Products {
-		products[i] = dto.ProductResponse{
-			ID:          p.ID,
-			Name:        p.Name,
-			Description: p.Description,
-			Price:       p.Price,
-			CategoryID:  p.CategoryID,
-			CreatedAt:   p.CreatedAt,
-			UpdatedAt:   p.UpdatedAt,
-		}
-	}
-
-	return &dto.PaginatedResponse{
-		Pagination: dto.Pagination{
-			Total: output.Total,
-			Page:  output.Page,
-			Limit: output.Limit,
-		},
-		Products: products,
-	}, nil
+	return nil
 }
 
-func (c *ProductController) CreateProduct(ctx context.Context, req dto.ProductRequest) (*dto.ProductResponse, error) {
-	input := usecase.CreateProductInput{
+func (c *ProductController) CreateProduct(ctx context.Context, rw dto.ResponseWriter, req dto.ProductRequest) error {
+	input := dto.CreateProductInput{
 		Name:        req.Name,
 		Description: req.Description,
 		Price:       req.Price,
 		CategoryID:  req.CategoryID,
+		Writer:      rw,
 	}
 
-	output, err := c.createProductUseCase.Execute(ctx, input)
+	err := c.createProductUseCase.Execute(ctx, input)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return &dto.ProductResponse{
-		ID:          output.ID,
-		Name:        output.Name,
-		Description: output.Description,
-		Price:       output.Price,
-		CategoryID:  output.CategoryID,
-		CreatedAt:   output.CreatedAt,
-		UpdatedAt:   output.UpdatedAt,
-	}, nil
+	return nil
 }
 
-func (c *ProductController) GetProduct(ctx context.Context, id uint64) (*dto.ProductResponse, error) {
-	output, err := c.getProductUseCase.Execute(ctx, id)
+func (c *ProductController) GetProduct(ctx context.Context, rw dto.ResponseWriter, id uint64) error {
+	input := dto.GetProductInput{
+		ID:     id,
+		Writer: rw,
+	}
+	err := c.getProductUseCase.Execute(ctx, input)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return &dto.ProductResponse{
-		ID:          output.ID,
-		Name:        output.Name,
-		Description: output.Description,
-		Price:       output.Price,
-		CategoryID:  output.CategoryID,
-		CreatedAt:   output.CreatedAt,
-		UpdatedAt:   output.UpdatedAt,
-	}, nil
+	return nil
 }
 
-func (c *ProductController) UpdateProduct(ctx context.Context, id uint64, req dto.ProductRequest) (*dto.ProductResponse, error) {
-	input := usecase.UpdateProductInput{
+func (c *ProductController) UpdateProduct(ctx context.Context, rw dto.ResponseWriter, id uint64, req dto.ProductRequest) error {
+	input := dto.UpdateProductInput{
+		ID:          id,
 		Name:        req.Name,
 		Description: req.Description,
 		Price:       req.Price,
 		CategoryID:  req.CategoryID,
+		Writer:      rw,
 	}
 
-	output, err := c.updateProductUseCase.Execute(ctx, id, input)
+	err := c.updateProductUseCase.Execute(ctx, input)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return &dto.ProductResponse{
-		ID:          output.ID,
-		Name:        output.Name,
-		Description: output.Description,
-		Price:       output.Price,
-		CategoryID:  output.CategoryID,
-		CreatedAt:   output.CreatedAt,
-		UpdatedAt:   output.UpdatedAt,
-	}, nil
+	return nil
 }
 
-func (c *ProductController) DeleteProduct(ctx context.Context, id uint64) error {
-	return c.deleteProductUseCase.Execute(ctx, id)
+func (c *ProductController) DeleteProduct(ctx context.Context, rw dto.ResponseWriter, id uint64) error {
+	input := dto.DeleteProductInput{
+		ID:     id,
+		Writer: rw,
+	}
+	return c.deleteProductUseCase.Execute(ctx, input)
 }

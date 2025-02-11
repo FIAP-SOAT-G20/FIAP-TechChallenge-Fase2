@@ -54,13 +54,11 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 	req.Page = page
 	req.Limit = limit
 
-	response, err := h.controller.ListProducts(c.Request.Context(), req)
+	err := h.controller.ListProducts(c.Request.Context(), c, req)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
-
-	c.JSON(http.StatusOK, response)
 }
 
 // CreateProduct cria um novo produto
@@ -82,13 +80,11 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 		return
 	}
 
-	response, err := h.controller.CreateProduct(c.Request.Context(), req)
+	err := h.controller.CreateProduct(c.Request.Context(), c, req)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
-
-	c.JSON(http.StatusCreated, response)
 }
 
 // GetProduct busca um produto pelo ID
@@ -111,13 +107,11 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 		return
 	}
 
-	response, err := h.controller.GetProduct(c.Request.Context(), id)
+	err = h.controller.GetProduct(c.Request.Context(), c, id)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
-
-	c.JSON(http.StatusOK, response)
 }
 
 // UpdateProduct atualiza um produto
@@ -147,13 +141,11 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 		return
 	}
 
-	response, err := h.controller.UpdateProduct(c.Request.Context(), id, req)
+	err = h.controller.UpdateProduct(c.Request.Context(), c, id, req)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
-
-	c.JSON(http.StatusOK, response)
 }
 
 // DeleteProduct deleta um produto
@@ -175,7 +167,7 @@ func (h *ProductHandler) DeleteProduct(c *gin.Context) {
 		return
 	}
 
-	if err := h.controller.DeleteProduct(c.Request.Context(), id); err != nil {
+	if err := h.controller.DeleteProduct(c.Request.Context(), c, id); err != nil {
 		_ = c.Error(err)
 		return
 	}

@@ -3,10 +3,10 @@ package product
 import (
 	"context"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
 
 type createProductUseCase struct {
@@ -21,19 +21,19 @@ func NewCreateProductUseCase(gateway port.ProductGateway, presenter port.Product
 	}
 }
 
-func (uc *createProductUseCase) Execute(ctx context.Context, input usecase.CreateProductInput) (*usecase.ProductOutput, error) {
-	// Cria e valida o produto usando as regras de domínio
+func (uc *createProductUseCase) Execute(ctx context.Context, input dto.CreateProductInput) error {
 	product, err := entity.NewProduct(input.Name, input.Description, input.Price, input.CategoryID)
 	if err != nil {
-		return nil, domain.NewValidationError(err)
+		return domain.NewValidationError(err)
 	}
 
-	// Persiste o produto
 	if err := uc.gateway.Create(ctx, product); err != nil {
-		return nil, domain.NewInternalError(err)
+		return domain.NewInternalError(err)
 	}
 
-	// Formata a resposta usando o presenter
-	output := uc.presenter.ToOutput(product)
-	return output, nil
+	uc.presenter.Present(port.ProductPresenterDTO{
+		Writer: input.Writer,
+		Result: product,
+	})
+	return nil
 }

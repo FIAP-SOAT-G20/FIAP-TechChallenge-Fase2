@@ -8,10 +8,12 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/dto"
+	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
 
 func TestGetProductUseCase_Execute(t *testing.T) {
@@ -20,6 +22,7 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 
 	mockGateway := mockport.NewMockProductGateway(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
+	mockWriter := mockdto.NewMockResponseWriter(ctrl)
 	useCase := NewGetProductUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
@@ -32,16 +35,6 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 		CategoryID:  1,
 		CreatedAt:   currentTime,
 		UpdatedAt:   currentTime,
-	}
-
-	mockOutput := &usecase.ProductOutput{
-		ID:          1,
-		Name:        "Test Product",
-		Description: "Test Description",
-		Price:       99.99,
-		CategoryID:  1,
-		CreatedAt:   currentTime.Format("2006-01-02T15:04:05Z07:00"),
-		UpdatedAt:   currentTime.Format("2006-01-02T15:04:05Z07:00"),
 	}
 
 	tests := []struct {
@@ -60,8 +53,10 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 					Return(mockProduct, nil)
 
 				mockPresenter.EXPECT().
-					ToOutput(mockProduct).
-					Return(mockOutput)
+					Present(port.ProductPresenterDTO{
+						Writer: mockWriter,
+						Result: mockProduct,
+					})
 			},
 			expectError: false,
 		},
@@ -93,18 +88,18 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			output, err := useCase.Execute(ctx, tt.id)
+			err := useCase.Execute(ctx, dto.GetProductInput{
+				ID:     tt.id,
+				Writer: mockWriter,
+			})
 
 			if tt.expectError {
 				assert.Error(t, err)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
-				assert.Nil(t, output)
 			} else {
 				assert.NoError(t, err)
-				assert.NotNil(t, output)
-				assert.Equal(t, mockOutput, output)
 			}
 		})
 	}
