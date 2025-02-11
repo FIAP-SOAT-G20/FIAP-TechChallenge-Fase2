@@ -49,16 +49,6 @@ type ListProductsInput struct {
 	Writer     ResponseWriter
 }
 
-type ProductOutput struct {
-	ID          uint64
-	Name        string
-	Description string
-	Price       float64
-	CategoryID  uint64
-	CreatedAt   string
-	UpdatedAt   string
-}
-
 type ProductPresenterInput struct {
 	Result any
 	Total  int64
