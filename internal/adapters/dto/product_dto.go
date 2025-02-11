@@ -46,11 +46,11 @@ type ProductOutput struct {
 }
 
 type ProductPresenterInput struct {
-	Writer ResponseWriter
 	Result any
 	Total  int64
 	Page   int
 	Limit  int
+	Writer ResponseWriter
 }
 
 type ProductRequest struct {
