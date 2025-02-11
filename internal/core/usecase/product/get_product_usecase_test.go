@@ -52,7 +52,7 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 					Return(mockProduct, nil)
 
 				mockPresenter.EXPECT().
-					Present(dto.ProductPresenterDTO{
+					Present(dto.ProductPresenterInput{
 						Writer: mockWriter,
 						Result: mockProduct,
 					})

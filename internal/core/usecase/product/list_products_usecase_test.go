@@ -67,7 +67,7 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 					Return(mockProducts, int64(2), nil)
 
 				mockPresenter.EXPECT().
-					Present(dto.ProductPresenterDTO{
+					Present(dto.ProductPresenterInput{
 						Writer: mockWriter,
 						Total:  int64(2),
 						Page:   1,
@@ -128,7 +128,7 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 					Return(mockProducts, int64(2), nil)
 
 				mockPresenter.EXPECT().
-					Present(dto.ProductPresenterDTO{
+					Present(dto.ProductPresenterInput{
 						Writer: mockWriter,
 						Total:  int64(2),
 						Page:   1,
@@ -152,7 +152,7 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 					Return(mockProducts, int64(2), nil)
 
 				mockPresenter.EXPECT().
-					Present(dto.ProductPresenterDTO{
+					Present(dto.ProductPresenterInput{
 						Writer: mockWriter,
 						Total:  int64(2),
 						Page:   1,

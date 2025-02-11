@@ -40,7 +40,7 @@ func (m *MockProductPresenter) EXPECT() *MockProductPresenterMockRecorder {
 }
 
 // Present mocks base method.
-func (m *MockProductPresenter) Present(pp dto.ProductPresenterDTO) {
+func (m *MockProductPresenter) Present(pp dto.ProductPresenterInput) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Present", pp)
 }

@@ -16,10 +16,10 @@ func NewProductJsonPresenter() port.ProductPresenter {
 	return &productJsonPresenter{}
 }
 
-func (p *productJsonPresenter) Present(pp dto.ProductPresenterDTO) {
+func (p *productJsonPresenter) Present(pp dto.ProductPresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.Product:
-		output := dto.ProductJsonResponse{
+		output := ProductJsonResponse{
 			ID:          v.ID,
 			Name:        v.Name,
 			Description: v.Description,
@@ -30,9 +30,9 @@ func (p *productJsonPresenter) Present(pp dto.ProductPresenterDTO) {
 		}
 		pp.Writer.JSON(http.StatusOK, output)
 	case []*entity.Product:
-		productOutputs := make([]dto.ProductJsonResponse, len(v))
+		productOutputs := make([]ProductJsonResponse, len(v))
 		for i, product := range v {
-			productOutputs[i] = dto.ProductJsonResponse{
+			productOutputs[i] = ProductJsonResponse{
 				ID:          product.ID,
 				Name:        product.Name,
 				Description: product.Description,
@@ -43,8 +43,8 @@ func (p *productJsonPresenter) Present(pp dto.ProductPresenterDTO) {
 			}
 		}
 
-		output := &dto.ProductJsonPaginatedResponse{
-			JsonPagination: dto.JsonPagination{
+		output := &ProductJsonPaginatedResponse{
+			JsonPagination: JsonPagination{
 				Total: pp.Total,
 				Page:  pp.Page,
 				Limit: pp.Limit,
@@ -58,5 +58,4 @@ func (p *productJsonPresenter) Present(pp dto.ProductPresenterDTO) {
 			pp.Writer.JSON(http.StatusInternalServerError, err)
 		}
 	}
-
 }

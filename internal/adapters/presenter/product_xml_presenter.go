@@ -16,10 +16,10 @@ func NewProductXmlPresenter() port.ProductPresenter {
 	return &productXmlPresenter{}
 }
 
-func (p *productXmlPresenter) Present(pp dto.ProductPresenterDTO) {
+func (p *productXmlPresenter) Present(pp dto.ProductPresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.Product:
-		output := dto.ProductXmlResponse{
+		output := ProductXmlResponse{
 			ID:          v.ID,
 			Name:        v.Name,
 			Description: v.Description,
@@ -30,9 +30,9 @@ func (p *productXmlPresenter) Present(pp dto.ProductPresenterDTO) {
 		}
 		pp.Writer.XML(http.StatusOK, output)
 	case []*entity.Product:
-		productOutputs := make([]dto.ProductXmlResponse, len(v))
+		productOutputs := make([]ProductXmlResponse, len(v))
 		for i, product := range v {
-			productOutputs[i] = dto.ProductXmlResponse{
+			productOutputs[i] = ProductXmlResponse{
 				ID:          product.ID,
 				Name:        product.Name,
 				Description: product.Description,
@@ -43,8 +43,8 @@ func (p *productXmlPresenter) Present(pp dto.ProductPresenterDTO) {
 			}
 		}
 
-		output := &dto.ProductXmlPaginatedResponse{
-			XmlPagination: dto.XmlPagination{
+		output := &ProductXmlPaginatedResponse{
+			XmlPagination: XmlPagination{
 				Total: pp.Total,
 				Page:  pp.Page,
 				Limit: pp.Limit,
