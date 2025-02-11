@@ -1,5 +1,19 @@
 package dto
 
+type ProductRequest struct {
+	Name        string  `json:"name" example:"Produto A"`
+	Description string  `json:"description" example:"Descrição do Produto A"`
+	Price       float64 `json:"price" example:"99.99"`
+	CategoryID  uint64  `json:"category_id" example:"1"`
+}
+
+type ProductListRequest struct {
+	Name       string `json:"name" example:"Produto"`
+	CategoryID uint64 `json:"category_id" example:"1"`
+	Page       int    `json:"page" example:"1"`
+	Limit      int    `json:"limit" example:"10"`
+}
+
 type CreateProductInput struct {
 	Name        string
 	Description string
@@ -51,18 +65,4 @@ type ProductPresenterInput struct {
 	Page   int
 	Limit  int
 	Writer ResponseWriter
-}
-
-type ProductRequest struct {
-	Name        string  `json:"name" example:"Produto A"`
-	Description string  `json:"description" example:"Descrição do Produto A"`
-	Price       float64 `json:"price" example:"99.99"`
-	CategoryID  uint64  `json:"category_id" example:"1"`
-}
-
-type ProductListRequest struct {
-	Name       string `json:"name" example:"Produto"`
-	CategoryID uint64 `json:"category_id" example:"1"`
-	Page       int    `json:"page" example:"1"`
-	Limit      int    `json:"limit" example:"10"`
 }
