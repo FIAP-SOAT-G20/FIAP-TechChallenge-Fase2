@@ -15,6 +15,28 @@ type ProductHandler struct {
 	controller *controller.ProductController
 }
 
+type ProductRequest struct {
+	Name        string  `json:"name" validate:"required,min=3,max=100" example:"Produto A"`
+	Description string  `json:"description" validate:"max=500" example:"Descrição do Produto A"`
+	Price       float64 `json:"price" validate:"required,gt=0" example:"99.99"`
+	CategoryID  uint64  `json:"category_id" validate:"required,gt=0" example:"1"`
+}
+
+func (p *ProductRequest) Validate() error {
+	return GetValidator().Struct(p)
+}
+
+type ProductListRequest struct {
+	Name       string `json:"name" validate:"required,min=3,max=100" example:"Produto"`
+	CategoryID uint64 `json:"category_id" example:"1"`
+	Page       int    `json:"page" validate:"required,gte=1" example:"1"`
+	Limit      int    `json:"limit" validate:"required,gte=1,lte=100" example:"10"`
+}
+
+func (p *ProductListRequest) Validate() error {
+	return GetValidator().Struct(p)
+}
+
 func NewProductHandler(controller *controller.ProductController) *ProductHandler {
 	return &ProductHandler{controller: controller}
 }
@@ -43,18 +65,19 @@ func (h *ProductHandler) Register(router *gin.RouterGroup) {
 //	@Failure		500			{object}	dto.ErrorResponse
 //	@Router			/products [get]
 func (h *ProductHandler) ListProducts(c *gin.Context) {
-	var req dto.ProductListRequest
-
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
 	categoryID, _ := strconv.ParseUint(c.DefaultQuery("category_id", "0"), 10, 64)
 
-	req.Name = c.Query("name")
-	req.CategoryID = categoryID
-	req.Page = page
-	req.Limit = limit
+	input := dto.ListProductsInput{
+		Name:       c.Query("name"),
+		CategoryID: categoryID,
+		Page:       page,
+		Limit:      limit,
+		Writer:     c,
+	}
 
-	err := h.controller.ListProducts(c.Request.Context(), c, req)
+	err := h.controller.ListProducts(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -74,13 +97,27 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/products [post]
 func (h *ProductHandler) CreateProduct(c *gin.Context) {
-	var req dto.ProductRequest
+	var req ProductRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 
-	err := h.controller.CreateProduct(c.Request.Context(), c, req)
+	// validate request
+	if err := req.Validate(); err != nil {
+		_ = c.Error(domain.NewInvalidInputError(err.Error()))
+		return
+	}
+
+	input := dto.CreateProductInput{
+		Name:        req.Name,
+		Description: req.Description,
+		Price:       req.Price,
+		CategoryID:  req.CategoryID,
+		Writer:      c,
+	}
+
+	err := h.controller.CreateProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -107,7 +144,12 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 		return
 	}
 
-	err = h.controller.GetProduct(c.Request.Context(), c, id)
+	input := dto.GetProductInput{
+		ID:     id,
+		Writer: c,
+	}
+
+	err = h.controller.GetProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -135,13 +177,27 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 		return
 	}
 
-	var req dto.ProductRequest
+	var req ProductRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 
-	err = h.controller.UpdateProduct(c.Request.Context(), c, id, req)
+	if err := req.Validate(); err != nil {
+		_ = c.Error(domain.NewInvalidInputError(err.Error()))
+		return
+	}
+
+	input := dto.UpdateProductInput{
+		ID:          id,
+		Name:        req.Name,
+		Description: req.Description,
+		Price:       req.Price,
+		CategoryID:  req.CategoryID,
+		Writer:      c,
+	}
+
+	err = h.controller.UpdateProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -167,7 +223,12 @@ func (h *ProductHandler) DeleteProduct(c *gin.Context) {
 		return
 	}
 
-	if err := h.controller.DeleteProduct(c.Request.Context(), c, id); err != nil {
+	input := dto.DeleteProductInput{
+		ID:     id,
+		Writer: c,
+	}
+
+	if err := h.controller.DeleteProduct(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return
 	}

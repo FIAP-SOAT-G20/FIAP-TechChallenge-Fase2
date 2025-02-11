@@ -93,24 +93,6 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 			errorType:   &domain.NotFoundError{},
 		},
 		{
-			name: "should return error when validation fails",
-			input: dto.UpdateProductInput{
-				ID:          1,
-				Name:        "", // Nome vazio deve falhar na validação
-				Description: "New Description",
-				Price:       20.0,
-				CategoryID:  2,
-				Writer:      mockWriter,
-			},
-			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
-					Return(existingProduct, nil)
-			},
-			expectError: true,
-			errorType:   &domain.ValidationError{},
-		},
-		{
 			name: "should return error when gateway update fails",
 			input: dto.UpdateProductInput{
 				ID:          1,

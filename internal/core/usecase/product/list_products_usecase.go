@@ -21,14 +21,6 @@ func NewListProductsUseCase(gateway port.ProductGateway, presenter port.ProductP
 }
 
 func (uc *listProductsUseCase) Execute(ctx context.Context, input dto.ListProductsInput) error {
-	if input.Page < 1 {
-		return domain.NewInvalidInputError(domain.ErrPageMustBeGreaterThanZero)
-	}
-
-	if input.Limit < 1 || input.Limit > 100 {
-		return domain.NewInvalidInputError(domain.ErrLimitMustBeBetween1And100)
-	}
-
 	products, total, err := uc.gateway.FindAll(ctx, input.Name, input.CategoryID, input.Page, input.Limit)
 	if err != nil {
 		return domain.NewInternalError(err)

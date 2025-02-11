@@ -31,9 +31,7 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, input dto.UpdatePro
 	}
 
 	// Atualiza o produto
-	if err := product.Update(input.Name, input.Description, input.Price, input.CategoryID); err != nil {
-		return domain.NewValidationError(err)
-	}
+	product.Update(input.Name, input.Description, input.Price, input.CategoryID)
 
 	// Persiste as alterações
 	if err := uc.gateway.Update(ctx, product); err != nil {

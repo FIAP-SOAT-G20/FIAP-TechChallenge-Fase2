@@ -50,19 +50,6 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 			expectError: false,
 		},
 		{
-			name: "should return error when validation fails",
-			input: dto.CreateProductInput{
-				Name:        "", // Nome vazio deve falhar na validação
-				Description: "Test Description",
-				Price:       99.99,
-				CategoryID:  1,
-				Writer:      mockWriter,
-			},
-			setupMocks:  func() {},
-			expectError: true,
-			errorType:   &domain.ValidationError{},
-		},
-		{
 			name: "should return error when gateway fails",
 			input: dto.CreateProductInput{
 				Name:        "Test Product",
@@ -83,6 +70,10 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			// t.Cleanup(func() {
+			// 	mockGateway.EXPECT().EXPECTATIONS = nil
+			// 	mockPresenter.EXPECTATIONS = nil
+			// })
 			tt.setupMocks()
 
 			err := useCase.Execute(ctx, tt.input)

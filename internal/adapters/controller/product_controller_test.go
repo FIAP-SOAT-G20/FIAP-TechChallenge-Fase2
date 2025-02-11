@@ -21,24 +21,19 @@ func TestProductController_ListProducts(t *testing.T) {
 	productController := NewProductController(mockListProductsUseCase, nil, nil, nil, nil)
 
 	ctx := context.Background()
-	req := dto.ProductListRequest{
+	input := dto.ListProductsInput{
 		Name:       "Test",
 		CategoryID: 1,
 		Page:       1,
 		Limit:      10,
+		Writer:     mockResponseWriter,
 	}
 
 	mockListProductsUseCase.EXPECT().
-		Execute(ctx, dto.ListProductsInput{
-			Name:       req.Name,
-			CategoryID: req.CategoryID,
-			Page:       req.Page,
-			Limit:      req.Limit,
-			Writer:     mockResponseWriter,
-		}).
+		Execute(ctx, input).
 		Return(nil)
 
-	err := productController.ListProducts(ctx, mockResponseWriter, req)
+	err := productController.ListProducts(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -51,24 +46,19 @@ func TestProductController_CreateProduct(t *testing.T) {
 	productController := NewProductController(nil, mockCreateProductUseCase, nil, nil, nil)
 
 	ctx := context.Background()
-	req := dto.ProductRequest{
+	input := dto.CreateProductInput{
 		Name:        "Test Product",
 		Description: "Test Description",
 		Price:       99.99,
 		CategoryID:  1,
+		Writer:      mockResponseWriter,
 	}
 
 	mockCreateProductUseCase.EXPECT().
-		Execute(ctx, dto.CreateProductInput{
-			Name:        req.Name,
-			Description: req.Description,
-			Price:       req.Price,
-			CategoryID:  req.CategoryID,
-			Writer:      mockResponseWriter,
-		}).
+		Execute(ctx, input).
 		Return(nil)
 
-	err := productController.CreateProduct(ctx, mockResponseWriter, req)
+	err := productController.CreateProduct(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -81,16 +71,16 @@ func TestProductController_GetProduct(t *testing.T) {
 	productController := NewProductController(nil, nil, mockGetProductUseCase, nil, nil)
 
 	ctx := context.Background()
-	id := uint64(1)
+	input := dto.GetProductInput{
+		ID:     uint64(1),
+		Writer: mockResponseWriter,
+	}
 
 	mockGetProductUseCase.EXPECT().
-		Execute(ctx, dto.GetProductInput{
-			ID:     id,
-			Writer: mockResponseWriter,
-		}).
+		Execute(ctx, input).
 		Return(nil)
 
-	err := productController.GetProduct(ctx, mockResponseWriter, id)
+	err := productController.GetProduct(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -103,26 +93,20 @@ func TestProductController_UpdateProduct(t *testing.T) {
 	productController := NewProductController(nil, nil, nil, mockUpdateProductUseCase, nil)
 
 	ctx := context.Background()
-	id := uint64(1)
-	req := dto.ProductRequest{
+	input := dto.UpdateProductInput{
+		ID:          uint64(1),
 		Name:        "Updated Product",
 		Description: "Updated Description",
 		Price:       199.99,
 		CategoryID:  2,
+		Writer:      mockResponseWriter,
 	}
 
 	mockUpdateProductUseCase.EXPECT().
-		Execute(ctx, dto.UpdateProductInput{
-			ID:          id,
-			Name:        req.Name,
-			Description: req.Description,
-			Price:       req.Price,
-			CategoryID:  req.CategoryID,
-			Writer:      mockResponseWriter,
-		}).
+		Execute(ctx, input).
 		Return(nil)
 
-	err := productController.UpdateProduct(ctx, mockResponseWriter, id, req)
+	err := productController.UpdateProduct(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -135,15 +119,15 @@ func TestProductController_DeleteProduct(t *testing.T) {
 	productController := NewProductController(nil, nil, nil, nil, mockDeleteProductUseCase)
 
 	ctx := context.Background()
-	id := uint64(1)
+	input := dto.DeleteProductInput{
+		ID:     uint64(1),
+		Writer: mockResponseWriter,
+	}
 
 	mockDeleteProductUseCase.EXPECT().
-		Execute(ctx, dto.DeleteProductInput{
-			ID:     id,
-			Writer: mockResponseWriter,
-		}).
+		Execute(ctx, input).
 		Return(nil)
 
-	err := productController.DeleteProduct(ctx, mockResponseWriter, id)
+	err := productController.DeleteProduct(ctx, input)
 	assert.NoError(t, err)
 }

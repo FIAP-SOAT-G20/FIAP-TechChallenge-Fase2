@@ -22,10 +22,7 @@ func NewCreateProductUseCase(gateway port.ProductGateway, presenter port.Product
 }
 
 func (uc *createProductUseCase) Execute(ctx context.Context, input dto.CreateProductInput) error {
-	product, err := entity.NewProduct(input.Name, input.Description, input.Price, input.CategoryID)
-	if err != nil {
-		return domain.NewValidationError(err)
-	}
+	product := entity.NewProduct(input.Name, input.Description, input.Price, input.CategoryID)
 
 	if err := uc.gateway.Create(ctx, product); err != nil {
 		return domain.NewInternalError(err)
