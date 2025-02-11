@@ -53,7 +53,10 @@ func (p *productJsonPresenter) Present(pp port.ProductPresenterDTO) {
 		}
 		pp.Writer.JSON(http.StatusOK, output)
 	default:
-		pp.Writer.Error(domain.NewInternalError(errors.New(domain.ErrInternalError)))
+		err := pp.Writer.Error(domain.NewInternalError(errors.New(domain.ErrInternalError)))
+		if err != nil {
+			pp.Writer.JSON(http.StatusInternalServerError, err)
+		}
 	}
 
 }
