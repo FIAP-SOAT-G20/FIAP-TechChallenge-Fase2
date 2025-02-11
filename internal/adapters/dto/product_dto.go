@@ -88,3 +88,11 @@ type ProductOutput struct {
 	CreatedAt   string
 	UpdatedAt   string
 }
+
+type ProductPresenterDTO struct {
+	Writer ResponseWriter
+	Result any
+	Total  int64
+	Page   int
+	Limit  int
+}

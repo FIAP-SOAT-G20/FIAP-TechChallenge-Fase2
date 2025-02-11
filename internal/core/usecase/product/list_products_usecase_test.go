@@ -12,7 +12,6 @@ import (
 	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 )
 
@@ -68,7 +67,7 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 					Return(mockProducts, int64(2), nil)
 
 				mockPresenter.EXPECT().
-					Present(port.ProductPresenterDTO{
+					Present(dto.ProductPresenterDTO{
 						Writer: mockWriter,
 						Total:  int64(2),
 						Page:   1,
@@ -129,7 +128,7 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 					Return(mockProducts, int64(2), nil)
 
 				mockPresenter.EXPECT().
-					Present(port.ProductPresenterDTO{
+					Present(dto.ProductPresenterDTO{
 						Writer: mockWriter,
 						Total:  int64(2),
 						Page:   1,
@@ -153,7 +152,7 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 					Return(mockProducts, int64(2), nil)
 
 				mockPresenter.EXPECT().
-					Present(port.ProductPresenterDTO{
+					Present(dto.ProductPresenterDTO{
 						Writer: mockWriter,
 						Total:  int64(2),
 						Page:   1,

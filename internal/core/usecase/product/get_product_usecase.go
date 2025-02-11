@@ -30,7 +30,7 @@ func (uc *getProductUseCase) Execute(ctx context.Context, input dto.GetProductIn
 		return domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
-	uc.presenter.Present(port.ProductPresenterDTO{
+	uc.presenter.Present(dto.ProductPresenterDTO{
 		Writer: input.Writer,
 		Result: product,
 	})

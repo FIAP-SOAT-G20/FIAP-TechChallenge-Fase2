@@ -34,7 +34,7 @@ func (uc *listProductsUseCase) Execute(ctx context.Context, input dto.ListProduc
 		return domain.NewInternalError(err)
 	}
 
-	uc.presenter.Present(port.ProductPresenterDTO{
+	uc.presenter.Present(dto.ProductPresenterDTO{
 		Writer: input.Writer,
 		Total:  total,
 		Page:   input.Page,

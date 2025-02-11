@@ -16,7 +16,7 @@ func NewProductJsonPresenter() port.ProductPresenter {
 	return &productJsonPresenter{}
 }
 
-func (p *productJsonPresenter) Present(pp port.ProductPresenterDTO) {
+func (p *productJsonPresenter) Present(pp dto.ProductPresenterDTO) {
 	switch v := pp.Result.(type) {
 	case *entity.Product:
 		output := dto.ProductJsonResponse{

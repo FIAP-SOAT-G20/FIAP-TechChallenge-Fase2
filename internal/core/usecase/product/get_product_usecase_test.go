@@ -12,7 +12,6 @@ import (
 	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 )
 
@@ -53,7 +52,7 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 					Return(mockProduct, nil)
 
 				mockPresenter.EXPECT().
-					Present(port.ProductPresenterDTO{
+					Present(dto.ProductPresenterDTO{
 						Writer: mockWriter,
 						Result: mockProduct,
 					})

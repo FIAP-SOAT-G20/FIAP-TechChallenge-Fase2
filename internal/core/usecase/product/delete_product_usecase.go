@@ -32,7 +32,7 @@ func (uc *deleteProductUseCase) Execute(ctx context.Context, input dto.DeletePro
 		return domain.NewInternalError(err)
 	}
 
-	uc.presenter.Present(port.ProductPresenterDTO{
+	uc.presenter.Present(dto.ProductPresenterDTO{
 		Writer: input.Writer,
 		Result: product,
 	})

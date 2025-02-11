@@ -12,7 +12,7 @@ package mock_port
 import (
 	reflect "reflect"
 
-	port "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
+	dto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/dto"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -40,7 +40,7 @@ func (m *MockProductPresenter) EXPECT() *MockProductPresenterMockRecorder {
 }
 
 // Present mocks base method.
-func (m *MockProductPresenter) Present(pp port.ProductPresenterDTO) {
+func (m *MockProductPresenter) Present(pp dto.ProductPresenterDTO) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Present", pp)
 }

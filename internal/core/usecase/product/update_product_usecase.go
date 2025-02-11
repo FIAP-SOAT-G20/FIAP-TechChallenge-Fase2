@@ -40,7 +40,7 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, input dto.UpdatePro
 		return domain.NewInternalError(err)
 	}
 
-	uc.presenter.Present(port.ProductPresenterDTO{
+	uc.presenter.Present(dto.ProductPresenterDTO{
 		Writer: input.Writer,
 		Result: product,
 	})

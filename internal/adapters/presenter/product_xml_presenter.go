@@ -16,7 +16,7 @@ func NewProductXmlPresenter() port.ProductPresenter {
 	return &productXmlPresenter{}
 }
 
-func (p *productXmlPresenter) Present(pp port.ProductPresenterDTO) {
+func (p *productXmlPresenter) Present(pp dto.ProductPresenterDTO) {
 	switch v := pp.Result.(type) {
 	case *entity.Product:
 		output := dto.ProductXmlResponse{
@@ -58,5 +58,4 @@ func (p *productXmlPresenter) Present(pp port.ProductPresenterDTO) {
 			pp.Writer.JSON(http.StatusInternalServerError, err)
 		}
 	}
-
 }
