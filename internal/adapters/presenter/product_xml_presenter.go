@@ -12,7 +12,7 @@ import (
 
 type productXmlPresenter struct{}
 
-func NewProductPresenter() port.ProductPresenter {
+func NewProductXmlPresenter() port.ProductPresenter {
 	return &productXmlPresenter{}
 }
 

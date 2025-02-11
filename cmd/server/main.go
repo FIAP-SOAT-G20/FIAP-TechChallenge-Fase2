@@ -67,6 +67,7 @@ func setupHandlers(db *database.Database) *routes.Handlers {
 
 	// Presenters
 	productPresenter := presenter.NewProductJsonPresenter()
+	// productPresenter := presenter.NewProductXmlPresenter()
 
 	// Use cases
 	listProductsUC := product.NewListProductsUseCase(productGateway, productPresenter)
