@@ -21,7 +21,6 @@ func NewUpdateProductUseCase(gateway port.ProductGateway, presenter port.Product
 }
 
 func (uc *updateProductUseCase) Execute(ctx context.Context, input dto.UpdateProductInput) error {
-	// Busca o produto existente
 	product, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
 		return domain.NewInternalError(err)
@@ -30,10 +29,8 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, input dto.UpdatePro
 		return domain.NewNotFoundError("produto não encontrado")
 	}
 
-	// Atualiza o produto
 	product.Update(input.Name, input.Description, input.Price, input.CategoryID)
 
-	// Persiste as alterações
 	if err := uc.gateway.Update(ctx, product); err != nil {
 		return domain.NewInternalError(err)
 	}

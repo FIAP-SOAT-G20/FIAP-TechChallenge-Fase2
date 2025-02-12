@@ -24,7 +24,7 @@ func (uc *deleteProductUseCase) Execute(ctx context.Context, input dto.DeletePro
 		return domain.NewInternalError(err)
 	}
 	if product == nil {
-		return domain.NewNotFoundError("produto não encontrado")
+		return domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
 	// Deleta o produto
