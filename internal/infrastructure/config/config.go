@@ -21,10 +21,11 @@ type Config struct {
 	DBMaxLifetime  time.Duration
 
 	// Server settings
-	ServerPort         string
-	ServerReadTimeout  time.Duration
-	ServerWriteTimeout time.Duration
-	ServerIdleTimeout  time.Duration
+	ServerPort                    string
+	ServerReadTimeout             time.Duration
+	ServerWriteTimeout            time.Duration
+	ServerIdleTimeout             time.Duration
+	ServerGracefulShutdownTimeout time.Duration
 
 	// Environment
 	Environment string
@@ -43,6 +44,7 @@ func LoadConfig() *Config {
 	serverReadTimeout, _ := time.ParseDuration(getEnv("SERVER_READ_TIMEOUT", "10s"))
 	serverWriteTimeout, _ := time.ParseDuration(getEnv("SERVER_WRITE_TIMEOUT", "10s"))
 	serverIdleTimeout, _ := time.ParseDuration(getEnv("SERVER_IDLE_TIMEOUT", "60s"))
+	serverGracefulShutdownTimeout, _ := time.ParseDuration(getEnv("SERVER_GRACEFUL_SHUTDOWN_SEC_TIMEOUT", "5s"))
 
 	return &Config{
 		// Database settings
@@ -56,10 +58,11 @@ func LoadConfig() *Config {
 		DBMaxLifetime:  dbMaxLifetime,
 
 		// Server settings
-		ServerPort:         getEnv("SERVER_PORT", "8080"),
-		ServerReadTimeout:  serverReadTimeout,
-		ServerWriteTimeout: serverWriteTimeout,
-		ServerIdleTimeout:  serverIdleTimeout,
+		ServerPort:                    getEnv("SERVER_PORT", "8080"),
+		ServerReadTimeout:             serverReadTimeout,
+		ServerWriteTimeout:            serverWriteTimeout,
+		ServerIdleTimeout:             serverIdleTimeout,
+		ServerGracefulShutdownTimeout: serverGracefulShutdownTimeout,
 
 		// Environment
 		Environment: getEnv("ENVIRONMENT", "development"),

@@ -17,6 +17,8 @@ Repository for the [FIAP](https://postech.fiap.com.br/) Tech Challenge 2, focuse
 
 Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
+> Tech Challenge 1 repository can be found [here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1)
+
 ## 📚 Dictionary - Ubiquitous Language
 
 - Customer (actor): Actor responsible for initiating the purchasing process
@@ -48,7 +50,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 │   └── infrastructure
 │       ├── config
 │       ├── database
-│       ├── datasources
+│       ├── datasource
 │       ├── handler
 │       ├── logger
 │       ├── middleware
@@ -81,8 +83,6 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
 </details>
 
-
-
 ### ✨ Features
 - [x] Dockerfile: small image with multi-stage docker build, and independent of the host environment
 - [x] Makefile: to simplify the build and run commands
@@ -99,6 +99,9 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [x] Health Check
 - [x] Lint
 - [x] Vulnerability check
+- [x] Mocks
+- [x] Environment variables
+- [x] Graceful shutdown
 
 ## :computer: Technologies
 
@@ -147,6 +150,7 @@ cd FIAP-TechChallenge-Fase1
 ```
 
 Set the environment variables
+
 ```sh
 cp .env.example .env
 ```
@@ -156,6 +160,7 @@ cp .env.example .env
 ```sh
 make compose-build
 ```
+
 > The binary will be created in the `bin` folder
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -201,21 +206,21 @@ kubectl apply -f k8s/
 10. Check the coverage report by running `make coverage`
 11. Check the lint by running `make lint`
 12. Update the swagger documentation by running `make swagger`
-13. Commit your changes
+13. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard
 14. Push to the branch and Open a new PR by running `make pull-request`
 
 > [!NOTE]
-> `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
-> Alternatively, you can run `make run-air` to run the application using Air (live reload) 
+> `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose.  
+> Alternatively, you can run `make run-air` to run the application using Air (live reload)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 ## :white_check_mark: Tests
 
 ```sh
 make test
 ```
+
 > [!NOTE]
 > It will run the unit tests and generate the coverage report as `coverage.out`  
 > You can check the coverage report by running `make coverage`  
@@ -234,6 +239,23 @@ make test
 - [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 - [Shields.io](https://shields.io/)
 - [Alistair in the "Hexagone" 1/3](https://www.youtube.com/watch?v=th4AgBcrEHA&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&ab_channel=DDDFR)
+- [Alistair in the "Hexagone" 2/3](https://www.youtube.com/watch?v=iALcE8BPs94&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&index=2&ab_channel=DDDFR)
+- [Alistair in the "Hexagone" 3/3](https://www.youtube.com/watch?v=DAe0Bmcyt-4&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&index=3&ab_channel=DDDFR)
+- [Clean Architecture - Uncle Bob](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+- [How to implement Clean Architecture in Go (Golang)](https://threedots.tech/post/introducing-clean-architecture)
+- [Clean Architecture — A essência direto ao ponto](https://medium.com/@rvf.vazquez/clean-architecture-a-ess%C3%AAncia-draft-6d902e10d4b2)
+- [Clean Architecture with Golang](https://medium.com/nerd-for-tech/clean-architecture-with-golang-3fa1a1c2b6d6)
+- [Generate Go Project with Clean Architecture - Thiago Adriano (FIAP)](https://github.com/tadrianonet/go-clean-arch-generator)
+- [POSTECH_SOAT_CleanArchitecture](https://github.com/FIAP/POSTECH_SOAT_CleanArchitecture/blob/main/aula_08/src/index.ts)
+- [Fiap - Clean Architecture Usando Go - Erick Muller (FIAP)](https://github.com/proferickmuller/cleanarch-golang)
+- [Clean Architecture, o início - Erick Muller (FIAP)](https://medium.com/@oerickmuller/clean-architecture-o-in%C3%ADcio-4fd74578155d)
+- [Building Better Go Applications with Clean Architecture: A Practical Guide for Beginners](https://medium.com/@jamal.kaksouri/building-better-go-applications-with-clean-architecture-a-practical-guide-for-beginners-98ea061bf81a)
+- [Clean Architecture, 2 years later](https://eltonminetto.dev/en/post/2020-07-06-clean-architecture-2years-later/)
+- [Implementando Clean Architecture com Golang](https://dev.to/booscaaa/implementando-clean-architecture-com-golang-4n0a)
+- [Go Backend Clean Architecture](https://outcomeschool.com/blog/go-backend-clean-architecture)
+- [golang-clean-architecture](https://pkg.go.dev/github.com/hendrorahmat/golang-clean-architecture#section-readme)
+- [[Hands-on Guide] How to Implement Clean Architecture in Golang?](https://reliasoftware.com/blog/clean-architecture-golang)
+- [Clean DDD lessons: presenters](https://medium.com/unil-ci-software-engineering/clean-ddd-lessons-presenters-6f092308b75e)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

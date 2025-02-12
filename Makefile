@@ -110,10 +110,12 @@ migrate-down:
 install:
 	@echo  "🟢 Installing dependencies..."
 	go mod download
-	go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
-	go install golang.org/x/vuln/cmd/govulncheck@latest
-	go install github.com/swaggo/swag/cmd/swag@latest
-	go install go.uber.org/mock/mockgen@latest
+	@go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+	@go install golang.org/x/vuln/cmd/govulncheck@latest
+	@go install github.com/swaggo/swag/cmd/swag@latest
+	@go install go.uber.org/mock/mockgen@latest
+	@go install github.com/air-verse/air@latest
+	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
 .PHONY: docker-build
 docker-build:
