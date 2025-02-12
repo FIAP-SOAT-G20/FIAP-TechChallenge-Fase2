@@ -40,29 +40,23 @@ import (
 //	@name						Authorization
 //	@description				Type "Bearer" followed by a space and the access token.
 func main() {
-	// Carrega configurações
 	cfg := config.LoadConfig()
 
-	// Inicializa o logger
 	loggerInstance := logger.NewLogger(cfg)
 
-	// Inicializa o banco de dados
 	db, err := database.NewPostgresConnection(cfg, loggerInstance.Logger)
 	if err != nil {
 		loggerInstance.Error("failed to connect to database", "error", err)
 		os.Exit(1)
 	}
 
-	// Roda as migrações
 	if err := db.Migrate(); err != nil {
 		loggerInstance.Error("failed to run migrations", "error", err)
 		os.Exit(1)
 	}
 
-	// Inicializa as dependências e handlers
 	handlers := setupHandlers(db)
 
-	// Inicializa e inicia o servidor
 	srv := server.NewServer(cfg, loggerInstance.Logger, handlers)
 	if err := srv.Start(); err != nil {
 		loggerInstance.Error("server failed to start", "error", err)
