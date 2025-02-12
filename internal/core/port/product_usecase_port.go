@@ -3,25 +3,25 @@ package port
 import (
 	"context"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 )
 
 type ListProductsUseCase interface {
-	Execute(ctx context.Context, input usecase.ListProductsInput) (*usecase.ListProductPaginatedOutput, error)
+	Execute(ctx context.Context, input dto.ListProductsInput) error
 }
 
 type CreateProductUseCase interface {
-	Execute(ctx context.Context, input usecase.CreateProductInput) (*usecase.ProductOutput, error)
+	Execute(ctx context.Context, input dto.CreateProductInput) error
 }
 
 type GetProductUseCase interface {
-	Execute(ctx context.Context, id uint64) (*usecase.ProductOutput, error)
+	Execute(ctx context.Context, input dto.GetProductInput) error
 }
 
 type UpdateProductUseCase interface {
-	Execute(ctx context.Context, id uint64, input usecase.UpdateProductInput) (*usecase.ProductOutput, error)
+	Execute(ctx context.Context, input dto.UpdateProductInput) error
 }
 
 type DeleteProductUseCase interface {
-	Execute(ctx context.Context, id uint64) error
+	Execute(ctx context.Context, input dto.DeleteProductInput) error
 }

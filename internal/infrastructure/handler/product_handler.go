@@ -6,13 +6,35 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/controller"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapters/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 )
 
 type ProductHandler struct {
 	controller *controller.ProductController
+}
+
+type ProductRequest struct {
+	Name        string  `json:"name" validate:"required,min=3,max=100" example:"Produto A"`
+	Description string  `json:"description" validate:"max=500" example:"Descrição do Produto A"`
+	Price       float64 `json:"price" validate:"required,gt=0" example:"99.99"`
+	CategoryID  uint64  `json:"category_id" validate:"required,gt=0" example:"1"`
+}
+
+func (p *ProductRequest) Validate() error {
+	return GetValidator().Struct(p)
+}
+
+type ProductListRequest struct {
+	Name       string `json:"name" validate:"required,min=3,max=100" example:"Produto"`
+	CategoryID uint64 `json:"category_id" example:"1"`
+	Page       int    `json:"page" validate:"required,gte=1" example:"1"`
+	Limit      int    `json:"limit" validate:"required,gte=1,lte=100" example:"10"`
+}
+
+func (p *ProductListRequest) Validate() error {
+	return GetValidator().Struct(p)
 }
 
 func NewProductHandler(controller *controller.ProductController) *ProductHandler {
@@ -27,82 +49,93 @@ func (h *ProductHandler) Register(router *gin.RouterGroup) {
 	router.DELETE("/:id", h.DeleteProduct)
 }
 
-// ListProducts lista os produtos
+// ListProducts godoc
 //
-//	@Summary		Listar produtos
-//	@Description	Retorna uma lista paginada de produtos
-//	@Tags			produtos
+//	@Summary		List products
+//	@Description	List all products
+//	@Tags			products
 //	@Accept			json
 //	@Produce		json
-//	@Param			page		query		int		false	"Número da página"	default(1)
-//	@Param			limit		query		int		false	"Itens por página"	default(10)
-//	@Param			name		query		string	false	"Filtrar por nome"
-//	@Param			category_id	query		int		false	"Filtrar por categoria"
-//	@Success		200			{object}	dto.PaginatedResponse
-//	@Failure		400			{object}	dto.ErrorResponse
-//	@Failure		500			{object}	dto.ErrorResponse
+//	@Param			page		query		int										false	"Page number"		default(1)
+//	@Param			limit		query		int										false	"Items per page"	default(10)
+//	@Param			name		query		string									false	"Filter by name"
+//	@Param			category_id	query		int										false	"Filter by category ID"
+//	@Success		200			{object}	presenter.ProductJsonPaginatedResponse	"OK"
+//	@Failure		400			{object}	middleware.ErrorResponse				"Bad Request"
+//	@Failure		500			{object}	middleware.ErrorResponse				"Internal Server Error"
 //	@Router			/products [get]
 func (h *ProductHandler) ListProducts(c *gin.Context) {
-	var req dto.ProductListRequest
-
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
 	categoryID, _ := strconv.ParseUint(c.DefaultQuery("category_id", "0"), 10, 64)
 
-	req.Name = c.Query("name")
-	req.CategoryID = categoryID
-	req.Page = page
-	req.Limit = limit
+	input := dto.ListProductsInput{
+		Name:       c.Query("name"),
+		CategoryID: categoryID,
+		Page:       page,
+		Limit:      limit,
+		Writer:     c,
+	}
 
-	response, err := h.controller.ListProducts(c.Request.Context(), req)
+	err := h.controller.ListProducts(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
-
-	c.JSON(http.StatusOK, response)
 }
 
-// CreateProduct cria um novo produto
+// CreateProduct godoc
 //
-//	@Summary		Criar produto
-//	@Description	Cria um novo produto
-//	@Tags			produtos
+//	@Summary		Create product
+//	@Description	Creates a new product
+//	@Tags			products
 //	@Accept			json
 //	@Produce		json
-//	@Param			product	body		dto.ProductRequest	true	"Dados do produto"
-//	@Success		201		{object}	dto.ProductResponse
-//	@Failure		400		{object}	dto.ErrorResponse
-//	@Failure		500		{object}	dto.ErrorResponse
+//	@Param			product	body		ProductRequest					true	"Product data"
+//	@Success		201		{object}	presenter.ProductJsonResponse	"Created"
+//	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
+//	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/products [post]
 func (h *ProductHandler) CreateProduct(c *gin.Context) {
-	var req dto.ProductRequest
+	var req ProductRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 
-	response, err := h.controller.CreateProduct(c.Request.Context(), req)
+	// validate request
+	if err := req.Validate(); err != nil {
+		_ = c.Error(domain.NewInvalidInputError(err.Error()))
+		return
+	}
+
+	input := dto.CreateProductInput{
+		Name:        req.Name,
+		Description: req.Description,
+		Price:       req.Price,
+		CategoryID:  req.CategoryID,
+		Writer:      c,
+	}
+
+	err := h.controller.CreateProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
-
-	c.JSON(http.StatusCreated, response)
 }
 
-// GetProduct busca um produto pelo ID
+// GetProduct godoc
 //
-//	@Summary		Buscar produto
-//	@Description	Busca um produto pelo ID
-//	@Tags			produtos
+//	@Summary		Get product
+//	@Description	Search for a product by ID
+//	@Tags			products
 //	@Accept			json
 //	@Produce		json
-//	@Param			id	path		int	true	"ID do produto"
-//	@Success		200	{object}	dto.ProductResponse
-//	@Failure		400	{object}	dto.ErrorResponse
-//	@Failure		404	{object}	dto.ErrorResponse
-//	@Failure		500	{object}	dto.ErrorResponse
+//	@Param			id	path		int								true	"Product ID"
+//	@Success		200	{object}	presenter.ProductJsonResponse	"OK"
+//	@Failure		400	{object}	middleware.ErrorResponse		"Bad Request"
+//	@Failure		404	{object}	middleware.ErrorResponse		"Not Found"
+//	@Failure		500	{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/products/{id} [get]
 func (h *ProductHandler) GetProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
@@ -111,28 +144,31 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 		return
 	}
 
-	response, err := h.controller.GetProduct(c.Request.Context(), id)
+	input := dto.GetProductInput{
+		ID:     id,
+		Writer: c,
+	}
+
+	err = h.controller.GetProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
-
-	c.JSON(http.StatusOK, response)
 }
 
-// UpdateProduct atualiza um produto
+// UpdateProduct godoc
 //
-//	@Summary		Atualizar produto
-//	@Description	Atualiza um produto existente
-//	@Tags			produtos
+//	@Summary		Update product
+//	@Description	Update an existing product
+//	@Tags			products
 //	@Accept			json
 //	@Produce		json
-//	@Param			id		path		int					true	"ID do produto"
-//	@Param			product	body		dto.ProductRequest	true	"Dados do produto"
-//	@Success		200		{object}	dto.ProductResponse
-//	@Failure		400		{object}	dto.ErrorResponse
-//	@Failure		404		{object}	dto.ErrorResponse
-//	@Failure		500		{object}	dto.ErrorResponse
+//	@Param			id		path		int								true	"Product ID"
+//	@Param			product	body		ProductRequest					true	"Product data"
+//	@Success		200		{object}	presenter.ProductJsonResponse	"OK"
+//	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
+//	@Failure		404		{object}	middleware.ErrorResponse		"Not Found"
+//	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/products/{id} [put]
 func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
@@ -141,32 +177,44 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 		return
 	}
 
-	var req dto.ProductRequest
+	var req ProductRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 
-	response, err := h.controller.UpdateProduct(c.Request.Context(), id, req)
+	if err := req.Validate(); err != nil {
+		_ = c.Error(domain.NewInvalidInputError(err.Error()))
+		return
+	}
+
+	input := dto.UpdateProductInput{
+		ID:          id,
+		Name:        req.Name,
+		Description: req.Description,
+		Price:       req.Price,
+		CategoryID:  req.CategoryID,
+		Writer:      c,
+	}
+
+	err = h.controller.UpdateProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
-
-	c.JSON(http.StatusOK, response)
 }
 
-// DeleteProduct deleta um produto
+// DeleteProduct godoc
 //
-//	@Summary		Deletar produto
-//	@Description	Remove um produto existente
-//	@Tags			produtos
+//	@Summary		Delete product
+//	@Description	Deletes a product by ID
+//	@Tags			products
 //	@Produce		json
-//	@Param			id	path		int	true	"ID do produto"
+//	@Param			id	path		int	true	"Product ID"
 //	@Success		204	{object}	nil
-//	@Failure		400	{object}	dto.ErrorResponse
-//	@Failure		404	{object}	dto.ErrorResponse
-//	@Failure		500	{object}	dto.ErrorResponse
+//	@Failure		400	{object}	middleware.ErrorResponse	"Bad Request"
+//	@Failure		404	{object}	middleware.ErrorResponse	"Not Found"
+//	@Failure		500	{object}	middleware.ErrorResponse	"Internal Server Error"
 //	@Router			/products/{id} [delete]
 func (h *ProductHandler) DeleteProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
@@ -175,7 +223,12 @@ func (h *ProductHandler) DeleteProduct(c *gin.Context) {
 		return
 	}
 
-	if err := h.controller.DeleteProduct(c.Request.Context(), id); err != nil {
+	input := dto.DeleteProductInput{
+		ID:     id,
+		Writer: c,
+	}
+
+	if err := h.controller.DeleteProduct(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return
 	}

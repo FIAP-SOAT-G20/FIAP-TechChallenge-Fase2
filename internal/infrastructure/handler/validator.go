@@ -1,4 +1,4 @@
-package validator
+package handler
 
 import (
 	"sync"
@@ -15,7 +15,7 @@ func GetValidator() *validator.Validate {
 	once.Do(func() {
 		instance = validator.New()
 
-		// Aqui você pode registrar validações customizadas
+		// Here you can register custom validation functions
 		// instance.RegisterValidation("custom", customValidation)
 	})
 

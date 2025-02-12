@@ -17,7 +17,7 @@ const docTemplate = `{
     "paths": {
         "/products": {
             "get": {
-                "description": "Retorna uma lista paginada de produtos",
+                "description": "List all products",
                 "consumes": [
                     "application/json"
                 ],
@@ -25,33 +25,33 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "produtos"
+                    "products"
                 ],
-                "summary": "Listar produtos",
+                "summary": "List products",
                 "parameters": [
                     {
                         "type": "integer",
                         "default": 1,
-                        "description": "Número da página",
+                        "description": "Page number",
                         "name": "page",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "default": 10,
-                        "description": "Itens por página",
+                        "description": "Items per page",
                         "name": "limit",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "Filtrar por nome",
+                        "description": "Filter by name",
                         "name": "name",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "Filtrar por categoria",
+                        "description": "Filter by category ID",
                         "name": "category_id",
                         "in": "query"
                     }
@@ -60,25 +60,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.PaginatedResponse"
+                            "$ref": "#/definitions/presenter.ProductJsonPaginatedResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorResponse"
                         }
                     }
                 }
             },
             "post": {
-                "description": "Cria um novo produto",
+                "description": "Creates a new product",
                 "consumes": [
                     "application/json"
                 ],
@@ -86,17 +86,17 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "produtos"
+                    "products"
                 ],
-                "summary": "Criar produto",
+                "summary": "Create product",
                 "parameters": [
                     {
-                        "description": "Dados do produto",
+                        "description": "Product data",
                         "name": "product",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.ProductRequest"
+                            "$ref": "#/definitions/handler.ProductRequest"
                         }
                     }
                 ],
@@ -104,19 +104,19 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/dto.ProductResponse"
+                            "$ref": "#/definitions/presenter.ProductJsonResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorResponse"
                         }
                     }
                 }
@@ -124,7 +124,7 @@ const docTemplate = `{
         },
         "/products/{id}": {
             "get": {
-                "description": "Busca um produto pelo ID",
+                "description": "Search for a product by ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -132,13 +132,13 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "produtos"
+                    "products"
                 ],
-                "summary": "Buscar produto",
+                "summary": "Get product",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "ID do produto",
+                        "description": "Product ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -148,31 +148,31 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.ProductResponse"
+                            "$ref": "#/definitions/presenter.ProductJsonResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorResponse"
                         }
                     }
                 }
             },
             "put": {
-                "description": "Atualiza um produto existente",
+                "description": "Update an existing product",
                 "consumes": [
                     "application/json"
                 ],
@@ -180,24 +180,24 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "produtos"
+                    "products"
                 ],
-                "summary": "Atualizar produto",
+                "summary": "Update product",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "ID do produto",
+                        "description": "Product ID",
                         "name": "id",
                         "in": "path",
                         "required": true
                     },
                     {
-                        "description": "Dados do produto",
+                        "description": "Product data",
                         "name": "product",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.ProductRequest"
+                            "$ref": "#/definitions/handler.ProductRequest"
                         }
                     }
                 ],
@@ -205,42 +205,42 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.ProductResponse"
+                            "$ref": "#/definitions/presenter.ProductJsonResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorResponse"
                         }
                     }
                 }
             },
             "delete": {
-                "description": "Remove um produto existente",
+                "description": "Deletes a product by ID",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "produtos"
+                    "products"
                 ],
-                "summary": "Deletar produto",
+                "summary": "Delete product",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "ID do produto",
+                        "description": "Product ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -253,19 +253,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorResponse"
                         }
                     }
                 }
@@ -273,20 +273,47 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "dto.ErrorResponse": {
+        "handler.ProductRequest": {
             "type": "object",
+            "required": [
+                "category_id",
+                "name",
+                "price"
+            ],
             "properties": {
-                "code": {
+                "category_id": {
                     "type": "integer",
-                    "example": 400
+                    "example": 1
                 },
-                "message": {
+                "description": {
                     "type": "string",
-                    "example": "Erro de validação"
+                    "maxLength": 500,
+                    "example": "Descrição do Produto A"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "Produto A"
+                },
+                "price": {
+                    "type": "number",
+                    "example": 99.99
                 }
             }
         },
-        "dto.PaginatedResponse": {
+        "middleware.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "presenter.ProductJsonPaginatedResponse": {
             "type": "object",
             "properties": {
                 "limit": {
@@ -300,7 +327,7 @@ const docTemplate = `{
                 "products": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.ProductResponse"
+                        "$ref": "#/definitions/presenter.ProductJsonResponse"
                     }
                 },
                 "total": {
@@ -309,28 +336,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ProductRequest": {
-            "type": "object",
-            "properties": {
-                "category_id": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "description": {
-                    "type": "string",
-                    "example": "Descrição do Produto A"
-                },
-                "name": {
-                    "type": "string",
-                    "example": "Produto A"
-                },
-                "price": {
-                    "type": "number",
-                    "example": 99.99
-                }
-            }
-        },
-        "dto.ProductResponse": {
+        "presenter.ProductJsonResponse": {
             "type": "object",
             "properties": {
                 "category_id": {
@@ -372,6 +378,24 @@ const docTemplate = `{
             "in": "header"
         }
     },
+    "tags": [
+        {
+            "description": "Regiter a new customer or staff",
+            "name": "sign-up"
+        },
+        {
+            "description": "List, create, update and delete products",
+            "name": "products"
+        },
+        {
+            "description": "Process payments",
+            "name": "payments"
+        },
+        {
+            "description": "Sign in to the system",
+            "name": "sign-in"
+        }
+    ],
     "externalDocs": {
         "description": "GitHub Repository",
         "url": "https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2"
@@ -381,10 +405,10 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1",
-	Host:             "",
-	BasePath:         "",
+	Host:             "localhost:8080",
+	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "FIAP Tech Challenge Fase 2 - 10SOAT - G18",
+	Title:            "FIAP Tech Challenge Fase 2 - 10SOAT - G80",
 	Description:      "### API de um Fast Food para o Tech Challenge da FIAP - Fase 2 - 10SOAT - G18",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

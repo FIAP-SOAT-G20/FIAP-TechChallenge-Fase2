@@ -3,14 +3,14 @@ package product
 import (
 	"context"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
 
 func TestCreateProductUseCase_Execute(t *testing.T) {
@@ -19,34 +19,25 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 
 	mockGateway := mockport.NewMockProductGateway(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
+	mockWriter := mockdto.NewMockResponseWriter(ctrl)
 	useCase := NewCreateProductUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
-	currentTime := time.Now()
-	mockOutput := &usecase.ProductOutput{
-		ID:          1,
-		Name:        "Test Product",
-		Description: "Test Description",
-		Price:       99.99,
-		CategoryID:  1,
-		CreatedAt:   currentTime.Format("2006-01-02T15:04:05Z07:00"),
-		UpdatedAt:   currentTime.Format("2006-01-02T15:04:05Z07:00"),
-	}
-
 	tests := []struct {
 		name        string
-		input       usecase.CreateProductInput
+		input       dto.CreateProductInput
 		setupMocks  func()
 		expectError bool
 		errorType   error
 	}{
 		{
 			name: "should create product successfully",
-			input: usecase.CreateProductInput{
+			input: dto.CreateProductInput{
 				Name:        "Test Product",
 				Description: "Test Description",
 				Price:       99.99,
 				CategoryID:  1,
+				Writer:      mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -54,30 +45,18 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 					Return(nil)
 
 				mockPresenter.EXPECT().
-					ToOutput(gomock.Any()).
-					Return(mockOutput)
+					Present(gomock.Any())
 			},
 			expectError: false,
 		},
 		{
-			name: "should return error when validation fails",
-			input: usecase.CreateProductInput{
-				Name:        "", // Nome vazio deve falhar na validação
-				Description: "Test Description",
-				Price:       99.99,
-				CategoryID:  1,
-			},
-			setupMocks:  func() {},
-			expectError: true,
-			errorType:   &domain.ValidationError{},
-		},
-		{
 			name: "should return error when gateway fails",
-			input: usecase.CreateProductInput{
+			input: dto.CreateProductInput{
 				Name:        "Test Product",
 				Description: "Test Description",
 				Price:       99.99,
 				CategoryID:  1,
+				Writer:      mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -93,18 +72,15 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			output, err := useCase.Execute(ctx, tt.input)
+			err := useCase.Execute(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
-				assert.Nil(t, output)
 			} else {
 				assert.NoError(t, err)
-				assert.NotNil(t, output)
-				assert.Equal(t, mockOutput, output)
 			}
 		})
 	}

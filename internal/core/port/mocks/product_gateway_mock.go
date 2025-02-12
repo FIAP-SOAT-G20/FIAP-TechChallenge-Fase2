@@ -11,10 +11,9 @@ package mock_port
 
 import (
 	context "context"
-	"reflect"
+	reflect "reflect"
 
 	entity "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
-
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -22,7 +21,6 @@ import (
 type MockProductGateway struct {
 	ctrl     *gomock.Controller
 	recorder *MockProductGatewayMockRecorder
-	isgomock struct{}
 }
 
 // MockProductGatewayMockRecorder is the mock recorder for MockProductGateway.

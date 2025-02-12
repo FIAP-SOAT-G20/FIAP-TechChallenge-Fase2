@@ -1,14 +1,35 @@
+basePath: /api/v1
 definitions:
-  dto.ErrorResponse:
+  handler.ProductRequest:
+    properties:
+      category_id:
+        example: 1
+        type: integer
+      description:
+        example: Descrição do Produto A
+        maxLength: 500
+        type: string
+      name:
+        example: Produto A
+        maxLength: 100
+        minLength: 3
+        type: string
+      price:
+        example: 99.99
+        type: number
+    required:
+    - category_id
+    - name
+    - price
+    type: object
+  middleware.ErrorResponse:
     properties:
       code:
-        example: 400
         type: integer
       message:
-        example: Erro de validação
         type: string
     type: object
-  dto.PaginatedResponse:
+  presenter.ProductJsonPaginatedResponse:
     properties:
       limit:
         example: 10
@@ -18,28 +39,13 @@ definitions:
         type: integer
       products:
         items:
-          $ref: '#/definitions/dto.ProductResponse'
+          $ref: '#/definitions/presenter.ProductJsonResponse'
         type: array
       total:
         example: 100
         type: integer
     type: object
-  dto.ProductRequest:
-    properties:
-      category_id:
-        example: 1
-        type: integer
-      description:
-        example: Descrição do Produto A
-        type: string
-      name:
-        example: Produto A
-        type: string
-      price:
-        example: 99.99
-        type: number
-    type: object
-  dto.ProductResponse:
+  presenter.ProductJsonResponse:
     properties:
       category_id:
         example: 1
@@ -66,34 +72,35 @@ definitions:
 externalDocs:
   description: GitHub Repository
   url: https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2
+host: localhost:8080
 info:
   contact: {}
   description: '### API de um Fast Food para o Tech Challenge da FIAP - Fase 2 - 10SOAT
     - G18'
-  title: FIAP Tech Challenge Fase 2 - 10SOAT - G18
+  title: FIAP Tech Challenge Fase 2 - 10SOAT - G80
   version: "1"
 paths:
   /products:
     get:
       consumes:
       - application/json
-      description: Retorna uma lista paginada de produtos
+      description: List all products
       parameters:
       - default: 1
-        description: Número da página
+        description: Page number
         in: query
         name: page
         type: integer
       - default: 10
-        description: Itens por página
+        description: Items per page
         in: query
         name: limit
         type: integer
-      - description: Filtrar por nome
+      - description: Filter by name
         in: query
         name: name
         type: string
-      - description: Filtrar por categoria
+      - description: Filter by category ID
         in: query
         name: category_id
         type: integer
@@ -103,52 +110,52 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.PaginatedResponse'
+            $ref: '#/definitions/presenter.ProductJsonPaginatedResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
-      summary: Listar produtos
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: List products
       tags:
-      - produtos
+      - products
     post:
       consumes:
       - application/json
-      description: Cria um novo produto
+      description: Creates a new product
       parameters:
-      - description: Dados do produto
+      - description: Product data
         in: body
         name: product
         required: true
         schema:
-          $ref: '#/definitions/dto.ProductRequest'
+          $ref: '#/definitions/handler.ProductRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/dto.ProductResponse'
+            $ref: '#/definitions/presenter.ProductJsonResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
-      summary: Criar produto
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Create product
       tags:
-      - produtos
+      - products
   /products/{id}:
     delete:
-      description: Remove um produto existente
+      description: Deletes a product by ID
       parameters:
-      - description: ID do produto
+      - description: Product ID
         in: path
         name: id
         required: true
@@ -161,24 +168,24 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
-      summary: Deletar produto
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Delete product
       tags:
-      - produtos
+      - products
     get:
       consumes:
       - application/json
-      description: Busca um produto pelo ID
+      description: Search for a product by ID
       parameters:
-      - description: ID do produto
+      - description: Product ID
         in: path
         name: id
         required: true
@@ -189,60 +196,60 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.ProductResponse'
+            $ref: '#/definitions/presenter.ProductJsonResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
-      summary: Buscar produto
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Get product
       tags:
-      - produtos
+      - products
     put:
       consumes:
       - application/json
-      description: Atualiza um produto existente
+      description: Update an existing product
       parameters:
-      - description: ID do produto
+      - description: Product ID
         in: path
         name: id
         required: true
         type: integer
-      - description: Dados do produto
+      - description: Product data
         in: body
         name: product
         required: true
         schema:
-          $ref: '#/definitions/dto.ProductRequest'
+          $ref: '#/definitions/handler.ProductRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.ProductResponse'
+            $ref: '#/definitions/presenter.ProductJsonResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/dto.ErrorResponse'
-      summary: Atualizar produto
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Update product
       tags:
-      - produtos
+      - products
 securityDefinitions:
   BearerAuth:
     description: Type "Bearer" followed by a space and the access token.
@@ -250,3 +257,12 @@ securityDefinitions:
     name: Authorization
     type: apiKey
 swagger: "2.0"
+tags:
+- description: Regiter a new customer or staff
+  name: sign-up
+- description: List, create, update and delete products
+  name: products
+- description: Process payments
+  name: payments
+- description: Sign in to the system
+  name: sign-in

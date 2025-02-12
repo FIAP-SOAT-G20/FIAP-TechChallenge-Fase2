@@ -10,10 +10,9 @@
 package mock_port
 
 import (
-	entity "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
-	usecase "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 	reflect "reflect"
 
+	dto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -21,7 +20,6 @@ import (
 type MockProductPresenter struct {
 	ctrl     *gomock.Controller
 	recorder *MockProductPresenterMockRecorder
-	isgomock struct{}
 }
 
 // MockProductPresenterMockRecorder is the mock recorder for MockProductPresenter.
@@ -41,30 +39,14 @@ func (m *MockProductPresenter) EXPECT() *MockProductPresenterMockRecorder {
 	return m.recorder
 }
 
-// ToOutput mocks base method.
-func (m *MockProductPresenter) ToOutput(product *entity.Product) *usecase.ProductOutput {
+// Present mocks base method.
+func (m *MockProductPresenter) Present(pp dto.ProductPresenterInput) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ToOutput", product)
-	ret0, _ := ret[0].(*usecase.ProductOutput)
-	return ret0
+	m.ctrl.Call(m, "Present", pp)
 }
 
-// ToOutput indicates an expected call of ToOutput.
-func (mr *MockProductPresenterMockRecorder) ToOutput(product any) *gomock.Call {
+// Present indicates an expected call of Present.
+func (mr *MockProductPresenterMockRecorder) Present(pp any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ToOutput", reflect.TypeOf((*MockProductPresenter)(nil).ToOutput), product)
-}
-
-// ToPaginatedOutput mocks base method.
-func (m *MockProductPresenter) ToPaginatedOutput(products []*entity.Product, total int64, page, limit int) *usecase.ListProductPaginatedOutput {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ToPaginatedOutput", products, total, page, limit)
-	ret0, _ := ret[0].(*usecase.ListProductPaginatedOutput)
-	return ret0
-}
-
-// ToPaginatedOutput indicates an expected call of ToPaginatedOutput.
-func (mr *MockProductPresenterMockRecorder) ToPaginatedOutput(products, total, page, limit any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ToPaginatedOutput", reflect.TypeOf((*MockProductPresenter)(nil).ToPaginatedOutput), products, total, page, limit)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Present", reflect.TypeOf((*MockProductPresenter)(nil).Present), pp)
 }

@@ -36,7 +36,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 │   └── server
 ├── docs
 ├── internal
-│   ├── adapters
+│   ├── adapter
 │   │   ├── controller
 │   │   ├── gateway
 │   │   └── presenter
@@ -52,7 +52,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 │       ├── handler
 │       ├── logger
 │       ├── middleware
-│       ├── routes
+│       ├── route
 │       └── server
 ├── k8s
 ```
@@ -65,7 +65,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - `usecases/`: Application use cases.
 - `ports/`: Interfaces that define contracts between layers, ensuring independence.
 
-### **2️⃣ Adapters (Middle layer)**
+### **2️⃣ adapter (Middle layer)**
 - `controller/`: Coordinates the flow of data between use cases and infrastructure.
 - `presenter/`: Formats data for presentation.
 - `gateway/`: Implements access to data from external sources (databases, APIs, etc.).

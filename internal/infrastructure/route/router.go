@@ -1,4 +1,4 @@
-package routes
+package route
 
 import (
 	"log/slog"
@@ -43,7 +43,7 @@ func NewRouter(logger *slog.Logger, environment string) *Router {
 	}
 }
 
-// RegisterRoutes configura todas as rotas da aplicação
+// RegisterRoutes configure all routes of the application
 func (r *Router) RegisterRoutes(handlers *Handlers) {
 	// API v1
 	v1 := r.engine.Group("/api/v1")
@@ -57,17 +57,18 @@ func (r *Router) RegisterRoutes(handlers *Handlers) {
 			c.JSON(200, gin.H{"status": "UP"})
 		})
 
-		// Adicione outras rotas aqui
+		// Add other routes here
 	}
 }
 
-// Engine retorna o gin.Engine para ser usado no servidor HTTP
+// Engine returns the gin engine
 func (r *Router) Engine() *gin.Engine {
 	return r.engine
 }
 
-// Handlers agrupa todos os handlers da aplicação
+// Handlers contains all handlers of the application
 type Handlers struct {
 	Product *handler.ProductHandler
-	// Adicione outros handlers aqui
+
+	// Add other handlers here
 }

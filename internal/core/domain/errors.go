@@ -19,8 +19,12 @@ var (
 	ErrOrderIsNotOnStatusOpen       = "order is not on status open"
 
 	ErrProductIdMandatory = "product id mandatory"
-)
 
+	ErrPageMustBeGreaterThanZero = "page must be greater than zero"
+	ErrLimitMustBeBetween1And100 = "limit must be between 1 and 100"
+
+	ErrInternalError = "internal error"
+)
 
 type ValidationError struct {
 	Message string

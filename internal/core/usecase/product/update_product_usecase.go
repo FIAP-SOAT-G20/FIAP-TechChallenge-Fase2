@@ -3,9 +3,9 @@ package product
 import (
 	"context"
 
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
 
 type updateProductUseCase struct {
@@ -13,6 +13,7 @@ type updateProductUseCase struct {
 	presenter port.ProductPresenter
 }
 
+// NewUpdateProductUseCase creates a new UpdateProductUseCase
 func NewUpdateProductUseCase(gateway port.ProductGateway, presenter port.ProductPresenter) port.UpdateProductUseCase {
 	return &updateProductUseCase{
 		gateway:   gateway,
@@ -20,26 +21,25 @@ func NewUpdateProductUseCase(gateway port.ProductGateway, presenter port.Product
 	}
 }
 
-func (uc *updateProductUseCase) Execute(ctx context.Context, id uint64, input usecase.UpdateProductInput) (*usecase.ProductOutput, error) {
-	// Busca o produto existente
-	product, err := uc.gateway.FindByID(ctx, id)
+// Execute updates a product
+func (uc *updateProductUseCase) Execute(ctx context.Context, input dto.UpdateProductInput) error {
+	product, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
-		return nil, domain.NewInternalError(err)
+		return domain.NewInternalError(err)
 	}
 	if product == nil {
-		return nil, domain.NewNotFoundError("produto não encontrado")
+		return domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
-	// Atualiza o produto
-	if err := product.Update(input.Name, input.Description, input.Price, input.CategoryID); err != nil {
-		return nil, domain.NewValidationError(err)
-	}
+	product.Update(input.Name, input.Description, input.Price, input.CategoryID)
 
-	// Persiste as alterações
 	if err := uc.gateway.Update(ctx, product); err != nil {
-		return nil, domain.NewInternalError(err)
+		return domain.NewInternalError(err)
 	}
 
-	output := uc.presenter.ToOutput(product)
-	return output, nil
+	uc.presenter.Present(dto.ProductPresenterInput{
+		Writer: input.Writer,
+		Result: product,
+	})
+	return nil
 }

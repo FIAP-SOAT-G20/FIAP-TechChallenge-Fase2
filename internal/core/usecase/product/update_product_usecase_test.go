@@ -8,10 +8,11 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
 
 func TestUpdateProductUseCase_Execute(t *testing.T) {
@@ -20,6 +21,7 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 
 	mockGateway := mockport.NewMockProductGateway(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
+	mockWriter := mockdto.NewMockResponseWriter(ctrl)
 
 	useCase := NewUpdateProductUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
@@ -35,32 +37,22 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 		UpdatedAt:   currentTime,
 	}
 
-	mockOutput := &usecase.ProductOutput{
-		ID:          1,
-		Name:        "New Name",
-		Description: "New Description",
-		Price:       20.0,
-		CategoryID:  2,
-		CreatedAt:   currentTime.Format("2006-01-02T15:04:05Z07:00"),
-		UpdatedAt:   currentTime.Format("2006-01-02T15:04:05Z07:00"),
-	}
-
 	tests := []struct {
 		name        string
-		id          uint64
-		input       usecase.UpdateProductInput
+		input       dto.UpdateProductInput
 		setupMocks  func()
 		expectError bool
 		errorType   error
 	}{
 		{
 			name: "should update product successfully",
-			id:   1,
-			input: usecase.UpdateProductInput{
+			input: dto.UpdateProductInput{
+				ID:          1,
 				Name:        "New Name",
 				Description: "New Description",
 				Price:       20.0,
 				CategoryID:  2,
+				Writer:      mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -78,19 +70,19 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 					})
 
 				mockPresenter.EXPECT().
-					ToOutput(gomock.Any()).
-					Return(mockOutput)
+					Present(gomock.Any())
 			},
 			expectError: false,
 		},
 		{
 			name: "should return error when product not found",
-			id:   1,
-			input: usecase.UpdateProductInput{
+			input: dto.UpdateProductInput{
+				ID:          1,
 				Name:        "New Name",
 				Description: "New Description",
 				Price:       20.0,
 				CategoryID:  2,
+				Writer:      mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -101,30 +93,14 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 			errorType:   &domain.NotFoundError{},
 		},
 		{
-			name: "should return error when validation fails",
-			id:   1,
-			input: usecase.UpdateProductInput{
-				Name:        "", // Nome vazio deve falhar na validação
-				Description: "New Description",
-				Price:       20.0,
-				CategoryID:  2,
-			},
-			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
-					Return(existingProduct, nil)
-			},
-			expectError: true,
-			errorType:   &domain.ValidationError{},
-		},
-		{
 			name: "should return error when gateway update fails",
-			id:   1,
-			input: usecase.UpdateProductInput{
+			input: dto.UpdateProductInput{
+				ID:          1,
 				Name:        "New Name",
 				Description: "New Description",
 				Price:       20.0,
 				CategoryID:  2,
+				Writer:      mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -144,18 +120,15 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			output, err := useCase.Execute(ctx, tt.id, tt.input)
+			err := useCase.Execute(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
-				assert.Nil(t, output)
 			} else {
 				assert.NoError(t, err)
-				assert.NotNil(t, output)
-				assert.Equal(t, mockOutput, output)
 			}
 		})
 	}
