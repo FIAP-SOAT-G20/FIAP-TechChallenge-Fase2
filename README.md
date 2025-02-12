@@ -206,21 +206,21 @@ kubectl apply -f k8s/
 10. Check the coverage report by running `make coverage`
 11. Check the lint by running `make lint`
 12. Update the swagger documentation by running `make swagger`
-13. Commit your changes
+13. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard
 14. Push to the branch and Open a new PR by running `make pull-request`
 
 > [!NOTE]
-> `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
-> Alternatively, you can run `make run-air` to run the application using Air (live reload) 
+> `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose.  
+> Alternatively, you can run `make run-air` to run the application using Air (live reload)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 ## :white_check_mark: Tests
 
 ```sh
 make test
 ```
+
 > [!NOTE]
 > It will run the unit tests and generate the coverage report as `coverage.out`  
 > You can check the coverage report by running `make coverage`  
@@ -245,10 +245,10 @@ make test
 - [How to implement Clean Architecture in Go (Golang)](https://threedots.tech/post/introducing-clean-architecture)
 - [Clean Architecture — A essência direto ao ponto](https://medium.com/@rvf.vazquez/clean-architecture-a-ess%C3%AAncia-draft-6d902e10d4b2)
 - [Clean Architecture with Golang](https://medium.com/nerd-for-tech/clean-architecture-with-golang-3fa1a1c2b6d6)
-- [Generate Go Project with Clean Architecture - Thiago Adriano da FIAP](https://github.com/tadrianonet/go-clean-arch-generator)
+- [Generate Go Project with Clean Architecture - Thiago Adriano (FIAP)](https://github.com/tadrianonet/go-clean-arch-generator)
 - [POSTECH_SOAT_CleanArchitecture](https://github.com/FIAP/POSTECH_SOAT_CleanArchitecture/blob/main/aula_08/src/index.ts)
-- [Fiap - Clean Architecture Usando Go - Erick Muller da FIAP](https://github.com/proferickmuller/cleanarch-golang)
-- [Clean Architecture, o início - Erick Muller da FIAP](https://medium.com/@oerickmuller/clean-architecture-o-in%C3%ADcio-4fd74578155d)
+- [Fiap - Clean Architecture Usando Go - Erick Muller (FIAP)](https://github.com/proferickmuller/cleanarch-golang)
+- [Clean Architecture, o início - Erick Muller (FIAP)](https://medium.com/@oerickmuller/clean-architecture-o-in%C3%ADcio-4fd74578155d)
 - [Building Better Go Applications with Clean Architecture: A Practical Guide for Beginners](https://medium.com/@jamal.kaksouri/building-better-go-applications-with-clean-architecture-a-practical-guide-for-beginners-98ea061bf81a)
 - [Clean Architecture, 2 years later](https://eltonminetto.dev/en/post/2020-07-06-clean-architecture-2years-later/)
 - [Implementando Clean Architecture com Golang](https://dev.to/booscaaa/implementando-clean-architecture-com-golang-4n0a)
