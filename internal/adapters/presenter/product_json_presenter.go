@@ -12,35 +12,34 @@ import (
 
 type productJsonPresenter struct{}
 
+// ProductJsonResponse represents the response of a product
 func NewProductJsonPresenter() port.ProductPresenter {
 	return &productJsonPresenter{}
 }
 
+// toJsonResponse convert entity.Product to ProductJsonResponse
+func toJsonResponse(product *entity.Product) ProductJsonResponse {
+	return ProductJsonResponse{
+		ID:          product.ID,
+		Name:        product.Name,
+		Description: product.Description,
+		Price:       product.Price,
+		CategoryID:  product.CategoryID,
+		CreatedAt:   product.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
+		UpdatedAt:   product.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
+	}
+}
+
+// Present write the response to the client
 func (p *productJsonPresenter) Present(pp dto.ProductPresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.Product:
-		output := ProductJsonResponse{
-			ID:          v.ID,
-			Name:        v.Name,
-			Description: v.Description,
-			Price:       v.Price,
-			CategoryID:  v.CategoryID,
-			CreatedAt:   v.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
-			UpdatedAt:   v.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
-		}
+		output := toJsonResponse(v)
 		pp.Writer.JSON(http.StatusOK, output)
 	case []*entity.Product:
 		productOutputs := make([]ProductJsonResponse, len(v))
 		for i, product := range v {
-			productOutputs[i] = ProductJsonResponse{
-				ID:          product.ID,
-				Name:        product.Name,
-				Description: product.Description,
-				Price:       product.Price,
-				CategoryID:  product.CategoryID,
-				CreatedAt:   product.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
-				UpdatedAt:   product.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
-			}
+			productOutputs[i] = toJsonResponse(product)
 		}
 
 		output := &ProductJsonPaginatedResponse{

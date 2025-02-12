@@ -14,6 +14,7 @@ type createProductUseCase struct {
 	presenter port.ProductPresenter
 }
 
+// NewCreateProductUseCase creates a new CreateProductUseCase
 func NewCreateProductUseCase(gateway port.ProductGateway, presenter port.ProductPresenter) port.CreateProductUseCase {
 	return &createProductUseCase{
 		gateway:   gateway,
@@ -21,6 +22,7 @@ func NewCreateProductUseCase(gateway port.ProductGateway, presenter port.Product
 	}
 }
 
+// Execute creates a new product
 func (uc *createProductUseCase) Execute(ctx context.Context, input dto.CreateProductInput) error {
 	product := entity.NewProduct(input.Name, input.Description, input.Price, input.CategoryID)
 

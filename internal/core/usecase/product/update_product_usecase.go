@@ -13,6 +13,7 @@ type updateProductUseCase struct {
 	presenter port.ProductPresenter
 }
 
+// NewUpdateProductUseCase creates a new UpdateProductUseCase
 func NewUpdateProductUseCase(gateway port.ProductGateway, presenter port.ProductPresenter) port.UpdateProductUseCase {
 	return &updateProductUseCase{
 		gateway:   gateway,
@@ -20,13 +21,14 @@ func NewUpdateProductUseCase(gateway port.ProductGateway, presenter port.Product
 	}
 }
 
+// Execute updates a product
 func (uc *updateProductUseCase) Execute(ctx context.Context, input dto.UpdateProductInput) error {
 	product, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
 		return domain.NewInternalError(err)
 	}
 	if product == nil {
-		return domain.NewNotFoundError("produto não encontrado")
+		return domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
 	product.Update(input.Name, input.Description, input.Price, input.CategoryID)

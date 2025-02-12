@@ -13,6 +13,7 @@ type getProductUseCase struct {
 	presenter port.ProductPresenter
 }
 
+// NewGetProductUseCase creates a new GetProductUseCase
 func NewGetProductUseCase(gateway port.ProductGateway, presenter port.ProductPresenter) port.GetProductUseCase {
 	return &getProductUseCase{
 		gateway:   gateway,
@@ -20,6 +21,7 @@ func NewGetProductUseCase(gateway port.ProductGateway, presenter port.ProductPre
 	}
 }
 
+// Execute gets a product
 func (uc *getProductUseCase) Execute(ctx context.Context, input dto.GetProductInput) error {
 	product, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {

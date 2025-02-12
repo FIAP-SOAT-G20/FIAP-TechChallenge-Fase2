@@ -13,6 +13,7 @@ type listProductsUseCase struct {
 	presenter port.ProductPresenter
 }
 
+// NewListProductsUseCase creates a new ListProductsUseCase
 func NewListProductsUseCase(gateway port.ProductGateway, presenter port.ProductPresenter) port.ListProductsUseCase {
 	return &listProductsUseCase{
 		gateway:   gateway,
@@ -20,6 +21,7 @@ func NewListProductsUseCase(gateway port.ProductGateway, presenter port.ProductP
 	}
 }
 
+// Execute lists all products
 func (uc *listProductsUseCase) Execute(ctx context.Context, input dto.ListProductsInput) error {
 	products, total, err := uc.gateway.FindAll(ctx, input.Name, input.CategoryID, input.Page, input.Limit)
 	if err != nil {

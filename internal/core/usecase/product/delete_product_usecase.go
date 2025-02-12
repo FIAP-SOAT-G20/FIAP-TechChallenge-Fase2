@@ -13,12 +13,13 @@ type deleteProductUseCase struct {
 	presenter port.ProductPresenter
 }
 
+// NewDeleteProductUseCase creates a new DeleteProductUseCase
 func NewDeleteProductUseCase(gateway port.ProductGateway, presenter port.ProductPresenter) port.DeleteProductUseCase {
 	return &deleteProductUseCase{gateway, presenter}
 }
 
+// Execute deletes a product
 func (uc *deleteProductUseCase) Execute(ctx context.Context, input dto.DeleteProductInput) error {
-	// Verifica se o produto existe
 	product, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
 		return domain.NewInternalError(err)
@@ -27,7 +28,6 @@ func (uc *deleteProductUseCase) Execute(ctx context.Context, input dto.DeletePro
 		return domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
-	// Deleta o produto
 	if err := uc.gateway.Delete(ctx, input.ID); err != nil {
 		return domain.NewInternalError(err)
 	}
