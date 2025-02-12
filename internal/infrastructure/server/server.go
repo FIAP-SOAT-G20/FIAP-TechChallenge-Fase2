@@ -9,7 +9,6 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/route"
@@ -22,10 +21,8 @@ type Server struct {
 }
 
 func NewServer(cfg *config.Config, logger *slog.Logger, handlers *route.Handlers) *Server {
-	// Cria o router
 	router := route.NewRouter(logger, cfg.Environment)
 
-	// Registra as rotas
 	router.RegisterRoutes(handlers)
 
 	return &Server{
@@ -44,29 +41,45 @@ func (s *Server) Start() error {
 		IdleTimeout:  s.config.ServerIdleTimeout,
 	}
 
-	// Graceful shutdown
-	go func() {
-		quit := make(chan os.Signal, 1)
-		signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
-		<-quit
+	chanError := make(chan error)
 
+	go gracefullyShutdown(server, chanError, s)
+
+	if err := <-chanError; err != nil {
+		s.logger.Error("server failed to start", "error", err)
+	}
+
+	return nil
+}
+
+func gracefullyShutdown(server *http.Server, chanError chan error, s *Server) {
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+
+	go func() {
+		<-ctx.Done()
 		s.logger.Info("shutting down server...")
 
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-		defer cancel()
+		ctxTimeout, cancel := context.WithTimeout(context.Background(), s.config.ServerGracefulShutdownTimeout)
 
-		if err := server.Shutdown(ctx); err != nil {
-			s.logger.Error("server forced to shutdown", "error", err)
-			os.Exit(1)
+		defer func() {
+			stop()
+			cancel()
+			close(chanError)
+		}()
+
+		err := server.Shutdown(ctxTimeout)
+		if err != nil {
+			return
 		}
 
 		s.logger.Info("server exited gracefully")
 	}()
 
-	s.logger.Info("server is running", "port", s.config.ServerPort)
-	if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-		return fmt.Errorf("failed to start server: %w", err)
-	}
-
-	return nil
+	go func() {
+		s.logger.Info("server is running", "port", server.Addr)
+		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			chanError <- fmt.Errorf("failed to start server: %w", err)
+			return
+		}
+	}()
 }

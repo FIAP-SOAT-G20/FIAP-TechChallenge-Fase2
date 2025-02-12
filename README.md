@@ -48,7 +48,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 │   └── infrastructure
 │       ├── config
 │       ├── database
-│       ├── datasources
+│       ├── datasource
 │       ├── handler
 │       ├── logger
 │       ├── middleware
@@ -99,6 +99,9 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [x] Health Check
 - [x] Lint
 - [x] Vulnerability check
+- [x] Mocks
+- [x] Environment variables
+- [x] Graceful shutdown
 
 ## :computer: Technologies
 
