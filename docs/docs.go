@@ -378,6 +378,24 @@ const docTemplate = `{
             "in": "header"
         }
     },
+    "tags": [
+        {
+            "description": "Regiter a new customer or staff",
+            "name": "sign-up"
+        },
+        {
+            "description": "List, create, update and delete products",
+            "name": "products"
+        },
+        {
+            "description": "Process payments",
+            "name": "payments"
+        },
+        {
+            "description": "Sign in to the system",
+            "name": "sign-in"
+        }
+    ],
     "externalDocs": {
         "description": "GitHub Repository",
         "url": "https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2"
@@ -387,10 +405,10 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1",
-	Host:             "",
-	BasePath:         "",
+	Host:             "localhost:8080",
+	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "FIAP Tech Challenge Fase 2 - 10SOAT - G18",
+	Title:            "FIAP Tech Challenge Fase 2 - 10SOAT - G80",
 	Description:      "### API de um Fast Food para o Tech Challenge da FIAP - Fase 2 - 10SOAT - G18",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

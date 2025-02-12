@@ -2,10 +2,12 @@
     "swagger": "2.0",
     "info": {
         "description": "### API de um Fast Food para o Tech Challenge da FIAP - Fase 2 - 10SOAT - G18",
-        "title": "FIAP Tech Challenge Fase 2 - 10SOAT - G18",
+        "title": "FIAP Tech Challenge Fase 2 - 10SOAT - G80",
         "contact": {},
         "version": "1"
     },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
     "paths": {
         "/products": {
             "get": {
@@ -370,6 +372,24 @@
             "in": "header"
         }
     },
+    "tags": [
+        {
+            "description": "Regiter a new customer or staff",
+            "name": "sign-up"
+        },
+        {
+            "description": "List, create, update and delete products",
+            "name": "products"
+        },
+        {
+            "description": "Process payments",
+            "name": "payments"
+        },
+        {
+            "description": "Sign in to the system",
+            "name": "sign-in"
+        }
+    ],
     "externalDocs": {
         "description": "GitHub Repository",
         "url": "https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2"
