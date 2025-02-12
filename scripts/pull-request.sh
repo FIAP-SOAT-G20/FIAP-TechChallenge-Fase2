@@ -1,6 +1,9 @@
 #!/bin/sh
 source ./scripts/menuselect.sh
 
+bold=$(tput bold)
+normal=$(tput sgr0)
+
 # Verify if Github CLI is installed
 if ! command -v gh &> /dev/null
 then
@@ -64,16 +67,15 @@ if [[ -z $description ]]; then
     # Step 1: remove the first part of the branch name
     branch=$(git rev-parse --abbrev-ref HEAD)
     description=$(echo $branch | sed -r 's/^.*\///g')
-    echo "Description: $description"
     # Step 2: replace _ with space
     description=$(echo $description | sed -r 's/_/ /g')
     # Step 3: make the first letter uppercase
     description=$(echo "$description" | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)}1')
 fi
 
-Join title
+# Join title
 title="[$app] $type: $description"
-echo "\n$title\n"
+echo "\n${bold}$title${normal}"
 
 # Open pull request with gh CLI
 gh pr create --title "$title" --base main --body-file $template --web
