@@ -83,7 +83,7 @@ mock:
 	mockgen -source=internal/core/port/product_gateway_port.go -destination=internal/core/port/mocks/product_gateway_mock.go
 	mockgen -source=internal/core/port/product_presenter_port.go -destination=internal/core/port/mocks/product_presenter_mock.go
 	mockgen -source=internal/core/port/product_usecase_port.go -destination=internal/core/port/mocks/product_usecase_mock.go
-	mockgen -source=internal/adapters/dto/response_writer.go -destination=internal/adapters/dto/mocks/response_writer_mock.go
+	mockgen -source=internal/adapter/dto/response_writer.go -destination=internal/adapter/dto/mocks/response_writer_mock.go
 
 .PHONY: swagger
 swagger:
