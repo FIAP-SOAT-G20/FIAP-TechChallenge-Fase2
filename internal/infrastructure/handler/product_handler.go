@@ -49,20 +49,20 @@ func (h *ProductHandler) Register(router *gin.RouterGroup) {
 	router.DELETE("/:id", h.DeleteProduct)
 }
 
-// ListProducts lista os produtos
+// ListProducts List products
 //
-//	@Summary		Listar produtos
-//	@Description	Retorna uma lista paginada de produtos
-//	@Tags			produtos
+//	@Summary		List products
+//	@Description	List all products
+//	@Tags			products
 //	@Accept			json
 //	@Produce		json
-//	@Param			page		query		int		false	"Número da página"	default(1)
-//	@Param			limit		query		int		false	"Itens por página"	default(10)
-//	@Param			name		query		string	false	"Filtrar por nome"
-//	@Param			category_id	query		int		false	"Filtrar por categoria"
-//	@Success		200			{object}	dto.PaginatedResponse
-//	@Failure		400			{object}	dto.ErrorResponse
-//	@Failure		500			{object}	dto.ErrorResponse
+//	@Param			page		query		int		false	"Page number"		default(1)
+//	@Param			limit		query		int		false	"Items per page"	default(10)
+//	@Param			name		query		string	false	"Filter by name"
+//	@Param			category_id	query		int		false	"Filter by category ID"
+//	@Success		200			{object}	presenter.ProductJsonPaginatedResponse
+//	@Failure		400			{object}	middleware.ErrorResponse
+//	@Failure		500			{object}	middleware.ErrorResponse
 //	@Router			/products [get]
 func (h *ProductHandler) ListProducts(c *gin.Context) {
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
@@ -84,17 +84,17 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 	}
 }
 
-// CreateProduct cria um novo produto
+// CreateProduct Create product
 //
-//	@Summary		Criar produto
-//	@Description	Cria um novo produto
-//	@Tags			produtos
+//	@Summary		Create product
+//	@Description	Creates a new product
+//	@Tags			products
 //	@Accept			json
 //	@Produce		json
-//	@Param			product	body		dto.ProductRequest	true	"Dados do produto"
-//	@Success		201		{object}	dto.ProductResponse
-//	@Failure		400		{object}	dto.ErrorResponse
-//	@Failure		500		{object}	dto.ErrorResponse
+//	@Param			product	body		ProductRequest	true	"Product data"
+//	@Success		201		{object}	presenter.ProductJsonResponse
+//	@Failure		400		{object}	middleware.ErrorResponse
+//	@Failure		500		{object}	middleware.ErrorResponse
 //	@Router			/products [post]
 func (h *ProductHandler) CreateProduct(c *gin.Context) {
 	var req ProductRequest
@@ -124,18 +124,18 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 	}
 }
 
-// GetProduct busca um produto pelo ID
+// GetProduct Search product
 //
-//	@Summary		Buscar produto
-//	@Description	Busca um produto pelo ID
-//	@Tags			produtos
+//	@Summary		Get product
+//	@Description	Search for a product by ID
+//	@Tags			products
 //	@Accept			json
 //	@Produce		json
-//	@Param			id	path		int	true	"ID do produto"
-//	@Success		200	{object}	dto.ProductResponse
-//	@Failure		400	{object}	dto.ErrorResponse
-//	@Failure		404	{object}	dto.ErrorResponse
-//	@Failure		500	{object}	dto.ErrorResponse
+//	@Param			id	path		int	true	"Product ID"
+//	@Success		200	{object}	presenter.ProductJsonResponse
+//	@Failure		400	{object}	middleware.ErrorResponse
+//	@Failure		404	{object}	middleware.ErrorResponse
+//	@Failure		500	{object}	middleware.ErrorResponse
 //	@Router			/products/{id} [get]
 func (h *ProductHandler) GetProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
@@ -156,19 +156,19 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 	}
 }
 
-// UpdateProduct atualiza um produto
+// UpdateProduct Update product
 //
-//	@Summary		Atualizar produto
-//	@Description	Atualiza um produto existente
-//	@Tags			produtos
+//	@Summary		Update product
+//	@Description	Update an existing product
+//	@Tags			products
 //	@Accept			json
 //	@Produce		json
-//	@Param			id		path		int					true	"ID do produto"
-//	@Param			product	body		dto.ProductRequest	true	"Dados do produto"
-//	@Success		200		{object}	dto.ProductResponse
-//	@Failure		400		{object}	dto.ErrorResponse
-//	@Failure		404		{object}	dto.ErrorResponse
-//	@Failure		500		{object}	dto.ErrorResponse
+//	@Param			id		path		int				true	"Product ID"
+//	@Param			product	body		ProductRequest	true	"Product data"
+//	@Success		200		{object}	presenter.ProductJsonResponse
+//	@Failure		400		{object}	middleware.ErrorResponse
+//	@Failure		404		{object}	middleware.ErrorResponse
+//	@Failure		500		{object}	middleware.ErrorResponse
 //	@Router			/products/{id} [put]
 func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
@@ -204,17 +204,17 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 	}
 }
 
-// DeleteProduct deleta um produto
+// DeleteProduct Delete product
 //
-//	@Summary		Deletar produto
-//	@Description	Remove um produto existente
-//	@Tags			produtos
+//	@Summary		Delete product
+//	@Description	Deletes a product by ID
+//	@Tags			products
 //	@Produce		json
-//	@Param			id	path		int	true	"ID do produto"
+//	@Param			id	path		int	true	"Product ID"
 //	@Success		204	{object}	nil
-//	@Failure		400	{object}	dto.ErrorResponse
-//	@Failure		404	{object}	dto.ErrorResponse
-//	@Failure		500	{object}	dto.ErrorResponse
+//	@Failure		400	{object}	middleware.ErrorResponse
+//	@Failure		404	{object}	middleware.ErrorResponse
+//	@Failure		500	{object}	middleware.ErrorResponse
 //	@Router			/products/{id} [delete]
 func (h *ProductHandler) DeleteProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
