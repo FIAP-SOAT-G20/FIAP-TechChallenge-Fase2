@@ -12,7 +12,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/datasources"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/routes"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/route"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/server"
 )
 
@@ -63,7 +63,7 @@ func main() {
 	}
 }
 
-func setupHandlers(db *database.Database) *routes.Handlers {
+func setupHandlers(db *database.Database) *route.Handlers {
 	// Datasource's
 	productDS := datasources.NewProductDataSource(db.DB)
 
@@ -93,7 +93,7 @@ func setupHandlers(db *database.Database) *routes.Handlers {
 	// Handlers
 	productHandler := handler.NewProductHandler(productController)
 
-	return &routes.Handlers{
+	return &route.Handlers{
 		Product: productHandler,
 	}
 }

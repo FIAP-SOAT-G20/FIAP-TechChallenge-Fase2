@@ -12,18 +12,18 @@ import (
 	"time"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/routes"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/route"
 )
 
 type Server struct {
-	router *routes.Router
+	router *route.Router
 	config *config.Config
 	logger *slog.Logger
 }
 
-func NewServer(cfg *config.Config, logger *slog.Logger, handlers *routes.Handlers) *Server {
+func NewServer(cfg *config.Config, logger *slog.Logger, handlers *route.Handlers) *Server {
 	// Cria o router
-	router := routes.NewRouter(logger, cfg.Environment)
+	router := route.NewRouter(logger, cfg.Environment)
 
 	// Registra as rotas
 	router.RegisterRoutes(handlers)
