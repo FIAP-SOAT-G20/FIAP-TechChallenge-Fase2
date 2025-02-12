@@ -49,20 +49,20 @@ func (h *ProductHandler) Register(router *gin.RouterGroup) {
 	router.DELETE("/:id", h.DeleteProduct)
 }
 
-// ListProducts List products
+// ListProducts godoc
 //
 //	@Summary		List products
 //	@Description	List all products
 //	@Tags			products
 //	@Accept			json
 //	@Produce		json
-//	@Param			page		query		int		false	"Page number"		default(1)
-//	@Param			limit		query		int		false	"Items per page"	default(10)
-//	@Param			name		query		string	false	"Filter by name"
-//	@Param			category_id	query		int		false	"Filter by category ID"
-//	@Success		200			{object}	presenter.ProductJsonPaginatedResponse
-//	@Failure		400			{object}	middleware.ErrorResponse
-//	@Failure		500			{object}	middleware.ErrorResponse
+//	@Param			page		query		int										false	"Page number"		default(1)
+//	@Param			limit		query		int										false	"Items per page"	default(10)
+//	@Param			name		query		string									false	"Filter by name"
+//	@Param			category_id	query		int										false	"Filter by category ID"
+//	@Success		200			{object}	presenter.ProductJsonPaginatedResponse	"OK"
+//	@Failure		400			{object}	middleware.ErrorResponse				"Bad Request"
+//	@Failure		500			{object}	middleware.ErrorResponse				"Internal Server Error"
 //	@Router			/products [get]
 func (h *ProductHandler) ListProducts(c *gin.Context) {
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
@@ -84,17 +84,17 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 	}
 }
 
-// CreateProduct Create product
+// CreateProduct godoc
 //
 //	@Summary		Create product
 //	@Description	Creates a new product
 //	@Tags			products
 //	@Accept			json
 //	@Produce		json
-//	@Param			product	body		ProductRequest	true	"Product data"
-//	@Success		201		{object}	presenter.ProductJsonResponse
-//	@Failure		400		{object}	middleware.ErrorResponse
-//	@Failure		500		{object}	middleware.ErrorResponse
+//	@Param			product	body		ProductRequest					true	"Product data"
+//	@Success		201		{object}	presenter.ProductJsonResponse	"Created"
+//	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
+//	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/products [post]
 func (h *ProductHandler) CreateProduct(c *gin.Context) {
 	var req ProductRequest
@@ -124,18 +124,18 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 	}
 }
 
-// GetProduct Search product
+// GetProduct godoc
 //
 //	@Summary		Get product
 //	@Description	Search for a product by ID
 //	@Tags			products
 //	@Accept			json
 //	@Produce		json
-//	@Param			id	path		int	true	"Product ID"
-//	@Success		200	{object}	presenter.ProductJsonResponse
-//	@Failure		400	{object}	middleware.ErrorResponse
-//	@Failure		404	{object}	middleware.ErrorResponse
-//	@Failure		500	{object}	middleware.ErrorResponse
+//	@Param			id	path		int								true	"Product ID"
+//	@Success		200	{object}	presenter.ProductJsonResponse	"OK"
+//	@Failure		400	{object}	middleware.ErrorResponse		"Bad Request"
+//	@Failure		404	{object}	middleware.ErrorResponse		"Not Found"
+//	@Failure		500	{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/products/{id} [get]
 func (h *ProductHandler) GetProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
@@ -156,19 +156,19 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 	}
 }
 
-// UpdateProduct Update product
+// UpdateProduct godoc
 //
 //	@Summary		Update product
 //	@Description	Update an existing product
 //	@Tags			products
 //	@Accept			json
 //	@Produce		json
-//	@Param			id		path		int				true	"Product ID"
-//	@Param			product	body		ProductRequest	true	"Product data"
-//	@Success		200		{object}	presenter.ProductJsonResponse
-//	@Failure		400		{object}	middleware.ErrorResponse
-//	@Failure		404		{object}	middleware.ErrorResponse
-//	@Failure		500		{object}	middleware.ErrorResponse
+//	@Param			id		path		int								true	"Product ID"
+//	@Param			product	body		ProductRequest					true	"Product data"
+//	@Success		200		{object}	presenter.ProductJsonResponse	"OK"
+//	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
+//	@Failure		404		{object}	middleware.ErrorResponse		"Not Found"
+//	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/products/{id} [put]
 func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
@@ -204,7 +204,7 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 	}
 }
 
-// DeleteProduct Delete product
+// DeleteProduct godoc
 //
 //	@Summary		Delete product
 //	@Description	Deletes a product by ID
@@ -212,9 +212,9 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 //	@Produce		json
 //	@Param			id	path		int	true	"Product ID"
 //	@Success		204	{object}	nil
-//	@Failure		400	{object}	middleware.ErrorResponse
-//	@Failure		404	{object}	middleware.ErrorResponse
-//	@Failure		500	{object}	middleware.ErrorResponse
+//	@Failure		400	{object}	middleware.ErrorResponse	"Bad Request"
+//	@Failure		404	{object}	middleware.ErrorResponse	"Not Found"
+//	@Failure		500	{object}	middleware.ErrorResponse	"Internal Server Error"
 //	@Router			/products/{id} [delete]
 func (h *ProductHandler) DeleteProduct(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
