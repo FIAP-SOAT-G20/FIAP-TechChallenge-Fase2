@@ -19,6 +19,10 @@ func NewProductHandler(controller *controller.ProductController) *ProductHandler
 	return &ProductHandler{controller: controller}
 }
 
+func (h *ProductHandler) GroupRouterPattern() string {
+	return "/products"
+}
+
 func (h *ProductHandler) Register(router *gin.RouterGroup) {
 	router.GET("/", h.ListProducts)
 	router.POST("/", h.CreateProduct)

@@ -14,6 +14,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/routes"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/server"
+	"go.uber.org/fx"
 )
 
 //	@title			FIAP Tech Challenge Fase 2 - 10SOAT - G18
@@ -50,12 +51,15 @@ func main() {
 	// Inicializa as dependências e handlers
 	handlers := setupHandlers(db)
 
+	fx.New().Run()
+
 	// Inicializa e inicia o servidor
 	srv := server.NewServer(cfg, loggerInstance.Logger, handlers)
 	if err := srv.Start(); err != nil {
 		loggerInstance.Error("server failed to start", "error", err)
 		os.Exit(1)
 	}
+
 }
 
 func setupHandlers(db *database.Database) *routes.Handlers {

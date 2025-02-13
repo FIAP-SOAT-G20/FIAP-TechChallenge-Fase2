@@ -8,7 +8,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/docs"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/middleware"
 )
 
@@ -17,9 +17,20 @@ type Router struct {
 	logger *slog.Logger
 }
 
-func NewRouter(logger *slog.Logger, environment string) *Router {
+type IRouter interface {
+	GroupRouterPattern() string
+	Register(router *gin.RouterGroup)
+}
+
+func InitGinEngine(cfg *config.Config) {
+	if cfg.Environment == "production" {
+		gin.SetMode(gin.ReleaseMode)
+	}
+}
+
+func NewRouter(logger *slog.Logger, cfg *config.Config) *Router {
 	// Set Gin mode
-	if environment == "production" {
+	if cfg.Environment == "production" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
@@ -44,30 +55,17 @@ func NewRouter(logger *slog.Logger, environment string) *Router {
 }
 
 // RegisterRoutes configura todas as rotas da aplicação
-func (r *Router) RegisterRoutes(handlers *Handlers) {
+func RegisterRoutes(r *Router, handlers []IRouter) {
 	// API v1
 	v1 := r.engine.Group("/api/v1")
 	{
-		// Products
-		products := v1.Group("/products")
-		handlers.Product.Register(products)
-
-		// Health check
-		v1.GET("/health", func(c *gin.Context) {
-			c.JSON(200, gin.H{"status": "UP"})
-		})
-
-		// Adicione outras rotas aqui
+		for _, handler := range handlers {
+			handler.Register(v1.Group(handler.GroupRouterPattern()))
+		}
 	}
 }
 
 // Engine retorna o gin.Engine para ser usado no servidor HTTP
 func (r *Router) Engine() *gin.Engine {
 	return r.engine
-}
-
-// Handlers agrupa todos os handlers da aplicação
-type Handlers struct {
-	Product *handler.ProductHandler
-	// Adicione outros handlers aqui
 }
