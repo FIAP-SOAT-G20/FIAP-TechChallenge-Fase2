@@ -77,5 +77,8 @@ fi
 title="[$app] $type: $description"
 echo "\n${bold}$title${normal}"
 
+# label is the type in lowercase
+label=$(echo $type | awk '{print tolower($0)}')
+
 # Open pull request with gh CLI
-gh pr create --title "$title" --base main --body-file $template --web
+gh pr create --title "$title" --base main --body-file $template --web --assignee @me --label $label

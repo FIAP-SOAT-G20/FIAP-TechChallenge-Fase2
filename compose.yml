@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: go-clean-arch-app
+    container_name: app.10soat-g18.dev
     ports:
       - "8080:8080"
     env_file:
@@ -11,25 +11,25 @@ services:
     environment:
       - DB_HOST=postgres
     depends_on:
-      postgres:
+      db:
         condition: service_healthy
     networks:
-      - go-clean-arch-network
+      - fastfood_10soat_g18_tc2_network
     restart: unless-stopped
 
-  postgres:
+  db:
     image: postgres:17-alpine3.21
-    container_name: go-clean-arch-postgres
+    container_name: db.10soat-g18.dev
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=products
+      - POSTGRES_DB=fastfood_10soat_g18_tc2
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     networks:
-      - go-clean-arch-network
+      - fastfood_10soat_g18_tc2_network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -37,24 +37,24 @@ services:
       retries: 5
     restart: unless-stopped
 
-  pgadmin:
+  dbadmin:
     image: dpage/pgadmin4
-    container_name: go-clean-arch-pgadmin
+    container_name: dbadmin.10soat-g18.dev
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=admin
     ports:
       - "5050:80"
     depends_on:
-      - postgres
+      - db
     networks:
-      - go-clean-arch-network
+      - fastfood_10soat_g18_tc2_network
     restart: unless-stopped
 
 volumes:
-  postgres_data:
+  db_data:
     driver: local
 
 networks:
-  go-clean-arch-network:
+  fastfood_10soat_g18_tc2_network:
     driver: bridge
