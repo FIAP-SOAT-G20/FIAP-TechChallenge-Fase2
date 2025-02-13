@@ -63,51 +63,60 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 <summary>Project Structure Explanation</summary>
 
 ### **1️⃣ Core (Innermost layer)**
+
 - `domain/`: Central business entities and rules.
-- `usecases/`: Application use cases.
-- `ports/`: Interfaces that define contracts between layers, ensuring independence.
+- `usecase/`: Application use cases.
+- `port/`: Interfaces that define contracts between layers, ensuring independence.
 
 ### **2️⃣ adapter (Middle layer)**
+
 - `controller/`: Coordinates the flow of data between use cases and infrastructure.
 - `presenter/`: Formats data for presentation.
 - `gateway/`: Implements access to data from external sources (databases, APIs, etc.).
 
 ### **3️⃣ Infrastructure (External layer)**
+
 - `config/`: Application configuration management.
 - `database/`: Configuration and connection to the database. - `server/`: Initialization of the HTTP server.
-- `routes/`: Definition of API routes.
+- `route/`: Definition of API routes.
 - `middleware/`: HTTP middlewares for handling requests.
 - `logger/`: Structured logger for detailed logs.
 - `handler/`: Handling of HTTP requests.
-- `datasources/`: Concrete implementations of data sources.
+- `datasource/`: Concrete implementations of data sources.
 
 </details>
 
 ### ✨ Features
+
 - [x] Dockerfile: small image with multi-stage docker build, and independent of the host environment
 - [x] Makefile: to simplify the build and run commands
 - [x] Clean architecture
 - [x] PostgreSQL database
 - [x] Conventional commits
-- [x] Unit tests
-- [x] Code coverage
+- [x] Unit tests (testify)
+- [x] Code coverage report (go tool cover)
 - [x] Swagger documentation
 - [x] Postman collection
 - [x] Feature branch workflow
-- [x] Air to run go
+- [x] Live reload (air)
 - [x] Pagination
 - [x] Health Check
-- [x] Lint
-- [x] Vulnerability check
-- [x] Mocks
+- [x] Lint (golangci-lint)
+- [x] Vulnerability check (govulncheck)
+- [x] Mocks (gomock)
 - [x] Environment variables
 - [x] Graceful shutdown
+- [x] Kubernetes deployment
+- [x] GitHub Actions
+- [x] Structured logs (slog)
+- [x] Database migrations (golang-migrate)
 
 ## :computer: Technologies
 
 - [Go 1.23+](https://golang.org/)
 - [Gin Web Framework](https://gin-gonic.com/)
 - [golangci-lint](https://golangci-lint.run/)
+- [golang-migrate](https://github.com/golang-migrate/migrate)
 - [govulncheck](https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck)
 - [gomock](https://github.com/uber-go/mock)
 - [go-playground/validator](https://github.com/go-playground/validator)
@@ -210,7 +219,7 @@ kubectl apply -f k8s/
 14. Push to the branch and Open a new PR by running `make pull-request`
 
 > [!NOTE]
-> `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose.  
+> `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
 > Alternatively, you can run `make run-air` to run the application using Air (live reload)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -256,6 +265,7 @@ make test
 - [golang-clean-architecture](https://pkg.go.dev/github.com/hendrorahmat/golang-clean-architecture#section-readme)
 - [[Hands-on Guide] How to Implement Clean Architecture in Golang?](https://reliasoftware.com/blog/clean-architecture-golang)
 - [Clean DDD lessons: presenters](https://medium.com/unil-ci-software-engineering/clean-ddd-lessons-presenters-6f092308b75e)
+- [Clean Architecture: Understanding the Role of Presenters](https://medium.com/@erickzanetti/clean-architecture-understanding-the-role-of-presenters-8707ff018aa3)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
