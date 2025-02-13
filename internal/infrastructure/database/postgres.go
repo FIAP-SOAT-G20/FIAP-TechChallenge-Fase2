@@ -2,20 +2,30 @@ package database
 
 import (
 	"context"
+	"embed"
+	"errors"
 	"fmt"
 	"log/slog"
 	"time"
 
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	gormlogger "gorm.io/gorm/logger"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/source/iofs"
 )
+
+// migrationsFS is a filesystem that embeds the migrations folder
+//
+//go:embed migrations/*.sql
+var migrationsFS embed.FS
 
 type Database struct {
 	*gorm.DB
+	dbURL string
 }
 
 type GormLogger struct {
@@ -68,6 +78,8 @@ func NewPostgresConnection(cfg *config.Config, logger *slog.Logger) (*Database, 
 		cfg.DBPort,
 	)
 
+	dbURL := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable", cfg.DBUser, cfg.DBPassword, cfg.DBHost, cfg.DBPort, cfg.DBName)
+
 	// Configure GORM with slog logger
 	gormConfig := &gorm.Config{
 		Logger:      &GormLogger{Logger: logger},
@@ -94,12 +106,25 @@ func NewPostgresConnection(cfg *config.Config, logger *slog.Logger) (*Database, 
 	// SetConnMaxLifetime sets the maximum amount of time a connection may be reused
 	sqlDB.SetConnMaxLifetime(cfg.DBMaxLifetime)
 
-	return &Database{db}, nil
+	return &Database{db, dbURL}, nil
 }
 
 // Migrate runs database migrations
 func (db *Database) Migrate() error {
-	return db.AutoMigrate(
-		&entity.Product{},
-	)
+	driver, err := iofs.New(migrationsFS, "migrations")
+	if err != nil {
+		return err
+	}
+
+	migrations, err := migrate.NewWithSourceInstance("iofs", driver, db.dbURL)
+	if err != nil {
+		return err
+	}
+
+	err = migrations.Up()
+	if err != nil && !errors.Is(err, migrate.ErrNoChange) {
+		return err
+	}
+
+	return nil
 }
