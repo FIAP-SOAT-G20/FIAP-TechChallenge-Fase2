@@ -47,7 +47,7 @@ help:
 build:
 	@echo  "🟢 Building the application..."
 	$(GOBUILD) fmt ./...
-	$(GOBUILD) -o $(APP_NAME) $(MAIN_FILE)
+	$(GOBUILD) -o bin/$(APP_NAME) $(MAIN_FILE)
 
 .PHONY: run
 run: build
