@@ -14,7 +14,7 @@ services:
       db:
         condition: service_healthy
     networks:
-      - fastfood_10soat_g18_tc2
+      - fastfood_10soat_g18_tc2_network
     restart: unless-stopped
 
   db:
@@ -29,7 +29,7 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
-      - fastfood_10soat_g18_tc2
+      - fastfood_10soat_g18_tc2_network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -48,7 +48,7 @@ services:
     depends_on:
       - db
     networks:
-      - fastfood_10soat_g18_tc2
+      - fastfood_10soat_g18_tc2_network
     restart: unless-stopped
 
 volumes:
@@ -56,5 +56,5 @@ volumes:
     driver: local
 
 networks:
-  fastfood_10soat_g18_tc2:
+  fastfood_10soat_g18_tc2_network:
     driver: bridge
