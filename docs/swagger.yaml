@@ -1,5 +1,37 @@
 basePath: /api/v1
 definitions:
+  handler.CustomerCreateRequest:
+    properties:
+      cpf:
+        example: 123.456.789-00
+        type: string
+      email:
+        example: test.customer.1@email.com
+        type: string
+      name:
+        example: Produto A
+        maxLength: 100
+        minLength: 3
+        type: string
+    required:
+    - cpf
+    - email
+    - name
+    type: object
+  handler.CustomerUpdateRequest:
+    properties:
+      email:
+        example: test.customer.1@email.com
+        type: string
+      name:
+        example: Produto A
+        maxLength: 100
+        minLength: 3
+        type: string
+    required:
+    - email
+    - name
+    type: object
   handler.ProductRequest:
     properties:
       category_id:
@@ -27,6 +59,43 @@ definitions:
       code:
         type: integer
       message:
+        type: string
+    type: object
+  presenter.CustomerJsonPaginatedResponse:
+    properties:
+      customers:
+        items:
+          $ref: '#/definitions/presenter.CustomerJsonResponse'
+        type: array
+      limit:
+        example: 10
+        type: integer
+      page:
+        example: 1
+        type: integer
+      total:
+        example: 100
+        type: integer
+    type: object
+  presenter.CustomerJsonResponse:
+    properties:
+      cpf:
+        example: 123.456.789-00
+        type: string
+      created_at:
+        example: "2024-02-09T10:00:00Z"
+        type: string
+      email:
+        example: john.doe@email.com
+        type: string
+      id:
+        example: 1
+        type: integer
+      name:
+        example: Produto A
+        type: string
+      updated_at:
+        example: "2024-02-09T10:00:00Z"
         type: string
     type: object
   presenter.ProductJsonPaginatedResponse:
@@ -80,6 +149,172 @@ info:
   title: FIAP Tech Challenge Fase 2 - 10SOAT - G80
   version: "1"
 paths:
+  /customers:
+    get:
+      consumes:
+      - application/json
+      description: List all customers
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Filter by name
+        in: query
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.CustomerJsonPaginatedResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: List customers
+      tags:
+      - customers
+    post:
+      consumes:
+      - application/json
+      description: Creates a new customer
+      parameters:
+      - description: Customer data
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CustomerCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/presenter.CustomerJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Create customer
+      tags:
+      - customers
+  /customers/{id}:
+    delete:
+      description: Deletes a customer by ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Delete customer
+      tags:
+      - customers
+    get:
+      consumes:
+      - application/json
+      description: Search for a customer by ID
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.CustomerJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Get customer
+      tags:
+      - customers
+    put:
+      consumes:
+      - application/json
+      description: Update an existing customer
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Customer data
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CustomerUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.CustomerJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Update customer
+      tags:
+      - customers
   /products:
     get:
       consumes:
