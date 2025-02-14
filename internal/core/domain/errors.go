@@ -25,6 +25,7 @@ var (
 
 	ErrInternalError = "internal server error"
 	ErrUnknownError  = "unknown error"
+	ErrValidationError = "validation error"
 )
 
 type ValidationError struct {
@@ -69,7 +70,7 @@ func (e *InvalidInputError) Error() string {
 
 func NewValidationError(err error) *ValidationError {
 	return &ValidationError{
-		Message: "erro de validação",
+		Message: ErrValidationError,
 		Err:     err,
 	}
 }
@@ -82,7 +83,7 @@ func NewNotFoundError(message string) *NotFoundError {
 
 func NewInternalError(err error) *InternalError {
 	return &InternalError{
-		Message: "erro interno",
+		Message: ErrInternalError,
 		Err:     err,
 	}
 }
