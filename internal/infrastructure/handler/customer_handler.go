@@ -63,12 +63,12 @@ func (h *CustomerHandler) Register(router *gin.RouterGroup) {
 //	@Tags			customers
 //	@Accept			json
 //	@Produce		json
-//	@Param			page		query		int										false	"Page number"		default(1)
-//	@Param			limit		query		int										false	"Items per page"	default(10)
-//	@Param			name		query		string									false	"Filter by name"
-//	@Success		200			{object}	presenter.CustomerJsonPaginatedResponse	"OK"
-//	@Failure		400			{object}	middleware.ErrorResponse				"Bad Request"
-//	@Failure		500			{object}	middleware.ErrorResponse				"Internal Server Error"
+//	@Param			page	query		int										false	"Page number"		default(1)
+//	@Param			limit	query		int										false	"Items per page"	default(10)
+//	@Param			name	query		string									false	"Filter by name"
+//	@Success		200		{object}	presenter.CustomerJsonPaginatedResponse	"OK"
+//	@Failure		400		{object}	middleware.ErrorResponse				"Bad Request"
+//	@Failure		500		{object}	middleware.ErrorResponse				"Internal Server Error"
 //	@Router			/customers [get]
 func (h *CustomerHandler) ListCustomers(c *gin.Context) {
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
@@ -95,10 +95,10 @@ func (h *CustomerHandler) ListCustomers(c *gin.Context) {
 //	@Tags			customers
 //	@Accept			json
 //	@Produce		json
-//	@Param			customer	body		CustomerCreateRequest					true	"Customer data"
-//	@Success		201		{object}	presenter.CustomerJsonResponse	"Created"
-//	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
-//	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
+//	@Param			customer	body		CustomerCreateRequest			true	"Customer data"
+//	@Success		201			{object}	presenter.CustomerJsonResponse	"Created"
+//	@Failure		400			{object}	middleware.ErrorResponse		"Bad Request"
+//	@Failure		500			{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/customers [post]
 func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
 	var req CustomerCreateRequest
@@ -166,12 +166,12 @@ func (h *CustomerHandler) GetCustomer(c *gin.Context) {
 //	@Tags			customers
 //	@Accept			json
 //	@Produce		json
-//	@Param			id		path		int								true	"Customer ID"
-//	@Param			customer	body		CustomerRequest					true	"Customer data"
-//	@Success		200		{object}	presenter.CustomerJsonResponse	"OK"
-//	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
-//	@Failure		404		{object}	middleware.ErrorResponse		"Not Found"
-//	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
+//	@Param			id			path		int								true	"Customer ID"
+//	@Param			customer	body		CustomerUpdateRequest			true	"Customer data"
+//	@Success		200			{object}	presenter.CustomerJsonResponse	"OK"
+//	@Failure		400			{object}	middleware.ErrorResponse		"Bad Request"
+//	@Failure		404			{object}	middleware.ErrorResponse		"Not Found"
+//	@Failure		500			{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/customers/{id} [put]
 func (h *CustomerHandler) UpdateCustomer(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
