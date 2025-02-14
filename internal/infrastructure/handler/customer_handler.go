@@ -15,13 +15,22 @@ type CustomerHandler struct {
 	controller *controller.CustomerController
 }
 
-type CustomerRequest struct {
+type CustomerCreateRequest struct {
 	Name  string `json:"name" validate:"required,min=3,max=100" example:"Produto A"`
-	Email string `json:"email" validate:"required,email" example:""test.customer.1@email.com"`
+	Email string `json:"email" validate:"required,email" example:"test.customer.1@email.com"`
 	CPF   string `json:"cpf" validate:"required" example:"123.456.789-00"`
 }
 
-func (p *CustomerRequest) Validate() error {
+func (p *CustomerCreateRequest) Validate() error {
+	return GetValidator().Struct(p)
+}
+
+type CustomerUpdateRequest struct {
+	Name  string `json:"name" validate:"required,min=3,max=100" example:"Produto A"`
+	Email string `json:"email" validate:"required,email" example:"test.customer.1@email.com"`
+}
+
+func (p *CustomerUpdateRequest) Validate() error {
 	return GetValidator().Struct(p)
 }
 
@@ -43,7 +52,7 @@ func (h *CustomerHandler) Register(router *gin.RouterGroup) {
 	router.GET("/", h.ListCustomers)
 	router.POST("/", h.CreateCustomer)
 	router.GET("/:id", h.GetCustomer)
-	// router.PUT("/:id", h.UpdateCustomer)
+	router.PUT("/:id", h.UpdateCustomer)
 	router.DELETE("/:id", h.DeleteCustomer)
 }
 
@@ -86,13 +95,13 @@ func (h *CustomerHandler) ListCustomers(c *gin.Context) {
 //	@Tags			customers
 //	@Accept			json
 //	@Produce		json
-//	@Param			customer	body		CustomerRequest					true	"Customer data"
+//	@Param			customer	body		CustomerCreateRequest					true	"Customer data"
 //	@Success		201		{object}	presenter.CustomerJsonResponse	"Created"
 //	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/customers [post]
 func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
-	var req CustomerRequest
+	var req CustomerCreateRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
@@ -150,53 +159,51 @@ func (h *CustomerHandler) GetCustomer(c *gin.Context) {
 	}
 }
 
-// // UpdateCustomer godoc
-// //
-// //	@Summary		Update customer
-// //	@Description	Update an existing customer
-// //	@Tags			customers
-// //	@Accept			json
-// //	@Produce		json
-// //	@Param			id		path		int								true	"Customer ID"
-// //	@Param			customer	body		CustomerRequest					true	"Customer data"
-// //	@Success		200		{object}	presenter.CustomerJsonResponse	"OK"
-// //	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
-// //	@Failure		404		{object}	middleware.ErrorResponse		"Not Found"
-// //	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
-// //	@Router			/customers/{id} [put]
-// func (h *CustomerHandler) UpdateCustomer(c *gin.Context) {
-// 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
-// 	if err != nil {
-// 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
-// 		return
-// 	}
+// UpdateCustomer godoc
+//
+//	@Summary		Update customer
+//	@Description	Update an existing customer
+//	@Tags			customers
+//	@Accept			json
+//	@Produce		json
+//	@Param			id		path		int								true	"Customer ID"
+//	@Param			customer	body		CustomerRequest					true	"Customer data"
+//	@Success		200		{object}	presenter.CustomerJsonResponse	"OK"
+//	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
+//	@Failure		404		{object}	middleware.ErrorResponse		"Not Found"
+//	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
+//	@Router			/customers/{id} [put]
+func (h *CustomerHandler) UpdateCustomer(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	if err != nil {
+		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
+		return
+	}
 
-// 	var req CustomerRequest
-// 	if err := c.ShouldBindJSON(&req); err != nil {
-// 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
-// 		return
-// 	}
+	var req CustomerUpdateRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
+		return
+	}
 
-// 	if err := req.Validate(); err != nil {
-// 		_ = c.Error(domain.NewInvalidInputError(err.Error()))
-// 		return
-// 	}
+	if err := req.Validate(); err != nil {
+		_ = c.Error(domain.NewInvalidInputError(err.Error()))
+		return
+	}
 
-// 	input := dto.UpdateCustomerInput{
-// 		ID:          id,
-// 		Name:        req.Name,
-// 		Description: req.Description,
-// 		Price:       req.Price,
-// 		CategoryID:  req.CategoryID,
-// 		Writer:      c,
-// 	}
+	input := dto.UpdateCustomerInput{
+		ID:          id,
+		Name:        req.Name,
+		Email: 		 req.Email,
+		Writer:      c,
+	}
 
-// 	err = h.controller.UpdateCustomer(c.Request.Context(), input)
-// 	if err != nil {
-// 		_ = c.Error(err)
-// 		return
-// 	}
-// }
+	err = h.controller.UpdateCustomer(c.Request.Context(), input)
+	if err != nil {
+		_ = c.Error(err)
+		return
+	}
+}
 
 // DeleteCustomer godoc
 //

@@ -11,7 +11,7 @@ type CustomerController struct {
 	listCustomersUseCase  port.ListCustomersUseCase
 	createCustomerUseCase port.CreateCustomerUseCase
 	getCustomerUseCase    port.GetCustomerUseCase
-	// updateCustomerUseCase port.UpdateCustomerUseCase
+	updateCustomerUseCase port.UpdateCustomerUseCase
 	deleteCustomerUseCase port.DeleteCustomerUseCase
 }
 
@@ -19,14 +19,14 @@ func NewCustomerController(
 	listUC port.ListCustomersUseCase,
 	createUC port.CreateCustomerUseCase,
 	getUC port.GetCustomerUseCase,
-	// updateUC port.UpdateCustomerUseCase,
+	updateUC port.UpdateCustomerUseCase,
 	deleteUC port.DeleteCustomerUseCase,
 ) *CustomerController {
 	return &CustomerController{
 		listCustomersUseCase:  listUC,
 		createCustomerUseCase: createUC,
 		getCustomerUseCase:    getUC,
-		// updateCustomerUseCase: updateUC,
+		updateCustomerUseCase: updateUC,
 		deleteCustomerUseCase: deleteUC,
 	}
 }
@@ -58,14 +58,14 @@ func (c *CustomerController) GetCustomer(ctx context.Context, input dto.GetCusto
 	return nil
 }
 
-// func (c *CustomerController) UpdateCustomer(ctx context.Context, input dto.UpdateCustomerInput) error {
-// 	err := c.updateCustomerUseCase.Execute(ctx, input)
-// 	if err != nil {
-// 		return err
-// 	}
+func (c *CustomerController) UpdateCustomer(ctx context.Context, input dto.UpdateCustomerInput) error {
+	err := c.updateCustomerUseCase.Execute(ctx, input)
+	if err != nil {
+		return err
+	}
 
-// 	return nil
-// }
+	return nil
+}
 
 func (c *CustomerController) DeleteCustomer(ctx context.Context, input dto.DeleteCustomerInput) error {
 	return c.deleteCustomerUseCase.Execute(ctx, input)

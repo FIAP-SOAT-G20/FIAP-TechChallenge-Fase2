@@ -18,7 +18,7 @@ func TestCustomerController_ListCustomers(t *testing.T) {
 
 	mockListCustomersUseCase := mockport.NewMockListCustomersUseCase(ctrl)
 	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-	productController := NewCustomerController(mockListCustomersUseCase, nil, nil, nil)
+	productController := NewCustomerController(mockListCustomersUseCase, nil, nil, nil, nil)
 
 	ctx := context.Background()
 	input := dto.ListCustomersInput{
@@ -42,7 +42,7 @@ func TestCustomerController_CreateCustomer(t *testing.T) {
 
 	mockCreateCustomerUseCase := mockport.NewMockCreateCustomerUseCase(ctrl)
 	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-	productController := NewCustomerController(nil, mockCreateCustomerUseCase, nil, nil)
+	productController := NewCustomerController(nil, mockCreateCustomerUseCase, nil, nil, nil)
 
 	ctx := context.Background()
 	input := dto.CreateCustomerInput{
@@ -66,7 +66,7 @@ func TestCustomerController_GetCustomer(t *testing.T) {
 
 	mockGetCustomerUseCase := mockport.NewMockGetCustomerUseCase(ctrl)
 	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-	productController := NewCustomerController(nil, nil, mockGetCustomerUseCase, nil)
+	productController := NewCustomerController(nil, nil, mockGetCustomerUseCase, nil, nil)
 
 	ctx := context.Background()
 	input := dto.GetCustomerInput{
@@ -82,31 +82,29 @@ func TestCustomerController_GetCustomer(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-// func TestCustomerController_UpdateCustomer(t *testing.T) {
-// 	ctrl := gomock.NewController(t)
-// 	defer ctrl.Finish()
+func TestCustomerController_UpdateCustomer(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
 
-// 	mockUpdateCustomerUseCase := mockport.NewMockUpdateCustomerUseCase(ctrl)
-// 	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-// 	productController := NewCustomerController(nil, nil, nil, mockUpdateCustomerUseCase, nil)
+	mockUpdateCustomerUseCase := mockport.NewMockUpdateCustomerUseCase(ctrl)
+	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
+	productController := NewCustomerController(nil, nil, nil, mockUpdateCustomerUseCase, nil)
 
-// 	ctx := context.Background()
-// 	input := dto.UpdateCustomerInput{
-// 		ID:          uint64(1),
-// 		Name:        "Updated Customer",
-// 		Description: "Updated Description",
-// 		Price:       199.99,
-// 		CategoryID:  2,
-// 		Writer:      mockResponseWriter,
-// 	}
+	ctx := context.Background()
+	input := dto.UpdateCustomerInput{
+		ID:     uint64(1),
+		Name:   "Updated Customer",
+		Email:  "updated.customer@email.com",
+		Writer: mockResponseWriter,
+	}
 
-// 	mockUpdateCustomerUseCase.EXPECT().
-// 		Execute(ctx, input).
-// 		Return(nil)
+	mockUpdateCustomerUseCase.EXPECT().
+		Execute(ctx, input).
+		Return(nil)
 
-// 	err := productController.UpdateCustomer(ctx, input)
-// 	assert.NoError(t, err)
-// }
+	err := productController.UpdateCustomer(ctx, input)
+	assert.NoError(t, err)
+}
 
 func TestCustomerController_DeleteCustomer(t *testing.T) {
 	ctrl := gomock.NewController(t)
@@ -114,7 +112,7 @@ func TestCustomerController_DeleteCustomer(t *testing.T) {
 
 	mockDeleteCustomerUseCase := mockport.NewMockDeleteCustomerUseCase(ctrl)
 	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-	productController := NewCustomerController(nil, nil, nil, mockDeleteCustomerUseCase)
+	productController := NewCustomerController(nil, nil, nil, nil, mockDeleteCustomerUseCase)
 
 	ctx := context.Background()
 	input := dto.DeleteCustomerInput{

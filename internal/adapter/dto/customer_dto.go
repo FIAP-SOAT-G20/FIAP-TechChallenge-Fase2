@@ -11,7 +11,6 @@ type UpdateCustomerInput struct {
 	ID     uint64
 	Name   string
 	Email  string
-	CPF    string
 	Writer ResponseWriter
 }
 

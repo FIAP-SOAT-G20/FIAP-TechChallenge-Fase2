@@ -25,9 +25,8 @@ func NewCustomer(name string, email string, cpf string) *Customer {
 	return product
 }
 
-func (p *Customer) Update(name string, email string, cpf string) {
+func (p *Customer) Update(name string, email string) {
 	p.Name = name
 	p.Email = email
-	p.CPF = cpf
 	p.UpdatedAt = time.Now()
 }
