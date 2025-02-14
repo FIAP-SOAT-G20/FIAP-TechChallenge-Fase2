@@ -21,6 +21,7 @@ import (
 type MockListProductsUseCase struct {
 	ctrl     *gomock.Controller
 	recorder *MockListProductsUseCaseMockRecorder
+	isgomock struct{}
 }
 
 // MockListProductsUseCaseMockRecorder is the mock recorder for MockListProductsUseCase.
@@ -58,6 +59,7 @@ func (mr *MockListProductsUseCaseMockRecorder) Execute(ctx, input any) *gomock.C
 type MockCreateProductUseCase struct {
 	ctrl     *gomock.Controller
 	recorder *MockCreateProductUseCaseMockRecorder
+	isgomock struct{}
 }
 
 // MockCreateProductUseCaseMockRecorder is the mock recorder for MockCreateProductUseCase.
@@ -95,6 +97,7 @@ func (mr *MockCreateProductUseCaseMockRecorder) Execute(ctx, input any) *gomock.
 type MockGetProductUseCase struct {
 	ctrl     *gomock.Controller
 	recorder *MockGetProductUseCaseMockRecorder
+	isgomock struct{}
 }
 
 // MockGetProductUseCaseMockRecorder is the mock recorder for MockGetProductUseCase.
@@ -132,6 +135,7 @@ func (mr *MockGetProductUseCaseMockRecorder) Execute(ctx, input any) *gomock.Cal
 type MockUpdateProductUseCase struct {
 	ctrl     *gomock.Controller
 	recorder *MockUpdateProductUseCaseMockRecorder
+	isgomock struct{}
 }
 
 // MockUpdateProductUseCaseMockRecorder is the mock recorder for MockUpdateProductUseCase.
@@ -169,6 +173,7 @@ func (mr *MockUpdateProductUseCaseMockRecorder) Execute(ctx, input any) *gomock.
 type MockDeleteProductUseCase struct {
 	ctrl     *gomock.Controller
 	recorder *MockDeleteProductUseCaseMockRecorder
+	isgomock struct{}
 }
 
 // MockDeleteProductUseCaseMockRecorder is the mock recorder for MockDeleteProductUseCase.

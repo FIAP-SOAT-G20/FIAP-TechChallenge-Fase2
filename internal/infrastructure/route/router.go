@@ -52,12 +52,14 @@ func (r *Router) RegisterRoutes(handlers *Handlers) {
 		products := v1.Group("/products")
 		handlers.Product.Register(products)
 
+		// Customers
+		customers := v1.Group("/customers")
+		handlers.Customer.Register(customers)
+
 		// Health check
 		v1.GET("/health", func(c *gin.Context) {
 			c.JSON(200, gin.H{"status": "UP"})
 		})
-
-		// Add other routes here
 	}
 }
 
@@ -69,6 +71,5 @@ func (r *Router) Engine() *gin.Engine {
 // Handlers contains all handlers of the application
 type Handlers struct {
 	Product *handler.ProductHandler
-
-	// Add other handlers here
+	Customer *handler.CustomerHandler
 }

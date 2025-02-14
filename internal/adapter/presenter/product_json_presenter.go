@@ -17,8 +17,8 @@ func NewProductJsonPresenter() port.ProductPresenter {
 	return &productJsonPresenter{}
 }
 
-// toJsonResponse convert entity.Product to ProductJsonResponse
-func toJsonResponse(product *entity.Product) ProductJsonResponse {
+// toProductJsonResponse convert entity.Product to ProductJsonResponse
+func toProductJsonResponse(product *entity.Product) ProductJsonResponse {
 	return ProductJsonResponse{
 		ID:          product.ID,
 		Name:        product.Name,
@@ -34,12 +34,12 @@ func toJsonResponse(product *entity.Product) ProductJsonResponse {
 func (p *productJsonPresenter) Present(pp dto.ProductPresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.Product:
-		output := toJsonResponse(v)
+		output := toProductJsonResponse(v)
 		pp.Writer.JSON(http.StatusOK, output)
 	case []*entity.Product:
 		productOutputs := make([]ProductJsonResponse, len(v))
 		for i, product := range v {
-			productOutputs[i] = toJsonResponse(product)
+			productOutputs[i] = toProductJsonResponse(product)
 		}
 
 		output := &ProductJsonPaginatedResponse{
