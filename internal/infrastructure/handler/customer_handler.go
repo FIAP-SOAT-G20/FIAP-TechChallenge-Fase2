@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -43,7 +44,7 @@ func (h *CustomerHandler) Register(router *gin.RouterGroup) {
 	router.POST("/", h.CreateCustomer)
 	router.GET("/:id", h.GetCustomer)
 	// router.PUT("/:id", h.UpdateCustomer)
-	// router.DELETE("/:id", h.DeleteCustomer)
+	router.DELETE("/:id", h.DeleteCustomer)
 }
 
 // ListCustomers godoc
@@ -197,34 +198,34 @@ func (h *CustomerHandler) GetCustomer(c *gin.Context) {
 // 	}
 // }
 
-// // DeleteCustomer godoc
-// //
-// //	@Summary		Delete customer
-// //	@Description	Deletes a customer by ID
-// //	@Tags			customers
-// //	@Produce		json
-// //	@Param			id	path		int	true	"Customer ID"
-// //	@Success		204	{object}	nil
-// //	@Failure		400	{object}	middleware.ErrorResponse	"Bad Request"
-// //	@Failure		404	{object}	middleware.ErrorResponse	"Not Found"
-// //	@Failure		500	{object}	middleware.ErrorResponse	"Internal Server Error"
-// //	@Router			/customers/{id} [delete]
-// func (h *CustomerHandler) DeleteCustomer(c *gin.Context) {
-// 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
-// 	if err != nil {
-// 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
-// 		return
-// 	}
+// DeleteCustomer godoc
+//
+//	@Summary		Delete customer
+//	@Description	Deletes a customer by ID
+//	@Tags			customers
+//	@Produce		json
+//	@Param			id	path		int	true	"Customer ID"
+//	@Success		204	{object}	nil
+//	@Failure		400	{object}	middleware.ErrorResponse	"Bad Request"
+//	@Failure		404	{object}	middleware.ErrorResponse	"Not Found"
+//	@Failure		500	{object}	middleware.ErrorResponse	"Internal Server Error"
+//	@Router			/customers/{id} [delete]
+func (h *CustomerHandler) DeleteCustomer(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	if err != nil {
+		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
+		return
+	}
 
-// 	input := dto.DeleteCustomerInput{
-// 		ID:     id,
-// 		Writer: c,
-// 	}
+	input := dto.DeleteCustomerInput{
+		ID:     id,
+		Writer: c,
+	}
 
-// 	if err := h.controller.DeleteCustomer(c.Request.Context(), input); err != nil {
-// 		_ = c.Error(err)
-// 		return
-// 	}
+	if err := h.controller.DeleteCustomer(c.Request.Context(), input); err != nil {
+		_ = c.Error(err)
+		return
+	}
 
-// 	c.Status(http.StatusNoContent)
-// }
+	c.Status(http.StatusNoContent)
+}

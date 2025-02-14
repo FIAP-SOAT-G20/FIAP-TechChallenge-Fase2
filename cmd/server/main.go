@@ -87,6 +87,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	listCustomersUC := customer.NewListCustomersUseCase(customerGateway, customerPresenter)
 	createCustomerUC := customer.NewCreateCustomerUseCase(customerGateway, customerPresenter)
 	getCustomerUC := customer.NewGetCustomerUseCase(customerGateway, customerPresenter)
+	deleteCustomerUC := customer.NewDeleteCustomerUseCase(customerGateway, customerPresenter)
 
 	// Controllers
 	productController := controller.NewProductController(
@@ -100,6 +101,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		listCustomersUC, 
 		createCustomerUC,
 		getCustomerUC,
+		deleteCustomerUC,
 	)
 
 	// Handlers

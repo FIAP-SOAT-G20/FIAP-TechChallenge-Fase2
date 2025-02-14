@@ -12,7 +12,7 @@ type CustomerController struct {
 	createCustomerUseCase port.CreateCustomerUseCase
 	getCustomerUseCase    port.GetCustomerUseCase
 	// updateCustomerUseCase port.UpdateCustomerUseCase
-	// deleteCustomerUseCase port.DeleteCustomerUseCase
+	deleteCustomerUseCase port.DeleteCustomerUseCase
 }
 
 func NewCustomerController(
@@ -20,14 +20,14 @@ func NewCustomerController(
 	createUC port.CreateCustomerUseCase,
 	getUC port.GetCustomerUseCase,
 	// updateUC port.UpdateCustomerUseCase,
-	// deleteUC port.DeleteCustomerUseCase,
+	deleteUC port.DeleteCustomerUseCase,
 ) *CustomerController {
 	return &CustomerController{
 		listCustomersUseCase:  listUC,
 		createCustomerUseCase: createUC,
 		getCustomerUseCase:    getUC,
 		// updateCustomerUseCase: updateUC,
-		// deleteCustomerUseCase: deleteUC,
+		deleteCustomerUseCase: deleteUC,
 	}
 }
 
@@ -67,6 +67,6 @@ func (c *CustomerController) GetCustomer(ctx context.Context, input dto.GetCusto
 // 	return nil
 // }
 
-// func (c *CustomerController) DeleteCustomer(ctx context.Context, input dto.DeleteCustomerInput) error {
-// 	return c.deleteCustomerUseCase.Execute(ctx, input)
-// }
+func (c *CustomerController) DeleteCustomer(ctx context.Context, input dto.DeleteCustomerInput) error {
+	return c.deleteCustomerUseCase.Execute(ctx, input)
+}
