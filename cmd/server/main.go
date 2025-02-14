@@ -99,7 +99,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		deleteProductUC,
 	)
 	customerController := controller.NewCustomerController(
-		listCustomersUC, 
+		listCustomersUC,
 		createCustomerUC,
 		getCustomerUC,
 		updateCustomerUC,
