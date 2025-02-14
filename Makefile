@@ -152,7 +152,7 @@ install:
 .PHONY: docker-build
 docker-build:
 	@echo  "🟢 Building Docker image..."
-	docker build -t $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) .
+	docker build --platform linux/amd64 -t $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) .
 	docker tag $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) $(DOCKER_REGISTRY)/$(APP_NAME):latest
 
 .PHONY: docker-push
@@ -202,7 +202,7 @@ compose-build:
 .PHONY: compose-up
 compose-up:
 	@echo  "🟢 Starting development environment..."
-	docker-compose up -d --wait
+	docker-compose up -d --wait --build
 
 .PHONY: compose-down
 compose-down:
