@@ -93,6 +93,10 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [x] Clean architecture
 - [x] PostgreSQL database
 - [x] Conventional commits
+
+<details>
+<summary>more (click to expand or collapse ↕️)</summary>
+
 - [x] Unit tests (testify)
 - [x] Code coverage report (go tool cover)
 - [x] Swagger documentation
@@ -111,6 +115,8 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [x] Structured logs (slog)
 - [x] Database migrations (golang-migrate)
 
+</details>
+
 ## :computer: Technologies
 
 - [Go 1.23+](https://golang.org/)
@@ -118,6 +124,10 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [golangci-lint](https://golangci-lint.run/)
 - [golang-migrate](https://github.com/golang-migrate/migrate)
 - [govulncheck](https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck)
+
+<details>
+<summary>more (click to expand or collapse ↕️)</summary>
+
 - [gomock](https://github.com/uber-go/mock)
 - [go-playground/validator](https://github.com/go-playground/validator)
 - [godotenv](https://github.com/joho/godotenv)
@@ -130,6 +140,8 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [Swagger](https://swagger.io/)
 - [Make](https://www.gnu.org/software/make/)
 - [Testify](https://github.com/stretchr/testify)
+
+</details>
 
 ## :scroll: Requirements
 
