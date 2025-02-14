@@ -1,0 +1,1437 @@
+{
+	"info": {
+		"_postman_id": "ee435699-dabf-40aa-b952-60630fe25f28",
+		"name": "10SOAT - G20 - Tech Challenge 1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2247744",
+		"_collection_link": "https://www.postman.com/filipe1309/workspace/10soat-g20/collection/2247744-ee435699-dabf-40aa-b952-60630fe25f28?action=share&source=collection_link&creator=2247744"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/products/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/products/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "beef0e07-5c9b-4856-8a1e-281017365503"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jan 2025 21:04:33 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "303"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"products\": [\n        {\n            \"id\": 1,\n            \"name\": \"Product 1\",\n            \"description\": \"Product 1 description\",\n            \"price\": 10,\n            \"active\": true,\n            \"category_id\": 1,\n            \"category\": {\n                \"id\": 0,\n                \"name\": \"\",\n                \"created_at\": \"0001-01-01T00:00:00Z\"\n            },\n            \"created_at\": \"2025-01-11T18:04:23.921471Z\",\n            \"updated_at\": \"2025-01-11T18:04:23.921471Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get products by category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/products/?category_id=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "category_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/products/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "beef0e07-5c9b-4856-8a1e-281017365503"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jan 2025 21:04:33 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "303"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"products\": [\n        {\n            \"id\": 1,\n            \"name\": \"Product 1\",\n            \"description\": \"Product 1 description\",\n            \"price\": 10,\n            \"active\": true,\n            \"category_id\": 1,\n            \"category\": {\n                \"id\": 0,\n                \"name\": \"\",\n                \"created_at\": \"0001-01-01T00:00:00Z\"\n            },\n            \"created_at\": \"2025-01-11T18:04:23.921471Z\",\n            \"updated_at\": \"2025-01-11T18:04:23.921471Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get a product by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/products/6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"6"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get a product by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/products/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "af3b7614-83a3-447a-a3e4-dab91bad5005"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Jan 2025 16:01:06 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "267"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"Product X UPDATED\",\n    \"description\": \"Product X description UPDATED\",\n    \"price\": 12,\n    \"active\": true,\n    \"category_id\": 1,\n    \"category\": {\n        \"id\": 0,\n        \"name\": \"\",\n        \"created_at\": \"0001-01-01T00:00:00Z\"\n    },\n    \"created_at\": \"0001-01-01T00:00:00Z\",\n    \"updated_at\": \"2025-01-21T16:00:55.427872Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create a product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Product X\",\n    \"description\": \"Product X description\",\n    \"price\": 13,\n    \"category_id\": 1,\n\t\t\"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/products/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create a product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Product 1\",\n    \"description\": \"Product 1 description\",\n    \"price\": 10,\n    \"category_id\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/products/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "cc77c8be-b6c2-45cf-86cd-5c8904320e35"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jan 2025 21:04:23 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "290"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Product 1\",\n    \"description\": \"Product 1 description\",\n    \"price\": 10,\n    \"active\": true,\n    \"category_id\": 1,\n    \"category\": {\n        \"id\": 1,\n        \"name\": \"Category test 1\",\n        \"created_at\": \"2025-01-11T17:57:26.404102Z\"\n    },\n    \"created_at\": \"2025-01-11T18:04:23.921471-03:00\",\n    \"updated_at\": \"2025-01-11T18:04:23.921471-03:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update a product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Product X UPDATED\",\n    \"description\": \"Product X description UPDATED\",\n    \"price\": 12,\n    \"category_id\": 1,\n\t\t\"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/products/6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"6"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update a product",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Product 1 updated\",\n    \"description\": \"Product 1 description updated\",\n    \"price\": 12,\n    \"category_id\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/products/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "03bc8375-9ebe-493a-b6bd-f9c8c6dc7335"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jan 2025 21:05:11 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "273"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Product 1 updated\",\n    \"description\": \"Product 1 description updated\",\n    \"price\": 12,\n    \"active\": false,\n    \"category_id\": 1,\n    \"category\": {\n        \"id\": 0,\n        \"name\": \"\",\n        \"created_at\": \"0001-01-01T00:00:00Z\"\n    },\n    \"created_at\": \"0001-01-01T00:00:00Z\",\n    \"updated_at\": \"2025-01-11T18:05:11.095635-03:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete a product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/products/6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Get categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/categories",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get categories",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/categories",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "8c749cc6-751b-4419-b091-4cc49c585e39"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jan 2025 21:05:24 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "123"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"categories\": [\n        {\n            \"id\": 1,\n            \"name\": \"Category test 1\",\n            \"created_at\": \"2025-01-11T17:57:26.404102Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Create a category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Category test 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/categories",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get categories Copy",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Category test 1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/categories",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"categories"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "c2f459d6-9149-4d3d-9a39-581e0c6e33b7"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jan 2025 20:57:26 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "81"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Category test 1\",\n    \"created_at\": \"2025-01-11T17:57:26.404102-03:00\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Create a customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe 1\",\n    \"email\": \"john.doe.1@email.com\",\n    \"cpf\": \"000.000.000-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/customers",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create a customer",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe 3\",\n    \"email\": \"john.doe.3@email.com\",\n    \"cpf\": \"000.000.000-03\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/customers",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"customers"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "e2fd5c76-5926-4741-8c22-c18655c00400"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jan 2025 21:03:57 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "82"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"John Doe 3\",\n    \"email\": \"john.doe.3@email.com\",\n    \"cpf\": \"000.000.000-03\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/customers",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Checkout",
+			"item": [
+				{
+					"name": "Payments Order Checkout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/payments/8/checkout",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"payments",
+								"8",
+								"checkout"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Payment Order Checkout",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/payments/3/checkout",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"payments",
+										"3",
+										"checkout"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "d3ca9262-cede-4aa7-b7b5-880bf2a9d260"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jan 2025 22:54:36 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "132"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"status\": \"PROCESSING\",\n    \"order_id\": 3,\n    \"external_payment_id\": \"123456\",\n    \"qr_data\": \"https://www.fiap-10-soat-g20.com.br/qr/123456\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Payments Callback",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"resource\": \"de3ffde8-6315-452a-b952-d86a4bd745bf\",\n    \"topic\": \"payment\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/payments/callback",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"payments",
+								"callback"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Payment Callback",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"resource\": \"123456\",\n    \"topic\": \"payment\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/payments/callback",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"payments",
+										"callback"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "e565d541-1110-48d5-9972-86fc7c07ea79"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jan 2025 23:09:02 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "131"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"status\": \"CONFIRMED\",\n    \"order_id\": 3,\n    \"external_payment_id\": \"123456\",\n    \"qr_data\": \"https://www.fiap-10-soat-g20.com.br/qr/123456\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/orders",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/orders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "164d94dc-91ad-4660-97e5-990442c2d1c7"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 19 Jan 2025 01:02:31 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "841"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 5,\n    \"page\": 1,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 3,\n            \"customer_id\": 1,\n            \"total_bill\": 32,\n            \"status\": \"RECEIVED\",\n            \"created_at\": \"2025-01-11T22:36:37.817676Z\",\n            \"updated_at\": \"2025-01-11T22:36:37.817676Z\",\n            \"products\": []\n        },\n        {\n            \"id\": 4,\n            \"customer_id\": 1,\n            \"total_bill\": 149.5,\n            \"status\": \"PENDING\",\n            \"created_at\": \"2025-01-17T23:33:41.771393Z\",\n            \"updated_at\": \"2025-01-18T01:09:07.592055Z\",\n            \"products\": []\n        },\n        {\n            \"id\": 5,\n            \"customer_id\": 3,\n            \"total_bill\": 88.2,\n            \"status\": \"RECEIVED\",\n            \"created_at\": \"2025-01-18T21:41:30.070565Z\",\n            \"updated_at\": \"2025-01-18T21:54:31.505307Z\",\n            \"products\": []\n        },\n        {\n            \"id\": 6,\n            \"customer_id\": 1,\n            \"total_bill\": 0,\n            \"status\": \"OPEN\",\n            \"created_at\": \"2025-01-18T22:02:03.156515Z\",\n            \"updated_at\": \"2025-01-18T22:02:03.156515Z\",\n            \"products\": []\n        },\n        {\n            \"id\": 7,\n            \"customer_id\": 1,\n            \"total_bill\": 0,\n            \"status\": \"OPEN\",\n            \"created_at\": \"2025-01-18T22:02:26.488995Z\",\n            \"updated_at\": \"2025-01-18T22:02:26.488995Z\",\n            \"products\": []\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get orders by customer id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/orders?customer_id=6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "customer_id",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get orders Copy",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?customer_id=6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "customer_id",
+											"value": "6"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "ccc718b6-8706-4aa6-983c-bc96cadfe782"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Jan 2025 16:10:33 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "204"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 8,\n            \"customer_id\": 6,\n            \"total_bill\": 51.8,\n            \"status\": \"RECEIVED\",\n            \"created_at\": \"2025-01-21T16:03:51.48294Z\",\n            \"updated_at\": \"2025-01-21T16:08:15.388034Z\",\n            \"products\": []\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Create an order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customer_id\": 6\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/orders",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customer_id\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/orders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "e56f7a81-2621-4b92-a8dc-17468d45a904"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 19 Jan 2025 01:02:26 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "165"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 7,\n    \"customer_id\": 1,\n    \"total_bill\": 0,\n    \"status\": \"OPEN\",\n    \"created_at\": \"2025-01-18T22:02:26.488995-03:00\",\n    \"updated_at\": \"2025-01-18T22:02:26.488995-03:00\",\n    \"products\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Creante an order product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantity\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/orders/products/8/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"products",
+								"8",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get an order",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/orders/8",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"8"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/orders/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"5"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "8d1889d2-1bb6-459e-9893-adcd0890147d"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 19 Jan 2025 01:04:10 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "442"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 5,\n    \"customer_id\": 3,\n    \"total_bill\": 88.2,\n    \"status\": \"RECEIVED\",\n    \"created_at\": \"2025-01-18T21:41:30.070565Z\",\n    \"updated_at\": \"2025-01-18T21:54:31.505307Z\",\n    \"products\": [\n        {\n            \"order_id\": 5,\n            \"product_id\": 3,\n            \"price\": 19.5,\n            \"quantity\": 3,\n            \"created_at\": \"2025-01-18T21:46:05.114615Z\",\n            \"updated_at\": \"2025-01-18T21:46:05.114615Z\"\n        },\n        {\n            \"order_id\": 5,\n            \"product_id\": 4,\n            \"price\": 9.9,\n            \"quantity\": 3,\n            \"created_at\": \"2025-01-18T21:46:13.34927Z\",\n            \"updated_at\": \"2025-01-18T21:46:13.34927Z\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Staffs",
+			"item": [
+				{
+					"name": "Create a staff",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe 2\",\n  \"role\": \"COOK\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/staffs",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"staffs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get staffs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/staffs",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"staffs"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/staffs",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"staffs"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "49e0c1ae-45ae-4fb8-b90a-ce140b0bf343"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 19 Jan 2025 01:05:26 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "126"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 2,\n    \"page\": 1,\n    \"limit\": 10,\n    \"staffs\": [\n        {\n            \"id\": 1,\n            \"name\": \"John Doe\",\n            \"role\": \"COOK\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"John Doe 2\",\n            \"role\": \"COOK\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Sign In a customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cpf\": \"000.000.000-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/sign-in",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sign-in"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sign In a customer",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cpf\": \"000.000.000-00\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/sign-in",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"sign-in"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "19803c19-9ba3-40f9-9bb5-dd3b62c6fa1d"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jan 2025 21:03:37 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "78"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"John Doe\",\n    \"email\": \"john.doe@email.com\",\n    \"cpf\": \"000.000.000-00\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"item": [
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/health",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Health",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/health",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"health"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "7ab25fb6-5d00-4b34-a90e-a187985b14f0"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Jan 2025 22:51:19 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "130"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"pass\",\n    \"checks\": {\n        \"db:postgres\": {\n            \"componentId\": \"db:postgres\",\n            \"status\": \"pass\",\n            \"time\": \"2025-01-13T19:51:19.249928-03:00\"\n        }\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
