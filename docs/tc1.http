@@ -2,10 +2,10 @@
 # https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
 @baseUrl = http://localhost:8080
-@num = 3
+@num = 4
 @name = John Doe {{num}}
-@email = john.doe.{{num}}
-@cpf = 000.000.000-0{{num}}
+@email = john.doe.{{num}}@email.com
+@cpf = 123.456.789-0{{num}}
 
 
 # @name healthCheck

@@ -17,7 +17,10 @@ GOCLEAN=$(GOCMD) clean
 help:
 	@echo "Usage: make <command>"
 	@echo "  make build                 - Build the application"
+	@echo "  make run-db                - Run the database"
 	@echo "  make run                   - Run the application"
+	@echo "  make stop                  - Stop the application"
+	@echo "  make stop-db               - Stop the database"
 	@echo "  make run-air               - Run the application with Air"
 	@echo "  make test                  - Run tests"
 	@echo "  make coverage              - Run tests with coverage"
@@ -49,16 +52,25 @@ build:
 	$(GOBUILD) fmt ./...
 	$(GOBUILD) -o bin/$(APP_NAME) $(MAIN_FILE)
 
-.PHONY: run
-run: build
-	@echo  "🟢 Running the application..."
+.PHONY: run-db
+run-db:
+	@echo  "🟢 Running the database..."
 	docker-compose up -d db dbadmin
-	$(GORUN) $(MAIN_FILE)
 
+.PHONY: run
+run: build run-db
+	@echo  "🟢 Running the application..."
+	$(GORUN) $(MAIN_FILE) || true
+
+.PHONY: stop
 stop:
 	@echo  "🔴 Stopping the application..."
 	docker-compose down	
 
+.PHONY: stop-db
+stop-db:
+	@echo  "🔴 Stopping the database..."
+	docker-compose down db dbadmin
 
 .PHONY: run-air
 run-air: build
@@ -91,6 +103,9 @@ mock:
 	mockgen -source=internal/core/port/product_gateway_port.go -destination=internal/core/port/mocks/product_gateway_mock.go
 	mockgen -source=internal/core/port/product_presenter_port.go -destination=internal/core/port/mocks/product_presenter_mock.go
 	mockgen -source=internal/core/port/product_usecase_port.go -destination=internal/core/port/mocks/product_usecase_mock.go
+	mockgen -source=internal/core/port/customer_gateway_port.go -destination=internal/core/port/mocks/customer_gateway_mock.go
+	mockgen -source=internal/core/port/customer_presenter_port.go -destination=internal/core/port/mocks/customer_presenter_mock.go
+	mockgen -source=internal/core/port/customer_usecase_port.go -destination=internal/core/port/mocks/customer_usecase_mock.go
 	mockgen -source=internal/adapter/dto/response_writer.go -destination=internal/adapter/dto/mocks/response_writer_mock.go
 
 .PHONY: swagger
@@ -137,7 +152,7 @@ install:
 .PHONY: docker-build
 docker-build:
 	@echo  "🟢 Building Docker image..."
-	docker build -t $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) .
+	docker build --platform linux/amd64 -t $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) .
 	docker tag $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) $(DOCKER_REGISTRY)/$(APP_NAME):latest
 
 .PHONY: docker-push
@@ -187,7 +202,7 @@ compose-build:
 .PHONY: compose-up
 compose-up:
 	@echo  "🟢 Starting development environment..."
-	docker-compose up -d --wait
+	docker-compose up -d --wait --build
 
 .PHONY: compose-down
 compose-down:
