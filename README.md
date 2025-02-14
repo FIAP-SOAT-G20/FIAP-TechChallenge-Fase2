@@ -150,11 +150,11 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 ## :cd: Installation
 
 ```sh
-git clone https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1.git
+git clone https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2.git
 ```
 
 ```sh
-cd FIAP-TechChallenge-Fase1
+cd FIAP-TechChallenge-Fase2
 ```
 
 Set the environment variables
