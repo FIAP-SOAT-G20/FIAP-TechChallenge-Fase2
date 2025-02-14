@@ -17,7 +17,10 @@ GOCLEAN=$(GOCMD) clean
 help:
 	@echo "Usage: make <command>"
 	@echo "  make build                 - Build the application"
+	@echo "  make run-db                - Run the database"
 	@echo "  make run                   - Run the application"
+	@echo "  make stop                  - Stop the application"
+	@echo "  make stop-db               - Stop the database"
 	@echo "  make run-air               - Run the application with Air"
 	@echo "  make test                  - Run tests"
 	@echo "  make coverage              - Run tests with coverage"
@@ -49,16 +52,25 @@ build:
 	$(GOBUILD) fmt ./...
 	$(GOBUILD) -o bin/$(APP_NAME) $(MAIN_FILE)
 
-.PHONY: run
-run: build
-	@echo  "🟢 Running the application..."
+.PHONY: run-db
+run-db:
+	@echo  "🟢 Running the database..."
 	docker-compose up -d db dbadmin
-	$(GORUN) $(MAIN_FILE)
 
+.PHONY: run
+run: build run-db
+	@echo  "🟢 Running the application..."
+	$(GORUN) $(MAIN_FILE) || true
+
+.PHONY: stop
 stop:
 	@echo  "🔴 Stopping the application..."
 	docker-compose down	
 
+.PHONY: stop-db
+stop-db:
+	@echo  "🔴 Stopping the database..."
+	docker-compose down db dbadmin
 
 .PHONY: run-air
 run-air: build
