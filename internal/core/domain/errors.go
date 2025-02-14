@@ -23,7 +23,8 @@ var (
 	ErrPageMustBeGreaterThanZero = "page must be greater than zero"
 	ErrLimitMustBeBetween1And100 = "limit must be between 1 and 100"
 
-	ErrInternalError = "internal error"
+	ErrInternalError = "internal server error"
+	ErrUnknownError  = "unknown error"
 )
 
 type ValidationError struct {
