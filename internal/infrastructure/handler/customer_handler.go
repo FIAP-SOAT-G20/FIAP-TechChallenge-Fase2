@@ -192,10 +192,10 @@ func (h *CustomerHandler) UpdateCustomer(c *gin.Context) {
 	}
 
 	input := dto.UpdateCustomerInput{
-		ID:          id,
-		Name:        req.Name,
-		Email: 		 req.Email,
-		Writer:      c,
+		ID:     id,
+		Name:   req.Name,
+		Email:  req.Email,
+		Writer: c,
 	}
 
 	err = h.controller.UpdateCustomer(c.Request.Context(), input)

@@ -70,6 +70,6 @@ func (r *Router) Engine() *gin.Engine {
 
 // Handlers contains all handlers of the application
 type Handlers struct {
-	Product *handler.ProductHandler
+	Product  *handler.ProductHandler
 	Customer *handler.CustomerHandler
 }

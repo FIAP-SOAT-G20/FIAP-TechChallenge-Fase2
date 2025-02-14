@@ -27,11 +27,11 @@ func TestGetCustomerUseCase_Execute(t *testing.T) {
 
 	currentTime := time.Now()
 	mockCustomer := &entity.Customer{
-		ID:          1,
-		Name:        "Test Customer",
-		Email: 		 "test.customer@email.com",
-		CreatedAt:   currentTime,
-		UpdatedAt:   currentTime,
+		ID:        1,
+		Name:      "Test Customer",
+		Email:     "test.customer@email.com",
+		CreatedAt: currentTime,
+		UpdatedAt: currentTime,
 	}
 
 	tests := []struct {
