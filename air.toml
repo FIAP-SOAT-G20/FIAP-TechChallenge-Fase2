@@ -5,8 +5,8 @@ tmp_dir = "tmp"
 [build]
   args_bin = []
   bin = "app"
-  pre_cmd = ["docker-compose up -d postgres"]
-  cmd = "go build -o app cmd/server/main.go"
+  pre_cmd = ["docker-compose up -d db dbadmin"]
+  cmd = "go build -o bin/app cmd/server/main.go"
   post_cmd = ["docker-compose down"]
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata", "log"]
