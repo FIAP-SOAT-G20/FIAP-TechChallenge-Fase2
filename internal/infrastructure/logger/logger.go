@@ -20,10 +20,11 @@ func NewLogger(cfg *config.Config) *Logger {
 			AddSource: true,
 		})
 	} else {
-		handler = slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
-			Level:     slog.LevelDebug,
-			AddSource: true,
-		})
+		handler = NewPrettyHandler(os.Stdout, PrettyHandlerOptions{
+			SlogOpts: slog.HandlerOptions{
+				Level:     slog.LevelDebug,
+				AddSource: true,
+			}})
 	}
 
 	return &Logger{
