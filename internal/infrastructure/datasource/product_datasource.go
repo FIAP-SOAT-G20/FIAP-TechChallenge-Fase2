@@ -15,7 +15,7 @@ type productDataSource struct {
 	db *gorm.DB
 }
 
-type key string
+type productKey string
 
 func NewProductDataSource(db *gorm.DB) port.ProductDataSource {
 	return &productDataSource{
@@ -46,7 +46,7 @@ func (ds *productDataSource) FindAll(ctx context.Context, filters map[string]int
 		switch key {
 		case "name":
 			if name, ok := value.(string); ok && name != "" {
-				query = query.Where("name ILIKE ?", "%"+name+"%")
+				query = query.Where("name LIKE ?", "%"+name+"%")
 			}
 		case "category_id":
 			if categoryID, ok := value.(uint64); ok && categoryID != 0 {
@@ -101,7 +101,7 @@ func (ds *productDataSource) Delete(ctx context.Context, id uint64) error {
 func (ds *productDataSource) Transaction(ctx context.Context, fn func(ctx context.Context) error) error {
 	return ds.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		// Create a new context with the transaction
-		keyPrincipalID := key(uuid.NewString())
+		keyPrincipalID := productKey(uuid.NewString())
 		txCtx := context.WithValue(ctx, keyPrincipalID, tx)
 		return fn(txCtx)
 	})
