@@ -617,6 +617,103 @@
 					]
 				},
 				{
+					"name": "Update a customer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe 1 UPDATED\",\n    \"email\": \"john.doe.1.updated@email.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/customers/6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"6"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update a customer",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe 1 UPDATED\",\n    \"email\": \"john.doe.1.updated@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/customers/14",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"customers",
+										"14"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "79c043b8-bc60-4d97-91bd-450eeda68bfb"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Feb 2025 02:17:55 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "176"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 14,\n    \"name\": \"John Doe 1 UPDATED\",\n    \"email\": \"john.doe.1.updated@email.com\",\n    \"cpf\": \"000.000.000-01\",\n    \"created_at\": \"2025-02-13T23:16:18Z\",\n    \"updated_at\": \"2025-02-13T23:17:55-03:00\"\n}"
+						}
+					]
+				},
+				{
 					"name": "Get customers",
 					"request": {
 						"method": "GET",
@@ -630,6 +727,163 @@
 								"api",
 								"v1",
 								"customers"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get customers",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/customers",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"customers"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "a1e125d2-f89b-4ecc-9476-3c63fdbb9561"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Feb 2025 17:50:37 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "810"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 5,\n    \"page\": 1,\n    \"limit\": 10,\n    \"customers\": [\n        {\n            \"id\": 1,\n            \"name\": \"Lucas Mendes\",\n            \"email\": \"lucas@email.com\",\n            \"cpf\": \"123.456.789-00\",\n            \"created_at\": \"2025-02-14T17:49:24Z\",\n            \"updated_at\": \"2025-02-14T17:49:24Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Julia Santos\",\n            \"email\": \"julia@email.com\",\n            \"cpf\": \"987.654.321-00\",\n            \"created_at\": \"2025-02-14T17:49:24Z\",\n            \"updated_at\": \"2025-02-14T17:49:24Z\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Rafael Costa\",\n            \"email\": \"rafael@email.com\",\n            \"cpf\": \"456.789.123-00\",\n            \"created_at\": \"2025-02-14T17:49:24Z\",\n            \"updated_at\": \"2025-02-14T17:49:24Z\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Mariana Lima\",\n            \"email\": \"mariana@email.com\",\n            \"cpf\": \"789.123.456-00\",\n            \"created_at\": \"2025-02-14T17:49:24Z\",\n            \"updated_at\": \"2025-02-14T17:49:24Z\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Bruno Oliveira\",\n            \"email\": \"bruno@email.com\",\n            \"cpf\": \"321.654.987-00\",\n            \"created_at\": \"2025-02-14T17:49:24Z\",\n            \"updated_at\": \"2025-02-14T17:49:24Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get a customer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/customers/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get a customer",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/customers/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"customers",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "d4872077-354e-4e76-925f-bb14b59c34d7"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Feb 2025 17:51:13 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "151"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Lucas Mendes\",\n    \"email\": \"lucas@email.com\",\n    \"cpf\": \"123.456.789-00\",\n    \"created_at\": \"2025-02-14T17:49:24Z\",\n    \"updated_at\": \"2025-02-14T17:49:24Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete custome",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/customers/6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"6"
 							]
 						}
 					},
