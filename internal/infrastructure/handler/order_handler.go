@@ -21,10 +21,6 @@ type CreateOrderRequest struct {
 	CustomerID uint64 `json:"customer_id" binding:"required" example:"1"`
 }
 
-func (p *CreateOrderRequest) Validate() error {
-	return GetValidator().Struct(p)
-}
-
 // type ListOrderRequest struct {
 // 	Name       string `json:"name" validate:"required,min=3,max=100" example:"Produto"`
 // 	CategoryID uint64 `json:"category_id" example:"1"`
@@ -36,6 +32,10 @@ func (p *CreateOrderRequest) Validate() error {
 // 	return GetValidator().Struct(p)
 // }
 
+type GetOrderRequest struct {
+	ID uint64 `uri:"id" binding:"required"`
+}
+
 func NewOrderHandler(controller *controller.OrderController) *OrderHandler {
 	return &OrderHandler{controller: controller}
 }
@@ -43,7 +43,7 @@ func NewOrderHandler(controller *controller.OrderController) *OrderHandler {
 func (h *OrderHandler) Register(router *gin.RouterGroup) {
 	router.GET("/", h.ListOrders)
 	router.POST("/", h.CreateOrder)
-	// router.GET("/:id", h.GetOrder)
+	router.GET("/:id", h.GetOrder)
 	// router.PUT("/:id", h.UpdateOrder)
 	// router.DELETE("/:id", h.DeleteOrder)
 }
@@ -109,12 +109,6 @@ func (h *OrderHandler) CreateOrder(c *gin.Context) {
 		return
 	}
 
-	// validate request
-	if err := req.Validate(); err != nil {
-		_ = c.Error(domain.NewInvalidInputError(err.Error()))
-		return
-	}
-
 	input := dto.CreateOrderInput{
 		CustomerID: req.CustomerID,
 		Writer:     c,
@@ -140,24 +134,24 @@ func (h *OrderHandler) CreateOrder(c *gin.Context) {
 //	@Failure		404	{object}	middleware.ErrorResponse		"Not Found"
 //	@Failure		500	{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/orders/{id} [get]
-// func (h *OrderHandler) GetOrder(c *gin.Context) {
-// 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
-// 	if err != nil {
-// 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
-// 		return
-// 	}
+func (h *OrderHandler) GetOrder(c *gin.Context) {
+	var req GetOrderRequest
+	if err := c.ShouldBindUri(&req); err != nil {
+		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
+		return
+	}
 
-// 	input := dto.GetOrderInput{
-// 		ID:     id,
-// 		Writer: c,
-// 	}
+	input := dto.GetOrderInput{
+		ID:     req.ID,
+		Writer: c,
+	}
 
-// 	err = h.controller.GetOrder(c.Request.Context(), input)
-// 	if err != nil {
-// 		_ = c.Error(err)
-// 		return
-// 	}
-// }
+	err := h.controller.GetOrder(c.Request.Context(), input)
+	if err != nil {
+		_ = c.Error(err)
+		return
+	}
+}
 
 // // UpdateOrder godoc
 // //

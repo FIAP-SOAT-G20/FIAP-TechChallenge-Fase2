@@ -19,7 +19,7 @@ func TestOrderController_ListOrders(t *testing.T) {
 	mockListOrdersUseCase := mockport.NewMockListOrdersUseCase(ctrl)
 	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
 	// productController := NewOrderController(mockListOrdersUseCase, nil, nil, nil, nil)
-	productController := NewOrderController(mockListOrdersUseCase, nil)
+	productController := NewOrderController(mockListOrdersUseCase, nil, nil)
 
 	ctx := context.Background()
 	input := dto.ListOrdersInput{
@@ -45,7 +45,7 @@ func TestOrderController_CreateOrder(t *testing.T) {
 	mockCreateOrderUseCase := mockport.NewMockCreateOrderUseCase(ctrl)
 	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
 	// productController := NewOrderController(nil, mockCreateOrderUseCase, nil, nil, nil)
-	productController := NewOrderController(nil, mockCreateOrderUseCase)
+	productController := NewOrderController(nil, mockCreateOrderUseCase, nil)
 
 	ctx := context.Background()
 	input := dto.CreateOrderInput{
@@ -61,27 +61,28 @@ func TestOrderController_CreateOrder(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-// func TestOrderController_GetOrder(t *testing.T) {
-// 	ctrl := gomock.NewController(t)
-// 	defer ctrl.Finish()
+func TestOrderController_GetOrder(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
 
-// 	mockGetOrderUseCase := mockport.NewMockGetOrderUseCase(ctrl)
-// 	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-// 	productController := NewOrderController(nil, nil, mockGetOrderUseCase, nil, nil)
+	mockGetOrderUseCase := mockport.NewMockGetOrderUseCase(ctrl)
+	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
+	// productController := NewOrderController(nil, nil, mockGetOrderUseCase, nil, nil)
+	productController := NewOrderController(nil, nil, mockGetOrderUseCase)
 
-// 	ctx := context.Background()
-// 	input := dto.GetOrderInput{
-// 		ID:     uint64(1),
-// 		Writer: mockResponseWriter,
-// 	}
+	ctx := context.Background()
+	input := dto.GetOrderInput{
+		ID:     uint64(1),
+		Writer: mockResponseWriter,
+	}
 
-// 	mockGetOrderUseCase.EXPECT().
-// 		Execute(ctx, input).
-// 		Return(nil)
+	mockGetOrderUseCase.EXPECT().
+		Execute(ctx, input).
+		Return(nil)
 
-// 	err := productController.GetOrder(ctx, input)
-// 	assert.NoError(t, err)
-// }
+	err := productController.GetOrder(ctx, input)
+	assert.NoError(t, err)
+}
 
 // func TestOrderController_UpdateOrder(t *testing.T) {
 // 	ctrl := gomock.NewController(t)

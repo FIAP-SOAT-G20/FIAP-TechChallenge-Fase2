@@ -10,7 +10,7 @@ import (
 type OrderController struct {
 	listOrdersUseCase  port.ListOrdersUseCase
 	createOrderUseCase port.CreateOrderUseCase
-	// getOrderUseCase    port.GetOrderUseCase
+	getOrderUseCase    port.GetOrderUseCase
 	// updateOrderUseCase port.UpdateOrderUseCase
 	// deleteOrderUseCase port.DeleteOrderUseCase
 }
@@ -18,14 +18,14 @@ type OrderController struct {
 func NewOrderController(
 	listUC port.ListOrdersUseCase,
 	createUC port.CreateOrderUseCase,
-	// getUC port.GetOrderUseCase,
+	getUC port.GetOrderUseCase,
 	// updateUC port.UpdateOrderUseCase,
 	// deleteUC port.DeleteOrderUseCase,
 ) *OrderController {
 	return &OrderController{
 		listOrdersUseCase:  listUC,
 		createOrderUseCase: createUC,
-		// getOrderUseCase:    getUC,
+		getOrderUseCase:    getUC,
 		// updateOrderUseCase: updateUC,
 		// deleteOrderUseCase: deleteUC,
 	}
@@ -49,14 +49,14 @@ func (c *OrderController) CreateOrder(ctx context.Context, input dto.CreateOrder
 	return nil
 }
 
-// func (c *OrderController) GetOrder(ctx context.Context, input dto.GetOrderInput) error {
-// 	err := c.getOrderUseCase.Execute(ctx, input)
-// 	if err != nil {
-// 		return err
-// 	}
+func (c *OrderController) GetOrder(ctx context.Context, input dto.GetOrderInput) error {
+	err := c.getOrderUseCase.Execute(ctx, input)
+	if err != nil {
+		return err
+	}
 
-// 	return nil
-// }
+	return nil
+}
 
 // func (c *OrderController) UpdateOrder(ctx context.Context, input dto.UpdateOrderInput) error {
 // 	err := c.updateOrderUseCase.Execute(ctx, input)
