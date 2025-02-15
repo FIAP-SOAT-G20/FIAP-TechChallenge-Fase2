@@ -96,6 +96,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	createOrderUC := order.NewCreateOrderUseCase(orderGateway, orderPresenter)
 	listOrdersUC := order.NewListOrdersUseCase(orderGateway, orderPresenter)
 	getOrderUC := order.NewGetOrderUseCase(orderGateway, orderPresenter)
+	updateOrderUC := order.NewUpdateOrderUseCase(orderGateway, orderPresenter)
 
 	// Controllers
 	productController := controller.NewProductController(
@@ -116,6 +117,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		listOrdersUC, 
 		createOrderUC, 
 		getOrderUC,
+		updateOrderUC,
 	)
 
 	// Handlers

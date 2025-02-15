@@ -17,23 +17,22 @@ type OrderHandler struct {
 	controller *controller.OrderController
 }
 
-type CreateOrderRequest struct {
+type CreateOrderBodyRequest struct {
 	CustomerID uint64 `json:"customer_id" binding:"required" example:"1"`
 }
 
-// type ListOrderRequest struct {
-// 	Name       string `json:"name" validate:"required,min=3,max=100" example:"Produto"`
-// 	CategoryID uint64 `json:"category_id" example:"1"`
-// 	Page       int    `json:"page" validate:"required,gte=1" example:"1"`
-// 	Limit      int    `json:"limit" validate:"required,gte=1,lte=100" example:"10"`
-// }
-
-// func (p *ListOrderRequest) Validate() error {
-// 	return GetValidator().Struct(p)
-// }
-
-type GetOrderRequest struct {
+type GetOrderUriRequest struct {
 	ID uint64 `uri:"id" binding:"required"`
+}
+
+type UpdateOrderUriRequest struct {
+	ID uint64 `uri:"id" binding:"required"`
+}
+
+type UpdateOrderBodyRequest struct {
+	CustomerID uint64             `json:"customer_id" binding:"required" example:"1"`
+	TotalBill  float32            `json:"total_bill" binding:"required" example:"100.00"`
+	Status     entity.OrderStatus `json:"status" binding:"required" example:"PENDING"`
 }
 
 func NewOrderHandler(controller *controller.OrderController) *OrderHandler {
@@ -44,7 +43,8 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 	router.GET("/", h.ListOrders)
 	router.POST("/", h.CreateOrder)
 	router.GET("/:id", h.GetOrder)
-	// router.PUT("/:id", h.UpdateOrder)
+	router.PUT("/:id", h.UpdateOrder)
+	// router.PATCH("/:id", h.UpdateOrderPartial)
 	// router.DELETE("/:id", h.DeleteOrder)
 }
 
@@ -77,7 +77,7 @@ func (h *OrderHandler) ListOrders(c *gin.Context) {
 
 	input := dto.ListOrdersInput{
 		CustomerID: customerID,
-		Status:     status,
+		Status:     entity.OrderStatus(status),
 		Page:       page,
 		Limit:      limit,
 		Writer:     c,
@@ -103,7 +103,7 @@ func (h *OrderHandler) ListOrders(c *gin.Context) {
 //	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/orders [post]
 func (h *OrderHandler) CreateOrder(c *gin.Context) {
-	var req CreateOrderRequest
+	var req CreateOrderBodyRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
@@ -135,7 +135,7 @@ func (h *OrderHandler) CreateOrder(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/orders/{id} [get]
 func (h *OrderHandler) GetOrder(c *gin.Context) {
-	var req GetOrderRequest
+	var req GetOrderUriRequest
 	if err := c.ShouldBindUri(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
@@ -153,53 +153,47 @@ func (h *OrderHandler) GetOrder(c *gin.Context) {
 	}
 }
 
-// // UpdateOrder godoc
-// //
-// //	@Summary		Update order
-// //	@Description	Update an existing order
-// //	@Tags			orders
-// //	@Accept			json
-// //	@Produce		json
-// //	@Param			id		path		int								true	"Order ID"
-// //	@Param			order	body		OrderRequest					true	"Order data"
-// //	@Success		200		{object}	presenter.OrderJsonResponse	"OK"
-// //	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
-// //	@Failure		404		{object}	middleware.ErrorResponse		"Not Found"
-// //	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
-// //	@Router			/orders/{id} [put]
-// func (h *OrderHandler) UpdateOrder(c *gin.Context) {
-// 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
-// 	if err != nil {
-// 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
-// 		return
-// 	}
+// UpdateOrder godoc
+//
+//	@Summary		Update order
+//	@Description	Update an existing order
+//	@Tags			orders
+//	@Accept			json
+//	@Produce		json
+//	@Param			id		path		int								true	"Order ID"
+//	@Param			order	body		OrderRequest					true	"Order data"
+//	@Success		200		{object}	presenter.OrderJsonResponse	"OK"
+//	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
+//	@Failure		404		{object}	middleware.ErrorResponse		"Not Found"
+//	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
+//	@Router			/orders/{id} [put]
+func (h *OrderHandler) UpdateOrder(c *gin.Context) {
+	var reqUri UpdateOrderUriRequest
+	if err := c.ShouldBindUri(&reqUri); err != nil {
+		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
+		return
+	}
 
-// 	var req OrderRequest
-// 	if err := c.ShouldBindJSON(&req); err != nil {
-// 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
-// 		return
-// 	}
+	var req UpdateOrderBodyRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
+		return
+	}
 
-// 	if err := req.Validate(); err != nil {
-// 		_ = c.Error(domain.NewInvalidInputError(err.Error()))
-// 		return
-// 	}
+	input := dto.UpdateOrderInput{
+		ID:         reqUri.ID,
+		CustomerID: req.CustomerID,
+		TotalBill:  req.TotalBill,
+		Status:     req.Status,
+		Writer:     c,
+	}
 
-// 	input := dto.UpdateOrderInput{
-// 		ID:          id,
-// 		Name:        req.Name,
-// 		Description: req.Description,
-// 		Price:       req.Price,
-// 		CategoryID:  req.CategoryID,
-// 		Writer:      c,
-// 	}
-
-// 	err = h.controller.UpdateOrder(c.Request.Context(), input)
-// 	if err != nil {
-// 		_ = c.Error(err)
-// 		return
-// 	}
-// }
+	err := h.controller.UpdateOrder(c.Request.Context(), input)
+	if err != nil {
+		_ = c.Error(err)
+		return
+	}
+}
 
 // // DeleteOrder godoc
 // //
