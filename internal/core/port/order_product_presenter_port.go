@@ -2,11 +2,11 @@ package port
 
 import "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 
-type ProductPresenter interface {
-	Present(pp dto.ProductPresenterInput)
+type OrderProductPresenter interface {
+	Present(pp dto.OrderProductPresenterInput)
 }
 
-type ProductPresenterDTO struct {
+type OrderProductPresenterDTO struct {
 	Result any
 	Total  int64
 	Page   int
