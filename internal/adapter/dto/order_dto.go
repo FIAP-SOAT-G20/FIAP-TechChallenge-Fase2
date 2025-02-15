@@ -1,17 +1,19 @@
 package dto
 
+import "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+
 type CreateOrderInput struct {
-	CustomerID  uint64
-	Writer      ResponseWriter
+	CustomerID uint64
+	Writer     ResponseWriter
 }
 
 type UpdateOrderInput struct {
-	ID            uint64
-	CustomerID    uint64
-	TotalBill     float32
-	// Status        OrderStatus
+	ID         uint64
+	CustomerID uint64
+	TotalBill  float32
+	Status     entity.OrderStatus
 	// Payment       Payment
-	Writer      ResponseWriter
+	Writer ResponseWriter
 }
 
 type GetOrderInput struct {
@@ -26,7 +28,7 @@ type DeleteOrderInput struct {
 
 type ListOrdersInput struct {
 	CustomerID uint64
-	Status 	 string
+	Status     entity.OrderStatus
 	Page       int
 	Limit      int
 	Writer     ResponseWriter

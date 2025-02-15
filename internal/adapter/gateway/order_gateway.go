@@ -21,7 +21,7 @@ func (pg *orderGateway) FindByID(ctx context.Context, id uint64) (*entity.Order,
 	return pg.dataSource.FindByID(ctx, id)
 }
 
-func (pg *orderGateway) FindAll(ctx context.Context, customerId uint64, status string, page, limit int) ([]*entity.Order, int64, error) {
+func (pg *orderGateway) FindAll(ctx context.Context, customerId uint64, status entity.OrderStatus, page, limit int) ([]*entity.Order, int64, error) {
 	filters := make(map[string]interface{})
 
 	if customerId != 0 {
