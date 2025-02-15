@@ -52,7 +52,7 @@ func LoadConfig() *Config {
 		DBPort:         dbPort,
 		DBUser:         getEnv("DB_USER", "postgres"),
 		DBPassword:     getEnv("DB_PASSWORD", "postgres"),
-		DBName:         getEnv("DB_NAME", "products"),
+		DBName:         getEnv("DB_NAME", "fastfood_10soat_g18_tc2"),
 		DBMaxOpenConns: dbMaxOpenConns,
 		DBMaxIdleConns: dbMaxIdleConns,
 		DBMaxLifetime:  dbMaxLifetime,

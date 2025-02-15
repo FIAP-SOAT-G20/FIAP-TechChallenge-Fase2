@@ -16,9 +16,9 @@ type ErrorResponse struct {
 
 func ErrorHandler(logger *slog.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Next() // Execute os handlers primeiro
+		c.Next() // Execute all the handlers
 
-		// Se houver erros, trata o último erro
+		// If there are errors, handle the last one
 		if len(c.Errors) > 0 {
 			err := c.Errors.Last().Err
 			handleError(c, err, logger)
@@ -47,25 +47,25 @@ func handleError(c *gin.Context, err error, logger *slog.Logger) {
 		})
 
 	case *domain.InternalError:
-		logger.Error("internal server error",
+		logger.Error(domain.ErrInternalError,
 			"error", e.Error(),
 			"path", c.Request.URL.Path,
 			"method", c.Request.Method,
 		)
 		c.JSON(http.StatusInternalServerError, ErrorResponse{
 			Code:    http.StatusInternalServerError,
-			Message: "Erro interno do servidor",
+			Message: domain.ErrInternalError,
 		})
 
 	default:
-		logger.Error("unknown error",
+		logger.Error(domain.ErrUnknownError,
 			"error", err.Error(),
 			"path", c.Request.URL.Path,
 			"method", c.Request.Method,
 		)
 		c.JSON(http.StatusInternalServerError, ErrorResponse{
 			Code:    http.StatusInternalServerError,
-			Message: "Erro interno do servidor",
+			Message: domain.ErrInternalError,
 		})
 	}
 }

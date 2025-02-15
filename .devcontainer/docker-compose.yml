@@ -16,7 +16,7 @@ services:
       - DB_PORT=5432
       - DB_USER=postgres
       - DB_PASSWORD=postgres
-      - DB_NAME=products
+      - DB_NAME=fastfood_10soat_g18_tc2
     command: sleep infinity
     network_mode: service:postgres
 
@@ -28,7 +28,7 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: products
+      POSTGRES_DB: fastfood_10soat_g18_tc2
 
 volumes:
   postgres-data:

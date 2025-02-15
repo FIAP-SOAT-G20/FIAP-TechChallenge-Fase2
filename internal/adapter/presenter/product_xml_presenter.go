@@ -17,8 +17,8 @@ func NewProductXmlPresenter() port.ProductPresenter {
 	return &productXmlPresenter{}
 }
 
-// toResponse converts a Product entity to a ProductXmlResponse
-func toXmlResponse(product *entity.Product) ProductXmlResponse {
+// toProductXmlResponse converts a Product entity to a ProductXmlResponse
+func toProductXmlResponse(product *entity.Product) ProductXmlResponse {
 	return ProductXmlResponse{
 		ID:          product.ID,
 		Name:        product.Name,
@@ -34,12 +34,12 @@ func toXmlResponse(product *entity.Product) ProductXmlResponse {
 func (p *productXmlPresenter) Present(pp dto.ProductPresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.Product:
-		output := toXmlResponse(v)
+		output := toProductXmlResponse(v)
 		pp.Writer.XML(http.StatusOK, output)
 	case []*entity.Product:
 		productOutputs := make([]ProductXmlResponse, len(v))
 		for i, product := range v {
-			productOutputs[i] = toXmlResponse(product)
+			productOutputs[i] = toProductXmlResponse(product)
 		}
 
 		output := &ProductXmlPaginatedResponse{

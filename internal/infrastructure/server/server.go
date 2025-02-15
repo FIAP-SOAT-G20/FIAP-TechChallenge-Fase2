@@ -73,6 +73,7 @@ func gracefullyShutdown(server *http.Server, chanError chan error, s *Server) {
 		}
 
 		s.logger.Info("server exited gracefully")
+		fmt.Println("Bye! 👋")
 	}()
 
 	go func() {

@@ -63,52 +63,71 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 <summary>Project Structure Explanation</summary>
 
 ### **1️⃣ Core (Innermost layer)**
-- `domain/`: Central business entities and rules.
-- `usecases/`: Application use cases.
-- `ports/`: Interfaces that define contracts between layers, ensuring independence.
 
-### **2️⃣ adapter (Middle layer)**
+- `domain/`: Central business entities and rules.
+- `usecase/`: Application use cases.
+- `port/`: Interfaces that define contracts between layers, ensuring independence.
+
+### **2️⃣ Adapter (Middle layer)**
+
 - `controller/`: Coordinates the flow of data between use cases and infrastructure.
 - `presenter/`: Formats data for presentation.
 - `gateway/`: Implements access to data from external sources (databases, APIs, etc.).
 
 ### **3️⃣ Infrastructure (External layer)**
+
 - `config/`: Application configuration management.
 - `database/`: Configuration and connection to the database. - `server/`: Initialization of the HTTP server.
-- `routes/`: Definition of API routes.
+- `route/`: Definition of API routes.
 - `middleware/`: HTTP middlewares for handling requests.
 - `logger/`: Structured logger for detailed logs.
 - `handler/`: Handling of HTTP requests.
-- `datasources/`: Concrete implementations of data sources.
+- `datasource/`: Concrete implementations of data sources.
 
 </details>
 
 ### ✨ Features
+
 - [x] Dockerfile: small image with multi-stage docker build, and independent of the host environment
 - [x] Makefile: to simplify the build and run commands
 - [x] Clean architecture
 - [x] PostgreSQL database
 - [x] Conventional commits
-- [x] Unit tests
-- [x] Code coverage
+
+<details>
+<summary>more (click to expand or collapse ↕️)</summary>
+
+- [x] Unit tests (testify)
+- [x] Code coverage report (go tool cover)
 - [x] Swagger documentation
 - [x] Postman collection
 - [x] Feature branch workflow
-- [x] Air to run go
+- [x] Live reload (air)
 - [x] Pagination
 - [x] Health Check
-- [x] Lint
-- [x] Vulnerability check
-- [x] Mocks
+- [x] Lint (golangci-lint)
+- [x] Vulnerability check (govulncheck)
+- [x] Mocks (gomock)
 - [x] Environment variables
 - [x] Graceful shutdown
+- [x] Kubernetes deployment
+- [x] GitHub Actions
+- [x] Structured logs (slog)
+- [x] Database migrations (golang-migrate)
+
+</details>
 
 ## :computer: Technologies
 
 - [Go 1.23+](https://golang.org/)
 - [Gin Web Framework](https://gin-gonic.com/)
 - [golangci-lint](https://golangci-lint.run/)
+- [golang-migrate](https://github.com/golang-migrate/migrate)
 - [govulncheck](https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck)
+
+<details>
+<summary>more (click to expand or collapse ↕️)</summary>
+
 - [gomock](https://github.com/uber-go/mock)
 - [go-playground/validator](https://github.com/go-playground/validator)
 - [godotenv](https://github.com/joho/godotenv)
@@ -122,6 +141,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [Make](https://www.gnu.org/software/make/)
 - [Testify](https://github.com/stretchr/testify)
 
+</details>
 
 ## :scroll: Requirements
 
@@ -142,11 +162,11 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 ## :cd: Installation
 
 ```sh
-git clone https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1.git
+git clone https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2.git
 ```
 
 ```sh
-cd FIAP-TechChallenge-Fase1
+cd FIAP-TechChallenge-Fase2
 ```
 
 Set the environment variables
@@ -174,8 +194,12 @@ make compose-up
 ```
 
 > [!NOTE]
-> To stop the application, run `compose-stop`
-> To remove the application, run `compose-clean`
+> To stop the application, run `compose-down`  
+> To remove the application, run `compose-clean`  
+
+> [!NOTE]
+> You can check the application swagger documentation at http://localhost:8080/docs/index.html  
+> Alternatively, a postman collection is available at [here](docs/10soat-g20-tech-challenge-1.postman_collection.json)  
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -185,12 +209,7 @@ make compose-up
 kubectl apply -f k8s/
 ```
 
-> [!NOTE]
-> You can check the application swagger documentation at http://localhost:8080/docs/index.html  
-> Alternatively, a postman collection is available at [here](docs/10soat-g20-tech-challenge-1.postman_collection.json)  
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 ## :hammer_and_wrench: Development
 
@@ -210,7 +229,7 @@ kubectl apply -f k8s/
 14. Push to the branch and Open a new PR by running `make pull-request`
 
 > [!NOTE]
-> `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose.  
+> `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
 > Alternatively, you can run `make run-air` to run the application using Air (live reload)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -233,11 +252,16 @@ make test
 - [Building RESTful API with Hexagonal Architecture in Go](https://dev.to/bagashiz/building-restful-api-with-hexagonal-architecture-in-go-1mij)
 - [Hexagonal Architecture in Go](https://medium.com/@matiasvarela/hexagonal-architecture-in-go-cfd4e436faa3)
 - [DBML](https://www.dbml.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [GORM](https://gorm.io/)
+- [Gin Web Framework](https://gin-gonic.com/)
+- [Docker](https://www.docker.com/)
+- [Kubernetes](https://kubernetes.io/)
+- [The S.O.L.I.D Principles in Pictures](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
 - [Health Check Response Format for HTTP APIs](https://datatracker.ietf.org/doc/html/draft-inadarei-api-health-check-06)
 - [Event Storming](https://www.eventstorming.com/)
 - [Swagger](https://swagger.io/)
 - [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
-- [Shields.io](https://shields.io/)
 - [Alistair in the "Hexagone" 1/3](https://www.youtube.com/watch?v=th4AgBcrEHA&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&ab_channel=DDDFR)
 - [Alistair in the "Hexagone" 2/3](https://www.youtube.com/watch?v=iALcE8BPs94&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&index=2&ab_channel=DDDFR)
 - [Alistair in the "Hexagone" 3/3](https://www.youtube.com/watch?v=DAe0Bmcyt-4&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&index=3&ab_channel=DDDFR)
@@ -256,6 +280,7 @@ make test
 - [golang-clean-architecture](https://pkg.go.dev/github.com/hendrorahmat/golang-clean-architecture#section-readme)
 - [[Hands-on Guide] How to Implement Clean Architecture in Golang?](https://reliasoftware.com/blog/clean-architecture-golang)
 - [Clean DDD lessons: presenters](https://medium.com/unil-ci-software-engineering/clean-ddd-lessons-presenters-6f092308b75e)
+- [Clean Architecture: Understanding the Role of Presenters](https://medium.com/@erickzanetti/clean-architecture-understanding-the-role-of-presenters-8707ff018aa3)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

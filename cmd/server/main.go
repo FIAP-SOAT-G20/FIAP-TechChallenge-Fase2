@@ -6,6 +6,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/gateway"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/customer"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/product"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/database"
@@ -66,13 +67,16 @@ func main() {
 func setupHandlers(db *database.Database) *route.Handlers {
 	// Datasource's
 	productDS := datasource.NewProductDataSource(db.DB)
+	customerDS := datasource.NewCustomerDataSource(db.DB)
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
+	customerGateway := gateway.NewCustomerGateway(customerDS)
 
 	// Presenters
 	productPresenter := presenter.NewProductJsonPresenter()
 	// productPresenter := presenter.NewProductXmlPresenter()
+	customerPresenter := presenter.NewCustomerJsonPresenter()
 
 	// Use cases
 	listProductsUC := product.NewListProductsUseCase(productGateway, productPresenter)
@@ -80,6 +84,11 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	getProductUC := product.NewGetProductUseCase(productGateway, productPresenter)
 	updateProductUC := product.NewUpdateProductUseCase(productGateway, productPresenter)
 	deleteProductUC := product.NewDeleteProductUseCase(productGateway, productPresenter)
+	listCustomersUC := customer.NewListCustomersUseCase(customerGateway, customerPresenter)
+	createCustomerUC := customer.NewCreateCustomerUseCase(customerGateway, customerPresenter)
+	getCustomerUC := customer.NewGetCustomerUseCase(customerGateway, customerPresenter)
+	updateCustomerUC := customer.NewUpdateCustomerUseCase(customerGateway, customerPresenter)
+	deleteCustomerUC := customer.NewDeleteCustomerUseCase(customerGateway, customerPresenter)
 
 	// Controllers
 	productController := controller.NewProductController(
@@ -89,11 +98,20 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		updateProductUC,
 		deleteProductUC,
 	)
+	customerController := controller.NewCustomerController(
+		listCustomersUC,
+		createCustomerUC,
+		getCustomerUC,
+		updateCustomerUC,
+		deleteCustomerUC,
+	)
 
 	// Handlers
 	productHandler := handler.NewProductHandler(productController)
+	customerHandler := handler.NewCustomerHandler(customerController)
 
 	return &route.Handlers{
-		Product: productHandler,
+		Product:  productHandler,
+		Customer: customerHandler,
 	}
 }

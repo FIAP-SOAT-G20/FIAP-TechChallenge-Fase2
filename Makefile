@@ -5,6 +5,8 @@ VERSION=$(shell git describe --tags --always --dirty)
 NAMESPACE=tech-challenge-system
 TEST_PATH=./internal/...
 TEST_COVERAGE_FILE_NAME=coverage.out
+MIGRATION_PATH = internal/infrastructure/database/migrations
+DB_URL = postgres://postgres:postgres@localhost:5432/fastfood_10soat_g18_tc2?sslmode=disable
 
 GOCMD=go
 GOBUILD=$(GOCMD) build
@@ -14,46 +16,64 @@ GOCLEAN=$(GOCMD) clean
 
 help:
 	@echo "Usage: make <command>"
-	@echo "  make build         - Build the application"
-	@echo "  make run           - Run the application"
-	@echo "  make run-air       - Run the application with Air"
-	@echo "  make test          - Run tests"
-	@echo "  make coverage      - Run tests with coverage"
-	@echo "  make clean         - Clean up"
-	@echo "  make mock          - Generate mocks"
-	@echo "  make swagger       - Generate Swagger documentation"
-	@echo "  make lint          - Run linter"
-	@echo "  make migrate-up    - Run migrations"
-	@echo "  make migrate-down  - Roll back migrations"
-	@echo "  make install       - Install dependencies"
-	@echo "  make scan          - Run security scan"
-	@echo "  make new-branch    - Create new branch"
-	@echo "  make pull-request  - Create pull request"
-	@echo "  make docker-build  - Build Docker image"
-	@echo "  make docker-push   - Push Docker image"
-	@echo "  make compose-build - Build the application with Docker Compose"
-	@echo "  make compose-up    - Start development environment with Docker Compose"
-	@echo "  make compose-down  - Stop development environment with Docker Compose"
-	@echo "  make compose-clean - Clean the application with Docker Compose"
-	@echo "  make k8s-apply     - Apply Kubernetes manifests"
-	@echo "  make k8s-delete    - Delete Kubernetes resources"
-	@echo "  make k8s-logs      - Show application logs"
-	@echo "  make k8s-status    - Show Kubernetes resources status"
+	@echo "  make build                 - Build the application"
+	@echo "  make run-db                - Run the database"
+	@echo "  make run                   - Run the application"
+	@echo "  make stop                  - Stop the application"
+	@echo "  make stop-db               - Stop the database"
+	@echo "  make run-air               - Run the application with Air"
+	@echo "  make test                  - Run tests"
+	@echo "  make coverage              - Run tests with coverage"
+	@echo "  make clean                 - Clean up"
+	@echo "  make mock                  - Generate mocks"
+	@echo "  make swagger               - Generate Swagger documentation"
+	@echo "  make lint                  - Run linter"
+	@echo "  make migrate-create [name] - Create new migration"
+	@echo "  make migrate-up            - Run migrations"
+	@echo "  make migrate-down          - Roll back migrations"
+	@echo "  make install               - Install dependencies"
+	@echo "  make scan                  - Run security scan"
+	@echo "  make new-branch            - Create new branch"
+	@echo "  make pull-request          - Create pull request"
+	@echo "  make docker-build          - Build Docker image"
+	@echo "  make docker-push           - Push Docker image"
+	@echo "  make compose-build         - Build the application with Docker Compose"
+	@echo "  make compose-up            - Start development environment with Docker Compose"
+	@echo "  make compose-down          - Stop development environment with Docker Compose"
+	@echo "  make compose-clean         - Clean the application with Docker Compose"
+	@echo "  make k8s-apply             - Apply Kubernetes manifests"
+	@echo "  make k8s-delete            - Delete Kubernetes resources"
+	@echo "  make k8s-logs              - Show application logs"
+	@echo "  make k8s-status            - Show Kubernetes resources status"
 
 .PHONY: build
 build:
 	@echo  "🟢 Building the application..."
 	$(GOBUILD) fmt ./...
-	$(GOBUILD) -o $(APP_NAME) $(MAIN_FILE)
+	$(GOBUILD) -o bin/$(APP_NAME) $(MAIN_FILE)
+
+.PHONY: run-db
+run-db:
+	@echo  "🟢 Running the database..."
+	docker-compose up -d db dbadmin
 
 .PHONY: run
-run:
+run: build run-db
 	@echo  "🟢 Running the application..."
-	docker-compose up -d postgres
-	$(GORUN) $(MAIN_FILE)
+	$(GORUN) $(MAIN_FILE) || true
+
+.PHONY: stop
+stop:
+	@echo  "🔴 Stopping the application..."
+	docker-compose down	
+
+.PHONY: stop-db
+stop-db:
+	@echo  "🔴 Stopping the database..."
+	docker-compose down db dbadmin
 
 .PHONY: run-air
-run-air:
+run-air: build
 	@echo  "🟢 Running the application with Air..."
 	air -c air.toml
 
@@ -83,6 +103,9 @@ mock:
 	mockgen -source=internal/core/port/product_gateway_port.go -destination=internal/core/port/mocks/product_gateway_mock.go
 	mockgen -source=internal/core/port/product_presenter_port.go -destination=internal/core/port/mocks/product_presenter_mock.go
 	mockgen -source=internal/core/port/product_usecase_port.go -destination=internal/core/port/mocks/product_usecase_mock.go
+	mockgen -source=internal/core/port/customer_gateway_port.go -destination=internal/core/port/mocks/customer_gateway_mock.go
+	mockgen -source=internal/core/port/customer_presenter_port.go -destination=internal/core/port/mocks/customer_presenter_mock.go
+	mockgen -source=internal/core/port/customer_usecase_port.go -destination=internal/core/port/mocks/customer_usecase_mock.go
 	mockgen -source=internal/adapter/dto/response_writer.go -destination=internal/adapter/dto/mocks/response_writer_mock.go
 
 .PHONY: swagger
@@ -96,15 +119,24 @@ lint:
 	@echo  "🟢 Running linter..."
 	golangci-lint run
 
+.PHONY: migrate-create
+migrate-create:
+	@echo  "🟢 Creating new migration..."
+# if name is not passed, required argument
+ifndef name
+	$(error name is not set, usage example: make migrate-create name=create_table_products)
+endif
+	migrate create -ext sql -dir ${MIGRATION_PATH} -seq $(name)
+
 .PHONY: migrate-up
 migrate-up:
 	@echo  "🟢 Running migrations..."
-	migrate -path database/migrations -database "postgresql://postgres:postgres@localhost:5432/products?sslmode=disable" up
+	migrate -path ${MIGRATION_PATH} -database "${DB_URL}" -verbose up
 
 .PHONY: migrate-down
 migrate-down:
 	@echo  "🔴 Rolling back migrations..."
-	migrate -path database/migrations -database "postgresql://postgres:postgres@localhost:5432/products?sslmode=disable" down
+	migrate -path ${MIGRATION_PATH} -database "${DB_URL}" -verbose down
 
 .PHONY: install
 install:
@@ -120,7 +152,7 @@ install:
 .PHONY: docker-build
 docker-build:
 	@echo  "🟢 Building Docker image..."
-	docker build -t $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) .
+	docker build --platform linux/amd64 -t $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) .
 	docker tag $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) $(DOCKER_REGISTRY)/$(APP_NAME):latest
 
 .PHONY: docker-push
@@ -170,7 +202,7 @@ compose-build:
 .PHONY: compose-up
 compose-up:
 	@echo  "🟢 Starting development environment..."
-	docker-compose up -d --wait
+	docker-compose up -d --wait --build
 
 .PHONY: compose-down
 compose-down:
