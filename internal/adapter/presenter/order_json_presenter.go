@@ -17,28 +17,16 @@ func NewOrderJsonPresenter() port.OrderPresenter {
 	return &orderJsonPresenter{}
 }
 
-// toOrderJsonResponse convert entity.Order to OrderJsonResponse
-func toOrderJsonResponse(order *entity.Order) OrderJsonResponse {
-	return OrderJsonResponse{
-		ID:         order.ID,
-		CustomerID: order.CustomerID,
-		TotalBill:  order.TotalBill,
-		Status:     order.Status.ToString(),
-		CreatedAt:  order.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
-		UpdatedAt:  order.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
-	}
-}
-
 // Present write the response to the client
 func (p *orderJsonPresenter) Present(pp dto.OrderPresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.Order:
-		output := toOrderJsonResponse(v)
+		output := ToOrderJsonResponse(v)
 		pp.Writer.JSON(http.StatusOK, output)
 	case []*entity.Order:
 		orderOutputs := make([]OrderJsonResponse, len(v))
 		for i, order := range v {
-			orderOutputs[i] = toOrderJsonResponse(order)
+			orderOutputs[i] = ToOrderJsonResponse(order)
 		}
 
 		output := &OrderJsonPaginatedResponse{
@@ -56,4 +44,29 @@ func (p *orderJsonPresenter) Present(pp dto.OrderPresenterInput) {
 			pp.Writer.JSON(http.StatusInternalServerError, err)
 		}
 	}
+}
+
+// ToOrderJsonResponse convert entity.Order to OrderJsonResponse
+func ToOrderJsonResponse(order *entity.Order) OrderJsonResponse {
+	return OrderJsonResponse{
+		ID:         order.ID,
+		CustomerID: order.CustomerID,
+		TotalBill:  order.TotalBill,
+		Status:     order.Status.ToString(),
+		Products:   ToProductsJsonResponse(order.OrderProducts),
+		CreatedAt:  order.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
+		UpdatedAt:  order.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
+	}
+}
+
+// ToProductsJsonResponse convert a slice of entity.OrderProduct to a slice of ProductsJsonResponse
+func ToProductsJsonResponse(orderProducts []entity.OrderProduct) []ProductsJsonResponse {
+	products := make([]ProductsJsonResponse, len(orderProducts))
+	for i, orderProduct := range orderProducts {
+		products[i] = ProductsJsonResponse{
+			ProductJsonResponse: ToProductJsonResponse(&orderProduct.Product),
+			Quantity:            orderProduct.Quantity,
+		}
+	}
+	return products
 }

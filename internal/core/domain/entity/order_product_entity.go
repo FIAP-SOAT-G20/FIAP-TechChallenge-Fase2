@@ -8,8 +8,8 @@ type OrderProduct struct {
 	OrderID   uint64
 	ProductID uint64
 	Quantity  uint32
-	// Order     Order // Mover para response
-	// Product   Product // Mover para response
+	Order     Order
+	Product   Product
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

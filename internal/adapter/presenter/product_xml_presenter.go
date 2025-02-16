@@ -17,19 +17,6 @@ func NewProductXmlPresenter() port.ProductPresenter {
 	return &productXmlPresenter{}
 }
 
-// toProductXmlResponse converts a Product entity to a ProductXmlResponse
-func toProductXmlResponse(product *entity.Product) ProductXmlResponse {
-	return ProductXmlResponse{
-		ID:          product.ID,
-		Name:        product.Name,
-		Description: product.Description,
-		Price:       product.Price,
-		CategoryID:  product.CategoryID,
-		CreatedAt:   product.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
-		UpdatedAt:   product.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
-	}
-}
-
 // Present writes the response to the client
 func (p *productXmlPresenter) Present(pp dto.ProductPresenterInput) {
 	switch v := pp.Result.(type) {
@@ -56,5 +43,18 @@ func (p *productXmlPresenter) Present(pp dto.ProductPresenterInput) {
 		if err != nil {
 			pp.Writer.JSON(http.StatusInternalServerError, err)
 		}
+	}
+}
+
+// toProductXmlResponse converts a Product entity to a ProductXmlResponse
+func toProductXmlResponse(product *entity.Product) ProductXmlResponse {
+	return ProductXmlResponse{
+		ID:          product.ID,
+		Name:        product.Name,
+		Description: product.Description,
+		Price:       product.Price,
+		CategoryID:  product.CategoryID,
+		CreatedAt:   product.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
+		UpdatedAt:   product.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
 	}
 }

@@ -17,29 +17,16 @@ func NewOrderProductJsonPresenter() port.OrderProductPresenter {
 	return &orderProductJsonPresenter{}
 }
 
-// toOrderProductJsonResponse convert entity.OrderProduct to OrderProductJsonResponse
-func toOrderProductJsonResponse(orderProduct *entity.OrderProduct) OrderProductJsonResponse {
-	return OrderProductJsonResponse{
-		OrderID:   orderProduct.OrderID,
-		ProductID: orderProduct.ProductID,
-		Quantity:  orderProduct.Quantity,
-		// Order: 		toOrderJsonResponse(orderProduct.Order),
-		// Product: 	toProductJsonResponse(orderProduct.Product),
-		CreatedAt: orderProduct.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
-		UpdatedAt: orderProduct.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
-	}
-}
-
 // Present write the response to the client
 func (p *orderProductJsonPresenter) Present(pp dto.OrderProductPresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.OrderProduct:
-		output := toOrderProductJsonResponse(v)
+		output := ToOrderProductJsonResponse(v)
 		pp.Writer.JSON(http.StatusOK, output)
 	case []*entity.OrderProduct:
 		orderProductOutputs := make([]OrderProductJsonResponse, len(v))
 		for i, orderProduct := range v {
-			orderProductOutputs[i] = toOrderProductJsonResponse(orderProduct)
+			orderProductOutputs[i] = ToOrderProductJsonResponse(orderProduct)
 		}
 
 		output := &OrderProductJsonPaginatedResponse{
@@ -56,5 +43,18 @@ func (p *orderProductJsonPresenter) Present(pp dto.OrderProductPresenterInput) {
 		if err != nil {
 			pp.Writer.JSON(http.StatusInternalServerError, err)
 		}
+	}
+}
+
+// ToOrderProductJsonResponse convert entity.OrderProduct to OrderProductJsonResponse
+func ToOrderProductJsonResponse(orderProduct *entity.OrderProduct) OrderProductJsonResponse {
+	return OrderProductJsonResponse{
+		OrderID:   orderProduct.OrderID,
+		ProductID: orderProduct.ProductID,
+		Quantity:  orderProduct.Quantity,
+		Order:     ToOrderJsonResponse(&orderProduct.Order),
+		Product:   ToProductJsonResponse(&orderProduct.Product),
+		CreatedAt: orderProduct.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
+		UpdatedAt: orderProduct.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
 	}
 }

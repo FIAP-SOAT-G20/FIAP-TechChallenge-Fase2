@@ -25,7 +25,7 @@ func NewOrderDataSource(db *gorm.DB) port.OrderDataSource {
 
 func (ds *orderDataSource) FindByID(ctx context.Context, id uint64) (*entity.Order, error) {
 	var order entity.Order
-	result := ds.db.WithContext(ctx).First(&order, id)
+	result := ds.db.WithContext(ctx).Preload("OrderProducts.Product").First(&order, id)
 	if result.Error != nil {
 		if result.Error == gorm.ErrRecordNotFound {
 			return nil, nil

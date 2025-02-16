@@ -25,7 +25,7 @@ func NewOrderProductDataSource(db *gorm.DB) port.OrderProductDataSource {
 
 func (ds *orderProductDataSource) FindByID(ctx context.Context, orderId, productId uint64) (*entity.OrderProduct, error) {
 	var orderProduct entity.OrderProduct
-	result := ds.db.WithContext(ctx).First(&orderProduct, "order_id = ? AND product_id = ?", orderId, productId)
+	result := ds.db.WithContext(ctx).Preload("Order").Preload("Product").First(&orderProduct, "order_id = ? AND product_id = ?", orderId, productId)
 	if result.Error != nil {
 		if result.Error == gorm.ErrRecordNotFound {
 			return nil, nil
@@ -39,7 +39,7 @@ func (ds *orderProductDataSource) FindAll(ctx context.Context, filters map[strin
 	var orderProducts []*entity.OrderProduct
 	var total int64
 
-	query := ds.db.WithContext(ctx)
+	query := ds.db.WithContext(ctx).Preload("Order").Preload("Product")
 
 	// Apply filters
 	for key, value := range filters {
@@ -69,6 +69,12 @@ func (ds *orderProductDataSource) Create(ctx context.Context, orderProduct *enti
 	if err := ds.db.WithContext(ctx).Create(orderProduct).Error; err != nil {
 		return fmt.Errorf("error creating orderProduct: %w", err)
 	}
+
+	// Preload related entities
+	if err := ds.db.WithContext(ctx).Preload("Order").Preload("Product").First(orderProduct, "order_id = ? AND product_id = ?", orderProduct.OrderID, orderProduct.ProductID).Error; err != nil {
+		return fmt.Errorf("error preloading orderProduct: %w", err)
+	}
+
 	return nil
 }
 

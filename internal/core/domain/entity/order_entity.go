@@ -11,9 +11,9 @@ type Order struct {
 	Status     OrderStatus
 	// Payment       Payment // Mover para response
 	// Customer Customer // Mover para response
-	// OrderProducts []OrderProduct // Mover para response
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	OrderProducts []OrderProduct // Mover para response
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
 }
 
 func NewOrder(consumerID uint64) *Order {
@@ -39,5 +39,6 @@ func (p *Order) Update(customerID uint64, totalBill float32, status OrderStatus)
 		// 	p.UpdateStatus(status) // TODO: Validate status transition
 		p.Status = status
 	}
+	p.OrderProducts = nil
 	p.UpdatedAt = time.Now()
 }
