@@ -93,7 +93,7 @@ func (h *CustomerHandler) ListCustomers(c *gin.Context) {
 //
 //	@Summary		Create customer
 //	@Description	Creates a new customer
-//	@Tags			customers
+//	@Tags			customers, sign-up
 //	@Accept			json
 //	@Produce		json
 //	@Param			customer	body		CreateCustomerBodyRequest		true	"Customer data"

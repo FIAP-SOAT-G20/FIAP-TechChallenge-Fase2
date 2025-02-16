@@ -223,12 +223,12 @@ func (h *OrderHandler) UpdateOrder(c *gin.Context) {
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
-//	@Param			id		path		int							true	"Order ID"
-//	@Param			order	body		UpdateOrderPartilBodyRequest		true	"Order data"
-//	@Success		200		{object}	presenter.OrderJsonResponse	"OK"
-//	@Failure		400		{object}	middleware.ErrorResponse	"Bad Request"
-//	@Failure		404		{object}	middleware.ErrorResponse	"Not Found"
-//	@Failure		500		{object}	middleware.ErrorResponse	"Internal Server Error"
+//	@Param			id		path		int								true	"Order ID"
+//	@Param			order	body		UpdateOrderPartilBodyRequest	true	"Order data"
+//	@Success		200		{object}	presenter.OrderJsonResponse		"OK"
+//	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
+//	@Failure		404		{object}	middleware.ErrorResponse		"Not Found"
+//	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/orders/{id} [patch]
 func (h *OrderHandler) UpdateOrderPartial(c *gin.Context) {
 	var reqUri UpdateOrderUriRequest
