@@ -5,7 +5,6 @@ import "time"
 type CreateOrderProductInput struct {
 	OrderID   uint64
 	ProductID uint64
-	Price     float32
 	Quantity  uint32
 	// Order     Order
 	// Product   Product
@@ -15,9 +14,10 @@ type CreateOrderProductInput struct {
 }
 
 type UpdateOrderProductInput struct {
-	Price    float32
-	Quantity uint32
-	Writer   ResponseWriter
+	OrderID   uint64
+	ProductID uint64
+	Quantity  uint32
+	Writer    ResponseWriter
 }
 
 type GetOrderProductInput struct {

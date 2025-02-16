@@ -18,10 +18,10 @@ type OrderHandler struct {
 }
 
 type ListOrdersQueryRequest struct {
-	Page       int    `form:"page,default=1" example:"1"`
-	Limit      int    `form:"limit,default=10" example:"10"`
 	CustomerID uint64 `form:"customer_id" example:"1" default:"0"`
 	Status     string `form:"status" example:"PENDING"`
+	Page       int    `form:"page,default=1" example:"1"`
+	Limit      int    `form:"limit,default=10" example:"10"`
 }
 
 type CreateOrderBodyRequest struct {
@@ -61,7 +61,7 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 	router.POST("/", h.CreateOrder)
 	router.GET("/:id", h.GetOrder)
 	router.PUT("/:id", h.UpdateOrder)
-	router.PATCH("/:id", h.UpdateOrderPartial)
+	router.PATCH("/:id", h.UpdateOrderPartial) // TODO: Add test
 	router.DELETE("/:id", h.DeleteOrder)
 }
 
