@@ -99,6 +99,19 @@ definitions:
     - status
     - total_bill
     type: object
+  handler.UpdateOrderPartilBodyRequest:
+    properties:
+      customer_id:
+        example: 1
+        type: integer
+      status:
+        allOf:
+        - $ref: '#/definitions/entity.OrderStatus'
+        example: PENDING
+      total_bill:
+        example: 100
+        type: number
+    type: object
   handler.UpdateProductRequest:
     properties:
       category_id:
@@ -341,6 +354,7 @@ paths:
       summary: Create customer
       tags:
       - customers
+      - sign-up
   /customers/{id}:
     delete:
       description: Deletes a customer by ID
@@ -570,6 +584,54 @@ paths:
           schema:
             $ref: '#/definitions/middleware.ErrorResponse'
       summary: Get order
+      tags:
+      - orders
+    patch:
+      consumes:
+      - application/json
+      description: |-
+        Partially updates an existing order
+        The status are: **OPEN**, **CANCELLED**, **PENDING**, **RECEIVED**, **PREPARING**, **READY**, **COMPLETED**
+        ## Transition of status:
+        - OPEN      -> CANCELLED || PENDING
+        - CANCELLED -> {},
+        - PENDING   -> OPEN || RECEIVED
+        - RECEIVED  -> PREPARING
+        - PREPARING -> READY
+        - READY     -> COMPLETED
+        - COMPLETED -> {}
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Order data
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UpdateOrderPartilBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.OrderJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Partial update order
       tags:
       - orders
     put:
