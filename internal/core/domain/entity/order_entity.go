@@ -20,15 +20,15 @@ func NewOrder(consumerID uint64) *Order {
 	order := &Order{
 		CustomerID: consumerID,
 		// TotalBill:  totalBill,
-		Status:     OPEN,
-		CreatedAt:  time.Now(),
-		UpdatedAt:  time.Now(),
+		Status:    OPEN,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
 	}
 
 	return order
 }
 
-func (p *Order) Update(customerID uint64, totalBill float32, status OrderStatus) { 
+func (p *Order) Update(customerID uint64, totalBill float32, status OrderStatus) {
 	p.CustomerID = customerID
 	p.TotalBill = totalBill
 	p.Status = status

@@ -17,12 +17,12 @@ type OrderProduct struct {
 
 func NewOrderProduct(orderID uint64, productID uint64, price float32, quantity uint32) *OrderProduct {
 	orderProduct := &OrderProduct{
-		OrderID:     orderID,
-		ProductID:   productID,
-		Price:       price,
-		Quantity: 	quantity,
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
+		OrderID:   orderID,
+		ProductID: productID,
+		Price:     price,
+		Quantity:  quantity,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
 	}
 
 	return orderProduct

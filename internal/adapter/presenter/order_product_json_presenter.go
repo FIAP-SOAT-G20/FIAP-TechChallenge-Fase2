@@ -20,10 +20,10 @@ func NewOrderProductJsonPresenter() port.OrderProductPresenter {
 // toOrderProductJsonResponse convert entity.OrderProduct to OrderProductJsonResponse
 func toOrderProductJsonResponse(orderProduct *entity.OrderProduct) OrderProductJsonResponse {
 	return OrderProductJsonResponse{
-		OrderID: 	orderProduct.OrderID,
-		ProductID: 	orderProduct.ProductID,
-		Quantity: 	orderProduct.Quantity,
-		Price: 		orderProduct.Price,
+		OrderID:   orderProduct.OrderID,
+		ProductID: orderProduct.ProductID,
+		Quantity:  orderProduct.Quantity,
+		Price:     orderProduct.Price,
 		// Order: 		toOrderJsonResponse(orderProduct.Order),
 		// Product: 	toProductJsonResponse(orderProduct.Product),
 		CreatedAt: orderProduct.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),

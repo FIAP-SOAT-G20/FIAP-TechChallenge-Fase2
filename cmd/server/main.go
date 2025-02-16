@@ -115,8 +115,8 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		deleteCustomerUC,
 	)
 	orderController := controller.NewOrderController(
-		listOrdersUC, 
-		createOrderUC, 
+		listOrdersUC,
+		createOrderUC,
 		getOrderUC,
 		updateOrderUC,
 		deleteOrderUC,

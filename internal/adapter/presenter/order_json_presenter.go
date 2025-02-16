@@ -20,12 +20,12 @@ func NewOrderJsonPresenter() port.OrderPresenter {
 // toOrderJsonResponse convert entity.Order to OrderJsonResponse
 func toOrderJsonResponse(order *entity.Order) OrderJsonResponse {
 	return OrderJsonResponse{
-		ID:        order.ID,
+		ID:         order.ID,
 		CustomerID: order.CustomerID,
-		TotalBill: order.TotalBill,
-		Status: 	order.Status.ToString(),
-		CreatedAt: order.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
-		UpdatedAt: order.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
+		TotalBill:  order.TotalBill,
+		Status:     order.Status.ToString(),
+		CreatedAt:  order.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
+		UpdatedAt:  order.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
 	}
 }
 
