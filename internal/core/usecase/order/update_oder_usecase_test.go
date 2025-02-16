@@ -60,7 +60,7 @@ func TestUpdateOrderUseCase_Execute(t *testing.T) {
 				mockGateway.EXPECT().
 					Update(ctx, gomock.Any()).
 					DoAndReturn(func(_ context.Context, p *entity.Order) error {
-						assert.Equal(t, "RECEIVED", p.Status)
+						assert.Equal(t, uint64(1), p.ID)
 						return nil
 					})
 

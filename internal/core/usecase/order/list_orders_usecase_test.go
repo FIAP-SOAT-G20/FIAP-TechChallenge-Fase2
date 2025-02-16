@@ -31,7 +31,7 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 			ID:         1,
 			CustomerID: uint64(1),
 			TotalBill:  99.99,
-			Status:     "PENDING",
+			Status:     entity.PENDING,
 			CreatedAt:  currentTime,
 			UpdatedAt:  currentTime,
 		},
@@ -39,7 +39,7 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 			ID:         2,
 			CustomerID: uint64(2),
 			TotalBill:  199.99,
-			Status:     "DELIVERED",
+			Status:     entity.PENDING,
 			CreatedAt:  currentTime,
 			UpdatedAt:  currentTime,
 		},
@@ -61,7 +61,7 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), "", 1, 10).
+					FindAll(ctx, uint64(0), entity.OrderStatus(""), 1, 10).
 					Return(mockOrders, int64(2), nil)
 
 				mockPresenter.EXPECT().
@@ -84,7 +84,7 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), "", 1, 10).
+					FindAll(ctx, uint64(0), entity.OrderStatus(""), 1, 10).
 					Return(nil, int64(0), assert.AnError)
 			},
 			expectError: true,
@@ -100,7 +100,7 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), "PENDING", 1, 10).
+					FindAll(ctx, uint64(0), entity.OrderStatus("PENDING"), 1, 10).
 					Return(mockOrders, int64(2), nil)
 
 				mockPresenter.EXPECT().
@@ -124,7 +124,7 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(1), "", 1, 10).
+					FindAll(ctx, uint64(1), entity.OrderStatus(""), 1, 10).
 					Return(mockOrders, int64(2), nil)
 
 				mockPresenter.EXPECT().
