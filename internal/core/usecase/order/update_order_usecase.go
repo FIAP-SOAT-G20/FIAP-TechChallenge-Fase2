@@ -52,7 +52,7 @@ func (uc *updateOrderUseCase) Execute(ctx context.Context, input dto.UpdateOrder
 		// }
 	}
 
-	order.Update(input.CustomerID, input.TotalBill, input.Status)
+	order.Update(input.CustomerID, input.Status)
 
 	if err := uc.gateway.Update(ctx, order); err != nil {
 		return domain.NewInternalError(err)

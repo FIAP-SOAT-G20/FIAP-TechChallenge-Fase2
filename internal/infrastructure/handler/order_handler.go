@@ -38,13 +38,11 @@ type UpdateOrderUriRequest struct {
 
 type UpdateOrderBodyRequest struct {
 	CustomerID uint64             `json:"customer_id" binding:"required" example:"1"`
-	TotalBill  float32            `json:"total_bill" binding:"required" example:"100.00"`
-	Status     entity.OrderStatus `json:"status" binding:"required" example:"PENDING"`
+	Status     entity.OrderStatus `json:"status" binding:"required,order_status" example:"PENDING"`
 }
 
 type UpdateOrderPartilBodyRequest struct {
 	CustomerID uint64             `json:"customer_id" example:"1"`
-	TotalBill  float32            `json:"total_bill" example:"100.00"`
 	Status     entity.OrderStatus `json:"status" example:"PENDING"`
 }
 
@@ -61,7 +59,7 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 	router.POST("/", h.CreateOrder)
 	router.GET("/:id", h.GetOrder)
 	router.PUT("/:id", h.UpdateOrder)
-	router.PATCH("/:id", h.UpdateOrderPartial) // TODO: Add test
+	router.PATCH("/:id", h.UpdateOrderPartial)
 	router.DELETE("/:id", h.DeleteOrder)
 }
 
@@ -195,7 +193,6 @@ func (h *OrderHandler) UpdateOrder(c *gin.Context) {
 	input := dto.UpdateOrderInput{
 		ID:         reqUri.ID,
 		CustomerID: req.CustomerID,
-		TotalBill:  req.TotalBill,
 		Status:     req.Status,
 		Writer:     c,
 	}
@@ -247,7 +244,6 @@ func (h *OrderHandler) UpdateOrderPartial(c *gin.Context) {
 	input := dto.UpdateOrderInput{
 		ID:         reqUri.ID,
 		CustomerID: req.CustomerID,
-		TotalBill:  req.TotalBill,
 		Status:     req.Status,
 		Writer:     c,
 	}

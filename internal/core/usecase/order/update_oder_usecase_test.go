@@ -49,7 +49,6 @@ func TestUpdateOrderUseCase_Execute(t *testing.T) {
 				ID:         1,
 				CustomerID: 1,
 				Status:     "RECEIVED",
-				TotalBill:  101.0,
 				Writer:     mockWriter,
 			},
 			setupMocks: func() {
@@ -75,7 +74,6 @@ func TestUpdateOrderUseCase_Execute(t *testing.T) {
 				ID:         1,
 				CustomerID: 1,
 				Status:     "RECEIVED",
-				TotalBill:  101.0,
 				Writer:     mockWriter,
 			},
 			setupMocks: func() {
@@ -92,7 +90,6 @@ func TestUpdateOrderUseCase_Execute(t *testing.T) {
 				ID:         1,
 				CustomerID: 1,
 				Status:     "RECEIVED",
-				TotalBill:  101.0,
 				Writer:     mockWriter,
 			},
 			setupMocks: func() {

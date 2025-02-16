@@ -93,7 +93,6 @@ func TestOrderController_UpdateOrder(t *testing.T) {
 	input := dto.UpdateOrderInput{
 		ID:         uint64(1),
 		CustomerID: 1,
-		TotalBill:  100.0,
 		Status:     "PENDING",
 		Writer:     mockResponseWriter,
 	}

@@ -10,7 +10,6 @@ type CreateOrderInput struct {
 type UpdateOrderInput struct {
 	ID         uint64
 	CustomerID uint64
-	TotalBill  float32
 	Status     entity.OrderStatus
 	// Payment       Payment
 	Writer ResponseWriter
