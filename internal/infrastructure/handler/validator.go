@@ -18,7 +18,10 @@ func GetValidator() *validator.Validate {
 
 		// Here you can register custom validation functions
 		// instance.RegisterValidation("custom", customValidation)
-		instance.RegisterValidation("order_status", OrderStatusValidator)
+		err := instance.RegisterValidation("order_status", OrderStatusValidator)
+		if err != nil {
+			panic(err)
+		}
 	})
 
 	return instance
