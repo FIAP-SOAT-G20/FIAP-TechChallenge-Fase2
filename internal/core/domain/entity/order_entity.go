@@ -9,9 +9,9 @@ type Order struct {
 	CustomerID uint64
 	TotalBill  float32
 	Status     OrderStatus
-	// Payment       Payment // Mover para response
-	// Customer Customer // Mover para response
-	OrderProducts []OrderProduct // Mover para response
+	// Payment       Payment // TODO: Add payment
+	// Customer Customer // TODO: Add customer
+	OrderProducts []OrderProduct
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 }

@@ -51,7 +51,7 @@ func ToOrderJsonResponse(order *entity.Order) OrderJsonResponse {
 	return OrderJsonResponse{
 		ID:         order.ID,
 		CustomerID: order.CustomerID,
-		TotalBill:  order.TotalBill,
+		TotalBill:  calculateTotalBill(order.OrderProducts),
 		Status:     order.Status.ToString(),
 		Products:   ToProductsJsonResponse(order.OrderProducts),
 		CreatedAt:  order.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
@@ -69,4 +69,13 @@ func ToProductsJsonResponse(orderProducts []entity.OrderProduct) []ProductsJsonR
 		}
 	}
 	return products
+}
+
+// calculateTotalBill calculate the total bill of an order
+func calculateTotalBill(orderProducts []entity.OrderProduct) float64 {
+	var total float64
+	for _, orderProduct := range orderProducts {
+		total += orderProduct.Product.Price * float64(orderProduct.Quantity)
+	}
+	return total
 }
