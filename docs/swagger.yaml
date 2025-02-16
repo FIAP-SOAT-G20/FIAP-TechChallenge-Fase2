@@ -1,6 +1,26 @@
 basePath: /api/v1
 definitions:
-  handler.CustomerCreateRequest:
+  entity.OrderStatus:
+    enum:
+    - UNDEFINDED
+    - OPEN
+    - CANCELLED
+    - PENDING
+    - RECEIVED
+    - PREPARING
+    - READY
+    - COMPLETED
+    type: string
+    x-enum-varnames:
+    - UNDEFINDED
+    - OPEN
+    - CANCELLED
+    - PENDING
+    - RECEIVED
+    - PREPARING
+    - READY
+    - COMPLETED
+  handler.CreateCustomerBodyRequest:
     properties:
       cpf:
         example: 123.456.789-00
@@ -18,7 +38,37 @@ definitions:
     - email
     - name
     type: object
-  handler.CustomerUpdateRequest:
+  handler.CreateOrderBodyRequest:
+    properties:
+      customer_id:
+        example: 1
+        type: integer
+    required:
+    - customer_id
+    type: object
+  handler.CreateProductRequest:
+    properties:
+      category_id:
+        example: 1
+        type: integer
+      description:
+        example: Product A description
+        maxLength: 500
+        type: string
+      name:
+        example: Product A
+        maxLength: 100
+        minLength: 3
+        type: string
+      price:
+        example: 99.99
+        type: number
+    required:
+    - category_id
+    - name
+    - price
+    type: object
+  handler.UpdateCustomerBodyRequest:
     properties:
       email:
         example: test.customer.1@email.com
@@ -32,17 +82,34 @@ definitions:
     - email
     - name
     type: object
-  handler.ProductRequest:
+  handler.UpdateOrderBodyRequest:
+    properties:
+      customer_id:
+        example: 1
+        type: integer
+      status:
+        allOf:
+        - $ref: '#/definitions/entity.OrderStatus'
+        example: PENDING
+      total_bill:
+        example: 100
+        type: number
+    required:
+    - customer_id
+    - status
+    - total_bill
+    type: object
+  handler.UpdateProductRequest:
     properties:
       category_id:
         example: 1
         type: integer
       description:
-        example: Descrição do Produto A
+        example: Product A description
         maxLength: 500
         type: string
       name:
-        example: Produto A
+        example: Product A
         maxLength: 100
         minLength: 3
         type: string
@@ -92,8 +159,66 @@ definitions:
         example: 1
         type: integer
       name:
-        example: Produto A
+        example: John Doe
         type: string
+      updated_at:
+        example: "2024-02-09T10:00:00Z"
+        type: string
+    type: object
+  presenter.OrderJsonPaginatedResponse:
+    properties:
+      limit:
+        example: 10
+        type: integer
+      orders:
+        items:
+          $ref: '#/definitions/presenter.OrderJsonResponse'
+        type: array
+      page:
+        example: 1
+        type: integer
+      total:
+        example: 100
+        type: integer
+    type: object
+  presenter.OrderJsonResponse:
+    properties:
+      created_at:
+        example: "2024-02-09T10:00:00Z"
+        type: string
+      customer_id:
+        type: integer
+      id:
+        type: integer
+      products:
+        items:
+          $ref: '#/definitions/presenter.OrderProductJsonResponse'
+        type: array
+      status:
+        type: string
+      total_bill:
+        type: number
+      updated_at:
+        example: "2024-02-09T10:00:00Z"
+        type: string
+    type: object
+  presenter.OrderProductJsonResponse:
+    properties:
+      created_at:
+        example: "2024-02-09T10:00:00Z"
+        type: string
+      order:
+        $ref: '#/definitions/presenter.OrderJsonResponse'
+      order_id:
+        type: integer
+      price:
+        type: number
+      product:
+        $ref: '#/definitions/presenter.ProductJsonResponse'
+      product_id:
+        type: integer
+      quantity:
+        type: integer
       updated_at:
         example: "2024-02-09T10:00:00Z"
         type: string
@@ -197,7 +322,7 @@ paths:
         name: customer
         required: true
         schema:
-          $ref: '#/definitions/handler.CustomerCreateRequest'
+          $ref: '#/definitions/handler.CreateCustomerBodyRequest'
       produces:
       - application/json
       responses:
@@ -292,7 +417,7 @@ paths:
         name: customer
         required: true
         schema:
-          $ref: '#/definitions/handler.CustomerUpdateRequest'
+          $ref: '#/definitions/handler.UpdateCustomerBodyRequest'
       produces:
       - application/json
       responses:
@@ -315,6 +440,176 @@ paths:
       summary: Update customer
       tags:
       - customers
+  /orders:
+    get:
+      consumes:
+      - application/json
+      description: List all orders
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Filter by name
+        in: query
+        name: name
+        type: string
+      - description: Filter by category ID
+        in: query
+        name: category_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.OrderJsonPaginatedResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: List orders
+      tags:
+      - orders
+    post:
+      consumes:
+      - application/json
+      description: Creates a new order
+      parameters:
+      - description: Order data
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CreateOrderBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/presenter.OrderJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Create order
+      tags:
+      - orders
+  /orders/{id}:
+    delete:
+      description: Deletes a order by ID
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Delete order
+      tags:
+      - orders
+    get:
+      consumes:
+      - application/json
+      description: Search for a order by ID
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.OrderJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Get order
+      tags:
+      - orders
+    put:
+      consumes:
+      - application/json
+      description: Update an existing order
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Order data
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UpdateOrderBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.OrderJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Update order
+      tags:
+      - orders
   /products:
     get:
       consumes:
@@ -367,7 +662,7 @@ paths:
         name: product
         required: true
         schema:
-          $ref: '#/definitions/handler.ProductRequest'
+          $ref: '#/definitions/handler.CreateProductRequest'
       produces:
       - application/json
       responses:
@@ -462,7 +757,7 @@ paths:
         name: product
         required: true
         schema:
-          $ref: '#/definitions/handler.ProductRequest'
+          $ref: '#/definitions/handler.UpdateProductRequest'
       produces:
       - application/json
       responses:
