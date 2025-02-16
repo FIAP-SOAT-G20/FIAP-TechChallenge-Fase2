@@ -3,6 +3,7 @@ package handler
 import (
 	"sync"
 
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -17,7 +18,13 @@ func GetValidator() *validator.Validate {
 
 		// Here you can register custom validation functions
 		// instance.RegisterValidation("custom", customValidation)
+		instance.RegisterValidation("order_status", OrderStatusValidator)
 	})
 
 	return instance
+}
+
+func OrderStatusValidator(fl validator.FieldLevel) bool {
+	status := fl.Field().String()
+	return entity.IsValidOrderStatus(status)
 }
