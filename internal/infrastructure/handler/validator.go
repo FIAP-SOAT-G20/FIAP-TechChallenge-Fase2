@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"sync"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
@@ -18,7 +19,7 @@ func GetValidator() *validator.Validate {
 
 		// Here you can register custom validation functions
 		// instance.RegisterValidation("custom", customValidation)
-		err := instance.RegisterValidation("order_status", OrderStatusValidator)
+		err := instance.RegisterValidation("order_status_exists", OrderStatusValidator)
 		if err != nil {
 			panic(err)
 		}
@@ -29,5 +30,6 @@ func GetValidator() *validator.Validate {
 
 func OrderStatusValidator(fl validator.FieldLevel) bool {
 	status := fl.Field().String()
+	fmt.Println("OrderStatusValidator status", entity.IsValidOrderStatus(status))
 	return entity.IsValidOrderStatus(status)
 }

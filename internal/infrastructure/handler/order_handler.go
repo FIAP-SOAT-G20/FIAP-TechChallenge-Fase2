@@ -38,7 +38,7 @@ type UpdateOrderUriRequest struct {
 
 type UpdateOrderBodyRequest struct {
 	CustomerID uint64             `json:"customer_id" binding:"required" example:"1"`
-	Status     entity.OrderStatus `json:"status" binding:"required,order_status" example:"PENDING"`
+	Status     entity.OrderStatus `json:"status" binding:"required,order_status_exists" example:"PENDING"`
 }
 
 type UpdateOrderPartilBodyRequest struct {

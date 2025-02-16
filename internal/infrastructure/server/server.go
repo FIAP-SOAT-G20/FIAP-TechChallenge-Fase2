@@ -11,7 +11,11 @@ import (
 	"syscall"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/route"
+	"github.com/gin-gonic/gin/binding"
+
+	"github.com/go-playground/validator/v10"
 )
 
 type Server struct {
@@ -23,6 +27,7 @@ type Server struct {
 func NewServer(cfg *config.Config, logger *slog.Logger, handlers *route.Handlers) *Server {
 	router := route.NewRouter(logger, cfg.Environment)
 
+	registerCustomValidation()
 	router.RegisterRoutes(handlers)
 
 	return &Server{
@@ -83,4 +88,10 @@ func gracefullyShutdown(server *http.Server, chanError chan error, s *Server) {
 			return
 		}
 	}()
+}
+
+func registerCustomValidation() {
+	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		v.RegisterValidation("order_status_exists", handler.OrderStatusValidator)
+	}
 }
