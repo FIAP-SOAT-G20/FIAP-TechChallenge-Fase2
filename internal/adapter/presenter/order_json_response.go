@@ -3,7 +3,7 @@ package presenter
 type OrderJsonResponse struct {
 	ID         uint64                 `json:"id"`
 	CustomerID uint64                 `json:"customer_id"`
-	TotalBill  float32                `json:"total_bill"`
+	TotalBill  float32                `json:"total_bill"` // TODO: Auto calculate
 	Status     string                 `json:"status"`
 	Products   []ProductsJsonResponse `json:"products,omitempty"`
 	CreatedAt  string                 `json:"created_at" example:"2024-02-09T10:00:00Z"`
