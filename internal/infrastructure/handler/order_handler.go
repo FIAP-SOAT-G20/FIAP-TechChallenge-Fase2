@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -41,6 +42,12 @@ type UpdateOrderBodyRequest struct {
 	Status     entity.OrderStatus `json:"status" binding:"required" example:"PENDING"`
 }
 
+type UpdateOrderPartilBodyRequest struct {
+	CustomerID uint64             `json:"customer_id" example:"1"`
+	TotalBill  float32            `json:"total_bill" example:"100.00"`
+	Status     entity.OrderStatus `json:"status" example:"PENDING"`
+}
+
 type DeleteOrderUriRequest struct {
 	ID uint64 `uri:"id" binding:"required"`
 }
@@ -54,7 +61,7 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 	router.POST("/", h.CreateOrder)
 	router.GET("/:id", h.GetOrder)
 	router.PUT("/:id", h.UpdateOrder)
-	// router.PATCH("/:id", h.UpdateOrderPartial)
+	router.PATCH("/:id", h.UpdateOrderPartial)
 	router.DELETE("/:id", h.DeleteOrder)
 }
 
@@ -82,7 +89,7 @@ func (h *OrderHandler) ListOrders(c *gin.Context) {
 
 	input := dto.ListOrdersInput{
 		CustomerID: req.CustomerID,
-		Status:     entity.OrderStatus(strings.ToUpper(req.Status)), // TODO: Validate status wit aa custom validator
+		Status:     entity.OrderStatus(strings.ToUpper(req.Status)), // TODO: Validate status wit a custom validator
 		Page:       req.Page,
 		Limit:      req.Limit,
 		Writer:     c,
@@ -181,6 +188,58 @@ func (h *OrderHandler) UpdateOrder(c *gin.Context) {
 
 	var req UpdateOrderBodyRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
+		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
+		return
+	}
+
+	input := dto.UpdateOrderInput{
+		ID:         reqUri.ID,
+		CustomerID: req.CustomerID,
+		TotalBill:  req.TotalBill,
+		Status:     req.Status,
+		Writer:     c,
+	}
+
+	err := h.controller.UpdateOrder(c.Request.Context(), input)
+	if err != nil {
+		_ = c.Error(err)
+		return
+	}
+}
+
+// UpdateOrderPartial godoc
+//
+//	@Summary		Partial update order
+//	@Description	Partially updates an existing order
+//	@Description	The status are: **OPEN**, **CANCELLED**, **PENDING**, **RECEIVED**, **PREPARING**, **READY**, **COMPLETED**
+//	@Description	## Transition of status:
+//	@Description	- OPEN      -> CANCELLED || PENDING
+//	@Description	- CANCELLED -> {},
+//	@Description	- PENDING   -> OPEN || RECEIVED
+//	@Description	- RECEIVED  -> PREPARING
+//	@Description	- PREPARING -> READY
+//	@Description	- READY     -> COMPLETED
+//	@Description	- COMPLETED -> {}
+//	@Tags			orders
+//	@Accept			json
+//	@Produce		json
+//	@Param			id		path		int							true	"Order ID"
+//	@Param			order	body		UpdateOrderPartilBodyRequest		true	"Order data"
+//	@Success		200		{object}	presenter.OrderJsonResponse	"OK"
+//	@Failure		400		{object}	middleware.ErrorResponse	"Bad Request"
+//	@Failure		404		{object}	middleware.ErrorResponse	"Not Found"
+//	@Failure		500		{object}	middleware.ErrorResponse	"Internal Server Error"
+//	@Router			/orders/{id} [patch]
+func (h *OrderHandler) UpdateOrderPartial(c *gin.Context) {
+	var reqUri UpdateOrderUriRequest
+	if err := c.ShouldBindUri(&reqUri); err != nil {
+		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
+		return
+	}
+
+	var req UpdateOrderPartilBodyRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		fmt.Println(err)
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}

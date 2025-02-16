@@ -29,8 +29,15 @@ func NewOrder(consumerID uint64) *Order {
 }
 
 func (p *Order) Update(customerID uint64, totalBill float32, status OrderStatus) {
-	p.CustomerID = customerID
-	p.TotalBill = totalBill
-	p.Status = status
+	if customerID != 0 {
+		p.CustomerID = customerID
+	}
+	if totalBill != 0 {
+		p.TotalBill = totalBill
+	}
+	if status != UNDEFINDED {
+		// 	p.UpdateStatus(status) // TODO: Validate status transition
+		p.Status = status
+	}
 	p.UpdatedAt = time.Now()
 }
