@@ -55,7 +55,6 @@ CREATE TABLE IF NOT EXISTS order_products
 (
     order_id   INT REFERENCES orders (id),
     product_id INT REFERENCES products (id),
-    price      DECIMAL(19, 2),
     quantity   INT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT now(),
     updated_at TIMESTAMP NOT NULL DEFAULT now(),
