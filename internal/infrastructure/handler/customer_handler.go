@@ -96,7 +96,7 @@ func (h *CustomerHandler) ListCustomers(c *gin.Context) {
 //	@Tags			customers
 //	@Accept			json
 //	@Produce		json
-//	@Param			customer	body		CreateCustomerBodyRequest			true	"Customer data"
+//	@Param			customer	body		CreateCustomerBodyRequest		true	"Customer data"
 //	@Success		201			{object}	presenter.CustomerJsonResponse	"Created"
 //	@Failure		400			{object}	middleware.ErrorResponse		"Bad Request"
 //	@Failure		500			{object}	middleware.ErrorResponse		"Internal Server Error"
@@ -162,7 +162,7 @@ func (h *CustomerHandler) GetCustomer(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id			path		int								true	"Customer ID"
-//	@Param			customer	body		UpdateCustomerBodyRequest			true	"Customer data"
+//	@Param			customer	body		UpdateCustomerBodyRequest		true	"Customer data"
 //	@Success		200			{object}	presenter.CustomerJsonResponse	"OK"
 //	@Failure		400			{object}	middleware.ErrorResponse		"Bad Request"
 //	@Failure		404			{object}	middleware.ErrorResponse		"Not Found"
