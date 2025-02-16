@@ -12,7 +12,7 @@ type OrderController struct {
 	createOrderUseCase port.CreateOrderUseCase
 	getOrderUseCase    port.GetOrderUseCase
 	updateOrderUseCase port.UpdateOrderUseCase
-	// deleteOrderUseCase port.DeleteOrderUseCase
+	deleteOrderUseCase port.DeleteOrderUseCase
 }
 
 func NewOrderController(
@@ -20,14 +20,14 @@ func NewOrderController(
 	createUC port.CreateOrderUseCase,
 	getUC port.GetOrderUseCase,
 	updateUC port.UpdateOrderUseCase,
-	// deleteUC port.DeleteOrderUseCase,
+	deleteUC port.DeleteOrderUseCase,
 ) *OrderController {
 	return &OrderController{
 		listOrdersUseCase:  listUC,
 		createOrderUseCase: createUC,
 		getOrderUseCase:    getUC,
 		updateOrderUseCase: updateUC,
-		// deleteOrderUseCase: deleteUC,
+		deleteOrderUseCase: deleteUC,
 	}
 }
 
@@ -67,6 +67,6 @@ func (c *OrderController) UpdateOrder(ctx context.Context, input dto.UpdateOrder
 	return nil
 }
 
-// func (c *OrderController) DeleteOrder(ctx context.Context, input dto.DeleteOrderInput) error {
-// 	return c.deleteOrderUseCase.Execute(ctx, input)
-// }
+func (c *OrderController) DeleteOrder(ctx context.Context, input dto.DeleteOrderInput) error {
+	return c.deleteOrderUseCase.Execute(ctx, input)
+}

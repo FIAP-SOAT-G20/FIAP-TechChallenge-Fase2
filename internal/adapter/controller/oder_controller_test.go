@@ -18,8 +18,7 @@ func TestOrderController_ListOrders(t *testing.T) {
 
 	mockListOrdersUseCase := mockport.NewMockListOrdersUseCase(ctrl)
 	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-	// productController := NewOrderController(mockListOrdersUseCase, nil, nil, nil, nil)
-	productController := NewOrderController(mockListOrdersUseCase, nil, nil, nil)
+	productController := NewOrderController(mockListOrdersUseCase, nil, nil, nil, nil)
 
 	ctx := context.Background()
 	input := dto.ListOrdersInput{
@@ -44,8 +43,7 @@ func TestOrderController_CreateOrder(t *testing.T) {
 
 	mockCreateOrderUseCase := mockport.NewMockCreateOrderUseCase(ctrl)
 	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-	// productController := NewOrderController(nil, mockCreateOrderUseCase, nil, nil, nil)
-	productController := NewOrderController(nil, mockCreateOrderUseCase, nil, nil)
+	productController := NewOrderController(nil, mockCreateOrderUseCase, nil, nil, nil)
 
 	ctx := context.Background()
 	input := dto.CreateOrderInput{
@@ -67,8 +65,7 @@ func TestOrderController_GetOrder(t *testing.T) {
 
 	mockGetOrderUseCase := mockport.NewMockGetOrderUseCase(ctrl)
 	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-	// productController := NewOrderController(nil, nil, mockGetOrderUseCase, nil, nil)
-	productController := NewOrderController(nil, nil, mockGetOrderUseCase, nil)
+	productController := NewOrderController(nil, nil, mockGetOrderUseCase, nil, nil)
 
 	ctx := context.Background()
 	input := dto.GetOrderInput{
@@ -90,8 +87,7 @@ func TestOrderController_UpdateOrder(t *testing.T) {
 
 	mockUpdateOrderUseCase := mockport.NewMockUpdateOrderUseCase(ctrl)
 	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-	// productController := NewOrderController(nil, nil, nil, mockUpdateOrderUseCase, nil)
-	productController := NewOrderController(nil, nil, nil, mockUpdateOrderUseCase)
+	productController := NewOrderController(nil, nil, nil, mockUpdateOrderUseCase, nil)
 
 	ctx := context.Background()
 	input := dto.UpdateOrderInput{
@@ -110,24 +106,24 @@ func TestOrderController_UpdateOrder(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-// func TestOrderController_DeleteOrder(t *testing.T) {
-// 	ctrl := gomock.NewController(t)
-// 	defer ctrl.Finish()
+func TestOrderController_DeleteOrder(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
 
-// 	mockDeleteOrderUseCase := mockport.NewMockDeleteOrderUseCase(ctrl)
-// 	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-// 	productController := NewOrderController(nil, nil, nil, nil, mockDeleteOrderUseCase)
+	mockDeleteOrderUseCase := mockport.NewMockDeleteOrderUseCase(ctrl)
+	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
+	productController := NewOrderController(nil, nil, nil, nil, mockDeleteOrderUseCase)
 
-// 	ctx := context.Background()
-// 	input := dto.DeleteOrderInput{
-// 		ID:     uint64(1),
-// 		Writer: mockResponseWriter,
-// 	}
+	ctx := context.Background()
+	input := dto.DeleteOrderInput{
+		ID:     uint64(1),
+		Writer: mockResponseWriter,
+	}
 
-// 	mockDeleteOrderUseCase.EXPECT().
-// 		Execute(ctx, input).
-// 		Return(nil)
+	mockDeleteOrderUseCase.EXPECT().
+		Execute(ctx, input).
+		Return(nil)
 
-// 	err := productController.DeleteOrder(ctx, input)
-// 	assert.NoError(t, err)
-// }
+	err := productController.DeleteOrder(ctx, input)
+	assert.NoError(t, err)
+}

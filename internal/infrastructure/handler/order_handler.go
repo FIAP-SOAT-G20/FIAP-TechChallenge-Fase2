@@ -1,8 +1,7 @@
 package handler
 
 import (
-	"fmt"
-	"strconv"
+	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -15,6 +14,13 @@ import (
 
 type OrderHandler struct {
 	controller *controller.OrderController
+}
+
+type ListOrdersQueryRequest struct {
+	Page       int    `form:"page,default=1" example:"1"`
+	Limit      int    `form:"limit,default=10" example:"10"`
+	CustomerID uint64 `form:"customer_id" example:"1" default:"0"`
+	Status     string `form:"status" example:"PENDING"`
 }
 
 type CreateOrderBodyRequest struct {
@@ -35,6 +41,10 @@ type UpdateOrderBodyRequest struct {
 	Status     entity.OrderStatus `json:"status" binding:"required" example:"PENDING"`
 }
 
+type DeleteOrderUriRequest struct {
+	ID uint64 `uri:"id" binding:"required"`
+}
+
 func NewOrderHandler(controller *controller.OrderController) *OrderHandler {
 	return &OrderHandler{controller: controller}
 }
@@ -45,7 +55,7 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 	router.GET("/:id", h.GetOrder)
 	router.PUT("/:id", h.UpdateOrder)
 	// router.PATCH("/:id", h.UpdateOrderPartial)
-	// router.DELETE("/:id", h.DeleteOrder)
+	router.DELETE("/:id", h.DeleteOrder)
 }
 
 // ListOrders godoc
@@ -64,22 +74,17 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 //	@Failure		500			{object}	middleware.ErrorResponse				"Internal Server Error"
 //	@Router			/orders [get]
 func (h *OrderHandler) ListOrders(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
-	customerID, _ := strconv.ParseUint(c.DefaultQuery("customer_id", "0"), 10, 64)
-	status := strings.ToUpper(c.DefaultQuery("status", ""))
-
-	if status != "" && !entity.IsValidOrderStatus(status) {
-		fmt.Println("status", status)
+	var req ListOrdersQueryRequest
+	if err := c.ShouldBindQuery(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.ListOrdersInput{
-		CustomerID: customerID,
-		Status:     entity.OrderStatus(status),
-		Page:       page,
-		Limit:      limit,
+		CustomerID: req.CustomerID,
+		Status:     entity.OrderStatus(strings.ToUpper(req.Status)), // TODO: Validate status wit aa custom validator
+		Page:       req.Page,
+		Limit:      req.Limit,
 		Writer:     c,
 	}
 
@@ -97,7 +102,7 @@ func (h *OrderHandler) ListOrders(c *gin.Context) {
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
-//	@Param			order	body		CreateOrderRequest					true	"Order data"
+//	@Param			order	body		CreateOrderBodyRequest					true	"Order data"
 //	@Success		201		{object}	presenter.OrderJsonResponse	"Created"
 //	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
@@ -161,7 +166,7 @@ func (h *OrderHandler) GetOrder(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id		path		int								true	"Order ID"
-//	@Param			order	body		OrderRequest					true	"Order data"
+//	@Param			order	body		UpdateOrderBodyRequest					true	"Order data"
 //	@Success		200		{object}	presenter.OrderJsonResponse	"OK"
 //	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
 //	@Failure		404		{object}	middleware.ErrorResponse		"Not Found"
@@ -195,34 +200,34 @@ func (h *OrderHandler) UpdateOrder(c *gin.Context) {
 	}
 }
 
-// // DeleteOrder godoc
-// //
-// //	@Summary		Delete order
-// //	@Description	Deletes a order by ID
-// //	@Tags			orders
-// //	@Produce		json
-// //	@Param			id	path		int	true	"Order ID"
-// //	@Success		204	{object}	nil
-// //	@Failure		400	{object}	middleware.ErrorResponse	"Bad Request"
-// //	@Failure		404	{object}	middleware.ErrorResponse	"Not Found"
-// //	@Failure		500	{object}	middleware.ErrorResponse	"Internal Server Error"
-// //	@Router			/orders/{id} [delete]
-// func (h *OrderHandler) DeleteOrder(c *gin.Context) {
-// 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
-// 	if err != nil {
-// 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
-// 		return
-// 	}
+// DeleteOrder godoc
+//
+//	@Summary		Delete order
+//	@Description	Deletes a order by ID
+//	@Tags			orders
+//	@Produce		json
+//	@Param			id	path		int	true	"Order ID"
+//	@Success		204	{object}	nil
+//	@Failure		400	{object}	middleware.ErrorResponse	"Bad Request"
+//	@Failure		404	{object}	middleware.ErrorResponse	"Not Found"
+//	@Failure		500	{object}	middleware.ErrorResponse	"Internal Server Error"
+//	@Router			/orders/{id} [delete]
+func (h *OrderHandler) DeleteOrder(c *gin.Context) {
+	var req DeleteOrderUriRequest
+	if err := c.ShouldBindUri(&req); err != nil {
+		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
+		return
+	}
 
-// 	input := dto.DeleteOrderInput{
-// 		ID:     id,
-// 		Writer: c,
-// 	}
+	input := dto.DeleteOrderInput{
+		ID:     req.ID,
+		Writer: c,
+	}
 
-// 	if err := h.controller.DeleteOrder(c.Request.Context(), input); err != nil {
-// 		_ = c.Error(err)
-// 		return
-// 	}
+	if err := h.controller.DeleteOrder(c.Request.Context(), input); err != nil {
+		_ = c.Error(err)
+		return
+	}
 
-// 	c.Status(http.StatusNoContent)
-// }
+	c.Status(http.StatusNoContent)
+}
