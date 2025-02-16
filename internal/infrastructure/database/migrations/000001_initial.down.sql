@@ -1,10 +1,10 @@
-DROP TABLE payments;
-DROP TABLE order_products;
-DROP TABLE products;
-DROP TABLE order_histories;
-DROP TABLE staffs;
-DROP TABLE categories;
-DROP TABLE orders;
-DROP TABLE customers;
+DROP TABLE IF EXISTS payments;
+DROP TABLE IF EXISTS order_products;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS order_histories;
+DROP TABLE IF EXISTS staffs;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS customers;
 
 DROP TYPE order_status;
