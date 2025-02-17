@@ -103,11 +103,8 @@ definitions:
     - customer_id
     - status
     type: object
-  handler.UpdateOrderPartilBodyRequest:
+  handler.UpdateOrderPartilRequest:
     properties:
-      customer_id:
-        example: 1
-        type: integer
       status:
         allOf:
         - $ref: '#/definitions/entity.OrderStatus'
@@ -852,7 +849,7 @@ paths:
         name: order
         required: true
         schema:
-          $ref: '#/definitions/handler.UpdateOrderPartilBodyRequest'
+          $ref: '#/definitions/handler.UpdateOrderPartilRequest'
       produces:
       - application/json
       responses:
@@ -878,7 +875,17 @@ paths:
     put:
       consumes:
       - application/json
-      description: Update an existing order
+      description: |-
+        Update an existing order
+        The status are: **OPEN**, **CANCELLED**, **PENDING**, **RECEIVED**, **PREPARING**, **READY**, **COMPLETED**
+        ## Transition of status:
+        - OPEN      -> CANCELLED || PENDING
+        - CANCELLED -> {},
+        - PENDING   -> OPEN || RECEIVED
+        - RECEIVED  -> PREPARING
+        - PREPARING -> READY
+        - READY     -> COMPLETED
+        - COMPLETED -> {}
       parameters:
       - description: Order ID
         in: path

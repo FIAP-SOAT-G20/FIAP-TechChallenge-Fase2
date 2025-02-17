@@ -702,7 +702,7 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "Update an existing order",
+                "description": "Update an existing order\nThe status are: **OPEN**, **CANCELLED**, **PENDING**, **RECEIVED**, **PREPARING**, **READY**, **COMPLETED**\n## Transition of status:\n- OPEN      -\u003e CANCELLED || PENDING\n- CANCELLED -\u003e {},\n- PENDING   -\u003e OPEN || RECEIVED\n- RECEIVED  -\u003e PREPARING\n- PREPARING -\u003e READY\n- READY     -\u003e COMPLETED\n- COMPLETED -\u003e {}",
                 "consumes": [
                     "application/json"
                 ],
@@ -826,7 +826,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.UpdateOrderPartilBodyRequest"
+                            "$ref": "#/definitions/handler.UpdateOrderPartilRequest"
                         }
                     }
                 ],
@@ -1256,13 +1256,9 @@ const docTemplate = `{
                 }
             }
         },
-        "handler.UpdateOrderPartilBodyRequest": {
+        "handler.UpdateOrderPartilRequest": {
             "type": "object",
             "properties": {
-                "customer_id": {
-                    "type": "integer",
-                    "example": 1
-                },
                 "status": {
                     "allOf": [
                         {
