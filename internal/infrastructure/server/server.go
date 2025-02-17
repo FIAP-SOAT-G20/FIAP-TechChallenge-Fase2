@@ -92,6 +92,9 @@ func gracefullyShutdown(server *http.Server, chanError chan error, s *Server) {
 
 func registerCustomValidation() {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
-		v.RegisterValidation("order_status_exists", handler.OrderStatusValidator)
+		err := v.RegisterValidation("order_status_exists", handler.OrderStatusValidator)
+		if err != nil {
+			panic(err)
+		}
 	}
 }
