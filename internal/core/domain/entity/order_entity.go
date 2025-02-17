@@ -9,8 +9,8 @@ type Order struct {
 	CustomerID uint64
 	TotalBill  float32
 	Status     OrderStatus
-	// Payment       Payment // TODO: Add payment
-	// Customer Customer // TODO: Add customer
+	// Payment       Payment // TODO: Add payment when payment is implemented
+	Customer      Customer
 	OrderProducts []OrderProduct
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
