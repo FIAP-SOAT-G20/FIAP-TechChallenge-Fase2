@@ -1520,7 +1520,7 @@ const docTemplate = `{
                 },
                 "description": {
                     "type": "string",
-                    "example": "Descrição do Produto A"
+                    "example": "Description of product A"
                 },
                 "id": {
                     "type": "integer",
@@ -1528,7 +1528,7 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string",
-                    "example": "Produto A"
+                    "example": "Product A"
                 },
                 "price": {
                     "type": "number",
@@ -1553,7 +1553,7 @@ const docTemplate = `{
                 },
                 "description": {
                     "type": "string",
-                    "example": "Descrição do Produto A"
+                    "example": "Description of product A"
                 },
                 "id": {
                     "type": "integer",
@@ -1561,7 +1561,7 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string",
-                    "example": "Produto A"
+                    "example": "Product A"
                 },
                 "price": {
                     "type": "number",

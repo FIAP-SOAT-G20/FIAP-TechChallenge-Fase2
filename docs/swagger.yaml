@@ -286,13 +286,13 @@ definitions:
         example: "2024-02-09T10:00:00Z"
         type: string
       description:
-        example: Descrição do Produto A
+        example: Description of product A
         type: string
       id:
         example: 1
         type: integer
       name:
-        example: Produto A
+        example: Product A
         type: string
       price:
         example: 99.99
@@ -310,13 +310,13 @@ definitions:
         example: "2024-02-09T10:00:00Z"
         type: string
       description:
-        example: Descrição do Produto A
+        example: Description of product A
         type: string
       id:
         example: 1
         type: integer
       name:
-        example: Produto A
+        example: Product A
         type: string
       price:
         example: 99.99

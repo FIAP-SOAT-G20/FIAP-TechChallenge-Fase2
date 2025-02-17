@@ -1514,7 +1514,7 @@
                 },
                 "description": {
                     "type": "string",
-                    "example": "Descrição do Produto A"
+                    "example": "Description of product A"
                 },
                 "id": {
                     "type": "integer",
@@ -1522,7 +1522,7 @@
                 },
                 "name": {
                     "type": "string",
-                    "example": "Produto A"
+                    "example": "Product A"
                 },
                 "price": {
                     "type": "number",
@@ -1547,7 +1547,7 @@
                 },
                 "description": {
                     "type": "string",
-                    "example": "Descrição do Produto A"
+                    "example": "Description of product A"
                 },
                 "id": {
                     "type": "integer",
@@ -1555,7 +1555,7 @@
                 },
                 "name": {
                     "type": "string",
-                    "example": "Produto A"
+                    "example": "Product A"
                 },
                 "price": {
                     "type": "number",
