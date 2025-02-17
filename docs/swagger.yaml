@@ -143,8 +143,10 @@ definitions:
   middleware.ErrorResponse:
     properties:
       code:
+        example: 400
         type: integer
       message:
+        example: Bad Request
         type: string
     type: object
   presenter.CustomerJsonPaginatedResponse:
