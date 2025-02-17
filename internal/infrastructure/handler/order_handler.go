@@ -3,14 +3,13 @@ package handler
 import (
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 )
 
 type OrderHandler struct {
@@ -18,10 +17,10 @@ type OrderHandler struct {
 }
 
 type ListOrdersQueryRequest struct {
-	CustomerID uint64 `form:"customer_id" example:"1" default:"0"`
-	Status     string `form:"status" example:"PENDING"`
-	Page       int    `form:"page,default=1" example:"1"`
-	Limit      int    `form:"limit,default=10" example:"10"`
+	CustomerID uint64                  `form:"customer_id" example:"1" default:"0"`
+	Status     valueobject.OrderStatus `form:"status" binding:"omitempty,order_status_exists" example:"PENDING"`
+	Page       int                     `form:"page,default=1" example:"1"`
+	Limit      int                     `form:"limit,default=10" example:"10"`
 }
 
 type CreateOrderBodyRequest struct {
@@ -37,17 +36,17 @@ type UpdateOrderUriRequest struct {
 }
 
 type UpdateOrderBodyRequest struct {
-	CustomerID uint64             `json:"customer_id" binding:"required" example:"1"`
-	Status     entity.OrderStatus `json:"status" binding:"required,order_status_exists" example:"PENDING"`
+	CustomerID uint64                  `json:"customer_id" binding:"required" example:"1"`
+	Status     valueobject.OrderStatus `json:"status" binding:"required,order_status_exists" example:"PENDING"`
 }
 
 type UpdateOrderPartilRequest struct {
-	Status entity.OrderStatus `json:"status" example:"PENDING"`
+	Status valueobject.OrderStatus `json:"status" example:"PENDING"`
 }
 
 type UpdateOrderPartilBodyRequest struct {
-	CustomerID uint64             `json:"customer_id" example:"1"`
-	Status     entity.OrderStatus `json:"status" example:"PENDING"`
+	CustomerID uint64                  `json:"customer_id" example:"1"`
+	Status     valueobject.OrderStatus `json:"status" binding:"omitempty,order_status_exists" example:"PENDING"`
 }
 
 type DeleteOrderUriRequest struct {
@@ -91,7 +90,7 @@ func (h *OrderHandler) ListOrders(c *gin.Context) {
 
 	input := dto.ListOrdersInput{
 		CustomerID: req.CustomerID,
-		Status:     entity.OrderStatus(strings.ToUpper(req.Status)),
+		Status:     req.Status,
 		Page:       req.Page,
 		Limit:      req.Limit,
 		Writer:     c,

@@ -1,6 +1,8 @@
-package entity
+package valueobject
 
-import "strings"
+import (
+	"strings"
+)
 
 type OrderStatus string
 
@@ -16,19 +18,19 @@ const (
 )
 
 func IsValidOrderStatus(status string) bool {
-	switch strings.ToUpper(status) {
-	case "OPEN", "CANCELLED", "PENDING", "RECEIVED", "PREPARING", "READY", "COMPLETED":
-		return true
-	default:
+	if ToOrderStatus(status) == UNDEFINDED {
 		return false
 	}
+	return true
 }
 
-func (o OrderStatus) ToString() string {
-	return string(o)
+// String returns the string representation of the OrderStatus
+func (o OrderStatus) String() string {
+	return strings.ToUpper(string(o))
 }
 
-func (o OrderStatus) From(status string) OrderStatus {
+// ToOrderStatus converts a string to an OrderStatus
+func ToOrderStatus(status string) OrderStatus {
 	switch strings.ToUpper(status) {
 	case "OPEN":
 		return OPEN
@@ -49,6 +51,7 @@ func (o OrderStatus) From(status string) OrderStatus {
 	}
 }
 
+// OrderStatusTransitions defines the allowed transitions between OrderStatuses
 var OrderStatusTransitions = map[OrderStatus][]OrderStatus{
 	OPEN:      {CANCELLED, PENDING},
 	CANCELLED: {},
@@ -59,7 +62,8 @@ var OrderStatusTransitions = map[OrderStatus][]OrderStatus{
 	COMPLETED: {},
 }
 
-func CanTransitionTo(oldStatus, newStatus OrderStatus) bool {
+// StatusCanTransitionTo returns true if the transition from oldStatus to newStatus is allowed
+func StatusCanTransitionTo(oldStatus, newStatus OrderStatus) bool {
 	allowedStatuses := OrderStatusTransitions[oldStatus]
 	for _, allowedStatus := range allowedStatuses {
 		if newStatus == allowedStatus {
@@ -69,6 +73,7 @@ func CanTransitionTo(oldStatus, newStatus OrderStatus) bool {
 	return false
 }
 
+// StatusTransitionNeedsStaffID returns true if the new status requires a staff ID
 func StatusTransitionNeedsStaffID(newStatus OrderStatus) bool {
 	switch newStatus {
 	case OPEN:

@@ -2,13 +2,15 @@ package entity
 
 import (
 	"time"
+
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 )
 
 type Order struct {
 	ID         uint64
 	CustomerID uint64
 	TotalBill  float32
-	Status     OrderStatus
+	Status     valueobject.OrderStatus
 	// Payment       Payment // TODO: Add payment when payment is implemented
 	Customer      Customer
 	OrderProducts []OrderProduct
@@ -19,7 +21,7 @@ type Order struct {
 func NewOrder(consumerID uint64) *Order {
 	order := &Order{
 		CustomerID: consumerID,
-		Status:     OPEN,
+		Status:     valueobject.OPEN,
 		CreatedAt:  time.Now(),
 		UpdatedAt:  time.Now(),
 	}
@@ -27,11 +29,11 @@ func NewOrder(consumerID uint64) *Order {
 	return order
 }
 
-func (p *Order) Update(customerID uint64, status OrderStatus) {
+func (p *Order) Update(customerID uint64, status valueobject.OrderStatus) {
 	if customerID != 0 {
 		p.CustomerID = customerID
 	}
-	if status != UNDEFINDED {
+	if status != valueobject.UNDEFINDED {
 		p.Status = status
 	}
 	p.OrderProducts = nil

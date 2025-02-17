@@ -1,6 +1,8 @@
 package dto
 
-import "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+import (
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
+)
 
 type CreateOrderInput struct {
 	CustomerID uint64
@@ -10,7 +12,7 @@ type CreateOrderInput struct {
 type UpdateOrderInput struct {
 	ID         uint64
 	CustomerID uint64
-	Status     entity.OrderStatus
+	Status     valueobject.OrderStatus
 	// Payment       Payment
 	Writer ResponseWriter
 }
@@ -27,7 +29,7 @@ type DeleteOrderInput struct {
 
 type ListOrdersInput struct {
 	CustomerID uint64
-	Status     entity.OrderStatus
+	Status     valueobject.OrderStatus
 	Page       int
 	Limit      int
 	Writer     ResponseWriter

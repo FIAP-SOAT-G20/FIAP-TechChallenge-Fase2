@@ -12,6 +12,7 @@ import (
 	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/order"
 )
@@ -32,7 +33,7 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 			ID:         1,
 			CustomerID: uint64(1),
 			TotalBill:  99.99,
-			Status:     entity.PENDING,
+			Status:     valueobject.PENDING,
 			CreatedAt:  currentTime,
 			UpdatedAt:  currentTime,
 		},
@@ -40,7 +41,7 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 			ID:         2,
 			CustomerID: uint64(2),
 			TotalBill:  199.99,
-			Status:     entity.PENDING,
+			Status:     valueobject.PENDING,
 			CreatedAt:  currentTime,
 			UpdatedAt:  currentTime,
 		},
@@ -62,7 +63,7 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), entity.OrderStatus(""), 1, 10).
+					FindAll(ctx, uint64(0), valueobject.OrderStatus(""), 1, 10).
 					Return(mockOrders, int64(2), nil)
 
 				mockPresenter.EXPECT().
@@ -85,7 +86,7 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), entity.OrderStatus(""), 1, 10).
+					FindAll(ctx, uint64(0), valueobject.OrderStatus(""), 1, 10).
 					Return(nil, int64(0), assert.AnError)
 			},
 			expectError: true,
@@ -101,7 +102,7 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), entity.OrderStatus("PENDING"), 1, 10).
+					FindAll(ctx, uint64(0), valueobject.OrderStatus("PENDING"), 1, 10).
 					Return(mockOrders, int64(2), nil)
 
 				mockPresenter.EXPECT().
@@ -125,7 +126,7 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(1), entity.OrderStatus(""), 1, 10).
+					FindAll(ctx, uint64(1), valueobject.OrderStatus(""), 1, 10).
 					Return(mockOrders, int64(2), nil)
 
 				mockPresenter.EXPECT().

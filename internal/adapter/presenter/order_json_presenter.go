@@ -58,7 +58,7 @@ func ToOrderJsonResponse(order *entity.Order) OrderJsonResponse {
 		ID:         order.ID,
 		CustomerID: order.CustomerID,
 		TotalBill:  calculateTotalBill(order.OrderProducts),
-		Status:     order.Status.ToString(),
+		Status:     string(order.Status),
 		Customer:   c,
 		Products:   ToProductsJsonResponse(order.OrderProducts),
 		CreatedAt:  order.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),

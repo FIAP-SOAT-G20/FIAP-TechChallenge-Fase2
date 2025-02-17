@@ -1,10 +1,9 @@
 package handler
 
 import (
-	"fmt"
 	"sync"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -30,6 +29,5 @@ func GetValidator() *validator.Validate {
 
 func OrderStatusValidator(fl validator.FieldLevel) bool {
 	status := fl.Field().String()
-	fmt.Println("OrderStatusValidator status", entity.IsValidOrderStatus(status))
-	return entity.IsValidOrderStatus(status)
+	return valueobject.IsValidOrderStatus(status)
 }

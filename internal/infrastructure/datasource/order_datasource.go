@@ -8,6 +8,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
@@ -45,7 +46,7 @@ func (ds *orderDataSource) FindAll(ctx context.Context, filters map[string]inter
 	for key, value := range filters {
 		switch key {
 		case "status":
-			if status, ok := value.(entity.OrderStatus); ok && status != entity.UNDEFINDED {
+			if status, ok := value.(valueobject.OrderStatus); ok && status != valueobject.UNDEFINDED {
 				query = query.Where("status = ?", status)
 			}
 		case "customer_id":
