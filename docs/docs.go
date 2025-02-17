@@ -1239,8 +1239,7 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "customer_id",
-                "status",
-                "total_bill"
+                "status"
             ],
             "properties": {
                 "customer_id": {
@@ -1254,10 +1253,6 @@ const docTemplate = `{
                         }
                     ],
                     "example": "PENDING"
-                },
-                "total_bill": {
-                    "type": "number",
-                    "example": 100
                 }
             }
         },
@@ -1275,10 +1270,6 @@ const docTemplate = `{
                         }
                     ],
                     "example": "PENDING"
-                },
-                "total_bill": {
-                    "type": "number",
-                    "example": 100
                 }
             }
         },
@@ -1417,7 +1408,8 @@ const docTemplate = `{
                     "example": "2024-02-09T10:00:00Z"
                 },
                 "customer_id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 1
                 },
                 "id": {
                     "type": "integer"
@@ -1429,10 +1421,12 @@ const docTemplate = `{
                     }
                 },
                 "status": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "PENDING"
                 },
                 "total_bill": {
-                    "type": "number"
+                    "type": "string",
+                    "example": "100.00"
                 },
                 "updated_at": {
                     "type": "string",

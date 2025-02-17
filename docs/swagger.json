@@ -1233,8 +1233,7 @@
             "type": "object",
             "required": [
                 "customer_id",
-                "status",
-                "total_bill"
+                "status"
             ],
             "properties": {
                 "customer_id": {
@@ -1248,10 +1247,6 @@
                         }
                     ],
                     "example": "PENDING"
-                },
-                "total_bill": {
-                    "type": "number",
-                    "example": 100
                 }
             }
         },
@@ -1269,10 +1264,6 @@
                         }
                     ],
                     "example": "PENDING"
-                },
-                "total_bill": {
-                    "type": "number",
-                    "example": 100
                 }
             }
         },
@@ -1411,7 +1402,8 @@
                     "example": "2024-02-09T10:00:00Z"
                 },
                 "customer_id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 1
                 },
                 "id": {
                     "type": "integer"
@@ -1423,10 +1415,12 @@
                     }
                 },
                 "status": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "PENDING"
                 },
                 "total_bill": {
-                    "type": "number"
+                    "type": "string",
+                    "example": "100.00"
                 },
                 "updated_at": {
                     "type": "string",

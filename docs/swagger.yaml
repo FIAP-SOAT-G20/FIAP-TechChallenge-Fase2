@@ -99,13 +99,9 @@ definitions:
         allOf:
         - $ref: '#/definitions/entity.OrderStatus'
         example: PENDING
-      total_bill:
-        example: 100
-        type: number
     required:
     - customer_id
     - status
-    - total_bill
     type: object
   handler.UpdateOrderPartilBodyRequest:
     properties:
@@ -116,9 +112,6 @@ definitions:
         allOf:
         - $ref: '#/definitions/entity.OrderStatus'
         example: PENDING
-      total_bill:
-        example: 100
-        type: number
     type: object
   handler.UpdateOrderProductBodyRequest:
     properties:
@@ -216,6 +209,7 @@ definitions:
         example: "2024-02-09T10:00:00Z"
         type: string
       customer_id:
+        example: 1
         type: integer
       id:
         type: integer
@@ -224,9 +218,11 @@ definitions:
           $ref: '#/definitions/presenter.ProductsJsonResponse'
         type: array
       status:
+        example: PENDING
         type: string
       total_bill:
-        type: number
+        example: "100.00"
+        type: string
       updated_at:
         example: "2024-02-09T10:00:00Z"
         type: string
