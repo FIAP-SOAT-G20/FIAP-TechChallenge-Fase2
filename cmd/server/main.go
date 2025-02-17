@@ -27,12 +27,16 @@ import (
 // @BasePath					/api/v1
 // @tag.name					sign-up
 // @tag.description			Regiter a new customer or staff
-// @tag.name					products
-// @tag.description			List, create, update and delete products
-// @tag.name					payments
-// @tag.description			Process payments
 // @tag.name					sign-in
 // @tag.description			Sign in to the system
+// @tag.name					customers
+// @tag.description			List, create, update and delete customers
+// @tag.name					products
+// @tag.description			List, create, update and delete products
+// @tag.name					orders
+// @tag.description			List, create, update and delete orders
+// @tag.name					payments
+// @tag.description			Process payments
 //
 // @externalDocs.description	GitHub Repository
 // @externalDocs.url			https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2

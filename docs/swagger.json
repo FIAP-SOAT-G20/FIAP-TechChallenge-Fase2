@@ -1587,16 +1587,24 @@
             "name": "sign-up"
         },
         {
+            "description": "Sign in to the system",
+            "name": "sign-in"
+        },
+        {
+            "description": "List, create, update and delete customers",
+            "name": "customers"
+        },
+        {
             "description": "List, create, update and delete products",
             "name": "products"
         },
         {
-            "description": "Process payments",
-            "name": "payments"
+            "description": "List, create, update and delete orders",
+            "name": "orders"
         },
         {
-            "description": "Sign in to the system",
-            "name": "sign-in"
+            "description": "Process payments",
+            "name": "payments"
         }
     ],
     "externalDocs": {
