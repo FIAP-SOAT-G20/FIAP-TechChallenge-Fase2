@@ -48,11 +48,13 @@ func (p *orderProductJsonPresenter) Present(pp dto.OrderProductPresenterInput) {
 
 // ToOrderProductJsonResponse convert entity.OrderProduct to OrderProductJsonResponse
 func ToOrderProductJsonResponse(orderProduct *entity.OrderProduct) OrderProductJsonResponse {
+	order := ToOrderJsonResponse(&orderProduct.Order)
+	order.TotalBill = ""
 	return OrderProductJsonResponse{
 		OrderID:   orderProduct.OrderID,
 		ProductID: orderProduct.ProductID,
 		Quantity:  orderProduct.Quantity,
-		Order:     ToOrderJsonResponse(&orderProduct.Order),
+		Order:     order,
 		Product:   ToProductJsonResponse(&orderProduct.Product),
 		CreatedAt: orderProduct.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
 		UpdatedAt: orderProduct.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
