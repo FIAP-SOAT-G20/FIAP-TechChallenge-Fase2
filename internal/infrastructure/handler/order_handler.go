@@ -41,6 +41,10 @@ type UpdateOrderBodyRequest struct {
 	Status     entity.OrderStatus `json:"status" binding:"required,order_status_exists" example:"PENDING"`
 }
 
+type UpdateOrderPartilRequest struct {
+	Status entity.OrderStatus `json:"status" example:"PENDING"`
+}
+
 type UpdateOrderPartilBodyRequest struct {
 	CustomerID uint64             `json:"customer_id" example:"1"`
 	Status     entity.OrderStatus `json:"status" example:"PENDING"`
@@ -167,6 +171,15 @@ func (h *OrderHandler) GetOrder(c *gin.Context) {
 //
 //	@Summary		Update order
 //	@Description	Update an existing order
+//	@Description	The status are: **OPEN**, **CANCELLED**, **PENDING**, **RECEIVED**, **PREPARING**, **READY**, **COMPLETED**
+//	@Description	## Transition of status:
+//	@Description	- OPEN      -> CANCELLED || PENDING
+//	@Description	- CANCELLED -> {},
+//	@Description	- PENDING   -> OPEN || RECEIVED
+//	@Description	- RECEIVED  -> PREPARING
+//	@Description	- PREPARING -> READY
+//	@Description	- READY     -> COMPLETED
+//	@Description	- COMPLETED -> {}
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
@@ -220,12 +233,12 @@ func (h *OrderHandler) UpdateOrder(c *gin.Context) {
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
-//	@Param			id		path		int								true	"Order ID"
-//	@Param			order	body		UpdateOrderPartilBodyRequest	true	"Order data"
-//	@Success		200		{object}	presenter.OrderJsonResponse		"OK"
-//	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
-//	@Failure		404		{object}	middleware.ErrorResponse		"Not Found"
-//	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
+//	@Param			id		path		int							true	"Order ID"
+//	@Param			order	body		UpdateOrderPartilRequest	true	"Order data"
+//	@Success		200		{object}	presenter.OrderJsonResponse	"OK"
+//	@Failure		400		{object}	middleware.ErrorResponse	"Bad Request"
+//	@Failure		404		{object}	middleware.ErrorResponse	"Not Found"
+//	@Failure		500		{object}	middleware.ErrorResponse	"Internal Server Error"
 //	@Router			/orders/{id} [patch]
 func (h *OrderHandler) UpdateOrderPartial(c *gin.Context) {
 	var reqUri UpdateOrderUriRequest
