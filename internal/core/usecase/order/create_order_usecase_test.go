@@ -1,4 +1,4 @@
-package order
+package order_test
 
 import (
 	"context"
@@ -11,6 +11,7 @@ import (
 	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/order"
 )
 
 func TestCreateOrderUseCase_Execute(t *testing.T) {
@@ -20,7 +21,7 @@ func TestCreateOrderUseCase_Execute(t *testing.T) {
 	mockGateway := mockport.NewMockOrderGateway(ctrl)
 	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
 	mockWriter := mockdto.NewMockResponseWriter(ctrl)
-	useCase := NewCreateOrderUseCase(mockGateway, mockPresenter)
+	useCase := order.NewCreateOrderUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
 	tests := []struct {

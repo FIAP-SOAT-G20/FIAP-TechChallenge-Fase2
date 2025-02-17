@@ -1,4 +1,4 @@
-package order
+package order_test
 
 import (
 	"context"
@@ -11,6 +11,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/order"
 )
 
 func TestDeleteOrderUseCase_Execute(t *testing.T) {
@@ -19,7 +20,7 @@ func TestDeleteOrderUseCase_Execute(t *testing.T) {
 
 	mockGateway := mockport.NewMockOrderGateway(ctrl)
 	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	useCase := NewDeleteOrderUseCase(mockGateway, mockPresenter)
+	useCase := order.NewDeleteOrderUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
 	tests := []struct {

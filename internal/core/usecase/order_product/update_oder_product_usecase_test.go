@@ -1,4 +1,4 @@
-package orderproduct
+package orderproduct_test
 
 import (
 	"context"
@@ -13,6 +13,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
+	orderproduct "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/order_product"
 )
 
 func TestUpdateOrderProductUseCase_Execute(t *testing.T) {
@@ -23,7 +24,7 @@ func TestUpdateOrderProductUseCase_Execute(t *testing.T) {
 	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
 	mockWriter := mockdto.NewMockResponseWriter(ctrl)
 
-	useCase := NewUpdateOrderProductUseCase(mockGateway, mockPresenter)
+	useCase := orderproduct.NewUpdateOrderProductUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
 	currentTime := time.Now()
