@@ -1116,29 +1116,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "entity.OrderStatus": {
-            "type": "string",
-            "enum": [
-                "UNDEFINDED",
-                "OPEN",
-                "CANCELLED",
-                "PENDING",
-                "RECEIVED",
-                "PREPARING",
-                "READY",
-                "COMPLETED"
-            ],
-            "x-enum-varnames": [
-                "UNDEFINDED",
-                "OPEN",
-                "CANCELLED",
-                "PENDING",
-                "RECEIVED",
-                "PREPARING",
-                "READY",
-                "COMPLETED"
-            ]
-        },
         "handler.CreateCustomerBodyRequest": {
             "type": "object",
             "required": [
@@ -1249,7 +1226,7 @@ const docTemplate = `{
                 "status": {
                     "allOf": [
                         {
-                            "$ref": "#/definitions/entity.OrderStatus"
+                            "$ref": "#/definitions/valueobject.OrderStatus"
                         }
                     ],
                     "example": "PENDING"
@@ -1262,7 +1239,7 @@ const docTemplate = `{
                 "status": {
                     "allOf": [
                         {
-                            "$ref": "#/definitions/entity.OrderStatus"
+                            "$ref": "#/definitions/valueobject.OrderStatus"
                         }
                     ],
                     "example": "PENDING"
@@ -1577,6 +1554,29 @@ const docTemplate = `{
                     "example": "2024-02-09T10:00:00Z"
                 }
             }
+        },
+        "valueobject.OrderStatus": {
+            "type": "string",
+            "enum": [
+                "UNDEFINDED",
+                "OPEN",
+                "CANCELLED",
+                "PENDING",
+                "RECEIVED",
+                "PREPARING",
+                "READY",
+                "COMPLETED"
+            ],
+            "x-enum-varnames": [
+                "UNDEFINDED",
+                "OPEN",
+                "CANCELLED",
+                "PENDING",
+                "RECEIVED",
+                "PREPARING",
+                "READY",
+                "COMPLETED"
+            ]
         }
     },
     "securityDefinitions": {

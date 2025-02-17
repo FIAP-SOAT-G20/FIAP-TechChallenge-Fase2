@@ -1,25 +1,5 @@
 basePath: /api/v1
 definitions:
-  entity.OrderStatus:
-    enum:
-    - UNDEFINDED
-    - OPEN
-    - CANCELLED
-    - PENDING
-    - RECEIVED
-    - PREPARING
-    - READY
-    - COMPLETED
-    type: string
-    x-enum-varnames:
-    - UNDEFINDED
-    - OPEN
-    - CANCELLED
-    - PENDING
-    - RECEIVED
-    - PREPARING
-    - READY
-    - COMPLETED
   handler.CreateCustomerBodyRequest:
     properties:
       cpf:
@@ -97,7 +77,7 @@ definitions:
         type: integer
       status:
         allOf:
-        - $ref: '#/definitions/entity.OrderStatus'
+        - $ref: '#/definitions/valueobject.OrderStatus'
         example: PENDING
     required:
     - customer_id
@@ -107,7 +87,7 @@ definitions:
     properties:
       status:
         allOf:
-        - $ref: '#/definitions/entity.OrderStatus'
+        - $ref: '#/definitions/valueobject.OrderStatus'
         example: PENDING
     type: object
   handler.UpdateOrderProductBodyRequest:
@@ -329,6 +309,26 @@ definitions:
         example: "2024-02-09T10:00:00Z"
         type: string
     type: object
+  valueobject.OrderStatus:
+    enum:
+    - UNDEFINDED
+    - OPEN
+    - CANCELLED
+    - PENDING
+    - RECEIVED
+    - PREPARING
+    - READY
+    - COMPLETED
+    type: string
+    x-enum-varnames:
+    - UNDEFINDED
+    - OPEN
+    - CANCELLED
+    - PENDING
+    - RECEIVED
+    - PREPARING
+    - READY
+    - COMPLETED
 externalDocs:
   description: GitHub Repository
   url: https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2
