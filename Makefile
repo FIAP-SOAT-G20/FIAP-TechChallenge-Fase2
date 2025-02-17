@@ -49,7 +49,7 @@ help:
 .PHONY: build
 build:
 	@echo  "🟢 Building the application..."
-	$(GOBUILD) fmt ./...
+	$(GOCMD) fmt ./...
 	$(GOBUILD) -o bin/$(APP_NAME) $(MAIN_FILE)
 
 .PHONY: run-db
@@ -100,13 +100,19 @@ clean:
 .PHONY: mock
 mock:
 	@echo  "🟢 Generating mocks..."
+	mockgen -source=internal/adapter/dto/response_writer.go -destination=internal/adapter/dto/mocks/response_writer_mock.go
 	mockgen -source=internal/core/port/product_gateway_port.go -destination=internal/core/port/mocks/product_gateway_mock.go
 	mockgen -source=internal/core/port/product_presenter_port.go -destination=internal/core/port/mocks/product_presenter_mock.go
 	mockgen -source=internal/core/port/product_usecase_port.go -destination=internal/core/port/mocks/product_usecase_mock.go
 	mockgen -source=internal/core/port/customer_gateway_port.go -destination=internal/core/port/mocks/customer_gateway_mock.go
 	mockgen -source=internal/core/port/customer_presenter_port.go -destination=internal/core/port/mocks/customer_presenter_mock.go
 	mockgen -source=internal/core/port/customer_usecase_port.go -destination=internal/core/port/mocks/customer_usecase_mock.go
-	mockgen -source=internal/adapter/dto/response_writer.go -destination=internal/adapter/dto/mocks/response_writer_mock.go
+	mockgen -source=internal/core/port/order_gateway_port.go -destination=internal/core/port/mocks/order_gateway_mock.go
+	mockgen -source=internal/core/port/order_presenter_port.go -destination=internal/core/port/mocks/order_presenter_mock.go
+	mockgen -source=internal/core/port/order_usecase_port.go -destination=internal/core/port/mocks/order_usecase_mock.go
+	mockgen -source=internal/core/port/order_product_gateway_port.go -destination=internal/core/port/mocks/order_product_gateway_mock.go
+	mockgen -source=internal/core/port/order_product_presenter_port.go -destination=internal/core/port/mocks/order_product_presenter_mock.go
+	mockgen -source=internal/core/port/order_product_usecase_port.go -destination=internal/core/port/mocks/order_product_usecase_mock.go
 
 .PHONY: swagger
 swagger:

@@ -17,8 +17,8 @@ func NewCustomerJsonPresenter() port.CustomerPresenter {
 	return &customerJsonPresenter{}
 }
 
-// toCustomerJsonResponse convert entity.Customer to CustomerJsonResponse
-func toCustomerJsonResponse(customer *entity.Customer) CustomerJsonResponse {
+// ToCustomerJsonResponse convert entity.Customer to CustomerJsonResponse
+func ToCustomerJsonResponse(customer *entity.Customer) CustomerJsonResponse {
 	return CustomerJsonResponse{
 		ID:        customer.ID,
 		Name:      customer.Name,
@@ -33,12 +33,12 @@ func toCustomerJsonResponse(customer *entity.Customer) CustomerJsonResponse {
 func (p *customerJsonPresenter) Present(pp dto.CustomerPresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.Customer:
-		output := toCustomerJsonResponse(v)
+		output := ToCustomerJsonResponse(v)
 		pp.Writer.JSON(http.StatusOK, output)
 	case []*entity.Customer:
 		customerOutputs := make([]CustomerJsonResponse, len(v))
 		for i, customer := range v {
-			customerOutputs[i] = toCustomerJsonResponse(customer)
+			customerOutputs[i] = ToCustomerJsonResponse(customer)
 		}
 
 		output := &CustomerJsonPaginatedResponse{

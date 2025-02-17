@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS products
     updated_at  TIMESTAMP      NOT NULL DEFAULT now()
 );
 
+DROP TYPE IF EXISTS order_status;
 CREATE TYPE order_status AS ENUM ('OPEN','CANCELLED','PENDING','RECEIVED', 'PREPARING', 'READY', 'COMPLETED');
 
 CREATE TABLE IF NOT EXISTS orders
@@ -54,7 +55,6 @@ CREATE TABLE IF NOT EXISTS order_products
 (
     order_id   INT REFERENCES orders (id),
     product_id INT REFERENCES products (id),
-    price      DECIMAL(19, 2),
     quantity   INT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT now(),
     updated_at TIMESTAMP NOT NULL DEFAULT now(),
@@ -121,19 +121,19 @@ VALUES (1, 32.80, 'OPEN'),
        (2, 6.90, 'COMPLETED');
 
 
-INSERT INTO order_products (order_id, product_id, price, quantity)
-VALUES (1, 1, 25.90, 1),
-       (1, 2, 6.90, 1),
-       (2, 5, 42.90, 1),
-       (3, 1, 25.90, 1),
-       (4, 1, 25.90, 1),
-       (4, 2, 6.90, 1),
-       (4, 3, 12.90, 1),
-       (4, 4, 15.90, 1),
-       (5, 2, 6.90, 2),
-       (5, 3, 12.90, 1),
-       (6, 1, 25.90, 1),
-       (7, 2, 6.90, 1);
+INSERT INTO order_products (order_id, product_id, quantity)
+VALUES (1, 1, 1),
+       (1, 2, 1),
+       (2, 5, 1),
+       (3, 1, 1),
+       (4, 1, 1),
+       (4, 2, 1),
+       (4, 3, 1),
+       (4, 4, 1),
+       (5, 2, 2),
+       (5, 3, 1),
+       (6, 1, 1),
+       (7, 2, 1);
 
 
 INSERT INTO order_histories (order_id, staff_id, status)

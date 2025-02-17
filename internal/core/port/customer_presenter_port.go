@@ -7,9 +7,9 @@ type CustomerPresenter interface {
 }
 
 type CustomerPresenterDTO struct {
-	Writer dto.ResponseWriter
 	Result any
 	Total  int64
 	Page   int
 	Limit  int
+	Writer dto.ResponseWriter
 }
