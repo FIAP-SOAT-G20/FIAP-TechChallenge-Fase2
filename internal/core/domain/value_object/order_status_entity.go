@@ -18,10 +18,7 @@ const (
 )
 
 func IsValidOrderStatus(status string) bool {
-	if ToOrderStatus(status) == UNDEFINDED {
-		return false
-	}
-	return true
+	return ToOrderStatus(status) != UNDEFINDED
 }
 
 // String returns the string representation of the OrderStatus
