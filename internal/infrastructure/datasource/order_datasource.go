@@ -39,7 +39,7 @@ func (ds *orderDataSource) FindAll(ctx context.Context, filters map[string]inter
 	var orders []*entity.Order
 	var total int64
 
-	query := ds.db.WithContext(ctx)
+	query := ds.db.WithContext(ctx).Preload("OrderProducts.Product")
 
 	// Apply filters
 	for key, value := range filters {

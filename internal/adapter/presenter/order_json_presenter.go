@@ -2,6 +2,7 @@ package presenter
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
@@ -72,10 +73,11 @@ func ToProductsJsonResponse(orderProducts []entity.OrderProduct) []ProductsJsonR
 }
 
 // calculateTotalBill calculate the total bill of an order
-func calculateTotalBill(orderProducts []entity.OrderProduct) float64 {
+func calculateTotalBill(orderProducts []entity.OrderProduct) string {
 	var total float64
 	for _, orderProduct := range orderProducts {
 		total += orderProduct.Product.Price * float64(orderProduct.Quantity)
 	}
-	return total
+	// 2 decimal places
+	return fmt.Sprintf("%.2f", total)
 }

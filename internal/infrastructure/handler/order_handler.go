@@ -87,7 +87,7 @@ func (h *OrderHandler) ListOrders(c *gin.Context) {
 
 	input := dto.ListOrdersInput{
 		CustomerID: req.CustomerID,
-		Status:     entity.OrderStatus(strings.ToUpper(req.Status)), // TODO: Validate status wit a custom validator
+		Status:     entity.OrderStatus(strings.ToUpper(req.Status)),
 		Page:       req.Page,
 		Limit:      req.Limit,
 		Writer:     c,
