@@ -208,6 +208,8 @@ definitions:
       created_at:
         example: "2024-02-09T10:00:00Z"
         type: string
+      customer:
+        $ref: '#/definitions/presenter.CustomerJsonResponse'
       customer_id:
         example: 1
         type: integer

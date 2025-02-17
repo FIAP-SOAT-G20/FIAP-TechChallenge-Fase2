@@ -1407,6 +1407,9 @@ const docTemplate = `{
                     "type": "string",
                     "example": "2024-02-09T10:00:00Z"
                 },
+                "customer": {
+                    "$ref": "#/definitions/presenter.CustomerJsonResponse"
+                },
                 "customer_id": {
                     "type": "integer",
                     "example": 1
