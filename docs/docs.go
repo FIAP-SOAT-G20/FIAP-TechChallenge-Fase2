@@ -557,7 +557,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Filter by role",
+                        "description": "Filter by role. Available options: COOK, ATTENDANT, MANAGER",
                         "name": "role",
                         "in": "query"
                     }

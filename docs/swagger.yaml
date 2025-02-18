@@ -553,7 +553,7 @@ paths:
         in: query
         name: name
         type: string
-      - description: Filter by role
+      - description: 'Filter by role. Available options: COOK, ATTENDANT, MANAGER'
         in: query
         name: role
         type: string

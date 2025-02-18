@@ -57,7 +57,7 @@ func (h *StaffHandler) Register(router *gin.RouterGroup) {
 //	@Param			page	query		int										false	"Page number"		default(1)
 //	@Param			limit	query		int										false	"Items per page"	default(10)
 //	@Param			name	query		string									false	"Filter by name"
-//	@Param			role	query		string									false	"Filter by role"
+//	@Param			role	query		string									false	"Filter by role. Available options: COOK, ATTENDANT, MANAGER"
 //	@Success		200		{object}	presenter.StaffJsonPaginatedResponse	"OK"
 //	@Failure		400		{object}	middleware.ErrorResponse				"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorResponse				"Internal Server Error"
