@@ -68,9 +68,10 @@ func (h *ProductHandler) Register(router *gin.RouterGroup) {
 //
 //	@Summary		List products
 //	@Description	List all products
+//	@Description	Response can return JSON or XML format (Accept header: application/json or text/xml)
 //	@Tags			products
 //	@Accept			json
-//	@Produce		json
+//	@Produce		json,xml
 //	@Param			page		query		int										false	"Page number"		default(1)
 //	@Param			limit		query		int										false	"Items per page"	default(10)
 //	@Param			name		query		string									false	"Filter by name"
@@ -93,7 +94,7 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 		Limit:      req.Limit,
 	}
 
-	if c.GetHeader("Accept") == "application/xml" {
+	if c.GetHeader("Accept") == "text/xml" {
 		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
 	} else {
 		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
@@ -110,9 +111,10 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 //
 //	@Summary		Create product
 //	@Description	Creates a new product
+//	@Description	Response can return JSON or XML format (Accept header: application/json or text/xml)
 //	@Tags			products
 //	@Accept			json
-//	@Produce		json
+//	@Produce		json,xml
 //	@Param			product	body		CreateProductRequest			true	"Product data"
 //	@Success		201		{object}	presenter.ProductJsonResponse	"Created"
 //	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
@@ -132,7 +134,7 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 		CategoryID:  req.CategoryID,
 	}
 
-	if c.GetHeader("Accept") == "application/xml" {
+	if c.GetHeader("Accept") == "text/xml" {
 		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
 	} else {
 		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
@@ -149,9 +151,10 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 //
 //	@Summary		Get product
 //	@Description	Search for a product by ID
+//	@Description	Response can return JSON or XML format (Accept header: application/json or text/xml)
 //	@Tags			products
 //	@Accept			json
-//	@Produce		json
+//	@Produce		json,xml
 //	@Param			id	path		int								true	"Product ID"
 //	@Success		200	{object}	presenter.ProductJsonResponse	"OK"
 //	@Failure		400	{object}	middleware.ErrorResponse		"Bad Request"
@@ -169,7 +172,7 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 		ID: req.ID,
 	}
 
-	if c.GetHeader("Accept") == "application/xml" {
+	if c.GetHeader("Accept") == "text/xml" {
 		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
 	} else {
 		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
@@ -186,9 +189,10 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 //
 //	@Summary		Update product
 //	@Description	Update an existing product
+//	@Description	Response can return JSON or XML format (Accept header: application/json or text/xml)
 //	@Tags			products
 //	@Accept			json
-//	@Produce		json
+//	@Produce		json,xml
 //	@Param			id		path		int								true	"Product ID"
 //	@Param			product	body		UpdateProductRequest			true	"Product data"
 //	@Success		200		{object}	presenter.ProductJsonResponse	"OK"
@@ -217,7 +221,7 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 		CategoryID:  req.CategoryID,
 	}
 
-	if c.GetHeader("Accept") == "application/xml" {
+	if c.GetHeader("Accept") == "text/xml" {
 		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
 	} else {
 		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
@@ -234,8 +238,10 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 //
 //	@Summary		Delete product
 //	@Description	Deletes a product by ID
+//	@Description	Response can return JSON or XML format (Accept header: application/json or text/xml)
 //	@Tags			products
-//	@Produce		json
+//	@Accept			json
+//	@Produce		json,xml
 //	@Param			id	path		int	true	"Product ID"
 //	@Success		204	{object}	nil
 //	@Failure		400	{object}	middleware.ErrorResponse	"Bad Request"
@@ -253,7 +259,7 @@ func (h *ProductHandler) DeleteProduct(c *gin.Context) {
 		ID: reqUri.ID,
 	}
 
-	if c.GetHeader("Accept") ==  "application/xml" {
+	if c.GetHeader("Accept") == "text/xml" {
 		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
 	} else {
 		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
