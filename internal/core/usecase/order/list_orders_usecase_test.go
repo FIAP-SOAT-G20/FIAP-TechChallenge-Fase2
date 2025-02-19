@@ -9,7 +9,6 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
-	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
@@ -22,9 +21,7 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	mockWriter := mockdto.NewMockResponseWriter(ctrl)
-	useCase := order.NewListOrdersUseCase(mockGateway, mockPresenter)
+	useCase := order.NewListOrdersUseCase(mockGateway)
 	ctx := context.Background()
 
 	currentTime := time.Now()
@@ -59,21 +56,12 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 			input: dto.ListOrdersInput{
 				Page:   1,
 				Limit:  10,
-				Writer: mockWriter,
+				Writer: nil,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
 					FindAll(ctx, uint64(0), valueobject.OrderStatus(""), 1, 10).
 					Return(mockOrders, int64(2), nil)
-
-				mockPresenter.EXPECT().
-					Present(dto.OrderPresenterInput{
-						Result: mockOrders,
-						Total:  int64(2),
-						Page:   1,
-						Limit:  10,
-						Writer: mockWriter,
-					})
 			},
 			expectError: false,
 		},
@@ -82,7 +70,7 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 			input: dto.ListOrdersInput{
 				Page:   1,
 				Limit:  10,
-				Writer: mockWriter,
+				Writer: nil,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -98,21 +86,12 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 				Status: "PENDING",
 				Page:   1,
 				Limit:  10,
-				Writer: mockWriter,
+				Writer: nil,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
 					FindAll(ctx, uint64(0), valueobject.OrderStatus("PENDING"), 1, 10).
 					Return(mockOrders, int64(2), nil)
-
-				mockPresenter.EXPECT().
-					Present(dto.OrderPresenterInput{
-						Writer: mockWriter,
-						Total:  int64(2),
-						Page:   1,
-						Limit:  10,
-						Result: mockOrders,
-					})
 			},
 			expectError: false,
 		},
@@ -122,21 +101,12 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 				CustomerID: 1,
 				Page:       1,
 				Limit:      10,
-				Writer:     mockWriter,
+				Writer:     nil,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
 					FindAll(ctx, uint64(1), valueobject.OrderStatus(""), 1, 10).
 					Return(mockOrders, int64(2), nil)
-
-				mockPresenter.EXPECT().
-					Present(dto.OrderPresenterInput{
-						Writer: mockWriter,
-						Total:  int64(2),
-						Page:   1,
-						Limit:  10,
-						Result: mockOrders,
-					})
 			},
 			expectError: false,
 		},
@@ -146,15 +116,20 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, tt.input)
+			orders, total, err := useCase.Execute(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, orders)
+				assert.Zero(t, total)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, orders)
+				assert.Len(t, orders, 2)
+				assert.Equal(t, int64(2), total)
 			}
 		})
 	}

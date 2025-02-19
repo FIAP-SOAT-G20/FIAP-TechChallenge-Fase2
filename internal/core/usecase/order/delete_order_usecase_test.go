@@ -19,8 +19,7 @@ func TestDeleteOrderUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	useCase := order.NewDeleteOrderUseCase(mockGateway, mockPresenter)
+	useCase := order.NewDeleteOrderUseCase(mockGateway)
 	ctx := context.Background()
 
 	tests := []struct {
@@ -36,14 +35,11 @@ func TestDeleteOrderUseCase_Execute(t *testing.T) {
 			setupMocks: func() {
 				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
-					Return(&entity.Order{}, nil)
+					Return(&entity.Order{ID: 1}, nil)
 
 				mockGateway.EXPECT().
 					Delete(ctx, uint64(1)).
 					Return(nil)
-
-				mockPresenter.EXPECT().
-					Present(gomock.Any())
 			},
 			expectError: false,
 		},
@@ -90,15 +86,18 @@ func TestDeleteOrderUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, dto.DeleteOrderInput{ID: tt.id})
+			order, err := useCase.Execute(ctx, dto.DeleteOrderInput{ID: tt.id})
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, order)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, order)
+				assert.Equal(t, tt.id, order.ID)
 			}
 		})
 	}

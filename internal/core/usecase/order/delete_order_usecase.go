@@ -5,37 +5,32 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
 type deleteOrderUseCase struct {
-	gateway   port.OrderGateway
-	presenter port.OrderPresenter
+	gateway port.OrderGateway
 }
 
 // NewDeleteOrderUseCase creates a new DeleteOrderUseCase
-func NewDeleteOrderUseCase(gateway port.OrderGateway, presenter port.OrderPresenter) port.DeleteOrderUseCase {
-	return &deleteOrderUseCase{gateway, presenter}
+func NewDeleteOrderUseCase(gateway port.OrderGateway) port.DeleteOrderUseCase {
+	return &deleteOrderUseCase{gateway}
 }
 
 // Execute deletes a order
-func (uc *deleteOrderUseCase) Execute(ctx context.Context, input dto.DeleteOrderInput) error {
+func (uc *deleteOrderUseCase) Execute(ctx context.Context, input dto.DeleteOrderInput) (*entity.Order, error) {
 	order, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
-		return domain.NewInternalError(err)
+		return nil, domain.NewInternalError(err)
 	}
 	if order == nil {
-		return domain.NewNotFoundError(domain.ErrNotFound)
+		return nil, domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
 	if err := uc.gateway.Delete(ctx, input.ID); err != nil {
-		return domain.NewInternalError(err)
+		return nil, domain.NewInternalError(err)
 	}
 
-	uc.presenter.Present(dto.OrderPresenterInput{
-		Writer: input.Writer,
-		Result: order,
-	})
-
-	return nil
+	return order, nil
 }

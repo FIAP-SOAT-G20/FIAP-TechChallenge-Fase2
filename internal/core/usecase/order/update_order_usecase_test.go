@@ -9,7 +9,6 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
-	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
@@ -21,9 +20,7 @@ func TestUpdateOrderUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	mockWriter := mockdto.NewMockResponseWriter(ctrl)
-	useCase := order.NewUpdateOrderUseCase(mockGateway, mockPresenter)
+	useCase := order.NewUpdateOrderUseCase(mockGateway)
 	ctx := context.Background()
 
 	currentTime := time.Now()
@@ -49,7 +46,6 @@ func TestUpdateOrderUseCase_Execute(t *testing.T) {
 				ID:         1,
 				CustomerID: 1,
 				Status:     "RECEIVED",
-				Writer:     mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -62,9 +58,6 @@ func TestUpdateOrderUseCase_Execute(t *testing.T) {
 						assert.Equal(t, uint64(1), p.ID)
 						return nil
 					})
-
-				mockPresenter.EXPECT().
-					Present(gomock.Any())
 			},
 			expectError: false,
 		},
@@ -74,7 +67,6 @@ func TestUpdateOrderUseCase_Execute(t *testing.T) {
 				ID:         1,
 				CustomerID: 1,
 				Status:     "RECEIVED",
-				Writer:     mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -90,7 +82,6 @@ func TestUpdateOrderUseCase_Execute(t *testing.T) {
 				ID:         1,
 				CustomerID: 1,
 				Status:     "RECEIVED",
-				Writer:     mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -110,15 +101,18 @@ func TestUpdateOrderUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, tt.input)
+			order, err := useCase.Execute(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, order)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, order)
+				assert.Equal(t, tt.input.Status, order.Status)
 			}
 		})
 	}

@@ -10,29 +10,21 @@ import (
 )
 
 type createOrderUseCase struct {
-	gateway   port.OrderGateway
-	presenter port.OrderPresenter
+	gateway port.OrderGateway
 }
 
 // NewCreateOrderUseCase creates a new CreateOrderUseCase
-func NewCreateOrderUseCase(gateway port.OrderGateway, presenter port.OrderPresenter) port.CreateOrderUseCase {
-	return &createOrderUseCase{
-		gateway:   gateway,
-		presenter: presenter,
-	}
+func NewCreateOrderUseCase(gateway port.OrderGateway) port.CreateOrderUseCase {
+	return &createOrderUseCase{gateway}
 }
 
 // Execute creates a new Order
-func (uc *createOrderUseCase) Execute(ctx context.Context, input dto.CreateOrderInput) error {
+func (uc *createOrderUseCase) Execute(ctx context.Context, input dto.CreateOrderInput) (*entity.Order, error) {
 	order := entity.NewOrder(input.CustomerID)
 
 	if err := uc.gateway.Create(ctx, order); err != nil {
-		return domain.NewInternalError(err)
+		return nil, domain.NewInternalError(err)
 	}
 
-	uc.presenter.Present(dto.OrderPresenterInput{
-		Writer: input.Writer,
-		Result: order,
-	})
-	return nil
+	return order, nil
 }

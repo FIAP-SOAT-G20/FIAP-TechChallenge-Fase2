@@ -5,35 +5,25 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
 type listOrdersUseCase struct {
-	gateway   port.OrderGateway
-	presenter port.OrderPresenter
+	gateway port.OrderGateway
 }
 
 // NewListOrdersUseCase creates a new ListOrdersUseCase
-func NewListOrdersUseCase(gateway port.OrderGateway, presenter port.OrderPresenter) port.ListOrdersUseCase {
-	return &listOrdersUseCase{
-		gateway:   gateway,
-		presenter: presenter,
-	}
+func NewListOrdersUseCase(gateway port.OrderGateway) port.ListOrdersUseCase {
+	return &listOrdersUseCase{gateway}
 }
 
 // Execute lists all orders
-func (uc *listOrdersUseCase) Execute(ctx context.Context, input dto.ListOrdersInput) error {
+func (uc *listOrdersUseCase) Execute(ctx context.Context, input dto.ListOrdersInput) ([]*entity.Order, int64, error) {
 	orders, total, err := uc.gateway.FindAll(ctx, input.CustomerID, input.Status, input.Page, input.Limit)
 	if err != nil {
-		return domain.NewInternalError(err)
+		return nil, 0, domain.NewInternalError(err)
 	}
 
-	uc.presenter.Present(dto.OrderPresenterInput{
-		Writer: input.Writer,
-		Total:  total,
-		Page:   input.Page,
-		Limit:  input.Limit,
-		Result: orders,
-	})
-	return nil
+	return orders, total, nil
 }

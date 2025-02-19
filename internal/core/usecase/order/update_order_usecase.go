@@ -5,41 +5,38 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
 type updateOrderUseCase struct {
-	gateway   port.OrderGateway
-	presenter port.OrderPresenter
+	gateway port.OrderGateway
 }
 
 // NewUpdateOrderUseCase creates a new UpdateOrderUseCase
-func NewUpdateOrderUseCase(gateway port.OrderGateway, presenter port.OrderPresenter) port.UpdateOrderUseCase {
-	return &updateOrderUseCase{
-		gateway:   gateway,
-		presenter: presenter,
-	}
+func NewUpdateOrderUseCase(gateway port.OrderGateway) port.UpdateOrderUseCase {
+	return &updateOrderUseCase{gateway}
 }
 
 // Execute updates a order
-func (uc *updateOrderUseCase) Execute(ctx context.Context, input dto.UpdateOrderInput) error {
+func (uc *updateOrderUseCase) Execute(ctx context.Context, input dto.UpdateOrderInput) (*entity.Order, error) {
 	order, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
-		return domain.NewInternalError(err)
+		return nil, domain.NewInternalError(err)
 	}
 
 	if order == nil {
-		return domain.NewNotFoundError(domain.ErrNotFound)
+		return nil, domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
 	if input.CustomerID != 0 && order.CustomerID != input.CustomerID {
-		return domain.NewInvalidInputError(domain.ErrInvalidBody)
+		return nil, domain.NewInvalidInputError(domain.ErrInvalidBody)
 	}
 
 	if input.Status != "" && order.Status != input.Status {
 		if !valueobject.StatusCanTransitionTo(order.Status, input.Status) {
-			return domain.NewInvalidInputError(domain.ErrInvalidBody)
+			return nil, domain.NewInvalidInputError(domain.ErrInvalidBody)
 		}
 
 		// TODO: Implement this validation when staff is implemented
@@ -55,12 +52,8 @@ func (uc *updateOrderUseCase) Execute(ctx context.Context, input dto.UpdateOrder
 	order.Update(input.CustomerID, input.Status)
 
 	if err := uc.gateway.Update(ctx, order); err != nil {
-		return domain.NewInternalError(err)
+		return nil, domain.NewInternalError(err)
 	}
 
-	uc.presenter.Present(dto.OrderPresenterInput{
-		Writer: input.Writer,
-		Result: order,
-	})
-	return nil
+	return order, nil
 }

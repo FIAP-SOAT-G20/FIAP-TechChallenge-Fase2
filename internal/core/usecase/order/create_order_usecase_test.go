@@ -8,7 +8,6 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
-	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/order"
@@ -19,9 +18,7 @@ func TestCreateOrderUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	mockWriter := mockdto.NewMockResponseWriter(ctrl)
-	useCase := order.NewCreateOrderUseCase(mockGateway, mockPresenter)
+	useCase := order.NewCreateOrderUseCase(mockGateway)
 	ctx := context.Background()
 
 	tests := []struct {
@@ -35,15 +32,12 @@ func TestCreateOrderUseCase_Execute(t *testing.T) {
 			name: "should create order successfully",
 			input: dto.CreateOrderInput{
 				CustomerID: 1,
-				Writer:     mockWriter,
+				Writer:     nil,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
 					Create(ctx, gomock.Any()).
 					Return(nil)
-
-				mockPresenter.EXPECT().
-					Present(gomock.Any())
 			},
 			expectError: false,
 		},
@@ -51,7 +45,7 @@ func TestCreateOrderUseCase_Execute(t *testing.T) {
 			name: "should return error when gateway fails",
 			input: dto.CreateOrderInput{
 				CustomerID: 1,
-				Writer:     mockWriter,
+				Writer:     nil,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -67,15 +61,18 @@ func TestCreateOrderUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, tt.input)
+			order, err := useCase.Execute(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, order)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, order)
+				assert.Equal(t, tt.input.CustomerID, order.CustomerID)
 			}
 		})
 	}

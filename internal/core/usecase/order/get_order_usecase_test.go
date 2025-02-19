@@ -9,7 +9,6 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
-	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
@@ -21,9 +20,7 @@ func TestGetOrderUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	mockWriter := mockdto.NewMockResponseWriter(ctrl)
-	useCase := order.NewGetOrderUseCase(mockGateway, mockPresenter)
+	useCase := order.NewGetOrderUseCase(mockGateway)
 	ctx := context.Background()
 
 	currentTime := time.Now()
@@ -50,12 +47,6 @@ func TestGetOrderUseCase_Execute(t *testing.T) {
 				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
 					Return(mockOrder, nil)
-
-				mockPresenter.EXPECT().
-					Present(dto.OrderPresenterInput{
-						Writer: mockWriter,
-						Result: mockOrder,
-					})
 			},
 			expectError: false,
 		},
@@ -87,18 +78,23 @@ func TestGetOrderUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, dto.GetOrderInput{
+			order, err := useCase.Execute(ctx, dto.GetOrderInput{
 				ID:     tt.id,
-				Writer: mockWriter,
+				Writer: nil,
 			})
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, order)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, order)
+				assert.Equal(t, mockOrder.ID, order.ID)
+				assert.Equal(t, mockOrder.CustomerID, order.CustomerID)
+				assert.Equal(t, mockOrder.Status, order.Status)
 			}
 		})
 	}
