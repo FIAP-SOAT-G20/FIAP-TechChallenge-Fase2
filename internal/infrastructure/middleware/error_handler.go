@@ -35,43 +35,23 @@ func handleError(c *gin.Context, err error, logger *slog.Logger) {
 	switch e := err.(type) {
 	case *domain.ValidationError:
 		setResponse(c, http.StatusBadRequest, e.Error())
-		logger.Warn(domain.ErrValidationError,
-			"error", e.Error(),
-			"path", c.Request.URL.Path,
-			"method", c.Request.Method,
-		)
+		logWarning(logger, domain.ErrValidationError, e, c.Request)
 
 	case *domain.NotFoundError:
 		setResponse(c, http.StatusNotFound, e.Error())
-		logger.Warn(domain.ErrNotFound,
-			"error", e.Error(),
-			"path", c.Request.URL.Path,
-			"method", c.Request.Method,
-		)
+		logWarning(logger, domain.ErrNotFound, e, c.Request)
 
 	case *domain.InvalidInputError:
 		setResponse(c, http.StatusBadRequest, e.Error())
-		logger.Warn(domain.ErrInvalidInput,
-			"error", e.Error(),
-			"path", c.Request.URL.Path,
-			"method", c.Request.Method,
-		)
+		logWarning(logger, domain.ErrInvalidInput, e, c.Request)
 
 	case *domain.InternalError:
 		setResponse(c, http.StatusInternalServerError, domain.ErrInternalError)
-		logger.Error(domain.ErrInternalError,
-			"error", e.Error(),
-			"path", c.Request.URL.Path,
-			"method", c.Request.Method,
-		)
+		logError(logger, domain.ErrInternalError, e, c.Request)
 
 	default:
 		setResponse(c, http.StatusInternalServerError, domain.ErrInternalError)
-		logger.Error(domain.ErrUnknownError,
-			"error", err.Error(),
-			"path", c.Request.URL.Path,
-			"method", c.Request.Method,
-		)
+		logError(logger, domain.ErrUnknownError, err, c.Request)
 	}
 }
 
@@ -88,4 +68,20 @@ func setResponse(c *gin.Context, status int, message string) {
 		Code:    status,
 		Message: message,
 	})
+}
+
+func logError(logger *slog.Logger, msg string, err error, req *http.Request) {
+	logger.Error(msg,
+		"error", err.Error(),
+		"path", req.URL.Path,
+		"method", req.Method,
+	)
+}
+
+func logWarning(logger *slog.Logger, msg string, err error, req *http.Request) {
+	logger.Warn(msg,
+		"error", err.Error(),
+		"path", req.URL.Path,
+		"method", req.Method,
+	)
 }
