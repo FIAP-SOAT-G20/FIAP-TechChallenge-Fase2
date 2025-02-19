@@ -5,7 +5,6 @@ type CreateProductInput struct {
 	Description string
 	Price       float64
 	CategoryID  uint64
-	Writer      ResponseWriter
 }
 
 type UpdateProductInput struct {
@@ -14,17 +13,14 @@ type UpdateProductInput struct {
 	Description string
 	Price       float64
 	CategoryID  uint64
-	Writer      ResponseWriter
 }
 
 type GetProductInput struct {
-	ID     uint64
-	Writer ResponseWriter
+	ID uint64
 }
 
 type DeleteProductInput struct {
-	ID     uint64
-	Writer ResponseWriter
+	ID uint64
 }
 
 type ListProductsInput struct {
@@ -32,7 +28,6 @@ type ListProductsInput struct {
 	CategoryID uint64
 	Page       int
 	Limit      int
-	Writer     ResponseWriter
 }
 
 type ProductPresenterInput struct {
@@ -40,5 +35,4 @@ type ProductPresenterInput struct {
 	Total  int64
 	Page   int
 	Limit  int
-	Writer ResponseWriter
 }

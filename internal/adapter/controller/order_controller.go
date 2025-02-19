@@ -13,7 +13,7 @@ type OrderController struct {
 	getUC     port.GetOrderUseCase
 	updateUC  port.UpdateOrderUseCase
 	deleteUC  port.DeleteOrderUseCase
-	presenter port.OrderPresenter
+	Presenter port.OrderPresenter
 }
 
 func NewOrderController(
@@ -22,7 +22,6 @@ func NewOrderController(
 	getUC port.GetOrderUseCase,
 	updateUC port.UpdateOrderUseCase,
 	deleteUC port.DeleteOrderUseCase,
-	presenter port.OrderPresenter,
 ) *OrderController {
 	return &OrderController{
 		listUC,
@@ -30,7 +29,7 @@ func NewOrderController(
 		getUC,
 		updateUC,
 		deleteUC,
-		presenter,
+		nil,
 	}
 }
 
@@ -40,8 +39,7 @@ func (c *OrderController) ListOrders(ctx context.Context, input dto.ListOrdersIn
 		return err
 	}
 
-	c.presenter.Present(dto.OrderPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.OrderPresenterInput{
 		Total:  total,
 		Page:   input.Page,
 		Limit:  input.Limit,
@@ -57,8 +55,7 @@ func (c *OrderController) CreateOrder(ctx context.Context, input dto.CreateOrder
 		return err
 	}
 
-	c.presenter.Present(dto.OrderPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.OrderPresenterInput{
 		Result: order,
 	})
 
@@ -71,8 +68,7 @@ func (c *OrderController) GetOrder(ctx context.Context, input dto.GetOrderInput)
 		return err
 	}
 
-	c.presenter.Present(dto.OrderPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.OrderPresenterInput{
 		Result: order,
 	})
 
@@ -85,8 +81,7 @@ func (c *OrderController) UpdateOrder(ctx context.Context, input dto.UpdateOrder
 		return err
 	}
 
-	c.presenter.Present(dto.OrderPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.OrderPresenterInput{
 		Result: order,
 	})
 
@@ -99,8 +94,7 @@ func (c *OrderController) DeleteOrder(ctx context.Context, input dto.DeleteOrder
 		return err
 	}
 
-	c.presenter.Present(dto.OrderPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.OrderPresenterInput{
 		Result: order,
 	})
 

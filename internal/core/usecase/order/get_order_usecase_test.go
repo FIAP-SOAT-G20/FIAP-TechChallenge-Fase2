@@ -79,8 +79,7 @@ func TestGetOrderUseCase_Execute(t *testing.T) {
 			tt.setupMocks()
 
 			order, err := useCase.Execute(ctx, dto.GetOrderInput{
-				ID:     tt.id,
-				Writer: nil,
+				ID: tt.id,
 			})
 
 			if tt.expectError {

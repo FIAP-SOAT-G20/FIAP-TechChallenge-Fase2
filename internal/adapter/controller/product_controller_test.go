@@ -20,7 +20,8 @@ func TestProductController_ListProducts(t *testing.T) {
 
 	mockListProductsUseCase := mockport.NewMockListProductsUseCase(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	productController := NewProductController(mockListProductsUseCase, nil, nil, nil, nil, mockPresenter)
+	productController := NewProductController(mockListProductsUseCase, nil, nil, nil, nil)
+	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.ListProductsInput{
@@ -76,7 +77,8 @@ func TestProductController_CreateProduct(t *testing.T) {
 
 	mockCreateProductUseCase := mockport.NewMockCreateProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	productController := NewProductController(nil, mockCreateProductUseCase, nil, nil, nil, mockPresenter)
+	productController := NewProductController(nil, mockCreateProductUseCase, nil, nil, nil)
+	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.CreateProductInput{
@@ -113,7 +115,8 @@ func TestProductController_GetProduct(t *testing.T) {
 
 	mockGetProductUseCase := mockport.NewMockGetProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	productController := NewProductController(nil, nil, mockGetProductUseCase, nil, nil, mockPresenter)
+	productController := NewProductController(nil, nil, mockGetProductUseCase, nil, nil)
+	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.GetProductInput{
@@ -153,7 +156,8 @@ func TestProductController_UpdateProduct(t *testing.T) {
 
 	mockUpdateProductUseCase := mockport.NewMockUpdateProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	productController := NewProductController(nil, nil, nil, mockUpdateProductUseCase, nil, mockPresenter)
+	productController := NewProductController(nil, nil, nil, mockUpdateProductUseCase, nil)
+	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.UpdateProductInput{
@@ -197,7 +201,8 @@ func TestProductController_DeleteProduct(t *testing.T) {
 
 	mockDeleteProductUseCase := mockport.NewMockDeleteProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	productController := NewProductController(nil, nil, nil, nil, mockDeleteProductUseCase, mockPresenter)
+	productController := NewProductController(nil, nil, nil, nil, mockDeleteProductUseCase)
+	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.DeleteProductInput{

@@ -54,9 +54,8 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 		{
 			name: "should list orders successfully",
 			input: dto.ListOrdersInput{
-				Page:   1,
-				Limit:  10,
-				Writer: nil,
+				Page:  1,
+				Limit: 10,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -68,9 +67,8 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 		{
 			name: "should return error when repository fails",
 			input: dto.ListOrdersInput{
-				Page:   1,
-				Limit:  10,
-				Writer: nil,
+				Page:  1,
+				Limit: 10,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -86,7 +84,6 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 				Status: "PENDING",
 				Page:   1,
 				Limit:  10,
-				Writer: nil,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -101,7 +98,6 @@ func TestListOrdersUseCase_Execute(t *testing.T) {
 				CustomerID: 1,
 				Page:       1,
 				Limit:      10,
-				Writer:     nil,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().

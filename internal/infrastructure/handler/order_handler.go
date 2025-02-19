@@ -8,6 +8,7 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 )
@@ -93,9 +94,8 @@ func (h *OrderHandler) ListOrders(c *gin.Context) {
 		Status:     req.Status,
 		Page:       req.Page,
 		Limit:      req.Limit,
-		Writer:     c,
 	}
-
+	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
 	err := h.controller.ListOrders(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -124,9 +124,8 @@ func (h *OrderHandler) CreateOrder(c *gin.Context) {
 
 	input := dto.CreateOrderInput{
 		CustomerID: req.CustomerID,
-		Writer:     c,
 	}
-
+	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
 	err := h.controller.CreateOrder(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -155,10 +154,9 @@ func (h *OrderHandler) GetOrder(c *gin.Context) {
 	}
 
 	input := dto.GetOrderInput{
-		ID:     req.ID,
-		Writer: c,
+		ID: req.ID,
 	}
-
+	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
 	err := h.controller.GetOrder(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -201,12 +199,11 @@ func (h *OrderHandler) UpdateOrder(c *gin.Context) {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
-
+	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
 	input := dto.UpdateOrderInput{
 		ID:         reqUri.ID,
 		CustomerID: req.CustomerID,
 		Status:     req.Status,
-		Writer:     c,
 	}
 
 	err := h.controller.UpdateOrder(c.Request.Context(), input)
@@ -252,12 +249,11 @@ func (h *OrderHandler) UpdateOrderPartial(c *gin.Context) {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
-
+	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
 	input := dto.UpdateOrderInput{
 		ID:         reqUri.ID,
 		CustomerID: req.CustomerID,
 		Status:     req.Status,
-		Writer:     c,
 	}
 
 	err := h.controller.UpdateOrder(c.Request.Context(), input)
@@ -287,10 +283,9 @@ func (h *OrderHandler) DeleteOrder(c *gin.Context) {
 	}
 
 	input := dto.DeleteOrderInput{
-		ID:     req.ID,
-		Writer: c,
+		ID: req.ID,
 	}
-
+	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
 	if err := h.controller.DeleteOrder(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return

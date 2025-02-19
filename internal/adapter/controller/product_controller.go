@@ -13,7 +13,7 @@ type ProductController struct {
 	getUC     port.GetProductUseCase
 	updateUC  port.UpdateProductUseCase
 	deleteUC  port.DeleteProductUseCase
-	presenter port.ProductPresenter
+	Presenter port.ProductPresenter
 }
 
 func NewProductController(
@@ -22,7 +22,6 @@ func NewProductController(
 	getUC port.GetProductUseCase,
 	updateUC port.UpdateProductUseCase,
 	deleteUC port.DeleteProductUseCase,
-	presenter port.ProductPresenter,
 ) *ProductController {
 	return &ProductController{
 		listUC,
@@ -30,7 +29,7 @@ func NewProductController(
 		getUC,
 		updateUC,
 		deleteUC,
-		presenter,
+		nil,
 	}
 }
 
@@ -40,8 +39,7 @@ func (c *ProductController) ListProducts(ctx context.Context, input dto.ListProd
 		return err
 	}
 
-	c.presenter.Present(dto.ProductPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.ProductPresenterInput{
 		Total:  total,
 		Page:   input.Page,
 		Limit:  input.Limit,
@@ -57,8 +55,7 @@ func (c *ProductController) CreateProduct(ctx context.Context, input dto.CreateP
 		return err
 	}
 
-	c.presenter.Present(dto.ProductPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.ProductPresenterInput{
 		Result: product,
 	})
 
@@ -71,8 +68,7 @@ func (c *ProductController) GetProduct(ctx context.Context, input dto.GetProduct
 		return err
 	}
 
-	c.presenter.Present(dto.ProductPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.ProductPresenterInput{
 		Result: product,
 	})
 
@@ -85,8 +81,7 @@ func (c *ProductController) UpdateProduct(ctx context.Context, input dto.UpdateP
 		return err
 	}
 
-	c.presenter.Present(dto.ProductPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.ProductPresenterInput{
 		Result: product,
 	})
 
@@ -99,8 +94,7 @@ func (c *ProductController) DeleteProduct(ctx context.Context, input dto.DeleteP
 		return err
 	}
 
-	c.presenter.Present(dto.ProductPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.ProductPresenterInput{
 		Result: product,
 	})
 

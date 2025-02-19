@@ -10,11 +10,13 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
-type customerJsonPresenter struct{}
+type customerJsonPresenter struct {
+	writer ResponseWriter
+}
 
 // CustomerJsonResponse represents the response of a customer
-func NewCustomerJsonPresenter() port.CustomerPresenter {
-	return &customerJsonPresenter{}
+func NewCustomerJsonPresenter(writer ResponseWriter) port.CustomerPresenter {
+	return &customerJsonPresenter{writer}
 }
 
 // ToCustomerJsonResponse convert entity.Customer to CustomerJsonResponse
@@ -34,7 +36,7 @@ func (p *customerJsonPresenter) Present(pp dto.CustomerPresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.Customer:
 		output := ToCustomerJsonResponse(v)
-		pp.Writer.JSON(http.StatusOK, output)
+		p.writer.JSON(http.StatusOK, output)
 	case []*entity.Customer:
 		customerOutputs := make([]CustomerJsonResponse, len(v))
 		for i, customer := range v {
@@ -49,11 +51,11 @@ func (p *customerJsonPresenter) Present(pp dto.CustomerPresenterInput) {
 			},
 			Customers: customerOutputs,
 		}
-		pp.Writer.JSON(http.StatusOK, output)
+		p.writer.JSON(http.StatusOK, output)
 	default:
-		err := pp.Writer.Error(domain.NewInternalError(errors.New(domain.ErrInternalError)))
+		err := p.writer.Error(domain.NewInternalError(errors.New(domain.ErrInternalError)))
 		if err != nil {
-			pp.Writer.JSON(http.StatusInternalServerError, err)
+			p.writer.JSON(http.StatusInternalServerError, err)
 		}
 	}
 }

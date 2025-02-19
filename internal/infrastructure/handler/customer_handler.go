@@ -7,6 +7,7 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 )
 
@@ -76,12 +77,11 @@ func (h *CustomerHandler) ListCustomers(c *gin.Context) {
 	}
 
 	input := dto.ListCustomersInput{
-		Name:   query.Name,
-		Page:   query.Page,
-		Limit:  query.Limit,
-		Writer: c,
+		Name:  query.Name,
+		Page:  query.Page,
+		Limit: query.Limit,
 	}
-
+	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
 	err := h.controller.ListCustomers(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -109,12 +109,11 @@ func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
 	}
 
 	input := dto.CreateCustomerInput{
-		Name:   req.Name,
-		Email:  req.Email,
-		CPF:    req.CPF,
-		Writer: c,
+		Name:  req.Name,
+		Email: req.Email,
+		CPF:   req.CPF,
 	}
-
+	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
 	err := h.controller.CreateCustomer(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -143,10 +142,9 @@ func (h *CustomerHandler) GetCustomer(c *gin.Context) {
 	}
 
 	input := dto.GetCustomerInput{
-		ID:     req.ID,
-		Writer: c,
+		ID: req.ID,
 	}
-
+	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
 	err := h.controller.GetCustomer(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -182,12 +180,11 @@ func (h *CustomerHandler) UpdateCustomer(c *gin.Context) {
 	}
 
 	input := dto.UpdateCustomerInput{
-		ID:     reqUri.ID,
-		Name:   req.Name,
-		Email:  req.Email,
-		Writer: c,
+		ID:    reqUri.ID,
+		Name:  req.Name,
+		Email: req.Email,
 	}
-
+	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
 	err := h.controller.UpdateCustomer(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -215,10 +212,9 @@ func (h *CustomerHandler) DeleteCustomer(c *gin.Context) {
 	}
 
 	input := dto.DeleteCustomerInput{
-		ID:     req.ID,
-		Writer: c,
+		ID: req.ID,
 	}
-
+	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
 	if err := h.controller.DeleteCustomer(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return

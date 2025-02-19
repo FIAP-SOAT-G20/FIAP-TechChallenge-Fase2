@@ -13,7 +13,7 @@ type CustomerController struct {
 	getUC     port.GetCustomerUseCase
 	updateUC  port.UpdateCustomerUseCase
 	deleteUC  port.DeleteCustomerUseCase
-	presenter port.CustomerPresenter
+	Presenter port.CustomerPresenter
 }
 
 func NewCustomerController(
@@ -22,7 +22,6 @@ func NewCustomerController(
 	getUC port.GetCustomerUseCase,
 	updateUC port.UpdateCustomerUseCase,
 	deleteUC port.DeleteCustomerUseCase,
-	presenter port.CustomerPresenter,
 ) *CustomerController {
 	return &CustomerController{
 		listUC,
@@ -30,7 +29,7 @@ func NewCustomerController(
 		getUC,
 		updateUC,
 		deleteUC,
-		presenter,
+		nil,
 	}
 }
 
@@ -40,8 +39,7 @@ func (c *CustomerController) ListCustomers(ctx context.Context, input dto.ListCu
 		return err
 	}
 
-	c.presenter.Present(dto.CustomerPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.CustomerPresenterInput{
 		Total:  total,
 		Page:   input.Page,
 		Limit:  input.Limit,
@@ -57,8 +55,7 @@ func (c *CustomerController) CreateCustomer(ctx context.Context, input dto.Creat
 		return err
 	}
 
-	c.presenter.Present(dto.CustomerPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.CustomerPresenterInput{
 		Result: customer,
 	})
 
@@ -71,8 +68,7 @@ func (c *CustomerController) GetCustomer(ctx context.Context, input dto.GetCusto
 		return err
 	}
 
-	c.presenter.Present(dto.CustomerPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.CustomerPresenterInput{
 		Result: customer,
 	})
 
@@ -85,8 +81,7 @@ func (c *CustomerController) UpdateCustomer(ctx context.Context, input dto.Updat
 		return err
 	}
 
-	c.presenter.Present(dto.CustomerPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.CustomerPresenterInput{
 		Result: customer,
 	})
 
@@ -99,8 +94,7 @@ func (c *CustomerController) DeleteCustomer(ctx context.Context, input dto.Delet
 		return err
 	}
 
-	c.presenter.Present(dto.CustomerPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.CustomerPresenterInput{
 		Result: customer,
 	})
 

@@ -13,7 +13,7 @@ type OrderProductController struct {
 	getUC     port.GetOrderProductUseCase
 	updateUC  port.UpdateOrderProductUseCase
 	deleteUC  port.DeleteOrderProductUseCase
-	presenter port.OrderProductPresenter
+	Presenter port.OrderProductPresenter
 }
 
 func NewOrderProductController(
@@ -22,7 +22,6 @@ func NewOrderProductController(
 	getUC port.GetOrderProductUseCase,
 	updateUC port.UpdateOrderProductUseCase,
 	deleteUC port.DeleteOrderProductUseCase,
-	presenter port.OrderProductPresenter,
 ) *OrderProductController {
 	return &OrderProductController{
 		listUC,
@@ -30,7 +29,7 @@ func NewOrderProductController(
 		getUC,
 		updateUC,
 		deleteUC,
-		presenter,
+		nil,
 	}
 }
 
@@ -40,8 +39,7 @@ func (c *OrderProductController) ListOrderProducts(ctx context.Context, input dt
 		return err
 	}
 
-	c.presenter.Present(dto.OrderProductPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.OrderProductPresenterInput{
 		Total:  total,
 		Page:   input.Page,
 		Limit:  input.Limit,
@@ -57,8 +55,7 @@ func (c *OrderProductController) CreateOrderProduct(ctx context.Context, input d
 		return err
 	}
 
-	c.presenter.Present(dto.OrderProductPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.OrderProductPresenterInput{
 		Result: orderProduct,
 	})
 
@@ -71,8 +68,7 @@ func (c *OrderProductController) GetOrderProduct(ctx context.Context, input dto.
 		return err
 	}
 
-	c.presenter.Present(dto.OrderProductPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.OrderProductPresenterInput{
 		Result: orderProduct,
 	})
 
@@ -85,8 +81,7 @@ func (c *OrderProductController) UpdateOrderProduct(ctx context.Context, input d
 		return err
 	}
 
-	c.presenter.Present(dto.OrderProductPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.OrderProductPresenterInput{
 		Result: orderProduct,
 	})
 
@@ -99,8 +94,7 @@ func (c *OrderProductController) DeleteOrderProduct(ctx context.Context, input d
 		return err
 	}
 
-	c.presenter.Present(dto.OrderProductPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.OrderProductPresenterInput{
 		Result: order,
 	})
 

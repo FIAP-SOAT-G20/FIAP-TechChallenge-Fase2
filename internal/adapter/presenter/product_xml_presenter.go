@@ -10,11 +10,13 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
-type productXmlPresenter struct{}
+type productXmlPresenter struct {
+	writer ResponseWriter
+}
 
 // NewProductXmlPresenter creates a new ProductXmlPresenter
-func NewProductXmlPresenter() port.ProductPresenter {
-	return &productXmlPresenter{}
+func NewProductXmlPresenter(writer ResponseWriter) port.ProductPresenter {
+	return &productXmlPresenter{writer}
 }
 
 // Present writes the response to the client
@@ -22,7 +24,7 @@ func (p *productXmlPresenter) Present(pp dto.ProductPresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.Product:
 		output := toProductXmlResponse(v)
-		pp.Writer.XML(http.StatusOK, output)
+		p.writer.XML(http.StatusOK, output)
 	case []*entity.Product:
 		productOutputs := make([]ProductXmlResponse, len(v))
 		for i, product := range v {
@@ -37,11 +39,11 @@ func (p *productXmlPresenter) Present(pp dto.ProductPresenterInput) {
 			},
 			Products: productOutputs,
 		}
-		pp.Writer.XML(http.StatusOK, output)
+		p.writer.XML(http.StatusOK, output)
 	default:
-		err := pp.Writer.Error(domain.NewInternalError(errors.New(domain.ErrInternalError)))
+		err := p.writer.Error(domain.NewInternalError(errors.New(domain.ErrInternalError)))
 		if err != nil {
-			pp.Writer.JSON(http.StatusInternalServerError, err)
+			p.writer.JSON(http.StatusInternalServerError, err)
 		}
 	}
 }

@@ -7,6 +7,7 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 )
 
@@ -87,9 +88,8 @@ func (h *OrderProductHandler) ListOrderProducts(c *gin.Context) {
 		ProductID: req.ProductID,
 		Page:      req.Page,
 		Limit:     req.Limit,
-		Writer:    c,
 	}
-
+	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
 	err := h.controller.ListOrderProducts(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -129,9 +129,8 @@ func (h *OrderProductHandler) CreateOrderProduct(c *gin.Context) {
 		OrderID:   reqUri.OrderID,
 		ProductID: reqUri.ProductID,
 		Quantity:  req.Quantity,
-		Writer:    c,
 	}
-
+	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
 	err := h.controller.CreateOrderProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -163,9 +162,8 @@ func (h *OrderProductHandler) GetOrderProduct(c *gin.Context) {
 	input := dto.GetOrderProductInput{
 		OrderID:   req.OrderID,
 		ProductID: req.ProductID,
-		Writer:    c,
 	}
-
+	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
 	err := h.controller.GetOrderProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -194,7 +192,6 @@ func (h *OrderProductHandler) UpdateOrderProduct(c *gin.Context) {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
-
 	var req UpdateOrderProductBodyRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
@@ -205,9 +202,8 @@ func (h *OrderProductHandler) UpdateOrderProduct(c *gin.Context) {
 		OrderID:   reqUri.OrderID,
 		ProductID: reqUri.ProductID,
 		Quantity:  req.Quantity,
-		Writer:    c,
 	}
-
+	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
 	err := h.controller.UpdateOrderProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -238,9 +234,8 @@ func (h *OrderProductHandler) DeleteOrderProduct(c *gin.Context) {
 	input := dto.DeleteOrderProductInput{
 		OrderID:   req.OrderID,
 		ProductID: req.ProductID,
-		Writer:    c,
 	}
-
+	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
 	if err := h.controller.DeleteOrderProduct(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return

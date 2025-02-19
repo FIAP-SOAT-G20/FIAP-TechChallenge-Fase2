@@ -32,7 +32,6 @@ func TestCreateOrderUseCase_Execute(t *testing.T) {
 			name: "should create order successfully",
 			input: dto.CreateOrderInput{
 				CustomerID: 1,
-				Writer:     nil,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -45,7 +44,6 @@ func TestCreateOrderUseCase_Execute(t *testing.T) {
 			name: "should return error when gateway fails",
 			input: dto.CreateOrderInput{
 				CustomerID: 1,
-				Writer:     nil,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().

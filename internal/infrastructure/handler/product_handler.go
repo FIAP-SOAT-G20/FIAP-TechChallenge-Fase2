@@ -7,6 +7,7 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 )
 
@@ -90,9 +91,8 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 		CategoryID: req.CategoryID,
 		Page:       req.Page,
 		Limit:      req.Limit,
-		Writer:     c,
 	}
-
+	h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	err := h.controller.ListProducts(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -124,9 +124,9 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 		Description: req.Description,
 		Price:       req.Price,
 		CategoryID:  req.CategoryID,
-		Writer:      c,
 	}
 
+	h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	err := h.controller.CreateProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -155,10 +155,9 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 	}
 
 	input := dto.GetProductInput{
-		ID:     req.ID,
-		Writer: c,
+		ID: req.ID,
 	}
-
+	h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	err := h.controller.GetProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -199,9 +198,8 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 		Description: req.Description,
 		Price:       req.Price,
 		CategoryID:  req.CategoryID,
-		Writer:      c,
 	}
-
+	h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	err := h.controller.UpdateProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -229,10 +227,9 @@ func (h *ProductHandler) DeleteProduct(c *gin.Context) {
 	}
 
 	input := dto.DeleteProductInput{
-		ID:     reqUri.ID,
-		Writer: c,
+		ID: reqUri.ID,
 	}
-
+	h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	if err := h.controller.DeleteProduct(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return

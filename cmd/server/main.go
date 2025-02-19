@@ -5,7 +5,6 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/gateway"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/customer"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/order"
 	orderproduct "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/order_product"
@@ -84,11 +83,11 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
 
 	// Presenters
-	productPresenter := presenter.NewProductJsonPresenter()
+	// productPresenter := presenter.NewProductJsonPresenter()
 	// productPresenter := presenter.NewProductXmlPresenter()
-	customerPresenter := presenter.NewCustomerJsonPresenter()
-	orderPresenter := presenter.NewOrderJsonPresenter()
-	orderProductPresenter := presenter.NewOrderProductJsonPresenter()
+	// customerPresenter := presenter.NewCustomerJsonPresenter()
+	// orderPresenter := presenter.NewOrderJsonPresenter()
+	// orderProductPresenter := presenter.NewOrderProductJsonPresenter()
 
 	// Use cases - Product
 	listProductsUC := product.NewListProductsUseCase(productGateway)
@@ -122,7 +121,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		getProductUC,
 		updateProductUC,
 		deleteProductUC,
-		productPresenter,
+		// productPresenter,
 	)
 	customerController := controller.NewCustomerController(
 		listCustomersUC,
@@ -130,7 +129,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		getCustomerUC,
 		updateCustomerUC,
 		deleteCustomerUC,
-		customerPresenter,
+		// customerPresenter,
 	)
 	orderController := controller.NewOrderController(
 		listOrdersUC,
@@ -138,7 +137,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		getOrderUC,
 		updateOrderUC,
 		deleteOrderUC,
-		orderPresenter,
+		// orderPresenter,
 	)
 	orderProductController := controller.NewOrderProductController(
 		listOrderProductsUC,
@@ -146,7 +145,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		getOrderProductUC,
 		updateOrderProductUC,
 		deleteOrderProductUC,
-		orderProductPresenter,
+		// orderProductPresenter,
 	)
 
 	// Handlers

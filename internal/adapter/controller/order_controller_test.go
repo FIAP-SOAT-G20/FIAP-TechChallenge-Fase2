@@ -19,7 +19,8 @@ func TestOrderController_ListOrders(t *testing.T) {
 
 	mockListOrdersUseCase := mockport.NewMockListOrdersUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	productController := NewOrderController(mockListOrdersUseCase, nil, nil, nil, nil, mockPresenter)
+	orderController := NewOrderController(mockListOrdersUseCase, nil, nil, nil, nil)
+	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.ListOrdersInput{
@@ -56,7 +57,7 @@ func TestOrderController_ListOrders(t *testing.T) {
 			Limit:  10,
 		})
 
-	err := productController.ListOrders(ctx, input)
+	err := orderController.ListOrders(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -66,7 +67,8 @@ func TestOrderController_CreateOrder(t *testing.T) {
 
 	mockCreateOrderUseCase := mockport.NewMockCreateOrderUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	productController := NewOrderController(nil, mockCreateOrderUseCase, nil, nil, nil, mockPresenter)
+	orderController := NewOrderController(nil, mockCreateOrderUseCase, nil, nil, nil)
+	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.CreateOrderInput{
@@ -89,7 +91,7 @@ func TestOrderController_CreateOrder(t *testing.T) {
 			Result: mockOrder,
 		})
 
-	err := productController.CreateOrder(ctx, input)
+	err := orderController.CreateOrder(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -99,7 +101,8 @@ func TestOrderController_GetOrder(t *testing.T) {
 
 	mockGetOrderUseCase := mockport.NewMockGetOrderUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	productController := NewOrderController(nil, nil, mockGetOrderUseCase, nil, nil, mockPresenter)
+	orderController := NewOrderController(nil, nil, mockGetOrderUseCase, nil, nil)
+	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.GetOrderInput{
@@ -122,7 +125,7 @@ func TestOrderController_GetOrder(t *testing.T) {
 			Result: mockOrder,
 		})
 
-	err := productController.GetOrder(ctx, input)
+	err := orderController.GetOrder(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -132,7 +135,8 @@ func TestOrderController_UpdateOrder(t *testing.T) {
 
 	mockUpdateOrderUseCase := mockport.NewMockUpdateOrderUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	productController := NewOrderController(nil, nil, nil, mockUpdateOrderUseCase, nil, mockPresenter)
+	orderController := NewOrderController(nil, nil, nil, mockUpdateOrderUseCase, nil)
+	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.UpdateOrderInput{
@@ -157,7 +161,7 @@ func TestOrderController_UpdateOrder(t *testing.T) {
 			Result: mockOrder,
 		})
 
-	err := productController.UpdateOrder(ctx, input)
+	err := orderController.UpdateOrder(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -167,7 +171,8 @@ func TestOrderController_DeleteOrder(t *testing.T) {
 
 	mockDeleteOrderUseCase := mockport.NewMockDeleteOrderUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	productController := NewOrderController(nil, nil, nil, nil, mockDeleteOrderUseCase, mockPresenter)
+	orderController := NewOrderController(nil, nil, nil, nil, mockDeleteOrderUseCase)
+	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.DeleteOrderInput{
@@ -190,6 +195,6 @@ func TestOrderController_DeleteOrder(t *testing.T) {
 			Result: mockOrder,
 		})
 
-	err := productController.DeleteOrder(ctx, input)
+	err := orderController.DeleteOrder(ctx, input)
 	assert.NoError(t, err)
 }

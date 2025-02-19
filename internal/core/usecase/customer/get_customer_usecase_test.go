@@ -78,7 +78,7 @@ func TestGetCustomerUseCase_Execute(t *testing.T) {
 			tt.setupMocks()
 
 			customer, err := useCase.Execute(ctx, dto.GetCustomerInput{
-				ID:     tt.id,
+				ID: tt.id,
 			})
 
 			if tt.expectError {

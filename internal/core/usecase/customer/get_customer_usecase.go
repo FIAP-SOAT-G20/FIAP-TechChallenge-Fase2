@@ -10,7 +10,7 @@ import (
 )
 
 type getCustomerUseCase struct {
-	gateway   port.CustomerGateway
+	gateway port.CustomerGateway
 }
 
 // NewGetCustomerUseCase creates a new GetCustomerUseCase

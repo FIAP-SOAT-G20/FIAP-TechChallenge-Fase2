@@ -31,9 +31,9 @@ func TestCreateCustomerUseCase_Execute(t *testing.T) {
 		{
 			name: "should create customer successfully",
 			input: dto.CreateCustomerInput{
-				Name:   "Test Customer",
-				Email:  "test.customer.1@email.com",
-				CPF:    "123.456.789-00",
+				Name:  "Test Customer",
+				Email: "test.customer.1@email.com",
+				CPF:   "123.456.789-00",
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -45,10 +45,9 @@ func TestCreateCustomerUseCase_Execute(t *testing.T) {
 		{
 			name: "should return error when gateway fails",
 			input: dto.CreateCustomerInput{
-				Name:   "Test Customer",
-				Email:  "test.customer.2@email.com",
-				CPF:    "123.456.789-01",
-				Writer: nil,
+				Name:  "Test Customer",
+				Email: "test.customer.2@email.com",
+				CPF:   "123.456.789-01",
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().

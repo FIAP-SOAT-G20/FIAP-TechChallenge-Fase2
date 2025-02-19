@@ -18,7 +18,8 @@ func TestCustomerController_ListCustomers(t *testing.T) {
 
 	mockListCustomersUseCase := mockport.NewMockListCustomersUseCase(ctrl)
 	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
-	productController := NewCustomerController(mockListCustomersUseCase, nil, nil, nil, nil, mockPresenter)
+	productController := NewCustomerController(mockListCustomersUseCase, nil, nil, nil, nil)
+	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.ListCustomersInput{
@@ -64,7 +65,8 @@ func TestCustomerController_CreateCustomer(t *testing.T) {
 
 	mockCreateCustomerUseCase := mockport.NewMockCreateCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
-	productController := NewCustomerController(nil, mockCreateCustomerUseCase, nil, nil, nil, mockPresenter)
+	productController := NewCustomerController(nil, mockCreateCustomerUseCase, nil, nil, nil)
+	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.CreateCustomerInput{
@@ -99,7 +101,8 @@ func TestCustomerController_GetCustomer(t *testing.T) {
 
 	mockGetCustomerUseCase := mockport.NewMockGetCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
-	productController := NewCustomerController(nil, nil, mockGetCustomerUseCase, nil, nil, mockPresenter)
+	productController := NewCustomerController(nil, nil, mockGetCustomerUseCase, nil, nil)
+	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.GetCustomerInput{
@@ -132,7 +135,8 @@ func TestCustomerController_UpdateCustomer(t *testing.T) {
 
 	mockUpdateCustomerUseCase := mockport.NewMockUpdateCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
-	productController := NewCustomerController(nil, nil, nil, mockUpdateCustomerUseCase, nil, mockPresenter)
+	productController := NewCustomerController(nil, nil, nil, mockUpdateCustomerUseCase, nil)
+	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.UpdateCustomerInput{
@@ -166,7 +170,8 @@ func TestCustomerController_DeleteCustomer(t *testing.T) {
 
 	mockDeleteCustomerUseCase := mockport.NewMockDeleteCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
-	productController := NewCustomerController(nil, nil, nil, nil, mockDeleteCustomerUseCase, mockPresenter)
+	productController := NewCustomerController(nil, nil, nil, nil, mockDeleteCustomerUseCase)
+	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.DeleteCustomerInput{
