@@ -93,6 +93,7 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 		Limit:      req.Limit,
 	}
 	h.controller.Presenter = presenter.NewProductJsonPresenter(c)
+	// h.controller.Presenter = presenter.NewProductXmlPresenter(c) // Example of another presenter
 	err := h.controller.ListProducts(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
