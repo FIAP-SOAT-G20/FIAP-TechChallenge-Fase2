@@ -44,6 +44,11 @@ POST {{baseUrl}}/api/v1/sign-in HTTP/1.1
 
 ###
 
+# @name getProducts
+GET {{baseUrl}}/api/v1/products HTTP/1.1
+
+###
+
 # @name createProduct
 POST {{baseUrl}}/api/v1/products HTTP/1.1
 Content-Type: application/json
@@ -159,11 +164,10 @@ GET {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
 ###
 
 # @name updateOrderStatus
-PUT {{baseUrl}}/api/v1/orders/status/{{orderId}} HTTP/1.1
+PATCH {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
 
 {
-    "staff_id": 1,
-    "status": "PREPARING"
+    "status": "PENDING"
 }
 
 ###
