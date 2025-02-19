@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/staff"
 	"os"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
@@ -68,15 +69,18 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	// Datasource's
 	productDS := datasource.NewProductDataSource(db.DB)
 	customerDS := datasource.NewCustomerDataSource(db.DB)
+	staffDS := datasource.NewStaffDataSource(db.DB)
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
 	customerGateway := gateway.NewCustomerGateway(customerDS)
+	staffGateway := gateway.NewStaffGateway(staffDS)
 
 	// Presenters
 	productPresenter := presenter.NewProductJsonPresenter()
 	// productPresenter := presenter.NewProductXmlPresenter()
 	customerPresenter := presenter.NewCustomerJsonPresenter()
+	staffPresenter := presenter.NewStaffJsonPresenter()
 
 	// Use cases
 	listProductsUC := product.NewListProductsUseCase(productGateway, productPresenter)
@@ -89,7 +93,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	getCustomerUC := customer.NewGetCustomerUseCase(customerGateway, customerPresenter)
 	updateCustomerUC := customer.NewUpdateCustomerUseCase(customerGateway, customerPresenter)
 	deleteCustomerUC := customer.NewDeleteCustomerUseCase(customerGateway, customerPresenter)
-
+	staffUC := staff.NewStaffUseCase(staffGateway)
 	// Controllers
 	productController := controller.NewProductController(
 		listProductsUC,
@@ -106,12 +110,16 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		deleteCustomerUC,
 	)
 
+	staffController := controller.NewStaffController(staffUC, staffPresenter)
+
 	// Handlers
 	productHandler := handler.NewProductHandler(productController)
 	customerHandler := handler.NewCustomerHandler(customerController)
+	staffHandler := handler.NewStaffHandler(staffController)
 
 	return &route.Handlers{
 		Product:  productHandler,
 		Customer: customerHandler,
+		Staff:    staffHandler,
 	}
 }
