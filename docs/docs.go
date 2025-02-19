@@ -860,12 +860,13 @@ const docTemplate = `{
         },
         "/products": {
             "get": {
-                "description": "List all products",
+                "description": "List all products\nResponse can return JSON or XML format (Accept header: application/json or text/xml)",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
-                    "application/json"
+                    "application/json",
+                    "text/xml"
                 ],
                 "tags": [
                     "products"
@@ -921,12 +922,13 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Creates a new product",
+                "description": "Creates a new product\nResponse can return JSON or XML format (Accept header: application/json or text/xml)",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
-                    "application/json"
+                    "application/json",
+                    "text/xml"
                 ],
                 "tags": [
                     "products"
@@ -967,12 +969,13 @@ const docTemplate = `{
         },
         "/products/{id}": {
             "get": {
-                "description": "Search for a product by ID",
+                "description": "Search for a product by ID\nResponse can return JSON or XML format (Accept header: application/json or text/xml)",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
-                    "application/json"
+                    "application/json",
+                    "text/xml"
                 ],
                 "tags": [
                     "products"
@@ -1015,12 +1018,13 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "Update an existing product",
+                "description": "Update an existing product\nResponse can return JSON or XML format (Accept header: application/json or text/xml)",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
-                    "application/json"
+                    "application/json",
+                    "text/xml"
                 ],
                 "tags": [
                     "products"
@@ -1072,9 +1076,13 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Deletes a product by ID",
-                "produces": [
+                "description": "Deletes a product by ID\nResponse can return JSON or XML format (Accept header: application/json or text/xml)",
+                "consumes": [
                     "application/json"
+                ],
+                "produces": [
+                    "application/json",
+                    "text/xml"
                 ],
                 "tags": [
                     "products"
