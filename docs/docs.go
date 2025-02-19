@@ -60,13 +60,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -111,19 +111,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -175,19 +175,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -239,7 +239,7 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -276,19 +276,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -339,13 +339,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -384,13 +384,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -428,19 +428,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -485,19 +485,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -527,19 +527,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -596,13 +596,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -640,13 +640,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -684,19 +684,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -741,19 +741,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -783,19 +783,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -840,19 +840,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -910,13 +910,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -955,13 +955,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -1000,19 +1000,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -1058,19 +1058,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -1104,19 +1104,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/middleware.ErrorResponse"
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     }
                 }
@@ -1295,7 +1295,7 @@ const docTemplate = `{
                 }
             }
         },
-        "middleware.ErrorResponse": {
+        "middleware.ErrorJsonResponse": {
             "type": "object",
             "properties": {
                 "code": {
