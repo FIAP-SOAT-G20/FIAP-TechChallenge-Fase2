@@ -1,4 +1,4 @@
-package product
+package product_test
 
 import (
 	"context"
@@ -13,6 +13,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/product"
 )
 
 func TestGetProductUseCase_Execute(t *testing.T) {
@@ -22,7 +23,7 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 	mockGateway := mockport.NewMockProductGateway(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
 	mockWriter := mockdto.NewMockResponseWriter(ctrl)
-	useCase := NewGetProductUseCase(mockGateway, mockPresenter)
+	useCase := product.NewGetProductUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
 	currentTime := time.Now()

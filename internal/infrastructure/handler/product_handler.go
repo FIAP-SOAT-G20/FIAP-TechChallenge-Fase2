@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 
@@ -15,26 +14,41 @@ type ProductHandler struct {
 	controller *controller.ProductController
 }
 
-type ProductRequest struct {
-	Name        string  `json:"name" validate:"required,min=3,max=100" example:"Produto A"`
-	Description string  `json:"description" validate:"max=500" example:"Descrição do Produto A"`
+type ListProductQueryRequest struct {
+	Name       string `form:"name" example:"Product A"`
+	CategoryID uint64 `form:"category_id" example:"1"`
+	Page       int    `form:"page,default=1" example:"1"`
+	Limit      int    `form:"limit,default=10" example:"10"`
+}
+
+type CreateProductRequest struct {
+	Name        string  `json:"name" validate:"required,min=3,max=100" example:"Product A"`
+	Description string  `json:"description" validate:"max=500" example:"Product A description"`
 	Price       float64 `json:"price" validate:"required,gt=0" example:"99.99"`
 	CategoryID  uint64  `json:"category_id" validate:"required,gt=0" example:"1"`
 }
 
-func (p *ProductRequest) Validate() error {
-	return GetValidator().Struct(p)
+// func (p *CreateProductRequest) Validate() error {
+// 	return GetValidator().Struct(p)
+// }
+
+type GetProductUriRequest struct {
+	ID uint64 `uri:"id" binding:"required"`
 }
 
-type ProductListRequest struct {
-	Name       string `json:"name" validate:"required,min=3,max=100" example:"Produto"`
-	CategoryID uint64 `json:"category_id" example:"1"`
-	Page       int    `json:"page" validate:"required,gte=1" example:"1"`
-	Limit      int    `json:"limit" validate:"required,gte=1,lte=100" example:"10"`
+type UpdateProductUriRequest struct {
+	ID uint64 `uri:"id" binding:"required"`
 }
 
-func (p *ProductListRequest) Validate() error {
-	return GetValidator().Struct(p)
+type UpdateProductRequest struct {
+	Name        string  `json:"name" validate:"required,min=3,max=100" example:"Product A"`
+	Description string  `json:"description" validate:"max=500" example:"Product A description"`
+	Price       float64 `json:"price" validate:"required,gt=0" example:"99.99"`
+	CategoryID  uint64  `json:"category_id" validate:"required,gt=0" example:"1"`
+}
+
+type DeleteProductUriRequest struct {
+	ID uint64 `uri:"id" binding:"required"`
 }
 
 func NewProductHandler(controller *controller.ProductController) *ProductHandler {
@@ -65,15 +79,17 @@ func (h *ProductHandler) Register(router *gin.RouterGroup) {
 //	@Failure		500			{object}	middleware.ErrorResponse				"Internal Server Error"
 //	@Router			/products [get]
 func (h *ProductHandler) ListProducts(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
-	categoryID, _ := strconv.ParseUint(c.DefaultQuery("category_id", "0"), 10, 64)
+	var req ListProductQueryRequest
+	if err := c.ShouldBindQuery(&req); err != nil {
+		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidQueryParams))
+		return
+	}
 
 	input := dto.ListProductsInput{
 		Name:       c.Query("name"),
-		CategoryID: categoryID,
-		Page:       page,
-		Limit:      limit,
+		CategoryID: req.CategoryID,
+		Page:       req.Page,
+		Limit:      req.Limit,
 		Writer:     c,
 	}
 
@@ -91,21 +107,15 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 //	@Tags			products
 //	@Accept			json
 //	@Produce		json
-//	@Param			product	body		ProductRequest					true	"Product data"
+//	@Param			product	body		CreateProductRequest			true	"Product data"
 //	@Success		201		{object}	presenter.ProductJsonResponse	"Created"
 //	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/products [post]
 func (h *ProductHandler) CreateProduct(c *gin.Context) {
-	var req ProductRequest
+	var req CreateProductRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
-		return
-	}
-
-	// validate request
-	if err := req.Validate(); err != nil {
-		_ = c.Error(domain.NewInvalidInputError(err.Error()))
 		return
 	}
 
@@ -138,18 +148,18 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/products/{id} [get]
 func (h *ProductHandler) GetProduct(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
-	if err != nil {
+	var req GetProductUriRequest
+	if err := c.ShouldBindUri(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.GetProductInput{
-		ID:     id,
+		ID:     req.ID,
 		Writer: c,
 	}
 
-	err = h.controller.GetProduct(c.Request.Context(), input)
+	err := h.controller.GetProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -164,32 +174,27 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id		path		int								true	"Product ID"
-//	@Param			product	body		ProductRequest					true	"Product data"
+//	@Param			product	body		UpdateProductRequest			true	"Product data"
 //	@Success		200		{object}	presenter.ProductJsonResponse	"OK"
 //	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
 //	@Failure		404		{object}	middleware.ErrorResponse		"Not Found"
 //	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
 //	@Router			/products/{id} [put]
 func (h *ProductHandler) UpdateProduct(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
-	if err != nil {
+	var reqUri UpdateProductUriRequest
+	if err := c.ShouldBindUri(&reqUri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
-	var req ProductRequest
+	var req UpdateProductRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 
-	if err := req.Validate(); err != nil {
-		_ = c.Error(domain.NewInvalidInputError(err.Error()))
-		return
-	}
-
 	input := dto.UpdateProductInput{
-		ID:          id,
+		ID:          reqUri.ID,
 		Name:        req.Name,
 		Description: req.Description,
 		Price:       req.Price,
@@ -197,7 +202,7 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 		Writer:      c,
 	}
 
-	err = h.controller.UpdateProduct(c.Request.Context(), input)
+	err := h.controller.UpdateProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -217,14 +222,14 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorResponse	"Internal Server Error"
 //	@Router			/products/{id} [delete]
 func (h *ProductHandler) DeleteProduct(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
-	if err != nil {
+	var reqUri DeleteProductUriRequest
+	if err := c.ShouldBindUri(&reqUri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.DeleteProductInput{
-		ID:     id,
+		ID:     reqUri.ID,
 		Writer: c,
 	}
 

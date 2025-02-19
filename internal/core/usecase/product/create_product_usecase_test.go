@@ -1,4 +1,4 @@
-package product
+package product_test
 
 import (
 	"context"
@@ -11,6 +11,7 @@ import (
 	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/product"
 )
 
 func TestCreateProductUseCase_Execute(t *testing.T) {
@@ -20,7 +21,7 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 	mockGateway := mockport.NewMockProductGateway(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
 	mockWriter := mockdto.NewMockResponseWriter(ctrl)
-	useCase := NewCreateProductUseCase(mockGateway, mockPresenter)
+	useCase := product.NewCreateProductUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
 	tests := []struct {

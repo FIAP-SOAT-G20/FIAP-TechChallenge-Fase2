@@ -15,6 +15,285 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/v1/orders/products": {
+            "get": {
+                "description": "List all orders",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "List orders",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Filter by order ID",
+                        "name": "order_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Items per page",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.OrderProductJsonPaginatedResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/orders/products/{order_id}/{product_id}": {
+            "get": {
+                "description": "Get an order product",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Get an order product",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Order ID",
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Product ID",
+                        "name": "product_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.OrderProductJsonResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an existing order",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Update order",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Order ID",
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Product ID",
+                        "name": "product_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "OrderProduct data",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.UpdateOrderProductBodyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.OrderProductJsonResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create an order product",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Create an order product",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Order ID",
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Product ID",
+                        "name": "product_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "OrderProduct data",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.CreateOrderProductBodyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.OrderProductJsonResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes a orderProduct by Order ID and Product ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Delete orderProduct",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Order ID",
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Product ID",
+                        "name": "product_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/customers": {
             "get": {
                 "description": "List all customers",
@@ -80,7 +359,8 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "customers"
+                    "customers",
+                    "sign-up"
                 ],
                 "summary": "Create customer",
                 "parameters": [
@@ -90,7 +370,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.CustomerCreateRequest"
+                            "$ref": "#/definitions/handler.CreateCustomerBodyRequest"
                         }
                     }
                 ],
@@ -191,7 +471,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.CustomerUpdateRequest"
+                            "$ref": "#/definitions/handler.UpdateCustomerBodyRequest"
                         }
                     }
                 ],
@@ -243,6 +523,319 @@ const docTemplate = `{
                 "responses": {
                     "204": {
                         "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/orders": {
+            "get": {
+                "description": "List all orders",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "List orders",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Items per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Filter by category ID",
+                        "name": "category_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.OrderJsonPaginatedResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a new order",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Create order",
+                "parameters": [
+                    {
+                        "description": "Order data",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.CreateOrderBodyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.OrderJsonResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{id}": {
+            "get": {
+                "description": "Search for a order by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Get order",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Order ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.OrderJsonResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an existing order\nThe status are: **OPEN**, **CANCELLED**, **PENDING**, **RECEIVED**, **PREPARING**, **READY**, **COMPLETED**\n## Transition of status:\n- OPEN      -\u003e CANCELLED || PENDING\n- CANCELLED -\u003e {},\n- PENDING   -\u003e OPEN || RECEIVED\n- RECEIVED  -\u003e PREPARING\n- PREPARING -\u003e READY\n- READY     -\u003e COMPLETED\n- COMPLETED -\u003e {}",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Update order",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Order ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Order data",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.UpdateOrderBodyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.OrderJsonResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes a order by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Delete order",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Order ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Partially updates an existing order\nThe status are: **OPEN**, **CANCELLED**, **PENDING**, **RECEIVED**, **PREPARING**, **READY**, **COMPLETED**\n## Transition of status:\n- OPEN      -\u003e CANCELLED || PENDING\n- CANCELLED -\u003e {},\n- PENDING   -\u003e OPEN || RECEIVED\n- RECEIVED  -\u003e PREPARING\n- PREPARING -\u003e READY\n- READY     -\u003e COMPLETED\n- COMPLETED -\u003e {}",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Partial update order",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Order ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Order data",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.UpdateOrderPartilRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.OrderJsonResponse"
+                        }
                     },
                     "400": {
                         "description": "Bad Request",
@@ -346,7 +939,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.ProductRequest"
+                            "$ref": "#/definitions/handler.CreateProductRequest"
                         }
                     }
                 ],
@@ -447,7 +1040,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.ProductRequest"
+                            "$ref": "#/definitions/handler.UpdateProductRequest"
                         }
                     }
                 ],
@@ -779,7 +1372,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "handler.CustomerCreateRequest": {
+        "handler.CreateCustomerBodyRequest": {
             "type": "object",
             "required": [
                 "cpf",
@@ -803,26 +1396,31 @@ const docTemplate = `{
                 }
             }
         },
-        "handler.CustomerUpdateRequest": {
+        "handler.CreateOrderBodyRequest": {
             "type": "object",
             "required": [
-                "email",
-                "name"
+                "customer_id"
             ],
             "properties": {
-                "email": {
-                    "type": "string",
-                    "example": "test.customer.1@email.com"
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 3,
-                    "example": "Produto A"
+                "customer_id": {
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },
-        "handler.ProductRequest": {
+        "handler.CreateOrderProductBodyRequest": {
+            "type": "object",
+            "required": [
+                "quantity"
+            ],
+            "properties": {
+                "quantity": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "handler.CreateProductRequest": {
             "type": "object",
             "required": [
                 "category_id",
@@ -837,13 +1435,13 @@ const docTemplate = `{
                 "description": {
                     "type": "string",
                     "maxLength": 500,
-                    "example": "Descrição do Produto A"
+                    "example": "Product A description"
                 },
                 "name": {
                     "type": "string",
                     "maxLength": 100,
                     "minLength": 3,
-                    "example": "Produto A"
+                    "example": "Product A"
                 },
                 "price": {
                     "type": "number",
@@ -870,14 +1468,110 @@ const docTemplate = `{
                 }
             }
         },
+        "handler.UpdateCustomerBodyRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "name"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "test.customer.1@email.com"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "Produto A"
+                }
+            }
+        },
+        "handler.UpdateOrderBodyRequest": {
+            "type": "object",
+            "required": [
+                "customer_id",
+                "status"
+            ],
+            "properties": {
+                "customer_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "status": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/valueobject.OrderStatus"
+                        }
+                    ],
+                    "example": "PENDING"
+                }
+            }
+        },
+        "handler.UpdateOrderPartilRequest": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/valueobject.OrderStatus"
+                        }
+                    ],
+                    "example": "PENDING"
+                }
+            }
+        },
+        "handler.UpdateOrderProductBodyRequest": {
+            "type": "object",
+            "required": [
+                "quantity"
+            ],
+            "properties": {
+                "quantity": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "handler.UpdateProductRequest": {
+            "type": "object",
+            "required": [
+                "category_id",
+                "name",
+                "price"
+            ],
+            "properties": {
+                "category_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "description": {
+                    "type": "string",
+                    "maxLength": 500,
+                    "example": "Product A description"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "Product A"
+                },
+                "price": {
+                    "type": "number",
+                    "example": 99.99
+                }
+            }
+        },
         "middleware.ErrorResponse": {
             "type": "object",
             "properties": {
                 "code": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 400
                 },
                 "message": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "Bad Request"
                 }
             }
         },
@@ -933,6 +1627,117 @@ const docTemplate = `{
                 }
             }
         },
+        "presenter.OrderJsonPaginatedResponse": {
+            "type": "object",
+            "properties": {
+                "limit": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "orders": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/presenter.OrderJsonResponse"
+                    }
+                },
+                "page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "total": {
+                    "type": "integer",
+                    "example": 100
+                }
+            }
+        },
+        "presenter.OrderJsonResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string",
+                    "example": "2024-02-09T10:00:00Z"
+                },
+                "customer": {
+                    "$ref": "#/definitions/presenter.CustomerJsonResponse"
+                },
+                "customer_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "products": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/presenter.ProductsJsonResponse"
+                    }
+                },
+                "status": {
+                    "type": "string",
+                    "example": "PENDING"
+                },
+                "total_bill": {
+                    "type": "string",
+                    "example": "100.00"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2024-02-09T10:00:00Z"
+                }
+            }
+        },
+        "presenter.OrderProductJsonPaginatedResponse": {
+            "type": "object",
+            "properties": {
+                "limit": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "order_products": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/presenter.OrderProductJsonResponse"
+                    }
+                },
+                "page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "total": {
+                    "type": "integer",
+                    "example": 100
+                }
+            }
+        },
+        "presenter.OrderProductJsonResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string",
+                    "example": "2024-02-09T10:00:00Z"
+                },
+                "order": {
+                    "$ref": "#/definitions/presenter.OrderJsonResponse"
+                },
+                "order_id": {
+                    "type": "integer"
+                },
+                "product": {
+                    "$ref": "#/definitions/presenter.ProductJsonResponse"
+                },
+                "product_id": {
+                    "type": "integer"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2024-02-09T10:00:00Z"
+                }
+            }
+        },
         "presenter.ProductJsonPaginatedResponse": {
             "type": "object",
             "properties": {
@@ -969,7 +1774,7 @@ const docTemplate = `{
                 },
                 "description": {
                     "type": "string",
-                    "example": "Descrição do Produto A"
+                    "example": "Description of product A"
                 },
                 "id": {
                     "type": "integer",
@@ -977,11 +1782,47 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string",
-                    "example": "Produto A"
+                    "example": "Product A"
                 },
                 "price": {
                     "type": "number",
                     "example": 99.99
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2024-02-09T10:00:00Z"
+                }
+            }
+        },
+        "presenter.ProductsJsonResponse": {
+            "type": "object",
+            "properties": {
+                "category_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "created_at": {
+                    "type": "string",
+                    "example": "2024-02-09T10:00:00Z"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Description of product A"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Product A"
+                },
+                "price": {
+                    "type": "number",
+                    "example": 99.99
+                },
+                "quantity": {
+                    "type": "integer"
                 },
                 "updated_at": {
                     "type": "string",
@@ -1036,6 +1877,29 @@ const docTemplate = `{
                     "example": "2024-02-09T10:00:00Z"
                 }
             }
+        },
+        "valueobject.OrderStatus": {
+            "type": "string",
+            "enum": [
+                "UNDEFINDED",
+                "OPEN",
+                "CANCELLED",
+                "PENDING",
+                "RECEIVED",
+                "PREPARING",
+                "READY",
+                "COMPLETED"
+            ],
+            "x-enum-varnames": [
+                "UNDEFINDED",
+                "OPEN",
+                "CANCELLED",
+                "PENDING",
+                "RECEIVED",
+                "PREPARING",
+                "READY",
+                "COMPLETED"
+            ]
         }
     },
     "securityDefinitions": {
@@ -1052,16 +1916,24 @@ const docTemplate = `{
             "name": "sign-up"
         },
         {
+            "description": "Sign in to the system",
+            "name": "sign-in"
+        },
+        {
+            "description": "List, create, update and delete customers",
+            "name": "customers"
+        },
+        {
             "description": "List, create, update and delete products",
             "name": "products"
         },
         {
-            "description": "Process payments",
-            "name": "payments"
+            "description": "List, create, update and delete orders",
+            "name": "orders"
         },
         {
-            "description": "Sign in to the system",
-            "name": "sign-in"
+            "description": "Process payments",
+            "name": "payments"
         }
     ],
     "externalDocs": {
@@ -1076,8 +1948,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8080",
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "FIAP Tech Challenge Fase 2 - 10SOAT - G80",
-	Description:      "### API de um Fast Food para o Tech Challenge da FIAP - Fase 2 - 10SOAT - G18",
+	Title:            "FIAP Tech Challenge Fase 2 - 10SOAT - G18",
+	Description:      "### API de um Fast Food para o Tech Challenge da FIAP - Fase 2",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

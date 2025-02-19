@@ -1,4 +1,4 @@
-package product
+package product_test
 
 import (
 	"context"
@@ -11,6 +11,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/product"
 )
 
 func TestDeleteProductUseCase_Execute(t *testing.T) {
@@ -19,7 +20,7 @@ func TestDeleteProductUseCase_Execute(t *testing.T) {
 
 	mockGateway := mockport.NewMockProductGateway(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	useCase := NewDeleteProductUseCase(mockGateway, mockPresenter)
+	useCase := product.NewDeleteProductUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
 	tests := []struct {
@@ -30,7 +31,7 @@ func TestDeleteProductUseCase_Execute(t *testing.T) {
 		errorType   error
 	}{
 		{
-			name: "should delete product successfully",
+			name: "should delete _test successfully",
 			id:   1,
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -47,7 +48,7 @@ func TestDeleteProductUseCase_Execute(t *testing.T) {
 			expectError: false,
 		},
 		{
-			name: "should return not found error when product doesn't exist",
+			name: "should return not found error when _test doesn't exist",
 			id:   1,
 			setupMocks: func() {
 				mockGateway.EXPECT().

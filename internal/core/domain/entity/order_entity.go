@@ -1,0 +1,41 @@
+package entity
+
+import (
+	"time"
+
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
+)
+
+type Order struct {
+	ID         uint64
+	CustomerID uint64
+	TotalBill  float32
+	Status     valueobject.OrderStatus
+	// Payment       Payment // TODO: Add payment when payment is implemented
+	Customer      Customer
+	OrderProducts []OrderProduct
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+}
+
+func NewOrder(consumerID uint64) *Order {
+	order := &Order{
+		CustomerID: consumerID,
+		Status:     valueobject.OPEN,
+		CreatedAt:  time.Now(),
+		UpdatedAt:  time.Now(),
+	}
+
+	return order
+}
+
+func (p *Order) Update(customerID uint64, status valueobject.OrderStatus) {
+	if customerID != 0 {
+		p.CustomerID = customerID
+	}
+	if status != valueobject.UNDEFINDED {
+		p.Status = status
+	}
+	p.OrderProducts = nil
+	p.UpdatedAt = time.Now()
+}

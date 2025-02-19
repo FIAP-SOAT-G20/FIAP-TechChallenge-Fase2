@@ -1,4 +1,4 @@
-package customer
+package customer_test
 
 import (
 	"context"
@@ -11,6 +11,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/customer"
 )
 
 func TestDeleteCustomerUseCase_Execute(t *testing.T) {
@@ -19,7 +20,7 @@ func TestDeleteCustomerUseCase_Execute(t *testing.T) {
 
 	mockGateway := mockport.NewMockCustomerGateway(ctrl)
 	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
-	useCase := NewDeleteCustomerUseCase(mockGateway, mockPresenter)
+	useCase := customer.NewDeleteCustomerUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
 	tests := []struct {

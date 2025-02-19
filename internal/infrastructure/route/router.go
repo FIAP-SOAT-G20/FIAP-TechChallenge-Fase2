@@ -52,6 +52,14 @@ func (r *Router) RegisterRoutes(handlers *Handlers) {
 		handlers.Customer.Register(v1.Group("/customers"))
 		handlers.Staff.Register(v1.Group("/staffs"))
 
+		// Orders
+		orders := v1.Group("/orders")
+		handlers.Order.Register(orders)
+
+		// Order Products
+		orderProducts := v1.Group("/orders/products")
+		handlers.OrderProduct.Register(orderProducts)
+
 		// Health check
 		v1.GET("/health", func(c *gin.Context) {
 			c.JSON(200, gin.H{"status": "UP"})
@@ -66,7 +74,9 @@ func (r *Router) Engine() *gin.Engine {
 
 // Handlers contains all handlers of the application
 type Handlers struct {
-	Product  *handler.ProductHandler
-	Customer *handler.CustomerHandler
-	Staff    *handler.StaffHandler
+	Product      *handler.ProductHandler
+	Customer     *handler.CustomerHandler
+	Staff        *handler.StaffHandler
+	Order        *handler.OrderHandler
+	OrderProduct *handler.OrderProductHandler
 }

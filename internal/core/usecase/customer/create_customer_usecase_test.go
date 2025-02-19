@@ -1,4 +1,4 @@
-package customer
+package customer_test
 
 import (
 	"context"
@@ -11,6 +11,7 @@ import (
 	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/customer"
 )
 
 func TestCreateCustomerUseCase_Execute(t *testing.T) {
@@ -20,7 +21,7 @@ func TestCreateCustomerUseCase_Execute(t *testing.T) {
 	mockGateway := mockport.NewMockCustomerGateway(ctrl)
 	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
 	mockWriter := mockdto.NewMockResponseWriter(ctrl)
-	useCase := NewCreateCustomerUseCase(mockGateway, mockPresenter)
+	useCase := customer.NewCreateCustomerUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
 	tests := []struct {
