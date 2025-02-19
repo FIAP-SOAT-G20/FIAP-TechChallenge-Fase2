@@ -91,11 +91,11 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderProductPresenter := presenter.NewOrderProductJsonPresenter()
 
 	// Use cases - Product
-	listProductsUC := product.NewListProductsUseCase(productGateway, productPresenter)
-	createProductUC := product.NewCreateProductUseCase(productGateway, productPresenter)
-	getProductUC := product.NewGetProductUseCase(productGateway, productPresenter)
-	updateProductUC := product.NewUpdateProductUseCase(productGateway, productPresenter)
-	deleteProductUC := product.NewDeleteProductUseCase(productGateway, productPresenter)
+	listProductsUC := product.NewListProductsUseCase(productGateway)
+	createProductUC := product.NewCreateProductUseCase(productGateway)
+	getProductUC := product.NewGetProductUseCase(productGateway)
+	updateProductUC := product.NewUpdateProductUseCase(productGateway)
+	deleteProductUC := product.NewDeleteProductUseCase(productGateway)
 	// Use cases - Customer
 	listCustomersUC := customer.NewListCustomersUseCase(customerGateway, customerPresenter)
 	createCustomerUC := customer.NewCreateCustomerUseCase(customerGateway, customerPresenter)
@@ -122,6 +122,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		getProductUC,
 		updateProductUC,
 		deleteProductUC,
+		productPresenter,
 	)
 	customerController := controller.NewCustomerController(
 		listCustomersUC,

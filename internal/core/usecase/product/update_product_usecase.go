@@ -5,41 +5,36 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
 type updateProductUseCase struct {
-	gateway   port.ProductGateway
-	presenter port.ProductPresenter
+	gateway port.ProductGateway
 }
 
 // NewUpdateProductUseCase creates a new UpdateProductUseCase
-func NewUpdateProductUseCase(gateway port.ProductGateway, presenter port.ProductPresenter) port.UpdateProductUseCase {
+func NewUpdateProductUseCase(gateway port.ProductGateway) port.UpdateProductUseCase {
 	return &updateProductUseCase{
-		gateway:   gateway,
-		presenter: presenter,
+		gateway: gateway,
 	}
 }
 
 // Execute updates a product
-func (uc *updateProductUseCase) Execute(ctx context.Context, input dto.UpdateProductInput) error {
+func (uc *updateProductUseCase) Execute(ctx context.Context, input dto.UpdateProductInput) (*entity.Product, error) {
 	product, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
-		return domain.NewInternalError(err)
+		return nil, domain.NewInternalError(err)
 	}
 	if product == nil {
-		return domain.NewNotFoundError(domain.ErrNotFound)
+		return nil, domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
 	product.Update(input.Name, input.Description, input.Price, input.CategoryID)
 
 	if err := uc.gateway.Update(ctx, product); err != nil {
-		return domain.NewInternalError(err)
+		return nil, domain.NewInternalError(err)
 	}
 
-	uc.presenter.Present(dto.ProductPresenterInput{
-		Writer: input.Writer,
-		Result: product,
-	})
-	return nil
+	return product, nil
 }
