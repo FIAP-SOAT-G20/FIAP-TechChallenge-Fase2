@@ -26,6 +26,7 @@ var (
 	ErrInternalError   = "internal server error"
 	ErrUnknownError    = "unknown error"
 	ErrValidationError = "validation error"
+	ErrInvalidInput    = "invalid input"
 )
 
 type ValidationError struct {
