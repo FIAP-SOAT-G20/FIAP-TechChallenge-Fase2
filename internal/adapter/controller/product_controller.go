@@ -8,12 +8,12 @@ import (
 )
 
 type ProductController struct {
-	listProductsUseCase  port.ListProductsUseCase
-	createProductUseCase port.CreateProductUseCase
-	getProductUseCase    port.GetProductUseCase
-	updateProductUseCase port.UpdateProductUseCase
-	deleteProductUseCase port.DeleteProductUseCase
-	presenter            port.ProductPresenter
+	listUC    port.ListProductsUseCase
+	createUC  port.CreateProductUseCase
+	getUC     port.GetProductUseCase
+	updateUC  port.UpdateProductUseCase
+	deleteUC  port.DeleteProductUseCase
+	presenter port.ProductPresenter
 }
 
 func NewProductController(
@@ -22,20 +22,20 @@ func NewProductController(
 	getUC port.GetProductUseCase,
 	updateUC port.UpdateProductUseCase,
 	deleteUC port.DeleteProductUseCase,
-	productPresenter port.ProductPresenter,
+	presenter port.ProductPresenter,
 ) *ProductController {
 	return &ProductController{
-		listProductsUseCase:  listUC,
-		createProductUseCase: createUC,
-		getProductUseCase:    getUC,
-		updateProductUseCase: updateUC,
-		deleteProductUseCase: deleteUC,
-		presenter:            productPresenter,
+		listUC,
+		createUC,
+		getUC,
+		updateUC,
+		deleteUC,
+		presenter,
 	}
 }
 
 func (c *ProductController) ListProducts(ctx context.Context, input dto.ListProductsInput) error {
-	products, total, err := c.listProductsUseCase.Execute(ctx, input)
+	products, total, err := c.listUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -52,7 +52,7 @@ func (c *ProductController) ListProducts(ctx context.Context, input dto.ListProd
 }
 
 func (c *ProductController) CreateProduct(ctx context.Context, input dto.CreateProductInput) error {
-	product, err := c.createProductUseCase.Execute(ctx, input)
+	product, err := c.createUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -66,7 +66,7 @@ func (c *ProductController) CreateProduct(ctx context.Context, input dto.CreateP
 }
 
 func (c *ProductController) GetProduct(ctx context.Context, input dto.GetProductInput) error {
-	product, err := c.getProductUseCase.Execute(ctx, input)
+	product, err := c.getUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -80,7 +80,7 @@ func (c *ProductController) GetProduct(ctx context.Context, input dto.GetProduct
 }
 
 func (c *ProductController) UpdateProduct(ctx context.Context, input dto.UpdateProductInput) error {
-	product, err := c.updateProductUseCase.Execute(ctx, input)
+	product, err := c.updateUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -94,7 +94,7 @@ func (c *ProductController) UpdateProduct(ctx context.Context, input dto.UpdateP
 }
 
 func (c *ProductController) DeleteProduct(ctx context.Context, input dto.DeleteProductInput) error {
-	product, err := c.deleteProductUseCase.Execute(ctx, input)
+	product, err := c.deleteUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}

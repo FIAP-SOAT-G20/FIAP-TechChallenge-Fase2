@@ -8,12 +8,12 @@ import (
 )
 
 type OrderController struct {
-	listOrdersUseCase  port.ListOrdersUseCase
-	createOrderUseCase port.CreateOrderUseCase
-	getOrderUseCase    port.GetOrderUseCase
-	updateOrderUseCase port.UpdateOrderUseCase
-	deleteOrderUseCase port.DeleteOrderUseCase
-	presenter          port.OrderPresenter
+	listUC    port.ListOrdersUseCase
+	createUC  port.CreateOrderUseCase
+	getUC     port.GetOrderUseCase
+	updateUC  port.UpdateOrderUseCase
+	deleteUC  port.DeleteOrderUseCase
+	presenter port.OrderPresenter
 }
 
 func NewOrderController(
@@ -22,20 +22,20 @@ func NewOrderController(
 	getUC port.GetOrderUseCase,
 	updateUC port.UpdateOrderUseCase,
 	deleteUC port.DeleteOrderUseCase,
-	orderPresenter port.OrderPresenter,
+	presenter port.OrderPresenter,
 ) *OrderController {
 	return &OrderController{
-		listOrdersUseCase:  listUC,
-		createOrderUseCase: createUC,
-		getOrderUseCase:    getUC,
-		updateOrderUseCase: updateUC,
-		deleteOrderUseCase: deleteUC,
-		presenter:          orderPresenter,
+		listUC,
+		createUC,
+		getUC,
+		updateUC,
+		deleteUC,
+		presenter,
 	}
 }
 
 func (c *OrderController) ListOrders(ctx context.Context, input dto.ListOrdersInput) error {
-	orders, total, err := c.listOrdersUseCase.Execute(ctx, input)
+	orders, total, err := c.listUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -52,7 +52,7 @@ func (c *OrderController) ListOrders(ctx context.Context, input dto.ListOrdersIn
 }
 
 func (c *OrderController) CreateOrder(ctx context.Context, input dto.CreateOrderInput) error {
-	order, err := c.createOrderUseCase.Execute(ctx, input)
+	order, err := c.createUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -66,7 +66,7 @@ func (c *OrderController) CreateOrder(ctx context.Context, input dto.CreateOrder
 }
 
 func (c *OrderController) GetOrder(ctx context.Context, input dto.GetOrderInput) error {
-	order, err := c.getOrderUseCase.Execute(ctx, input)
+	order, err := c.getUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -80,7 +80,7 @@ func (c *OrderController) GetOrder(ctx context.Context, input dto.GetOrderInput)
 }
 
 func (c *OrderController) UpdateOrder(ctx context.Context, input dto.UpdateOrderInput) error {
-	order, err := c.updateOrderUseCase.Execute(ctx, input)
+	order, err := c.updateUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -94,7 +94,7 @@ func (c *OrderController) UpdateOrder(ctx context.Context, input dto.UpdateOrder
 }
 
 func (c *OrderController) DeleteOrder(ctx context.Context, input dto.DeleteOrderInput) error {
-	order, err := c.deleteOrderUseCase.Execute(ctx, input)
+	order, err := c.deleteUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}

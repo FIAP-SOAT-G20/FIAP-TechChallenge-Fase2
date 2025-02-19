@@ -8,12 +8,12 @@ import (
 )
 
 type OrderProductController struct {
-	listOrderProductsUseCase  port.ListOrderProductsUseCase
-	createOrderProductUseCase port.CreateOrderProductUseCase
-	getOrderProductUseCase    port.GetOrderProductUseCase
-	updateOrderProductUseCase port.UpdateOrderProductUseCase
-	deleteOrderProductUseCase port.DeleteOrderProductUseCase
-	presenter                 port.OrderProductPresenter
+	listUC    port.ListOrderProductsUseCase
+	createUC  port.CreateOrderProductUseCase
+	getUC     port.GetOrderProductUseCase
+	updateUC  port.UpdateOrderProductUseCase
+	deleteUC  port.DeleteOrderProductUseCase
+	presenter port.OrderProductPresenter
 }
 
 func NewOrderProductController(
@@ -22,20 +22,20 @@ func NewOrderProductController(
 	getUC port.GetOrderProductUseCase,
 	updateUC port.UpdateOrderProductUseCase,
 	deleteUC port.DeleteOrderProductUseCase,
-	orderProductPresenter port.OrderProductPresenter,
+	presenter port.OrderProductPresenter,
 ) *OrderProductController {
 	return &OrderProductController{
-		listOrderProductsUseCase:  listUC,
-		createOrderProductUseCase: createUC,
-		getOrderProductUseCase:    getUC,
-		updateOrderProductUseCase: updateUC,
-		deleteOrderProductUseCase: deleteUC,
-		presenter:                 orderProductPresenter,
+		listUC,
+		createUC,
+		getUC,
+		updateUC,
+		deleteUC,
+		presenter,
 	}
 }
 
 func (c *OrderProductController) ListOrderProducts(ctx context.Context, input dto.ListOrderProductsInput) error {
-	orderProducts, total, err := c.listOrderProductsUseCase.Execute(ctx, input)
+	orderProducts, total, err := c.listUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -52,7 +52,7 @@ func (c *OrderProductController) ListOrderProducts(ctx context.Context, input dt
 }
 
 func (c *OrderProductController) CreateOrderProduct(ctx context.Context, input dto.CreateOrderProductInput) error {
-	orderProduct, err := c.createOrderProductUseCase.Execute(ctx, input)
+	orderProduct, err := c.createUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -66,7 +66,7 @@ func (c *OrderProductController) CreateOrderProduct(ctx context.Context, input d
 }
 
 func (c *OrderProductController) GetOrderProduct(ctx context.Context, input dto.GetOrderProductInput) error {
-	orderProduct, err := c.getOrderProductUseCase.Execute(ctx, input)
+	orderProduct, err := c.getUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -80,7 +80,7 @@ func (c *OrderProductController) GetOrderProduct(ctx context.Context, input dto.
 }
 
 func (c *OrderProductController) UpdateOrderProduct(ctx context.Context, input dto.UpdateOrderProductInput) error {
-	orderProduct, err := c.updateOrderProductUseCase.Execute(ctx, input)
+	orderProduct, err := c.updateUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -94,7 +94,7 @@ func (c *OrderProductController) UpdateOrderProduct(ctx context.Context, input d
 }
 
 func (c *OrderProductController) DeleteOrderProduct(ctx context.Context, input dto.DeleteOrderProductInput) error {
-	order, err := c.deleteOrderProductUseCase.Execute(ctx, input)
+	order, err := c.deleteUC.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
