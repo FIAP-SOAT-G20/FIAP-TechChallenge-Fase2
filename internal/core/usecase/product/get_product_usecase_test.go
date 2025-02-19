@@ -21,9 +21,8 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockProductGateway(ctrl)
-	mockPresenter := mockport.NewMockProductPresenter(ctrl)
 	mockWriter := mockdto.NewMockResponseWriter(ctrl)
-	useCase := product.NewGetProductUseCase(mockGateway, mockPresenter)
+	useCase := product.NewGetProductUseCase(mockGateway)
 	ctx := context.Background()
 
 	currentTime := time.Now()
@@ -51,12 +50,6 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
 					Return(mockProduct, nil)
-
-				mockPresenter.EXPECT().
-					Present(dto.ProductPresenterInput{
-						Writer: mockWriter,
-						Result: mockProduct,
-					})
 			},
 			expectError: false,
 		},
@@ -88,18 +81,20 @@ func TestGetProductUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, dto.GetProductInput{
+			product, err := useCase.Execute(ctx, dto.GetProductInput{
 				ID:     tt.id,
 				Writer: mockWriter,
 			})
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, product)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.Equal(t, mockProduct, product)
 			}
 		})
 	}

@@ -14,6 +14,7 @@ import (
 	reflect "reflect"
 
 	dto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	entity "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -42,11 +43,13 @@ func (m *MockListProductsUseCase) EXPECT() *MockListProductsUseCaseMockRecorder 
 }
 
 // Execute mocks base method.
-func (m *MockListProductsUseCase) Execute(ctx context.Context, input dto.ListProductsInput) error {
+func (m *MockListProductsUseCase) Execute(ctx context.Context, input dto.ListProductsInput) ([]*entity.Product, int64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Execute", ctx, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]*entity.Product)
+	ret1, _ := ret[1].(int64)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
 }
 
 // Execute indicates an expected call of Execute.
@@ -80,11 +83,12 @@ func (m *MockCreateProductUseCase) EXPECT() *MockCreateProductUseCaseMockRecorde
 }
 
 // Execute mocks base method.
-func (m *MockCreateProductUseCase) Execute(ctx context.Context, input dto.CreateProductInput) error {
+func (m *MockCreateProductUseCase) Execute(ctx context.Context, input dto.CreateProductInput) (*entity.Product, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Execute", ctx, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*entity.Product)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Execute indicates an expected call of Execute.
@@ -118,11 +122,12 @@ func (m *MockGetProductUseCase) EXPECT() *MockGetProductUseCaseMockRecorder {
 }
 
 // Execute mocks base method.
-func (m *MockGetProductUseCase) Execute(ctx context.Context, input dto.GetProductInput) error {
+func (m *MockGetProductUseCase) Execute(ctx context.Context, input dto.GetProductInput) (*entity.Product, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Execute", ctx, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*entity.Product)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Execute indicates an expected call of Execute.
@@ -156,11 +161,12 @@ func (m *MockUpdateProductUseCase) EXPECT() *MockUpdateProductUseCaseMockRecorde
 }
 
 // Execute mocks base method.
-func (m *MockUpdateProductUseCase) Execute(ctx context.Context, input dto.UpdateProductInput) error {
+func (m *MockUpdateProductUseCase) Execute(ctx context.Context, input dto.UpdateProductInput) (*entity.Product, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Execute", ctx, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*entity.Product)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Execute indicates an expected call of Execute.
@@ -194,11 +200,12 @@ func (m *MockDeleteProductUseCase) EXPECT() *MockDeleteProductUseCaseMockRecorde
 }
 
 // Execute mocks base method.
-func (m *MockDeleteProductUseCase) Execute(ctx context.Context, input dto.DeleteProductInput) error {
+func (m *MockDeleteProductUseCase) Execute(ctx context.Context, input dto.DeleteProductInput) (*entity.Product, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Execute", ctx, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*entity.Product)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Execute indicates an expected call of Execute.

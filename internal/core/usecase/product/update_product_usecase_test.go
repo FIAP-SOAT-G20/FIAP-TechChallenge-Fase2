@@ -21,9 +21,8 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockProductGateway(ctrl)
-	mockPresenter := mockport.NewMockProductPresenter(ctrl)
 	mockWriter := mockdto.NewMockResponseWriter(ctrl)
-	useCase := product.NewUpdateProductUseCase(mockGateway, mockPresenter)
+	useCase := product.NewUpdateProductUseCase(mockGateway)
 	ctx := context.Background()
 
 	currentTime := time.Now()
@@ -68,9 +67,6 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 						assert.Equal(t, uint64(2), p.CategoryID)
 						return nil
 					})
-
-				mockPresenter.EXPECT().
-					Present(gomock.Any())
 			},
 			expectError: false,
 		},
@@ -120,15 +116,20 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, tt.input)
+			product, err := useCase.Execute(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, product)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, product)
+				assert.Equal(t, tt.input.Name, product.Name)
+				assert.Equal(t, tt.input.Description, product.Description)
+				assert.Equal(t, tt.input.Price, product.Price)
 			}
 		})
 	}

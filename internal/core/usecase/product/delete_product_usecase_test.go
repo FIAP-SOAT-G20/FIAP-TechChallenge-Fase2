@@ -19,8 +19,7 @@ func TestDeleteProductUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockProductGateway(ctrl)
-	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	useCase := product.NewDeleteProductUseCase(mockGateway, mockPresenter)
+	useCase := product.NewDeleteProductUseCase(mockGateway)
 	ctx := context.Background()
 
 	tests := []struct {
@@ -41,9 +40,6 @@ func TestDeleteProductUseCase_Execute(t *testing.T) {
 				mockGateway.EXPECT().
 					Delete(ctx, uint64(1)).
 					Return(nil)
-
-				mockPresenter.EXPECT().
-					Present(gomock.Any())
 			},
 			expectError: false,
 		},
@@ -90,15 +86,17 @@ func TestDeleteProductUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, dto.DeleteProductInput{ID: tt.id})
+			product, err := useCase.Execute(ctx, dto.DeleteProductInput{ID: tt.id})
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, product)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, product)
 			}
 		})
 	}
