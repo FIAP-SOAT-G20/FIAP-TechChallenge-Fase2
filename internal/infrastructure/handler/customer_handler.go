@@ -66,8 +66,8 @@ func (h *CustomerHandler) Register(router *gin.RouterGroup) {
 //	@Param			limit	query		int										false	"Items per page"	default(10)
 //	@Param			name	query		string									false	"Filter by name"
 //	@Success		200		{object}	presenter.CustomerJsonPaginatedResponse	"OK"
-//	@Failure		400		{object}	middleware.ErrorResponse				"Bad Request"
-//	@Failure		500		{object}	middleware.ErrorResponse				"Internal Server Error"
+//	@Failure		400		{object}	middleware.ErrorJsonResponse			"Bad Request"
+//	@Failure		500		{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/customers [get]
 func (h *CustomerHandler) ListCustomers(c *gin.Context) {
 	var query ListCustomersQueryRequest
@@ -98,8 +98,8 @@ func (h *CustomerHandler) ListCustomers(c *gin.Context) {
 //	@Produce		json
 //	@Param			customer	body		CreateCustomerBodyRequest		true	"Customer data"
 //	@Success		201			{object}	presenter.CustomerJsonResponse	"Created"
-//	@Failure		400			{object}	middleware.ErrorResponse		"Bad Request"
-//	@Failure		500			{object}	middleware.ErrorResponse		"Internal Server Error"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/customers [post]
 func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
 	var req CreateCustomerBodyRequest
@@ -130,9 +130,9 @@ func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
 //	@Produce		json
 //	@Param			id	path		int								true	"Customer ID"
 //	@Success		200	{object}	presenter.CustomerJsonResponse	"OK"
-//	@Failure		400	{object}	middleware.ErrorResponse		"Bad Request"
-//	@Failure		404	{object}	middleware.ErrorResponse		"Not Found"
-//	@Failure		500	{object}	middleware.ErrorResponse		"Internal Server Error"
+//	@Failure		400	{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
+//	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/customers/{id} [get]
 func (h *CustomerHandler) GetCustomer(c *gin.Context) {
 	var req GetCustomerUriRequest
@@ -162,9 +162,9 @@ func (h *CustomerHandler) GetCustomer(c *gin.Context) {
 //	@Param			id			path		int								true	"Customer ID"
 //	@Param			customer	body		UpdateCustomerBodyRequest		true	"Customer data"
 //	@Success		200			{object}	presenter.CustomerJsonResponse	"OK"
-//	@Failure		400			{object}	middleware.ErrorResponse		"Bad Request"
-//	@Failure		404			{object}	middleware.ErrorResponse		"Not Found"
-//	@Failure		500			{object}	middleware.ErrorResponse		"Internal Server Error"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		404			{object}	middleware.ErrorJsonResponse	"Not Found"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/customers/{id} [put]
 func (h *CustomerHandler) UpdateCustomer(c *gin.Context) {
 	var reqUri UpdateCustomerUriRequest
@@ -200,9 +200,9 @@ func (h *CustomerHandler) UpdateCustomer(c *gin.Context) {
 //	@Produce		json
 //	@Param			id	path		int	true	"Customer ID"
 //	@Success		204	{object}	nil
-//	@Failure		400	{object}	middleware.ErrorResponse	"Bad Request"
-//	@Failure		404	{object}	middleware.ErrorResponse	"Not Found"
-//	@Failure		500	{object}	middleware.ErrorResponse	"Internal Server Error"
+//	@Failure		400	{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
+//	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/customers/{id} [delete]
 func (h *CustomerHandler) DeleteCustomer(c *gin.Context) {
 	var req DeleteCustomerUriRequest

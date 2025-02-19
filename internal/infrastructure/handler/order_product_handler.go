@@ -73,8 +73,8 @@ func (h *OrderProductHandler) Register(router *gin.RouterGroup) {
 //	@Param			page		query		int											false	"Page number"		default(1)
 //	@Param			limit		query		int											false	"Items per page"	default(10)
 //	@Success		200			{object}	presenter.OrderProductJsonPaginatedResponse	"OK"
-//	@Failure		400			{object}	middleware.ErrorResponse					"Bad Request"
-//	@Failure		500			{object}	middleware.ErrorResponse					"Internal Server Error"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse				"Bad Request"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse				"Internal Server Error"
 //	@Router			/api/v1/orders/products [get]
 func (h *OrderProductHandler) ListOrderProducts(c *gin.Context) {
 	var req ListOrderProductsQueryRequest
@@ -110,7 +110,7 @@ func (h *OrderProductHandler) ListOrderProducts(c *gin.Context) {
 //	@Param			product_id	path		int									true	"Product ID"
 //	@Param			order		body		CreateOrderProductBodyRequest		true	"OrderProduct data"
 //	@Success		201			{object}	presenter.OrderProductJsonResponse	"Created"
-//	@Failure		400			{object}	middleware.ErrorResponse			"Bad Request"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [post]
 func (h *OrderProductHandler) CreateOrderProduct(c *gin.Context) {
 	var reqUri CreateOrderProductUriRequest
@@ -148,9 +148,9 @@ func (h *OrderProductHandler) CreateOrderProduct(c *gin.Context) {
 //	@Param			order_id	path		int									true	"Order ID"
 //	@Param			product_id	path		int									true	"Product ID"
 //	@Success		200			{object}	presenter.OrderProductJsonResponse	"OK"
-//	@Failure		400			{object}	middleware.ErrorResponse			"Bad Request"
-//	@Failure		404			{object}	middleware.ErrorResponse			"Not Found"
-//	@Failure		500			{object}	middleware.ErrorResponse			"Internal Server Error"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [get]
 func (h *OrderProductHandler) GetOrderProduct(c *gin.Context) {
 	var req GetOrderProductUriRequest
@@ -182,9 +182,9 @@ func (h *OrderProductHandler) GetOrderProduct(c *gin.Context) {
 //	@Param			product_id	path		int									true	"Product ID"
 //	@Param			order		body		UpdateOrderProductBodyRequest		true	"OrderProduct data"
 //	@Success		200			{object}	presenter.OrderProductJsonResponse	"OK"
-//	@Failure		400			{object}	middleware.ErrorResponse			"Bad Request"
-//	@Failure		404			{object}	middleware.ErrorResponse			"Not Found"
-//	@Failure		500			{object}	middleware.ErrorResponse			"Internal Server Error"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [put]
 func (h *OrderProductHandler) UpdateOrderProduct(c *gin.Context) {
 	var reqUri UpdateOrderProductUriRequest
@@ -220,9 +220,9 @@ func (h *OrderProductHandler) UpdateOrderProduct(c *gin.Context) {
 //	@Param			order_id	path		int	true	"Order ID"
 //	@Param			product_id	path		int	true	"Product ID"
 //	@Success		204			{object}	nil
-//	@Failure		400			{object}	middleware.ErrorResponse	"Bad Request"
-//	@Failure		404			{object}	middleware.ErrorResponse	"Not Found"
-//	@Failure		500			{object}	middleware.ErrorResponse	"Internal Server Error"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		404			{object}	middleware.ErrorJsonResponse	"Not Found"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [delete]
 func (h *OrderProductHandler) DeleteOrderProduct(c *gin.Context) {
 	var req DeleteOrderProductUriRequest
