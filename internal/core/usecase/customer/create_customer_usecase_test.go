@@ -8,7 +8,6 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
-	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/customer"
@@ -19,7 +18,6 @@ func TestCreateCustomerUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockCustomerGateway(ctrl)
-	mockWriter := mockdto.NewMockResponseWriter(ctrl)
 	useCase := customer.NewCreateCustomerUseCase(mockGateway)
 	ctx := context.Background()
 
@@ -36,7 +34,6 @@ func TestCreateCustomerUseCase_Execute(t *testing.T) {
 				Name:   "Test Customer",
 				Email:  "test.customer.1@email.com",
 				CPF:    "123.456.789-00",
-				Writer: mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -51,7 +48,7 @@ func TestCreateCustomerUseCase_Execute(t *testing.T) {
 				Name:   "Test Customer",
 				Email:  "test.customer.2@email.com",
 				CPF:    "123.456.789-01",
-				Writer: mockWriter,
+				Writer: nil,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().

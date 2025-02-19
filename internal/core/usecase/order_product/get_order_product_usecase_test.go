@@ -9,7 +9,6 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
-	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
@@ -22,7 +21,6 @@ func TestGetOrderProductUseCase_Execute(t *testing.T) {
 
 	mockGateway := mockport.NewMockOrderProductGateway(ctrl)
 	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
-	mockWriter := mockdto.NewMockResponseWriter(ctrl)
 	useCase := orderproduct.NewGetOrderProductUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
@@ -52,7 +50,6 @@ func TestGetOrderProductUseCase_Execute(t *testing.T) {
 
 				mockPresenter.EXPECT().
 					Present(dto.OrderProductPresenterInput{
-						Writer: mockWriter,
 						Result: mockOrderProduct,
 					})
 			},
@@ -89,7 +86,6 @@ func TestGetOrderProductUseCase_Execute(t *testing.T) {
 			err := useCase.Execute(ctx, dto.GetOrderProductInput{
 				OrderID:   1,
 				ProductID: 1,
-				Writer:    mockWriter,
 			})
 
 			if tt.expectError {

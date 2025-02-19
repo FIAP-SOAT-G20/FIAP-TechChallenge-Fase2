@@ -9,7 +9,6 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
-	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
@@ -21,7 +20,6 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockProductGateway(ctrl)
-	mockWriter := mockdto.NewMockResponseWriter(ctrl)
 	useCase := product.NewUpdateProductUseCase(mockGateway)
 	ctx := context.Background()
 
@@ -51,7 +49,6 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 				Description: "New Description",
 				Price:       20.0,
 				CategoryID:  2,
-				Writer:      mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -78,7 +75,6 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 				Description: "New Description",
 				Price:       20.0,
 				CategoryID:  2,
-				Writer:      mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -96,7 +92,6 @@ func TestUpdateProductUseCase_Execute(t *testing.T) {
 				Description: "New Description",
 				Price:       20.0,
 				CategoryID:  2,
-				Writer:      mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().

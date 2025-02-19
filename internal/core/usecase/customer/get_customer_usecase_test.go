@@ -9,7 +9,6 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
-	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
@@ -21,7 +20,6 @@ func TestGetCustomerUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockCustomerGateway(ctrl)
-	mockWriter := mockdto.NewMockResponseWriter(ctrl)
 	useCase := customer.NewGetCustomerUseCase(mockGateway)
 	ctx := context.Background()
 
@@ -81,7 +79,6 @@ func TestGetCustomerUseCase_Execute(t *testing.T) {
 
 			customer, err := useCase.Execute(ctx, dto.GetCustomerInput{
 				ID:     tt.id,
-				Writer: mockWriter,
 			})
 
 			if tt.expectError {

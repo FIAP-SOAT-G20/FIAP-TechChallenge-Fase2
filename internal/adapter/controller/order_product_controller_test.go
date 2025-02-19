@@ -8,7 +8,6 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
-	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 )
 
@@ -17,7 +16,6 @@ func TestOrderProductController_ListOrderProducts(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockListOrderProductsUseCase := mockport.NewMockListOrderProductsUseCase(ctrl)
-	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
 	productController := NewOrderProductController(mockListOrderProductsUseCase, nil, nil, nil, nil)
 
 	ctx := context.Background()
@@ -26,7 +24,6 @@ func TestOrderProductController_ListOrderProducts(t *testing.T) {
 		ProductID: 1,
 		Page:      1,
 		Limit:     10,
-		Writer:    mockResponseWriter,
 	}
 
 	mockListOrderProductsUseCase.EXPECT().
@@ -42,7 +39,6 @@ func TestOrderProductController_CreateOrderProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockCreateOrderProductUseCase := mockport.NewMockCreateOrderProductUseCase(ctrl)
-	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
 	productController := NewOrderProductController(nil, mockCreateOrderProductUseCase, nil, nil, nil)
 
 	ctx := context.Background()
@@ -50,7 +46,6 @@ func TestOrderProductController_CreateOrderProduct(t *testing.T) {
 		OrderID:   1,
 		ProductID: 1,
 		Quantity:  1,
-		Writer:    mockResponseWriter,
 	}
 
 	mockCreateOrderProductUseCase.EXPECT().
@@ -66,14 +61,12 @@ func TestOrderProductController_GetOrderProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGetOrderProductUseCase := mockport.NewMockGetOrderProductUseCase(ctrl)
-	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
 	productController := NewOrderProductController(nil, nil, mockGetOrderProductUseCase, nil, nil)
 
 	ctx := context.Background()
 	input := dto.GetOrderProductInput{
 		OrderID:   1,
 		ProductID: 1,
-		Writer:    mockResponseWriter,
 	}
 
 	mockGetOrderProductUseCase.EXPECT().
@@ -89,7 +82,6 @@ func TestOrderProductController_UpdateOrderProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockUpdateOrderProductUseCase := mockport.NewMockUpdateOrderProductUseCase(ctrl)
-	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
 	productController := NewOrderProductController(nil, nil, nil, mockUpdateOrderProductUseCase, nil)
 
 	ctx := context.Background()
@@ -97,7 +89,6 @@ func TestOrderProductController_UpdateOrderProduct(t *testing.T) {
 		OrderID:   1,
 		ProductID: 1,
 		Quantity:  1,
-		Writer:    mockResponseWriter,
 	}
 
 	mockUpdateOrderProductUseCase.EXPECT().
@@ -113,14 +104,12 @@ func TestOrderProductController_DeleteOrderProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockDeleteOrderProductUseCase := mockport.NewMockDeleteOrderProductUseCase(ctrl)
-	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
 	productController := NewOrderProductController(nil, nil, nil, nil, mockDeleteOrderProductUseCase)
 
 	ctx := context.Background()
 	input := dto.DeleteOrderProductInput{
 		OrderID:   1,
 		ProductID: 1,
-		Writer:    mockResponseWriter,
 	}
 
 	mockDeleteOrderProductUseCase.EXPECT().

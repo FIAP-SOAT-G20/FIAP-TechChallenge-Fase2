@@ -9,7 +9,6 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
-	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
@@ -21,8 +20,6 @@ func TestUpdateCustomerUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockCustomerGateway(ctrl)
-	mockWriter := mockdto.NewMockResponseWriter(ctrl)
-
 	useCase := customer.NewUpdateCustomerUseCase(mockGateway)
 	ctx := context.Background()
 
@@ -45,10 +42,9 @@ func TestUpdateCustomerUseCase_Execute(t *testing.T) {
 		{
 			name: "should update customer successfully",
 			input: dto.UpdateCustomerInput{
-				ID:     1,
-				Name:   "New Name",
-				Email:  "new.name@email.com",
-				Writer: mockWriter,
+				ID:    1,
+				Name:  "New Name",
+				Email: "new.name@email.com",
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -68,10 +64,9 @@ func TestUpdateCustomerUseCase_Execute(t *testing.T) {
 		{
 			name: "should return error when customer not found",
 			input: dto.UpdateCustomerInput{
-				ID:     1,
-				Name:   "New Name",
-				Email:  "new.name@email.com",
-				Writer: mockWriter,
+				ID:    1,
+				Name:  "New Name",
+				Email: "new.name@email.com",
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -84,10 +79,9 @@ func TestUpdateCustomerUseCase_Execute(t *testing.T) {
 		{
 			name: "should return error when gateway update fails",
 			input: dto.UpdateCustomerInput{
-				ID:     1,
-				Name:   "New Name",
-				Email:  "new.name@email.com",
-				Writer: mockWriter,
+				ID:    1,
+				Name:  "New Name",
+				Email: "new.name@email.com",
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().

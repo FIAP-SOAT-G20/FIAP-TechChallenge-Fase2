@@ -9,7 +9,6 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
-	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
@@ -22,7 +21,6 @@ func TestListOrderProductsUseCase_Execute(t *testing.T) {
 
 	mockGateway := mockport.NewMockOrderProductGateway(ctrl)
 	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
-	mockWriter := mockdto.NewMockResponseWriter(ctrl)
 	useCase := orderproduct.NewListOrderProductsUseCase(mockGateway, mockPresenter)
 	ctx := context.Background()
 
@@ -54,9 +52,8 @@ func TestListOrderProductsUseCase_Execute(t *testing.T) {
 		{
 			name: "should list orderProducts successfully",
 			input: dto.ListOrderProductsInput{
-				Page:   1,
-				Limit:  10,
-				Writer: mockWriter,
+				Page:  1,
+				Limit: 10,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -69,7 +66,6 @@ func TestListOrderProductsUseCase_Execute(t *testing.T) {
 						Total:  int64(2),
 						Page:   1,
 						Limit:  10,
-						Writer: mockWriter,
 					})
 			},
 			expectError: false,
@@ -77,9 +73,8 @@ func TestListOrderProductsUseCase_Execute(t *testing.T) {
 		{
 			name: "should return error when repository fails",
 			input: dto.ListOrderProductsInput{
-				Page:   1,
-				Limit:  10,
-				Writer: mockWriter,
+				Page:  1,
+				Limit: 10,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -95,7 +90,6 @@ func TestListOrderProductsUseCase_Execute(t *testing.T) {
 				OrderID: 1,
 				Page:    1,
 				Limit:   10,
-				Writer:  mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -104,7 +98,6 @@ func TestListOrderProductsUseCase_Execute(t *testing.T) {
 
 				mockPresenter.EXPECT().
 					Present(dto.OrderProductPresenterInput{
-						Writer: mockWriter,
 						Total:  int64(2),
 						Page:   1,
 						Limit:  10,
@@ -119,7 +112,6 @@ func TestListOrderProductsUseCase_Execute(t *testing.T) {
 				ProductID: 1,
 				Page:      1,
 				Limit:     10,
-				Writer:    mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -128,7 +120,6 @@ func TestListOrderProductsUseCase_Execute(t *testing.T) {
 
 				mockPresenter.EXPECT().
 					Present(dto.OrderProductPresenterInput{
-						Writer: mockWriter,
 						Total:  int64(2),
 						Page:   1,
 						Limit:  10,

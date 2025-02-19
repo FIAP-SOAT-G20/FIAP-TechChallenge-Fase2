@@ -22,10 +22,9 @@ func TestCustomerController_ListCustomers(t *testing.T) {
 
 	ctx := context.Background()
 	input := dto.ListCustomersInput{
-		Name:   "Test",
-		Page:   1,
-		Limit:  10,
-		Writer: nil,
+		Name:  "Test",
+		Page:  1,
+		Limit: 10,
 	}
 
 	mockCustomers := []*entity.Customer{
@@ -49,7 +48,6 @@ func TestCustomerController_ListCustomers(t *testing.T) {
 
 	mockPresenter.EXPECT().
 		Present(dto.CustomerPresenterInput{
-			Writer: nil,
 			Total:  int64(2),
 			Page:   1,
 			Limit:  10,
@@ -70,10 +68,9 @@ func TestCustomerController_CreateCustomer(t *testing.T) {
 
 	ctx := context.Background()
 	input := dto.CreateCustomerInput{
-		Name:   "Test Customer",
-		Email:  "test.customer.1@email.com",
-		CPF:    "123.456.789-00",
-		Writer: nil,
+		Name:  "Test Customer",
+		Email: "test.customer.1@email.com",
+		CPF:   "123.456.789-00",
 	}
 
 	mockCustomer := &entity.Customer{
@@ -89,7 +86,6 @@ func TestCustomerController_CreateCustomer(t *testing.T) {
 
 	mockPresenter.EXPECT().
 		Present(dto.CustomerPresenterInput{
-			Writer: nil,
 			Result: mockCustomer,
 		})
 
@@ -107,8 +103,7 @@ func TestCustomerController_GetCustomer(t *testing.T) {
 
 	ctx := context.Background()
 	input := dto.GetCustomerInput{
-		ID:     uint64(1),
-		Writer: nil,
+		ID: uint64(1),
 	}
 
 	mockCustomer := &entity.Customer{
@@ -124,7 +119,6 @@ func TestCustomerController_GetCustomer(t *testing.T) {
 
 	mockPresenter.EXPECT().
 		Present(dto.CustomerPresenterInput{
-			Writer: nil,
 			Result: mockCustomer,
 		})
 
@@ -142,10 +136,9 @@ func TestCustomerController_UpdateCustomer(t *testing.T) {
 
 	ctx := context.Background()
 	input := dto.UpdateCustomerInput{
-		ID:     uint64(1),
-		Name:   "Test Customer",
-		Email:  "test.customer@email.com",
-		Writer: nil,
+		ID:    uint64(1),
+		Name:  "Test Customer",
+		Email: "test.customer@email.com",
 	}
 
 	mockCustomer := &entity.Customer{
@@ -160,7 +153,6 @@ func TestCustomerController_UpdateCustomer(t *testing.T) {
 
 	mockPresenter.EXPECT().
 		Present(dto.CustomerPresenterInput{
-			Writer: nil,
 			Result: mockCustomer,
 		})
 
@@ -178,8 +170,7 @@ func TestCustomerController_DeleteCustomer(t *testing.T) {
 
 	ctx := context.Background()
 	input := dto.DeleteCustomerInput{
-		ID:     uint64(1),
-		Writer: nil,
+		ID: uint64(1),
 	}
 
 	mockCustomer := &entity.Customer{
@@ -194,7 +185,6 @@ func TestCustomerController_DeleteCustomer(t *testing.T) {
 
 	mockPresenter.EXPECT().
 		Present(dto.CustomerPresenterInput{
-			Writer: nil,
 			Result: mockCustomer,
 		})
 

@@ -8,7 +8,6 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
-	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/product"
@@ -19,7 +18,6 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockProductGateway(ctrl)
-	mockWriter := mockdto.NewMockResponseWriter(ctrl)
 	useCase := product.NewCreateProductUseCase(mockGateway)
 	ctx := context.Background()
 
@@ -37,7 +35,6 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 				Description: "Test Description",
 				Price:       99.99,
 				CategoryID:  1,
-				Writer:      mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -53,7 +50,6 @@ func TestCreateProductUseCase_Execute(t *testing.T) {
 				Description: "Test Description",
 				Price:       99.99,
 				CategoryID:  1,
-				Writer:      mockWriter,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().

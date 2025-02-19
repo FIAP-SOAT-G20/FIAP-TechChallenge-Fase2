@@ -9,7 +9,6 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
-	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
@@ -21,8 +20,6 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockProductGateway(ctrl)
-	
-	mockWriter := mockdto.NewMockResponseWriter(ctrl)
 	useCase := product.NewListProductsUseCase(mockGateway)
 	ctx := context.Background()
 
@@ -58,9 +55,8 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 		{
 			name: "should list products successfully",
 			input: dto.ListProductsInput{
-				Writer: mockWriter,
-				Page:   1,
-				Limit:  10,
+				Page:  1,
+				Limit: 10,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -72,9 +68,8 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 		{
 			name: "should return error when repository fails",
 			input: dto.ListProductsInput{
-				Writer: mockWriter,
-				Page:   1,
-				Limit:  10,
+				Page:  1,
+				Limit: 10,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -87,10 +82,9 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 		{
 			name: "should filter by name",
 			input: dto.ListProductsInput{
-				Writer: mockWriter,
-				Name:   "Test",
-				Page:   1,
-				Limit:  10,
+				Name:  "Test",
+				Page:  1,
+				Limit: 10,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -102,7 +96,6 @@ func TestListProductsUseCase_Execute(t *testing.T) {
 		{
 			name: "should filter by category",
 			input: dto.ListProductsInput{
-				Writer:     mockWriter,
 				CategoryID: 1,
 				Page:       1,
 				Limit:      10,
