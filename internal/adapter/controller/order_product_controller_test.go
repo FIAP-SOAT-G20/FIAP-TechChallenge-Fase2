@@ -12,6 +12,7 @@ import (
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 )
 
+// TODO: Add more test cenarios
 func TestOrderProductController_ListOrderProducts(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()

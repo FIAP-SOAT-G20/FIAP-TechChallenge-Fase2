@@ -82,13 +82,6 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderGateway := gateway.NewOrderGateway(orderDS)
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
 
-	// Presenters
-	// productPresenter := presenter.NewProductJsonPresenter()
-	// productPresenter := presenter.NewProductXmlPresenter()
-	// customerPresenter := presenter.NewCustomerJsonPresenter()
-	// orderPresenter := presenter.NewOrderJsonPresenter()
-	// orderProductPresenter := presenter.NewOrderProductJsonPresenter()
-
 	// Use cases - Product
 	listProductsUC := product.NewListProductsUseCase(productGateway)
 	createProductUC := product.NewCreateProductUseCase(productGateway)
@@ -121,7 +114,6 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		getProductUC,
 		updateProductUC,
 		deleteProductUC,
-		// productPresenter,
 	)
 	customerController := controller.NewCustomerController(
 		listCustomersUC,
@@ -129,7 +121,6 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		getCustomerUC,
 		updateCustomerUC,
 		deleteCustomerUC,
-		// customerPresenter,
 	)
 	orderController := controller.NewOrderController(
 		listOrdersUC,
@@ -137,7 +128,6 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		getOrderUC,
 		updateOrderUC,
 		deleteOrderUC,
-		// orderPresenter,
 	)
 	orderProductController := controller.NewOrderProductController(
 		listOrderProductsUC,
@@ -145,7 +135,6 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		getOrderProductUC,
 		updateOrderProductUC,
 		deleteOrderProductUC,
-		// orderProductPresenter,
 	)
 
 	// Handlers
