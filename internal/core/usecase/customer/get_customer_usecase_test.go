@@ -21,9 +21,8 @@ func TestGetCustomerUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockCustomerGateway(ctrl)
-	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
 	mockWriter := mockdto.NewMockResponseWriter(ctrl)
-	useCase := customer.NewGetCustomerUseCase(mockGateway, mockPresenter)
+	useCase := customer.NewGetCustomerUseCase(mockGateway)
 	ctx := context.Background()
 
 	currentTime := time.Now()
@@ -49,12 +48,6 @@ func TestGetCustomerUseCase_Execute(t *testing.T) {
 				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
 					Return(mockCustomer, nil)
-
-				mockPresenter.EXPECT().
-					Present(dto.CustomerPresenterInput{
-						Writer: mockWriter,
-						Result: mockCustomer,
-					})
 			},
 			expectError: false,
 		},
@@ -86,18 +79,25 @@ func TestGetCustomerUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, dto.GetCustomerInput{
+			customer, err := useCase.Execute(ctx, dto.GetCustomerInput{
 				ID:     tt.id,
 				Writer: mockWriter,
 			})
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, customer)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, customer)
+				assert.Equal(t, mockCustomer.ID, customer.ID)
+				assert.Equal(t, mockCustomer.Name, customer.Name)
+				assert.Equal(t, mockCustomer.Email, customer.Email)
+				assert.Equal(t, mockCustomer.CreatedAt, customer.CreatedAt)
+				assert.Equal(t, mockCustomer.UpdatedAt, customer.UpdatedAt)
 			}
 		})
 	}

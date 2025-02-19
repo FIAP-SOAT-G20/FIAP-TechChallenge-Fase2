@@ -10,29 +10,21 @@ import (
 )
 
 type createCustomerUseCase struct {
-	gateway   port.CustomerGateway
-	presenter port.CustomerPresenter
+	gateway port.CustomerGateway
 }
 
 // NewCreateCustomerUseCase creates a new CreateCustomerUseCase
-func NewCreateCustomerUseCase(gateway port.CustomerGateway, presenter port.CustomerPresenter) port.CreateCustomerUseCase {
-	return &createCustomerUseCase{
-		gateway:   gateway,
-		presenter: presenter,
-	}
+func NewCreateCustomerUseCase(gateway port.CustomerGateway) port.CreateCustomerUseCase {
+	return &createCustomerUseCase{gateway}
 }
 
 // Execute creates a new Customer
-func (uc *createCustomerUseCase) Execute(ctx context.Context, input dto.CreateCustomerInput) error {
+func (uc *createCustomerUseCase) Execute(ctx context.Context, input dto.CreateCustomerInput) (*entity.Customer, error) {
 	customer := entity.NewCustomer(input.Name, input.Email, input.CPF)
 
 	if err := uc.gateway.Create(ctx, customer); err != nil {
-		return domain.NewInternalError(err)
+		return nil, domain.NewInternalError(err)
 	}
 
-	uc.presenter.Present(dto.CustomerPresenterInput{
-		Writer: input.Writer,
-		Result: customer,
-	})
-	return nil
+	return customer, nil
 }

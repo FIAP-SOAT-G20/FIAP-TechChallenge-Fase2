@@ -21,9 +21,8 @@ func TestListCustomersUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockCustomerGateway(ctrl)
-	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
 	mockWriter := mockdto.NewMockResponseWriter(ctrl)
-	useCase := customer.NewListCustomersUseCase(mockGateway, mockPresenter)
+	useCase := customer.NewListCustomersUseCase(mockGateway)
 	ctx := context.Background()
 
 	currentTime := time.Now()
@@ -64,15 +63,6 @@ func TestListCustomersUseCase_Execute(t *testing.T) {
 				mockGateway.EXPECT().
 					FindAll(ctx, "", 1, 10).
 					Return(mockCustomers, int64(2), nil)
-
-				mockPresenter.EXPECT().
-					Present(dto.CustomerPresenterInput{
-						Writer: mockWriter,
-						Total:  int64(2),
-						Page:   1,
-						Limit:  10,
-						Result: mockCustomers,
-					})
 			},
 			expectError: false,
 		},
@@ -103,15 +93,6 @@ func TestListCustomersUseCase_Execute(t *testing.T) {
 				mockGateway.EXPECT().
 					FindAll(ctx, "Test", 1, 10).
 					Return(mockCustomers, int64(2), nil)
-
-				mockPresenter.EXPECT().
-					Present(dto.CustomerPresenterInput{
-						Writer: mockWriter,
-						Total:  int64(2),
-						Page:   1,
-						Limit:  10,
-						Result: mockCustomers,
-					})
 			},
 			expectError: false,
 		},
@@ -121,15 +102,20 @@ func TestListCustomersUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, tt.input)
+			customers, total, err := useCase.Execute(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, customers)
+				assert.Equal(t, int64(0), total)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, customers)
+				assert.Equal(t, len(mockCustomers), len(customers))
+				assert.Equal(t, int64(2), total)
 			}
 		})
 	}

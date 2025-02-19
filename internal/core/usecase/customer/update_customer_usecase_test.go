@@ -21,10 +21,9 @@ func TestUpdateCustomerUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockCustomerGateway(ctrl)
-	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
 	mockWriter := mockdto.NewMockResponseWriter(ctrl)
 
-	useCase := customer.NewUpdateCustomerUseCase(mockGateway, mockPresenter)
+	useCase := customer.NewUpdateCustomerUseCase(mockGateway)
 	ctx := context.Background()
 
 	currentTime := time.Now()
@@ -63,9 +62,6 @@ func TestUpdateCustomerUseCase_Execute(t *testing.T) {
 						assert.Equal(t, "new.name@email.com", p.Email)
 						return nil
 					})
-
-				mockPresenter.EXPECT().
-					Present(gomock.Any())
 			},
 			expectError: false,
 		},
@@ -111,15 +107,20 @@ func TestUpdateCustomerUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, tt.input)
+			customer, err := useCase.Execute(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, customer)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, customer)
+				assert.Equal(t, tt.input.Name, customer.Name)
+				assert.Equal(t, tt.input.Email, customer.Email)
+				assert.Equal(t, existingCustomer.CreatedAt, customer.CreatedAt)
 			}
 		})
 	}

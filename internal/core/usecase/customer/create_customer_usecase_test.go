@@ -19,9 +19,8 @@ func TestCreateCustomerUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockCustomerGateway(ctrl)
-	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
 	mockWriter := mockdto.NewMockResponseWriter(ctrl)
-	useCase := customer.NewCreateCustomerUseCase(mockGateway, mockPresenter)
+	useCase := customer.NewCreateCustomerUseCase(mockGateway)
 	ctx := context.Background()
 
 	tests := []struct {
@@ -43,9 +42,6 @@ func TestCreateCustomerUseCase_Execute(t *testing.T) {
 				mockGateway.EXPECT().
 					Create(ctx, gomock.Any()).
 					Return(nil)
-
-				mockPresenter.EXPECT().
-					Present(gomock.Any())
 			},
 			expectError: false,
 		},
@@ -71,15 +67,20 @@ func TestCreateCustomerUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, tt.input)
+			customer, err := useCase.Execute(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, customer)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, customer)
+				assert.Equal(t, tt.input.Name, customer.Name)
+				assert.Equal(t, tt.input.Email, customer.Email)
+				assert.Equal(t, tt.input.CPF, customer.CPF)
 			}
 		})
 	}

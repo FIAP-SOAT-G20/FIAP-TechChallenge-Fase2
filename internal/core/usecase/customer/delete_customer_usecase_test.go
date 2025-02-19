@@ -19,8 +19,7 @@ func TestDeleteCustomerUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockCustomerGateway(ctrl)
-	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
-	useCase := customer.NewDeleteCustomerUseCase(mockGateway, mockPresenter)
+	useCase := customer.NewDeleteCustomerUseCase(mockGateway)
 	ctx := context.Background()
 
 	tests := []struct {
@@ -36,14 +35,11 @@ func TestDeleteCustomerUseCase_Execute(t *testing.T) {
 			setupMocks: func() {
 				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
-					Return(&entity.Customer{}, nil)
+					Return(&entity.Customer{ID: 1}, nil)
 
 				mockGateway.EXPECT().
 					Delete(ctx, uint64(1)).
 					Return(nil)
-
-				mockPresenter.EXPECT().
-					Present(gomock.Any())
 			},
 			expectError: false,
 		},
@@ -90,15 +86,18 @@ func TestDeleteCustomerUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, dto.DeleteCustomerInput{ID: tt.id})
+			customer, err := useCase.Execute(ctx, dto.DeleteCustomerInput{ID: tt.id})
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, customer)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, customer)
+				assert.Equal(t, tt.id, customer.ID)
 			}
 		})
 	}

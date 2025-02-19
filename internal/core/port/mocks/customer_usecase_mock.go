@@ -14,6 +14,7 @@ import (
 	reflect "reflect"
 
 	dto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	entity "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -42,11 +43,13 @@ func (m *MockListCustomersUseCase) EXPECT() *MockListCustomersUseCaseMockRecorde
 }
 
 // Execute mocks base method.
-func (m *MockListCustomersUseCase) Execute(ctx context.Context, input dto.ListCustomersInput) error {
+func (m *MockListCustomersUseCase) Execute(ctx context.Context, input dto.ListCustomersInput) ([]*entity.Customer, int64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Execute", ctx, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]*entity.Customer)
+	ret1, _ := ret[1].(int64)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
 }
 
 // Execute indicates an expected call of Execute.
@@ -80,11 +83,12 @@ func (m *MockCreateCustomerUseCase) EXPECT() *MockCreateCustomerUseCaseMockRecor
 }
 
 // Execute mocks base method.
-func (m *MockCreateCustomerUseCase) Execute(ctx context.Context, input dto.CreateCustomerInput) error {
+func (m *MockCreateCustomerUseCase) Execute(ctx context.Context, input dto.CreateCustomerInput) (*entity.Customer, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Execute", ctx, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*entity.Customer)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Execute indicates an expected call of Execute.
@@ -118,11 +122,12 @@ func (m *MockGetCustomerUseCase) EXPECT() *MockGetCustomerUseCaseMockRecorder {
 }
 
 // Execute mocks base method.
-func (m *MockGetCustomerUseCase) Execute(ctx context.Context, input dto.GetCustomerInput) error {
+func (m *MockGetCustomerUseCase) Execute(ctx context.Context, input dto.GetCustomerInput) (*entity.Customer, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Execute", ctx, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*entity.Customer)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Execute indicates an expected call of Execute.
@@ -156,11 +161,12 @@ func (m *MockUpdateCustomerUseCase) EXPECT() *MockUpdateCustomerUseCaseMockRecor
 }
 
 // Execute mocks base method.
-func (m *MockUpdateCustomerUseCase) Execute(ctx context.Context, input dto.UpdateCustomerInput) error {
+func (m *MockUpdateCustomerUseCase) Execute(ctx context.Context, input dto.UpdateCustomerInput) (*entity.Customer, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Execute", ctx, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*entity.Customer)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Execute indicates an expected call of Execute.
@@ -194,11 +200,12 @@ func (m *MockDeleteCustomerUseCase) EXPECT() *MockDeleteCustomerUseCaseMockRecor
 }
 
 // Execute mocks base method.
-func (m *MockDeleteCustomerUseCase) Execute(ctx context.Context, input dto.DeleteCustomerInput) error {
+func (m *MockDeleteCustomerUseCase) Execute(ctx context.Context, input dto.DeleteCustomerInput) (*entity.Customer, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Execute", ctx, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(*entity.Customer)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Execute indicates an expected call of Execute.
