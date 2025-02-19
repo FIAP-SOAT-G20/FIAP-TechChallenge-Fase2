@@ -109,11 +109,11 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	updateOrderUC := order.NewUpdateOrderUseCase(orderGateway)
 	deleteOrderUC := order.NewDeleteOrderUseCase(orderGateway)
 	// Use cases - OrderProduct
-	listOrderProductsUC := orderproduct.NewListOrderProductsUseCase(orderProductGateway, orderProductPresenter)
-	createOrderProductUC := orderproduct.NewCreateOrderProductUseCase(orderProductGateway, orderProductPresenter)
-	getOrderProductUC := orderproduct.NewGetOrderProductUseCase(orderProductGateway, orderProductPresenter)
-	updateOrderProductUC := orderproduct.NewUpdateOrderProductUseCase(orderProductGateway, orderProductPresenter)
-	deleteOrderProductUC := orderproduct.NewDeleteOrderProductUseCase(orderProductGateway, orderProductPresenter)
+	listOrderProductsUC := orderproduct.NewListOrderProductsUseCase(orderProductGateway)
+	createOrderProductUC := orderproduct.NewCreateOrderProductUseCase(orderProductGateway)
+	getOrderProductUC := orderproduct.NewGetOrderProductUseCase(orderProductGateway)
+	updateOrderProductUC := orderproduct.NewUpdateOrderProductUseCase(orderProductGateway)
+	deleteOrderProductUC := orderproduct.NewDeleteOrderProductUseCase(orderProductGateway)
 
 	// Controllers
 	productController := controller.NewProductController(
@@ -146,6 +146,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		getOrderProductUC,
 		updateOrderProductUC,
 		deleteOrderProductUC,
+		orderProductPresenter,
 	)
 
 	// Handlers

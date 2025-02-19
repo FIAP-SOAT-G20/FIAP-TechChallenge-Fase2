@@ -13,6 +13,7 @@ type OrderProductController struct {
 	getOrderProductUseCase    port.GetOrderProductUseCase
 	updateOrderProductUseCase port.UpdateOrderProductUseCase
 	deleteOrderProductUseCase port.DeleteOrderProductUseCase
+	presenter                 port.OrderProductPresenter
 }
 
 func NewOrderProductController(
@@ -21,6 +22,7 @@ func NewOrderProductController(
 	getUC port.GetOrderProductUseCase,
 	updateUC port.UpdateOrderProductUseCase,
 	deleteUC port.DeleteOrderProductUseCase,
+	orderProductPresenter port.OrderProductPresenter,
 ) *OrderProductController {
 	return &OrderProductController{
 		listOrderProductsUseCase:  listUC,
@@ -28,45 +30,79 @@ func NewOrderProductController(
 		getOrderProductUseCase:    getUC,
 		updateOrderProductUseCase: updateUC,
 		deleteOrderProductUseCase: deleteUC,
+		presenter:                 orderProductPresenter,
 	}
 }
 
 func (c *OrderProductController) ListOrderProducts(ctx context.Context, input dto.ListOrderProductsInput) error {
-	err := c.listOrderProductsUseCase.Execute(ctx, input)
+	orderProducts, total, err := c.listOrderProductsUseCase.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
+
+	c.presenter.Present(dto.OrderProductPresenterInput{
+		Writer: input.Writer,
+		Total:  total,
+		Page:   input.Page,
+		Limit:  input.Limit,
+		Result: orderProducts,
+	})
 
 	return nil
 }
 
 func (c *OrderProductController) CreateOrderProduct(ctx context.Context, input dto.CreateOrderProductInput) error {
-	err := c.createOrderProductUseCase.Execute(ctx, input)
+	orderProduct, err := c.createOrderProductUseCase.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
+
+	c.presenter.Present(dto.OrderProductPresenterInput{
+		Writer: input.Writer,
+		Result: orderProduct,
+	})
 
 	return nil
 }
 
 func (c *OrderProductController) GetOrderProduct(ctx context.Context, input dto.GetOrderProductInput) error {
-	err := c.getOrderProductUseCase.Execute(ctx, input)
+	orderProduct, err := c.getOrderProductUseCase.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
+
+	c.presenter.Present(dto.OrderProductPresenterInput{
+		Writer: input.Writer,
+		Result: orderProduct,
+	})
 
 	return nil
 }
 
 func (c *OrderProductController) UpdateOrderProduct(ctx context.Context, input dto.UpdateOrderProductInput) error {
-	err := c.updateOrderProductUseCase.Execute(ctx, input)
+	orderProduct, err := c.updateOrderProductUseCase.Execute(ctx, input)
 	if err != nil {
 		return err
 	}
+
+	c.presenter.Present(dto.OrderProductPresenterInput{
+		Writer: input.Writer,
+		Result: orderProduct,
+	})
 
 	return nil
 }
 
 func (c *OrderProductController) DeleteOrderProduct(ctx context.Context, input dto.DeleteOrderProductInput) error {
-	return c.deleteOrderProductUseCase.Execute(ctx, input)
+	order, err := c.deleteOrderProductUseCase.Execute(ctx, input)
+	if err != nil {
+		return err
+	}
+
+	c.presenter.Present(dto.OrderProductPresenterInput{
+		Writer: input.Writer,
+		Result: order,
+	})
+
+	return nil
 }

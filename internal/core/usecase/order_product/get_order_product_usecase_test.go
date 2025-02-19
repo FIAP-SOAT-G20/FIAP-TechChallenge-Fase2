@@ -20,8 +20,7 @@ func TestGetOrderProductUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderProductGateway(ctrl)
-	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
-	useCase := orderproduct.NewGetOrderProductUseCase(mockGateway, mockPresenter)
+	useCase := orderproduct.NewGetOrderProductUseCase(mockGateway)
 	ctx := context.Background()
 
 	currentTime := time.Now()
@@ -47,11 +46,6 @@ func TestGetOrderProductUseCase_Execute(t *testing.T) {
 				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1), uint64(1)).
 					Return(mockOrderProduct, nil)
-
-				mockPresenter.EXPECT().
-					Present(dto.OrderProductPresenterInput{
-						Result: mockOrderProduct,
-					})
 			},
 			expectError: false,
 		},
@@ -83,18 +77,22 @@ func TestGetOrderProductUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, dto.GetOrderProductInput{
+			orderProduct, err := useCase.Execute(ctx, dto.GetOrderProductInput{
 				OrderID:   1,
 				ProductID: 1,
 			})
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, orderProduct)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.Equal(t, mockOrderProduct, orderProduct)
+				assert.Equal(t, uint64(1), orderProduct.OrderID)
+				assert.Equal(t, uint64(1), orderProduct.ProductID)
 			}
 		})
 	}

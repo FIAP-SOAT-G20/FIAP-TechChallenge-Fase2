@@ -8,6 +8,7 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 )
 
@@ -16,19 +17,40 @@ func TestOrderProductController_ListOrderProducts(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockListOrderProductsUseCase := mockport.NewMockListOrderProductsUseCase(ctrl)
-	productController := NewOrderProductController(mockListOrderProductsUseCase, nil, nil, nil, nil)
+	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
+	productController := NewOrderProductController(mockListOrderProductsUseCase, nil, nil, nil, nil, mockPresenter)
 
 	ctx := context.Background()
 	input := dto.ListOrderProductsInput{
-		OrderID:   1,
-		ProductID: 1,
-		Page:      1,
-		Limit:     10,
+		OrderID: 1,
+		Page:    1,
+		Limit:   10,
+	}
+
+	mockOrderProducts := []*entity.OrderProduct{
+		{
+			OrderID:   1,
+			ProductID: 1,
+			Quantity:  1,
+		},
+		{
+			OrderID:   1,
+			ProductID: 2,
+			Quantity:  2,
+		},
 	}
 
 	mockListOrderProductsUseCase.EXPECT().
 		Execute(ctx, input).
-		Return(nil)
+		Return(mockOrderProducts, int64(2), nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.OrderProductPresenterInput{
+			Result: mockOrderProducts,
+			Total:  int64(2),
+			Page:   1,
+			Limit:  10,
+		})
 
 	err := productController.ListOrderProducts(ctx, input)
 	assert.NoError(t, err)
@@ -39,7 +61,8 @@ func TestOrderProductController_CreateOrderProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockCreateOrderProductUseCase := mockport.NewMockCreateOrderProductUseCase(ctrl)
-	productController := NewOrderProductController(nil, mockCreateOrderProductUseCase, nil, nil, nil)
+	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
+	productController := NewOrderProductController(nil, mockCreateOrderProductUseCase, nil, nil, nil, mockPresenter)
 
 	ctx := context.Background()
 	input := dto.CreateOrderProductInput{
@@ -48,9 +71,20 @@ func TestOrderProductController_CreateOrderProduct(t *testing.T) {
 		Quantity:  1,
 	}
 
+	mockOrderProduct := &entity.OrderProduct{
+		OrderID:   1,
+		ProductID: 1,
+		Quantity:  1,
+	}
+
 	mockCreateOrderProductUseCase.EXPECT().
 		Execute(ctx, input).
-		Return(nil)
+		Return(mockOrderProduct, nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.OrderProductPresenterInput{
+			Result: mockOrderProduct,
+		})
 
 	err := productController.CreateOrderProduct(ctx, input)
 	assert.NoError(t, err)
@@ -61,7 +95,8 @@ func TestOrderProductController_GetOrderProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGetOrderProductUseCase := mockport.NewMockGetOrderProductUseCase(ctrl)
-	productController := NewOrderProductController(nil, nil, mockGetOrderProductUseCase, nil, nil)
+	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
+	productController := NewOrderProductController(nil, nil, mockGetOrderProductUseCase, nil, nil, mockPresenter)
 
 	ctx := context.Background()
 	input := dto.GetOrderProductInput{
@@ -69,9 +104,20 @@ func TestOrderProductController_GetOrderProduct(t *testing.T) {
 		ProductID: 1,
 	}
 
+	mockOrderProduct := &entity.OrderProduct{
+		OrderID:   1,
+		ProductID: 1,
+		Quantity:  1,
+	}
+
 	mockGetOrderProductUseCase.EXPECT().
 		Execute(ctx, input).
-		Return(nil)
+		Return(mockOrderProduct, nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.OrderProductPresenterInput{
+			Result: mockOrderProduct,
+		})
 
 	err := productController.GetOrderProduct(ctx, input)
 	assert.NoError(t, err)
@@ -82,18 +128,30 @@ func TestOrderProductController_UpdateOrderProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockUpdateOrderProductUseCase := mockport.NewMockUpdateOrderProductUseCase(ctrl)
-	productController := NewOrderProductController(nil, nil, nil, mockUpdateOrderProductUseCase, nil)
+	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
+	productController := NewOrderProductController(nil, nil, nil, mockUpdateOrderProductUseCase, nil, mockPresenter)
 
 	ctx := context.Background()
 	input := dto.UpdateOrderProductInput{
 		OrderID:   1,
 		ProductID: 1,
-		Quantity:  1,
+		Quantity:  2,
+	}
+
+	mockOrderProduct := &entity.OrderProduct{
+		OrderID:   1,
+		ProductID: 1,
+		Quantity:  2,
 	}
 
 	mockUpdateOrderProductUseCase.EXPECT().
 		Execute(ctx, input).
-		Return(nil)
+		Return(mockOrderProduct, nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.OrderProductPresenterInput{
+			Result: mockOrderProduct,
+		})
 
 	err := productController.UpdateOrderProduct(ctx, input)
 	assert.NoError(t, err)
@@ -104,7 +162,8 @@ func TestOrderProductController_DeleteOrderProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockDeleteOrderProductUseCase := mockport.NewMockDeleteOrderProductUseCase(ctrl)
-	productController := NewOrderProductController(nil, nil, nil, nil, mockDeleteOrderProductUseCase)
+	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
+	productController := NewOrderProductController(nil, nil, nil, nil, mockDeleteOrderProductUseCase, mockPresenter)
 
 	ctx := context.Background()
 	input := dto.DeleteOrderProductInput{
@@ -112,9 +171,20 @@ func TestOrderProductController_DeleteOrderProduct(t *testing.T) {
 		ProductID: 1,
 	}
 
+	mockOrderProduct := &entity.OrderProduct{
+		OrderID:   1,
+		ProductID: 1,
+		Quantity:  1,
+	}
+
 	mockDeleteOrderProductUseCase.EXPECT().
 		Execute(ctx, input).
-		Return(nil)
+		Return(mockOrderProduct, nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.OrderProductPresenterInput{
+			Result: mockOrderProduct,
+		})
 
 	err := productController.DeleteOrderProduct(ctx, input)
 	assert.NoError(t, err)

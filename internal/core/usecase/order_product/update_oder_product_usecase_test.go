@@ -20,9 +20,7 @@ func TestUpdateOrderProductUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderProductGateway(ctrl)
-	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
-
-	useCase := orderproduct.NewUpdateOrderProductUseCase(mockGateway, mockPresenter)
+	useCase := orderproduct.NewUpdateOrderProductUseCase(mockGateway)
 	ctx := context.Background()
 
 	currentTime := time.Now()
@@ -60,9 +58,6 @@ func TestUpdateOrderProductUseCase_Execute(t *testing.T) {
 						assert.Equal(t, uint32(1), p.Quantity)
 						return nil
 					})
-
-				mockPresenter.EXPECT().
-					Present(gomock.Any())
 			},
 			expectError: false,
 		},
@@ -106,15 +101,20 @@ func TestUpdateOrderProductUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, tt.input)
+			orderProduct, err := useCase.Execute(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, orderProduct)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, orderProduct)
+				assert.Equal(t, tt.input.OrderID, orderProduct.OrderID)
+				assert.Equal(t, tt.input.ProductID, orderProduct.ProductID)
+				assert.Equal(t, tt.input.Quantity, orderProduct.Quantity)
 			}
 		})
 	}

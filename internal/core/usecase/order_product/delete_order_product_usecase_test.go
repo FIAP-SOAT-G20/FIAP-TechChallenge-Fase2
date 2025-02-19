@@ -19,8 +19,7 @@ func TestDeleteOrderProductUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderProductGateway(ctrl)
-	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
-	useCase := orderproduct.NewDeleteOrderProductUseCase(mockGateway, mockPresenter)
+	useCase := orderproduct.NewDeleteOrderProductUseCase(mockGateway)
 	ctx := context.Background()
 
 	tests := []struct {
@@ -38,14 +37,11 @@ func TestDeleteOrderProductUseCase_Execute(t *testing.T) {
 			setupMocks: func() {
 				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1), uint64(1)).
-					Return(&entity.OrderProduct{}, nil)
+					Return(&entity.OrderProduct{OrderID: 1, ProductID: 1}, nil)
 
 				mockGateway.EXPECT().
 					Delete(ctx, uint64(1), uint64(1)).
 					Return(nil)
-
-				mockPresenter.EXPECT().
-					Present(gomock.Any())
 			},
 			expectError: false,
 		},
@@ -95,18 +91,22 @@ func TestDeleteOrderProductUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, dto.DeleteOrderProductInput{
+			orderProduct, err := useCase.Execute(ctx, dto.DeleteOrderProductInput{
 				OrderID:   tt.orderID,
 				ProductID: tt.productID,
 			})
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, orderProduct)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, orderProduct)
+				assert.Equal(t, tt.orderID, orderProduct.OrderID)
+				assert.Equal(t, tt.productID, orderProduct.ProductID)
 			}
 		})
 	}

@@ -18,8 +18,7 @@ func TestCreateOrderProductUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderProductGateway(ctrl)
-	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
-	useCase := orderproduct.NewCreateOrderProductUseCase(mockGateway, mockPresenter)
+	useCase := orderproduct.NewCreateOrderProductUseCase(mockGateway)
 	ctx := context.Background()
 
 	tests := []struct {
@@ -39,9 +38,6 @@ func TestCreateOrderProductUseCase_Execute(t *testing.T) {
 				mockGateway.EXPECT().
 					Create(ctx, gomock.Any()).
 					Return(nil)
-
-				mockPresenter.EXPECT().
-					Present(gomock.Any())
 			},
 			expectError: false,
 		},
@@ -65,15 +61,19 @@ func TestCreateOrderProductUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, tt.input)
+			orderProduct, err := useCase.Execute(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, orderProduct)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, orderProduct)
+				assert.Equal(t, tt.input.OrderID, orderProduct.OrderID)
+				assert.Equal(t, tt.input.ProductID, orderProduct.ProductID)
 			}
 		})
 	}

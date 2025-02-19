@@ -20,8 +20,7 @@ func TestListOrderProductsUseCase_Execute(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderProductGateway(ctrl)
-	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
-	useCase := orderproduct.NewListOrderProductsUseCase(mockGateway, mockPresenter)
+	useCase := orderproduct.NewListOrderProductsUseCase(mockGateway)
 	ctx := context.Background()
 
 	currentTime := time.Now()
@@ -59,14 +58,6 @@ func TestListOrderProductsUseCase_Execute(t *testing.T) {
 				mockGateway.EXPECT().
 					FindAll(ctx, uint64(0), uint64(0), 1, 10).
 					Return(mockOrderProducts, int64(2), nil)
-
-				mockPresenter.EXPECT().
-					Present(dto.OrderProductPresenterInput{
-						Result: mockOrderProducts,
-						Total:  int64(2),
-						Page:   1,
-						Limit:  10,
-					})
 			},
 			expectError: false,
 		},
@@ -95,14 +86,6 @@ func TestListOrderProductsUseCase_Execute(t *testing.T) {
 				mockGateway.EXPECT().
 					FindAll(ctx, uint64(1), uint64(0), 1, 10).
 					Return(mockOrderProducts, int64(2), nil)
-
-				mockPresenter.EXPECT().
-					Present(dto.OrderProductPresenterInput{
-						Total:  int64(2),
-						Page:   1,
-						Limit:  10,
-						Result: mockOrderProducts,
-					})
 			},
 			expectError: false,
 		},
@@ -117,14 +100,6 @@ func TestListOrderProductsUseCase_Execute(t *testing.T) {
 				mockGateway.EXPECT().
 					FindAll(ctx, uint64(0), uint64(1), 1, 10).
 					Return(mockOrderProducts, int64(2), nil)
-
-				mockPresenter.EXPECT().
-					Present(dto.OrderProductPresenterInput{
-						Total:  int64(2),
-						Page:   1,
-						Limit:  10,
-						Result: mockOrderProducts,
-					})
 			},
 			expectError: false,
 		},
@@ -134,15 +109,20 @@ func TestListOrderProductsUseCase_Execute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			err := useCase.Execute(ctx, tt.input)
+			orderProducts, total, err := useCase.Execute(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
+				assert.Nil(t, orderProducts)
+				assert.Equal(t, int64(0), total)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
+				assert.NotNil(t, orderProducts)
+				assert.Equal(t, len(mockOrderProducts), len(orderProducts))
+				assert.Equal(t, int64(2), total)
 			}
 		})
 	}

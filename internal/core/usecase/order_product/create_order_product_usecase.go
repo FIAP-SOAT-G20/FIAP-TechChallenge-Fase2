@@ -10,29 +10,21 @@ import (
 )
 
 type createOrderProductUseCase struct {
-	gateway   port.OrderProductGateway
-	presenter port.OrderProductPresenter
+	gateway port.OrderProductGateway
 }
 
 // NewCreateOrderProductUseCase creates a new CreateOrderProductUseCase
-func NewCreateOrderProductUseCase(gateway port.OrderProductGateway, presenter port.OrderProductPresenter) port.CreateOrderProductUseCase {
-	return &createOrderProductUseCase{
-		gateway:   gateway,
-		presenter: presenter,
-	}
+func NewCreateOrderProductUseCase(gateway port.OrderProductGateway) port.CreateOrderProductUseCase {
+	return &createOrderProductUseCase{gateway}
 }
 
 // Execute creates a new OrderProduct
-func (uc *createOrderProductUseCase) Execute(ctx context.Context, input dto.CreateOrderProductInput) error {
+func (uc *createOrderProductUseCase) Execute(ctx context.Context, input dto.CreateOrderProductInput) (*entity.OrderProduct, error) {
 	orderProduct := entity.NewOrderProduct(input.OrderID, input.ProductID, input.Quantity)
 
 	if err := uc.gateway.Create(ctx, orderProduct); err != nil {
-		return domain.NewInternalError(err)
+		return nil, domain.NewInternalError(err)
 	}
 
-	uc.presenter.Present(dto.OrderProductPresenterInput{
-		Writer: input.Writer,
-		Result: orderProduct,
-	})
-	return nil
+	return orderProduct, nil
 }
