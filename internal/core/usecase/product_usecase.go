@@ -29,7 +29,7 @@ func (uc *productUseCase) List(ctx context.Context, input dto.ListProductsInput)
 }
 
 // Create creates a new product
-func (uc productUseCase) Create(ctx context.Context, input dto.CreateProductInput) (*entity.Product, error) {
+func (uc *productUseCase) Create(ctx context.Context, input dto.CreateProductInput) (*entity.Product, error) {
 	product := entity.NewProduct(input.Name, input.Description, input.Price, input.CategoryID)
 
 	if err := uc.gateway.Create(ctx, product); err != nil {
@@ -40,7 +40,7 @@ func (uc productUseCase) Create(ctx context.Context, input dto.CreateProductInpu
 }
 
 // Get returns a product by ID
-func (uc productUseCase) Get(ctx context.Context, input dto.GetProductInput) (*entity.Product, error) {
+func (uc *productUseCase) Get(ctx context.Context, input dto.GetProductInput) (*entity.Product, error) {
 	staff, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
@@ -54,7 +54,7 @@ func (uc productUseCase) Get(ctx context.Context, input dto.GetProductInput) (*e
 }
 
 // Update updates a product
-func (uc productUseCase) Update(ctx context.Context, input dto.UpdateProductInput) (*entity.Product, error) {
+func (uc *productUseCase) Update(ctx context.Context, input dto.UpdateProductInput) (*entity.Product, error) {
 	product, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
@@ -73,7 +73,7 @@ func (uc productUseCase) Update(ctx context.Context, input dto.UpdateProductInpu
 }
 
 // Delete deletes a product
-func (uc productUseCase) Delete(ctx context.Context, input dto.DeleteProductInput) (*entity.Product, error) {
+func (uc *productUseCase) Delete(ctx context.Context, input dto.DeleteProductInput) (*entity.Product, error) {
 	product, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
