@@ -79,4 +79,5 @@ type Handlers struct {
 	Staff        *handler.StaffHandler
 	Order        *handler.OrderHandler
 	OrderProduct *handler.OrderProductHandler
+	HealthCheck  *handler.HealthCheckHandler
 }

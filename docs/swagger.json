@@ -539,6 +539,38 @@
                 }
             }
         },
+        "/health": {
+            "get": {
+                "description": "Checks application health",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "healthcheck"
+                ],
+                "summary": "Application HealthCheck",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.HealthCheckResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/response.HealthCheckResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/orders": {
             "get": {
                 "description": "List all orders",
@@ -1864,11 +1896,52 @@
                 },
                 "role": {
                     "type": "string",
-                    "example": "Cook"
+                    "example": "COOK, ATTENDANT or MANAGER"
                 },
                 "updated_at": {
                     "type": "string",
                     "example": "2024-02-09T10:00:00Z"
+                }
+            }
+        },
+        "response.HealthCheckResponse": {
+            "type": "object",
+            "properties": {
+                "checks": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/response.HealthCheckVerifications"
+                    }
+                },
+                "status": {
+                    "$ref": "#/definitions/response.HealthCheckStatus"
+                }
+            }
+        },
+        "response.HealthCheckStatus": {
+            "type": "string",
+            "enum": [
+                "pass",
+                "warn",
+                "fail"
+            ],
+            "x-enum-varnames": [
+                "HealthCheckStatusPass",
+                "HealthCheckStatusWarn",
+                "HealthCheckStatusFail"
+            ]
+        },
+        "response.HealthCheckVerifications": {
+            "type": "object",
+            "properties": {
+                "componentId": {
+                    "type": "string"
+                },
+                "status": {
+                    "$ref": "#/definitions/response.HealthCheckStatus"
+                },
+                "time": {
+                    "type": "string"
                 }
             }
         },
