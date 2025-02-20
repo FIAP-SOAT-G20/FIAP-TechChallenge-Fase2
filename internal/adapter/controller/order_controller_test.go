@@ -17,9 +17,9 @@ func TestOrderController_ListOrders(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockListOrdersUseCase := mockport.NewMockListOrdersUseCase(ctrl)
+	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	orderController := NewOrderController(mockListOrdersUseCase, nil, nil, nil, nil)
+	orderController := NewOrderController(mokOrdercUseCase)
 	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -45,8 +45,8 @@ func TestOrderController_ListOrders(t *testing.T) {
 		},
 	}
 
-	mockListOrdersUseCase.EXPECT().
-		Execute(ctx, input).
+	mokOrdercUseCase.EXPECT().
+		List(ctx, input).
 		Return(mockOrders, int64(2), nil)
 
 	mockPresenter.EXPECT().
@@ -65,9 +65,9 @@ func TestOrderController_CreateOrder(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockCreateOrderUseCase := mockport.NewMockCreateOrderUseCase(ctrl)
+	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	orderController := NewOrderController(nil, mockCreateOrderUseCase, nil, nil, nil)
+	orderController := NewOrderController(mokOrdercUseCase)
 	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -82,8 +82,8 @@ func TestOrderController_CreateOrder(t *testing.T) {
 		TotalBill:  0.0,
 	}
 
-	mockCreateOrderUseCase.EXPECT().
-		Execute(ctx, input).
+	mokOrdercUseCase.EXPECT().
+		Create(ctx, input).
 		Return(mockOrder, nil)
 
 	mockPresenter.EXPECT().
@@ -99,9 +99,9 @@ func TestOrderController_GetOrder(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockGetOrderUseCase := mockport.NewMockGetOrderUseCase(ctrl)
+	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	orderController := NewOrderController(nil, nil, mockGetOrderUseCase, nil, nil)
+	orderController := NewOrderController(mokOrdercUseCase)
 	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -116,8 +116,8 @@ func TestOrderController_GetOrder(t *testing.T) {
 		TotalBill:  100.0,
 	}
 
-	mockGetOrderUseCase.EXPECT().
-		Execute(ctx, input).
+	mokOrdercUseCase.EXPECT().
+		Get(ctx, input).
 		Return(mockOrder, nil)
 
 	mockPresenter.EXPECT().
@@ -133,9 +133,9 @@ func TestOrderController_UpdateOrder(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockUpdateOrderUseCase := mockport.NewMockUpdateOrderUseCase(ctrl)
+	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	orderController := NewOrderController(nil, nil, nil, mockUpdateOrderUseCase, nil)
+	orderController := NewOrderController(mokOrdercUseCase)
 	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -152,8 +152,8 @@ func TestOrderController_UpdateOrder(t *testing.T) {
 		TotalBill:  100.0,
 	}
 
-	mockUpdateOrderUseCase.EXPECT().
-		Execute(ctx, input).
+	mokOrdercUseCase.EXPECT().
+		Update(ctx, input).
 		Return(mockOrder, nil)
 
 	mockPresenter.EXPECT().
@@ -169,9 +169,9 @@ func TestOrderController_DeleteOrder(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockDeleteOrderUseCase := mockport.NewMockDeleteOrderUseCase(ctrl)
+	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	orderController := NewOrderController(nil, nil, nil, nil, mockDeleteOrderUseCase)
+	orderController := NewOrderController(mokOrdercUseCase)
 	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -186,8 +186,8 @@ func TestOrderController_DeleteOrder(t *testing.T) {
 		TotalBill:  100.0,
 	}
 
-	mockDeleteOrderUseCase.EXPECT().
-		Execute(ctx, input).
+	mokOrdercUseCase.EXPECT().
+		Delete(ctx, input).
 		Return(mockOrder, nil)
 
 	mockPresenter.EXPECT().

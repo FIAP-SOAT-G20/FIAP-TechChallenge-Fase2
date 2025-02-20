@@ -90,12 +90,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	productUC := product.NewProductUseCase(productGateway)
 	staffUC := staff.NewStaffUseCase(staffGateway)
 	customerUC := customer.NewCustomerUseCase(customerGateway)
-	// Use cases - Order
-	listOrdersUC := order.NewListOrdersUseCase(orderGateway)
-	createOrderUC := order.NewCreateOrderUseCase(orderGateway)
-	getOrderUC := order.NewGetOrderUseCase(orderGateway)
-	updateOrderUC := order.NewUpdateOrderUseCase(orderGateway)
-	deleteOrderUC := order.NewDeleteOrderUseCase(orderGateway)
+	orderUC := order.NewOrderUseCase(orderGateway)
 	// Use cases - OrderProduct
 	listOrderProductsUC := orderproduct.NewListOrderProductsUseCase(orderProductGateway)
 	createOrderProductUC := orderproduct.NewCreateOrderProductUseCase(orderProductGateway)
@@ -106,13 +101,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	// Controllers
 	productController := controller.NewProductController(productUC)
 	customerController := controller.NewCustomerController(customerUC)
-	orderController := controller.NewOrderController(
-		listOrdersUC,
-		createOrderUC,
-		getOrderUC,
-		updateOrderUC,
-		deleteOrderUC,
-	)
+	orderController := controller.NewOrderController(orderUC)
 	orderProductController := controller.NewOrderProductController(
 		listOrderProductsUC,
 		createOrderProductUC,
