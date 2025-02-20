@@ -57,6 +57,15 @@ func (r *Router) RegisterRoutes(handlers *Handlers) {
 		// Order Products
 		orderProducts := v1.Group("/orders/products")
 		handlers.OrderProduct.Register(orderProducts)
+
+		// Payments
+		payments := v1.Group("/payments")
+		handlers.Payment.Register(payments)
+
+		// Health check
+		v1.GET("/health", func(c *gin.Context) {
+			c.JSON(200, gin.H{"status": "UP"})
+		})
 	}
 	// Health check
 	handlers.HealthCheck.Register(r.engine.Group("/health"))
@@ -75,4 +84,5 @@ type Handlers struct {
 	Order        *handler.OrderHandler
 	OrderProduct *handler.OrderProductHandler
 	HealthCheck  *handler.HealthCheckHandler
+	Payment      *handler.PaymentHandler
 }

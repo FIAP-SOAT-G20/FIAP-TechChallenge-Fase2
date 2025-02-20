@@ -5,10 +5,13 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/gateway"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/payment"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/database"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/datasource"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/external"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/route"
@@ -73,6 +76,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderDS := datasource.NewOrderDataSource(db.DB)
 	orderProductDS := datasource.NewOrderProductDataSource(db.DB)
 	staffDS := datasource.NewStaffDataSource(db.DB)
+	paymentDS := datasource.NewPaymentDataSource(db.DB)
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
@@ -94,6 +98,78 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderController := controller.NewOrderController(orderUC)
 	orderProductController := controller.NewOrderProductController(orderProductUC)
 	staffController := controller.NewStaffController(staffUC)
+	paymentGateway := gateway.NewPaymentGateway(paymentDS)
+
+	// Presenters
+	productPresenter := presenter.NewProductJsonPresenter()
+	// productPresenter := presenter.NewProductXmlPresenter()
+	customerPresenter := presenter.NewCustomerJsonPresenter()
+	orderPresenter := presenter.NewOrderJsonPresenter()
+	orderProductPresenter := presenter.NewOrderProductJsonPresenter()
+	paymentPresenter := presenter.NewPaymentJsonPresenter()
+
+	// Externals
+	paymentExternal := external.NewPaymentExternal()
+
+	// Use cases - Product
+	listProductsUC := product.NewListProductsUseCase(productGateway, productPresenter)
+	createProductUC := product.NewCreateProductUseCase(productGateway, productPresenter)
+	getProductUC := product.NewGetProductUseCase(productGateway, productPresenter)
+	updateProductUC := product.NewUpdateProductUseCase(productGateway, productPresenter)
+	deleteProductUC := product.NewDeleteProductUseCase(productGateway, productPresenter)
+	// Use cases - Customer
+	listCustomersUC := customer.NewListCustomersUseCase(customerGateway, customerPresenter)
+	createCustomerUC := customer.NewCreateCustomerUseCase(customerGateway, customerPresenter)
+	getCustomerUC := customer.NewGetCustomerUseCase(customerGateway, customerPresenter)
+	updateCustomerUC := customer.NewUpdateCustomerUseCase(customerGateway, customerPresenter)
+	deleteCustomerUC := customer.NewDeleteCustomerUseCase(customerGateway, customerPresenter)
+	// Use cases - Order
+	listOrdersUC := order.NewListOrdersUseCase(orderGateway, orderPresenter)
+	createOrderUC := order.NewCreateOrderUseCase(orderGateway, orderPresenter)
+	getOrderUC := order.NewGetOrderUseCase(orderGateway, orderPresenter)
+	updateOrderUC := order.NewUpdateOrderUseCase(orderGateway, orderPresenter)
+	deleteOrderUC := order.NewDeleteOrderUseCase(orderGateway, orderPresenter)
+	// Use cases - OrderProduct
+	listOrderProductsUC := orderproduct.NewListOrderProductsUseCase(orderProductGateway, orderProductPresenter)
+	createOrderProductUC := orderproduct.NewCreateOrderProductUseCase(orderProductGateway, orderProductPresenter)
+	getOrderProductUC := orderproduct.NewGetOrderProductUseCase(orderProductGateway, orderProductPresenter)
+	updateOrderProductUC := orderproduct.NewUpdateOrderProductUseCase(orderProductGateway, orderProductPresenter)
+	deleteOrderProductUC := orderproduct.NewDeleteOrderProductUseCase(orderProductGateway, orderProductPresenter)
+	// Use cases - Payment
+	createPaymentUC := payment.NewCreatePaymentUseCase(paymentGateway, orderGateway, paymentExternal, paymentPresenter)
+
+	// Controllers
+	productController := controller.NewProductController(
+		listProductsUC,
+		createProductUC,
+		getProductUC,
+		updateProductUC,
+		deleteProductUC,
+	)
+	customerController := controller.NewCustomerController(
+		listCustomersUC,
+		createCustomerUC,
+		getCustomerUC,
+		updateCustomerUC,
+		deleteCustomerUC,
+	)
+	orderController := controller.NewOrderController(
+		listOrdersUC,
+		createOrderUC,
+		getOrderUC,
+		updateOrderUC,
+		deleteOrderUC,
+	)
+	orderProductController := controller.NewOrderProductController(
+		listOrderProductsUC,
+		createOrderProductUC,
+		getOrderProductUC,
+		updateOrderProductUC,
+		deleteOrderProductUC,
+	)
+	paymentController := controller.NewPaymentController(
+		createPaymentUC,
+	)
 
 	// Handlers
 	productHandler := handler.NewProductHandler(productController)
@@ -102,6 +178,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderProductHandler := handler.NewOrderProductHandler(orderProductController)
 	staffHandler := handler.NewStaffHandler(staffController)
 	healthCheckHandler := handler.NewHealthCheckHandler()
+	paymentHandler := handler.NewPaymentHandler(paymentController)
 
 	return &route.Handlers{
 		Product:      productHandler,
@@ -110,5 +187,6 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		OrderProduct: orderProductHandler,
 		Staff:        staffHandler,
 		HealthCheck:  healthCheckHandler,
+		Payment:      paymentHandler,
 	}
 }

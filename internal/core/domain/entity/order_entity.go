@@ -7,11 +7,11 @@ import (
 )
 
 type Order struct {
-	ID         uint64
-	CustomerID uint64
-	TotalBill  float32
-	Status     valueobject.OrderStatus
-	// Payment       Payment // TODO: Add payment when payment is implemented
+	ID            uint64
+	CustomerID    uint64
+	TotalBill     float32
+	Status        valueobject.OrderStatus
+	Payment       Payment
 	Customer      Customer
 	OrderProducts []OrderProduct
 	CreatedAt     time.Time
