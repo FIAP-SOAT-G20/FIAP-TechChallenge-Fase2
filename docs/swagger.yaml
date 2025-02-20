@@ -56,6 +56,20 @@ definitions:
     - name
     - price
     type: object
+  handler.StaffRequest:
+    properties:
+      name:
+        example: Nome do funcionario
+        maxLength: 100
+        minLength: 3
+        type: string
+      role:
+        example: Cargo do funcionario
+        maxLength: 500
+        type: string
+    required:
+    - name
+    type: object
   handler.UpdateCustomerBodyRequest:
     properties:
       email:
@@ -305,6 +319,40 @@ definitions:
         type: number
       quantity:
         type: integer
+      updated_at:
+        example: "2024-02-09T10:00:00Z"
+        type: string
+    type: object
+  presenter.StaffJsonPaginatedResponse:
+    properties:
+      limit:
+        example: 10
+        type: integer
+      page:
+        example: 1
+        type: integer
+      staffs:
+        items:
+          $ref: '#/definitions/presenter.StaffJsonResponse'
+        type: array
+      total:
+        example: 100
+        type: integer
+    type: object
+  presenter.StaffJsonResponse:
+    properties:
+      created_at:
+        example: "2024-02-09T10:00:00Z"
+        type: string
+      id:
+        example: 1
+        type: integer
+      name:
+        example: John Doe
+        type: string
+      role:
+        example: Cook
+        type: string
       updated_at:
         example: "2024-02-09T10:00:00Z"
         type: string
@@ -1108,6 +1156,176 @@ paths:
       summary: Update product
       tags:
       - products
+  /staffs:
+    get:
+      consumes:
+      - application/json
+      description: List all staffs
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Filter by name
+        in: query
+        name: name
+        type: string
+      - description: 'Filter by role. Available options: COOK, ATTENDANT, MANAGER'
+        in: query
+        name: role
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.StaffJsonPaginatedResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: List staffs
+      tags:
+      - staffs
+    post:
+      consumes:
+      - application/json
+      description: Creates a new staff
+      parameters:
+      - description: Staff data
+        in: body
+        name: staff
+        required: true
+        schema:
+          $ref: '#/definitions/handler.StaffRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/presenter.StaffJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Create staff
+      tags:
+      - staffs
+  /staffs/{id}:
+    delete:
+      description: Deletes a staff by ID
+      parameters:
+      - description: Staff ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Delete staff
+      tags:
+      - staffs
+    get:
+      consumes:
+      - application/json
+      description: Search for a staff by ID
+      parameters:
+      - description: Staff ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.StaffJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Get staff
+      tags:
+      - staffs
+    put:
+      consumes:
+      - application/json
+      description: Update an existing staff
+      parameters:
+      - description: Staff ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Staff data
+        in: body
+        name: staff
+        required: true
+        schema:
+          $ref: '#/definitions/handler.StaffRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.StaffJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorResponse'
+      summary: Update staff
+      tags:
+      - staffs
 securityDefinitions:
   BearerAuth:
     description: Type "Bearer" followed by a space and the access token.
