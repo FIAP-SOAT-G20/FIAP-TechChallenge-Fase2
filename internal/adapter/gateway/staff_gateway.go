@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
@@ -21,14 +22,14 @@ func (pg *staffGateway) FindByID(ctx context.Context, id uint64) (*entity.Staff,
 	return pg.dataSource.FindByID(ctx, id)
 }
 
-func (pg *staffGateway) FindAll(ctx context.Context, name string, role entity.Role, page, limit int) ([]*entity.Staff, int64, error) {
+func (pg *staffGateway) FindAll(ctx context.Context, name string, role valueobject.StaffRole, page, limit int) ([]*entity.Staff, int64, error) {
 	filters := make(map[string]interface{})
 
 	if name != "" {
 		filters["name"] = name
 	}
 	if role != "" {
-		filters["role"] = string(role)
+		filters["role"] = role.String()
 	}
 
 	return pg.dataSource.FindAll(ctx, filters, page, limit)

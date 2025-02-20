@@ -2,14 +2,16 @@ package staff
 
 import (
 	"context"
+	"testing"
+	"time"
+
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
-	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
-	"testing"
-	"time"
+	"go.uber.org/mock/gomock"
 )
 
 func TestCreateStaffUseCase_Execute(t *testing.T) {
@@ -379,7 +381,7 @@ func TestListStaffsUseCase_Execute(t *testing.T) {
 				Limit: 10,
 			},
 			setupMocks: func() {
-				var role entity.Role
+				var role valueobject.StaffRole
 				mockGateway.EXPECT().
 					FindAll(ctx, "", role, 1, 10).
 					Return(mockStaffs, int64(2), nil)
@@ -393,7 +395,7 @@ func TestListStaffsUseCase_Execute(t *testing.T) {
 				Limit: 10,
 			},
 			setupMocks: func() {
-				var role entity.Role
+				var role valueobject.StaffRole
 				mockGateway.EXPECT().
 					FindAll(ctx, "", role, 1, 10).
 					Return(nil, int64(0), assert.AnError)
@@ -409,7 +411,7 @@ func TestListStaffsUseCase_Execute(t *testing.T) {
 				Limit: 10,
 			},
 			setupMocks: func() {
-				var role entity.Role
+				var role valueobject.StaffRole
 				mockGateway.EXPECT().
 					FindAll(ctx, "Test", role, 1, 10).
 					Return(mockStaffs, int64(2), nil)
@@ -425,7 +427,7 @@ func TestListStaffsUseCase_Execute(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
-					FindAll(ctx, "", entity.COOK, 1, 10).
+					FindAll(ctx, "", valueobject.COOK, 1, 10).
 					Return(mockStaffs, int64(2), nil)
 
 			},

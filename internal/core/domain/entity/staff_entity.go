@@ -2,25 +2,19 @@ package entity
 
 import (
 	"time"
-)
 
-type Role string
-
-const (
-	COOK      Role = "COOK"
-	ATTENDANT Role = "ATTENDANT"
-	MANAGER   Role = "MANAGER"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 )
 
 type Staff struct {
 	ID        uint64
 	Name      string
-	Role      Role
+	Role      valueobject.StaffRole
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
-func NewStaff(name string, role Role) *Staff {
+func NewStaff(name string, role valueobject.StaffRole) *Staff {
 	staff := &Staff{
 		Name:      name,
 		Role:      role,
@@ -30,7 +24,7 @@ func NewStaff(name string, role Role) *Staff {
 	return staff
 }
 
-func (p *Staff) Update(name string, role Role) {
+func (p *Staff) Update(name string, role valueobject.StaffRole) {
 	p.Name = name
 	p.Role = role
 	p.UpdatedAt = time.Now()

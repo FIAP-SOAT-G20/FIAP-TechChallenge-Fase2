@@ -2,7 +2,7 @@ package product_test
 
 import (
 	"context"
-	"github.com/golang/mock/gomock"
+	"go.uber.org/mock/gomock"
 	"testing"
 	"time"
 

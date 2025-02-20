@@ -2,9 +2,12 @@ package staff
 
 import (
 	"context"
+	"errors"
+
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
@@ -13,10 +16,7 @@ type staffUseCase struct {
 }
 
 func (s staffUseCase) List(ctx context.Context, input dto.ListStaffsInput) ([]*entity.Staff, int64, error) {
-	var role entity.Role
-	if input.Role != "" {
-		role = entity.Role(input.Role)
-	}
+	role := valueobject.ToStaffRole(input.Role)
 	staffs, total, err := s.gateway.FindAll(ctx, input.Name, role, input.Page, input.Limit)
 	if err != nil {
 		return nil, 0, domain.NewInternalError(err)
@@ -26,7 +26,12 @@ func (s staffUseCase) List(ctx context.Context, input dto.ListStaffsInput) ([]*e
 }
 
 func (s staffUseCase) Create(ctx context.Context, input dto.CreateStaffInput) (*entity.Staff, error) {
-	staff := entity.NewStaff(input.Name, entity.Role(input.Role))
+	role := valueobject.ToStaffRole(input.Role)
+	if role == valueobject.UNDEFINED_ROLE {
+		return nil, domain.NewValidationError(errors.New("Invalid role"))
+	}
+
+	staff := entity.NewStaff(input.Name, role)
 
 	if err := s.gateway.Create(ctx, staff); err != nil {
 		return nil, domain.NewInternalError(err)
@@ -57,7 +62,12 @@ func (s staffUseCase) Update(ctx context.Context, input dto.UpdateStaffInput) (*
 		return nil, domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
-	staff.Update(input.Name, entity.Role(input.Role))
+	role := valueobject.ToStaffRole(input.Role)
+	if role == valueobject.UNDEFINED_ROLE {
+		return nil, domain.NewValidationError(errors.New("Invalid role"))
+	}
+
+	staff.Update(input.Name, role)
 
 	if err := s.gateway.Update(ctx, staff); err != nil {
 		return nil, domain.NewInternalError(err)
