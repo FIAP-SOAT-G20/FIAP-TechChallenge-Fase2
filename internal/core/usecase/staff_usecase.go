@@ -22,8 +22,7 @@ func NewStaffUseCase(gateway port.StaffGateway) port.StaffUseCase {
 
 // List returns a list of staffs
 func (uc *staffUseCase) List(ctx context.Context, input dto.ListStaffsInput) ([]*entity.Staff, int64, error) {
-	role := valueobject.ToStaffRole(input.Role)
-	staffs, total, err := uc.gateway.FindAll(ctx, input.Name, role, input.Page, input.Limit)
+	staffs, total, err := uc.gateway.FindAll(ctx, input.Name, input.Role, input.Page, input.Limit)
 	if err != nil {
 		return nil, 0, domain.NewInternalError(err)
 	}
@@ -33,12 +32,11 @@ func (uc *staffUseCase) List(ctx context.Context, input dto.ListStaffsInput) ([]
 
 // Create creates a new staff
 func (uc *staffUseCase) Create(ctx context.Context, input dto.CreateStaffInput) (*entity.Staff, error) {
-	role := valueobject.ToStaffRole(input.Role)
-	if role == valueobject.UNDEFINED_ROLE {
+	if input.Role == valueobject.UNDEFINED {
 		return nil, domain.NewValidationError(errors.New("Invalid role"))
 	}
 
-	staff := entity.NewStaff(input.Name, role)
+	staff := entity.NewStaff(input.Name, input.Role)
 
 	if err := uc.gateway.Create(ctx, staff); err != nil {
 		return nil, domain.NewInternalError(err)
@@ -71,12 +69,11 @@ func (uc *staffUseCase) Update(ctx context.Context, input dto.UpdateStaffInput) 
 		return nil, domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
-	role := valueobject.ToStaffRole(input.Role)
-	if role == valueobject.UNDEFINED_ROLE {
+	if input.Role == valueobject.UNDEFINED {
 		return nil, domain.NewValidationError(errors.New("Invalid role"))
 	}
 
-	staff.Update(input.Name, role)
+	staff.Update(input.Name, input.Role)
 
 	if err := uc.gateway.Update(ctx, staff); err != nil {
 		return nil, domain.NewInternalError(err)
