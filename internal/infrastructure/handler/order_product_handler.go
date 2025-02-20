@@ -7,6 +7,7 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 )
 
@@ -72,8 +73,8 @@ func (h *OrderProductHandler) Register(router *gin.RouterGroup) {
 //	@Param			page		query		int											false	"Page number"		default(1)
 //	@Param			limit		query		int											false	"Items per page"	default(10)
 //	@Success		200			{object}	presenter.OrderProductJsonPaginatedResponse	"OK"
-//	@Failure		400			{object}	middleware.ErrorResponse					"Bad Request"
-//	@Failure		500			{object}	middleware.ErrorResponse					"Internal Server Error"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse				"Bad Request"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse				"Internal Server Error"
 //	@Router			/api/v1/orders/products [get]
 func (h *OrderProductHandler) ListOrderProducts(c *gin.Context) {
 	var req ListOrderProductsQueryRequest
@@ -87,9 +88,8 @@ func (h *OrderProductHandler) ListOrderProducts(c *gin.Context) {
 		ProductID: req.ProductID,
 		Page:      req.Page,
 		Limit:     req.Limit,
-		Writer:    c,
 	}
-
+	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
 	err := h.controller.ListOrderProducts(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -110,7 +110,7 @@ func (h *OrderProductHandler) ListOrderProducts(c *gin.Context) {
 //	@Param			product_id	path		int									true	"Product ID"
 //	@Param			order		body		CreateOrderProductBodyRequest		true	"OrderProduct data"
 //	@Success		201			{object}	presenter.OrderProductJsonResponse	"Created"
-//	@Failure		400			{object}	middleware.ErrorResponse			"Bad Request"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [post]
 func (h *OrderProductHandler) CreateOrderProduct(c *gin.Context) {
 	var reqUri CreateOrderProductUriRequest
@@ -129,9 +129,8 @@ func (h *OrderProductHandler) CreateOrderProduct(c *gin.Context) {
 		OrderID:   reqUri.OrderID,
 		ProductID: reqUri.ProductID,
 		Quantity:  req.Quantity,
-		Writer:    c,
 	}
-
+	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
 	err := h.controller.CreateOrderProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -149,9 +148,9 @@ func (h *OrderProductHandler) CreateOrderProduct(c *gin.Context) {
 //	@Param			order_id	path		int									true	"Order ID"
 //	@Param			product_id	path		int									true	"Product ID"
 //	@Success		200			{object}	presenter.OrderProductJsonResponse	"OK"
-//	@Failure		400			{object}	middleware.ErrorResponse			"Bad Request"
-//	@Failure		404			{object}	middleware.ErrorResponse			"Not Found"
-//	@Failure		500			{object}	middleware.ErrorResponse			"Internal Server Error"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [get]
 func (h *OrderProductHandler) GetOrderProduct(c *gin.Context) {
 	var req GetOrderProductUriRequest
@@ -163,9 +162,8 @@ func (h *OrderProductHandler) GetOrderProduct(c *gin.Context) {
 	input := dto.GetOrderProductInput{
 		OrderID:   req.OrderID,
 		ProductID: req.ProductID,
-		Writer:    c,
 	}
-
+	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
 	err := h.controller.GetOrderProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -184,9 +182,9 @@ func (h *OrderProductHandler) GetOrderProduct(c *gin.Context) {
 //	@Param			product_id	path		int									true	"Product ID"
 //	@Param			order		body		UpdateOrderProductBodyRequest		true	"OrderProduct data"
 //	@Success		200			{object}	presenter.OrderProductJsonResponse	"OK"
-//	@Failure		400			{object}	middleware.ErrorResponse			"Bad Request"
-//	@Failure		404			{object}	middleware.ErrorResponse			"Not Found"
-//	@Failure		500			{object}	middleware.ErrorResponse			"Internal Server Error"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [put]
 func (h *OrderProductHandler) UpdateOrderProduct(c *gin.Context) {
 	var reqUri UpdateOrderProductUriRequest
@@ -194,7 +192,6 @@ func (h *OrderProductHandler) UpdateOrderProduct(c *gin.Context) {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
-
 	var req UpdateOrderProductBodyRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
@@ -205,9 +202,8 @@ func (h *OrderProductHandler) UpdateOrderProduct(c *gin.Context) {
 		OrderID:   reqUri.OrderID,
 		ProductID: reqUri.ProductID,
 		Quantity:  req.Quantity,
-		Writer:    c,
 	}
-
+	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
 	err := h.controller.UpdateOrderProduct(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -224,9 +220,9 @@ func (h *OrderProductHandler) UpdateOrderProduct(c *gin.Context) {
 //	@Param			order_id	path		int	true	"Order ID"
 //	@Param			product_id	path		int	true	"Product ID"
 //	@Success		204			{object}	nil
-//	@Failure		400			{object}	middleware.ErrorResponse	"Bad Request"
-//	@Failure		404			{object}	middleware.ErrorResponse	"Not Found"
-//	@Failure		500			{object}	middleware.ErrorResponse	"Internal Server Error"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		404			{object}	middleware.ErrorJsonResponse	"Not Found"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [delete]
 func (h *OrderProductHandler) DeleteOrderProduct(c *gin.Context) {
 	var req DeleteOrderProductUriRequest
@@ -238,9 +234,8 @@ func (h *OrderProductHandler) DeleteOrderProduct(c *gin.Context) {
 	input := dto.DeleteOrderProductInput{
 		OrderID:   req.OrderID,
 		ProductID: req.ProductID,
-		Writer:    c,
 	}
-
+	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
 	if err := h.controller.DeleteOrderProduct(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return

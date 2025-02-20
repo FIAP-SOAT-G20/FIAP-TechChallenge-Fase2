@@ -10,11 +10,13 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
-type staffJsonPresenter struct{}
+type staffJsonPresenter struct {
+	writer ResponseWriter
+}
 
 // StaffJsonResponse represents the response of a staff
-func NewStaffJsonPresenter() port.StaffPresenter {
-	return &staffJsonPresenter{}
+func NewStaffJsonPresenter(writer ResponseWriter) port.StaffPresenter {
+	return &staffJsonPresenter{writer}
 }
 
 // toStaffJsonResponse convert entity.Staff to StaffJsonResponse
@@ -33,7 +35,7 @@ func (p *staffJsonPresenter) Present(pp dto.StaffPresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.Staff:
 		output := toStaffJsonResponse(v)
-		pp.Writer.JSON(http.StatusOK, output)
+		p.writer.JSON(http.StatusOK, output)
 	case []*entity.Staff:
 		staffOutputs := make([]StaffJsonResponse, len(v))
 		for i, staff := range v {
@@ -48,11 +50,11 @@ func (p *staffJsonPresenter) Present(pp dto.StaffPresenterInput) {
 			},
 			Staffs: staffOutputs,
 		}
-		pp.Writer.JSON(http.StatusOK, output)
+		p.writer.JSON(http.StatusOK, output)
 	default:
-		err := pp.Writer.Error(domain.NewInternalError(errors.New(domain.ErrInternalError)))
+		err := p.writer.Error(domain.NewInternalError(errors.New(domain.ErrInternalError)))
 		if err != nil {
-			pp.Writer.JSON(http.StatusInternalServerError, err)
+			p.writer.JSON(http.StatusInternalServerError, err)
 		}
 	}
 }

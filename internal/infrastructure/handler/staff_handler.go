@@ -8,6 +8,7 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 )
 
@@ -59,21 +60,21 @@ func (h *StaffHandler) Register(router *gin.RouterGroup) {
 //	@Param			name	query		string									false	"Filter by name"
 //	@Param			role	query		string									false	"Filter by role. Available options: COOK, ATTENDANT, MANAGER"
 //	@Success		200		{object}	presenter.StaffJsonPaginatedResponse	"OK"
-//	@Failure		400		{object}	middleware.ErrorResponse				"Bad Request"
-//	@Failure		500		{object}	middleware.ErrorResponse				"Internal Server Error"
+//	@Failure		400		{object}	middleware.ErrorJsonResponse			"Bad Request"
+//	@Failure		500		{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/staffs [get]
 func (h *StaffHandler) ListStaffs(c *gin.Context) {
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
 
 	input := dto.ListStaffsInput{
-		Name:   c.Query("name"),
-		Role:   c.Query("role"),
-		Page:   page,
-		Limit:  limit,
-		Writer: c,
+		Name:  c.Query("name"),
+		Role:  c.Query("role"),
+		Page:  page,
+		Limit: limit,
 	}
 
+	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
 	err := h.controller.ListStaffs(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -88,10 +89,10 @@ func (h *StaffHandler) ListStaffs(c *gin.Context) {
 //	@Tags			staffs
 //	@Accept			json
 //	@Produce		json
-//	@Param			staff	body		StaffRequest				true	"Staff data"
-//	@Success		201		{object}	presenter.StaffJsonResponse	"Created"
-//	@Failure		400		{object}	middleware.ErrorResponse	"Bad Request"
-//	@Failure		500		{object}	middleware.ErrorResponse	"Internal Server Error"
+//	@Param			staff	body		StaffRequest					true	"Staff data"
+//	@Success		201		{object}	presenter.StaffJsonResponse		"Created"
+//	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs [post]
 func (h *StaffHandler) CreateStaff(c *gin.Context) {
 	var req StaffRequest
@@ -107,9 +108,8 @@ func (h *StaffHandler) CreateStaff(c *gin.Context) {
 	}
 
 	input := dto.CreateStaffInput{
-		Name:   req.Name,
-		Role:   req.Role,
-		Writer: c,
+		Name: req.Name,
+		Role: req.Role,
 	}
 
 	err := h.controller.CreateStaff(c.Request.Context(), input)
@@ -126,11 +126,11 @@ func (h *StaffHandler) CreateStaff(c *gin.Context) {
 //	@Tags			staffs
 //	@Accept			json
 //	@Produce		json
-//	@Param			id	path		int							true	"Staff ID"
-//	@Success		200	{object}	presenter.StaffJsonResponse	"OK"
-//	@Failure		400	{object}	middleware.ErrorResponse	"Bad Request"
-//	@Failure		404	{object}	middleware.ErrorResponse	"Not Found"
-//	@Failure		500	{object}	middleware.ErrorResponse	"Internal Server Error"
+//	@Param			id	path		int								true	"Staff ID"
+//	@Success		200	{object}	presenter.StaffJsonResponse		"OK"
+//	@Failure		400	{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
+//	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs/{id} [get]
 func (h *StaffHandler) GetStaff(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
@@ -140,10 +140,9 @@ func (h *StaffHandler) GetStaff(c *gin.Context) {
 	}
 
 	input := dto.GetStaffInput{
-		ID:     id,
-		Writer: c,
+		ID: id,
 	}
-
+	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
 	err = h.controller.GetStaff(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -158,12 +157,12 @@ func (h *StaffHandler) GetStaff(c *gin.Context) {
 //	@Tags			staffs
 //	@Accept			json
 //	@Produce		json
-//	@Param			id		path		int							true	"Staff ID"
-//	@Param			staff	body		StaffRequest				true	"Staff data"
-//	@Success		200		{object}	presenter.StaffJsonResponse	"OK"
-//	@Failure		400		{object}	middleware.ErrorResponse	"Bad Request"
-//	@Failure		404		{object}	middleware.ErrorResponse	"Not Found"
-//	@Failure		500		{object}	middleware.ErrorResponse	"Internal Server Error"
+//	@Param			id		path		int								true	"Staff ID"
+//	@Param			staff	body		StaffRequest					true	"Staff data"
+//	@Success		200		{object}	presenter.StaffJsonResponse		"OK"
+//	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		404		{object}	middleware.ErrorJsonResponse	"Not Found"
+//	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs/{id} [put]
 func (h *StaffHandler) UpdateStaff(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
@@ -184,12 +183,11 @@ func (h *StaffHandler) UpdateStaff(c *gin.Context) {
 	}
 
 	input := dto.UpdateStaffInput{
-		ID:     id,
-		Name:   req.Name,
-		Role:   req.Role,
-		Writer: c,
+		ID:   id,
+		Name: req.Name,
+		Role: req.Role,
 	}
-
+	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
 	err = h.controller.UpdateStaff(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -205,9 +203,9 @@ func (h *StaffHandler) UpdateStaff(c *gin.Context) {
 //	@Produce		json
 //	@Param			id	path		int	true	"Staff ID"
 //	@Success		204	{object}	nil
-//	@Failure		400	{object}	middleware.ErrorResponse	"Bad Request"
-//	@Failure		404	{object}	middleware.ErrorResponse	"Not Found"
-//	@Failure		500	{object}	middleware.ErrorResponse	"Internal Server Error"
+//	@Failure		400	{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
+//	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs/{id} [delete]
 func (h *StaffHandler) DeleteStaff(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
@@ -217,10 +215,9 @@ func (h *StaffHandler) DeleteStaff(c *gin.Context) {
 	}
 
 	input := dto.DeleteStaffInput{
-		ID:     id,
-		Writer: c,
+		ID: id,
 	}
-
+	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
 	if err := h.controller.DeleteStaff(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return

@@ -8,65 +8,80 @@ import (
 )
 
 type ProductController struct {
-	listProductsUseCase  port.ListProductsUseCase
-	createProductUseCase port.CreateProductUseCase
-	getProductUseCase    port.GetProductUseCase
-	updateProductUseCase port.UpdateProductUseCase
-	deleteProductUseCase port.DeleteProductUseCase
+	useCase   port.ProductUseCase
+	Presenter port.ProductPresenter
 }
 
 func NewProductController(
-	listUC port.ListProductsUseCase,
-	createUC port.CreateProductUseCase,
-	getUC port.GetProductUseCase,
-	updateUC port.UpdateProductUseCase,
-	deleteUC port.DeleteProductUseCase,
+	useCase port.ProductUseCase,
 ) *ProductController {
-	return &ProductController{
-		listProductsUseCase:  listUC,
-		createProductUseCase: createUC,
-		getProductUseCase:    getUC,
-		updateProductUseCase: updateUC,
-		deleteProductUseCase: deleteUC,
-	}
+	return &ProductController{useCase, nil}
 }
 
 func (c *ProductController) ListProducts(ctx context.Context, input dto.ListProductsInput) error {
-	err := c.listProductsUseCase.Execute(ctx, input)
+	products, total, err := c.useCase.List(ctx, input)
 	if err != nil {
 		return err
 	}
+
+	c.Presenter.Present(dto.ProductPresenterInput{
+		Total:  total,
+		Page:   input.Page,
+		Limit:  input.Limit,
+		Result: products,
+	})
 
 	return nil
 }
 
 func (c *ProductController) CreateProduct(ctx context.Context, input dto.CreateProductInput) error {
-	err := c.createProductUseCase.Execute(ctx, input)
+	product, err := c.useCase.Create(ctx, input)
 	if err != nil {
 		return err
 	}
+
+	c.Presenter.Present(dto.ProductPresenterInput{
+		Result: product,
+	})
 
 	return nil
 }
 
 func (c *ProductController) GetProduct(ctx context.Context, input dto.GetProductInput) error {
-	err := c.getProductUseCase.Execute(ctx, input)
+	product, err := c.useCase.Get(ctx, input)
 	if err != nil {
 		return err
 	}
+
+	c.Presenter.Present(dto.ProductPresenterInput{
+		Result: product,
+	})
 
 	return nil
 }
 
 func (c *ProductController) UpdateProduct(ctx context.Context, input dto.UpdateProductInput) error {
-	err := c.updateProductUseCase.Execute(ctx, input)
+	product, err := c.useCase.Update(ctx, input)
 	if err != nil {
 		return err
 	}
+
+	c.Presenter.Present(dto.ProductPresenterInput{
+		Result: product,
+	})
 
 	return nil
 }
 
 func (c *ProductController) DeleteProduct(ctx context.Context, input dto.DeleteProductInput) error {
-	return c.deleteProductUseCase.Execute(ctx, input)
+	product, err := c.useCase.Delete(ctx, input)
+	if err != nil {
+		return err
+	}
+
+	c.Presenter.Present(dto.ProductPresenterInput{
+		Result: product,
+	})
+
+	return nil
 }

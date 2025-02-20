@@ -4,24 +4,13 @@ import (
 	"context"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 )
 
-type ListOrdersUseCase interface {
-	Execute(ctx context.Context, input dto.ListOrdersInput) error
-}
-
-type CreateOrderUseCase interface {
-	Execute(ctx context.Context, input dto.CreateOrderInput) error
-}
-
-type GetOrderUseCase interface {
-	Execute(ctx context.Context, input dto.GetOrderInput) error
-}
-
-type UpdateOrderUseCase interface {
-	Execute(ctx context.Context, input dto.UpdateOrderInput) error
-}
-
-type DeleteOrderUseCase interface {
-	Execute(ctx context.Context, input dto.DeleteOrderInput) error
+type OrderUseCase interface {
+	List(ctx context.Context, input dto.ListOrdersInput) ([]*entity.Order, int64, error)
+	Create(ctx context.Context, input dto.CreateOrderInput) (*entity.Order, error)
+	Get(ctx context.Context, input dto.GetOrderInput) (*entity.Order, error)
+	Update(ctx context.Context, input dto.UpdateOrderInput) (*entity.Order, error)
+	Delete(ctx context.Context, input dto.DeleteOrderInput) (*entity.Order, error)
 }

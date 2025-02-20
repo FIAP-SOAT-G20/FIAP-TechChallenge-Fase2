@@ -4,24 +4,13 @@ import (
 	"context"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 )
 
-type ListProductsUseCase interface {
-	Execute(ctx context.Context, input dto.ListProductsInput) error
-}
-
-type CreateProductUseCase interface {
-	Execute(ctx context.Context, input dto.CreateProductInput) error
-}
-
-type GetProductUseCase interface {
-	Execute(ctx context.Context, input dto.GetProductInput) error
-}
-
-type UpdateProductUseCase interface {
-	Execute(ctx context.Context, input dto.UpdateProductInput) error
-}
-
-type DeleteProductUseCase interface {
-	Execute(ctx context.Context, input dto.DeleteProductInput) error
+type ProductUseCase interface {
+	List(ctx context.Context, input dto.ListProductsInput) ([]*entity.Product, int64, error)
+	Create(ctx context.Context, input dto.CreateProductInput) (*entity.Product, error)
+	Get(ctx context.Context, input dto.GetProductInput) (*entity.Product, error)
+	Update(ctx context.Context, input dto.UpdateProductInput) (*entity.Product, error)
+	Delete(ctx context.Context, input dto.DeleteProductInput) (*entity.Product, error)
 }

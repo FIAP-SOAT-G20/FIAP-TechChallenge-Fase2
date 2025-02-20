@@ -7,7 +7,6 @@ type StaffPresenter interface {
 }
 
 type StaffPresenterDTO struct {
-	Writer dto.ResponseWriter
 	Result any
 	Total  int64
 	Page   int

@@ -1,34 +1,29 @@
 package dto
 
 type CreateStaffInput struct {
-	Name   string
-	Role   string
-	Writer ResponseWriter
+	Name string
+	Role string
 }
 
 type UpdateStaffInput struct {
-	ID     uint64
-	Name   string
-	Role   string
-	Writer ResponseWriter
+	ID   uint64
+	Name string
+	Role string
 }
 
 type GetStaffInput struct {
-	ID     uint64
-	Writer ResponseWriter
+	ID uint64
 }
 
 type DeleteStaffInput struct {
-	ID     uint64
-	Writer ResponseWriter
+	ID uint64
 }
 
 type ListStaffsInput struct {
-	Name   string
-	Role   string
-	Page   int
-	Limit  int
-	Writer ResponseWriter
+	Name  string
+	Role  string
+	Page  int
+	Limit int
 }
 
 type StaffPresenterInput struct {
@@ -36,5 +31,4 @@ type StaffPresenterInput struct {
 	Total  int64
 	Page   int
 	Limit  int
-	Writer ResponseWriter
 }

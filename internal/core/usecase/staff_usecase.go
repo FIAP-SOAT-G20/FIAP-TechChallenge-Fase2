@@ -1,4 +1,4 @@
-package staff
+package usecase
 
 import (
 	"context"
@@ -15,9 +15,15 @@ type staffUseCase struct {
 	gateway port.StaffGateway
 }
 
-func (s staffUseCase) List(ctx context.Context, input dto.ListStaffsInput) ([]*entity.Staff, int64, error) {
+// NewStaffUseCase creates a new StaffUseCase
+func NewStaffUseCase(gateway port.StaffGateway) port.StaffUseCase {
+	return &staffUseCase{gateway: gateway}
+}
+
+// List returns a list of staffs
+func (uc *staffUseCase) List(ctx context.Context, input dto.ListStaffsInput) ([]*entity.Staff, int64, error) {
 	role := valueobject.ToStaffRole(input.Role)
-	staffs, total, err := s.gateway.FindAll(ctx, input.Name, role, input.Page, input.Limit)
+	staffs, total, err := uc.gateway.FindAll(ctx, input.Name, role, input.Page, input.Limit)
 	if err != nil {
 		return nil, 0, domain.NewInternalError(err)
 	}
@@ -25,7 +31,8 @@ func (s staffUseCase) List(ctx context.Context, input dto.ListStaffsInput) ([]*e
 	return staffs, total, nil
 }
 
-func (s staffUseCase) Create(ctx context.Context, input dto.CreateStaffInput) (*entity.Staff, error) {
+// Create creates a new staff
+func (uc *staffUseCase) Create(ctx context.Context, input dto.CreateStaffInput) (*entity.Staff, error) {
 	role := valueobject.ToStaffRole(input.Role)
 	if role == valueobject.UNDEFINED_ROLE {
 		return nil, domain.NewValidationError(errors.New("Invalid role"))
@@ -33,15 +40,16 @@ func (s staffUseCase) Create(ctx context.Context, input dto.CreateStaffInput) (*
 
 	staff := entity.NewStaff(input.Name, role)
 
-	if err := s.gateway.Create(ctx, staff); err != nil {
+	if err := uc.gateway.Create(ctx, staff); err != nil {
 		return nil, domain.NewInternalError(err)
 	}
 
 	return staff, nil
 }
 
-func (s staffUseCase) Get(ctx context.Context, input dto.GetStaffInput) (*entity.Staff, error) {
-	staff, err := s.gateway.FindByID(ctx, input.ID)
+// Get returns a staff by ID
+func (uc *staffUseCase) Get(ctx context.Context, input dto.GetStaffInput) (*entity.Staff, error) {
+	staff, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -53,8 +61,9 @@ func (s staffUseCase) Get(ctx context.Context, input dto.GetStaffInput) (*entity
 	return staff, nil
 }
 
-func (s staffUseCase) Update(ctx context.Context, input dto.UpdateStaffInput) (*entity.Staff, error) {
-	staff, err := s.gateway.FindByID(ctx, input.ID)
+// Update updates a staff
+func (uc *staffUseCase) Update(ctx context.Context, input dto.UpdateStaffInput) (*entity.Staff, error) {
+	staff, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -69,15 +78,16 @@ func (s staffUseCase) Update(ctx context.Context, input dto.UpdateStaffInput) (*
 
 	staff.Update(input.Name, role)
 
-	if err := s.gateway.Update(ctx, staff); err != nil {
+	if err := uc.gateway.Update(ctx, staff); err != nil {
 		return nil, domain.NewInternalError(err)
 	}
 
 	return staff, nil
 }
 
-func (s staffUseCase) Delete(ctx context.Context, input dto.DeleteStaffInput) (*entity.Staff, error) {
-	staff, err := s.gateway.FindByID(ctx, input.ID)
+// Delete deletes a staff
+func (uc *staffUseCase) Delete(ctx context.Context, input dto.DeleteStaffInput) (*entity.Staff, error) {
+	staff, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -85,16 +95,9 @@ func (s staffUseCase) Delete(ctx context.Context, input dto.DeleteStaffInput) (*
 		return nil, domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
-	if err := s.gateway.Delete(ctx, input.ID); err != nil {
+	if err := uc.gateway.Delete(ctx, input.ID); err != nil {
 		return nil, domain.NewInternalError(err)
 	}
 
 	return staff, nil
-}
-
-// NewStaffUseCase creates a new StaffUseCase
-func NewStaffUseCase(gateway port.StaffGateway) port.StaffUseCase {
-	return &staffUseCase{
-		gateway: gateway,
-	}
 }

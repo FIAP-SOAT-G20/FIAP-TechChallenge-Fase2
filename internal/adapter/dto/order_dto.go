@@ -6,7 +6,6 @@ import (
 
 type CreateOrderInput struct {
 	CustomerID uint64
-	Writer     ResponseWriter
 }
 
 type UpdateOrderInput struct {
@@ -14,17 +13,14 @@ type UpdateOrderInput struct {
 	CustomerID uint64
 	Status     valueobject.OrderStatus
 	// Payment       Payment
-	Writer ResponseWriter
 }
 
 type GetOrderInput struct {
-	ID     uint64
-	Writer ResponseWriter
+	ID uint64
 }
 
 type DeleteOrderInput struct {
-	ID     uint64
-	Writer ResponseWriter
+	ID uint64
 }
 
 type ListOrdersInput struct {
@@ -32,7 +28,6 @@ type ListOrdersInput struct {
 	Status     valueobject.OrderStatus
 	Page       int
 	Limit      int
-	Writer     ResponseWriter
 }
 
 type OrderPresenterInput struct {
@@ -40,5 +35,4 @@ type OrderPresenterInput struct {
 	Total  int64
 	Page   int
 	Limit  int
-	Writer ResponseWriter
 }

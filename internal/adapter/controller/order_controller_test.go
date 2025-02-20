@@ -8,17 +8,19 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
-	mockdto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto/mocks"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 )
 
+// TODO: Add more test cenarios
 func TestOrderController_ListOrders(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockListOrdersUseCase := mockport.NewMockListOrdersUseCase(ctrl)
-	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-	productController := NewOrderController(mockListOrdersUseCase, nil, nil, nil, nil)
+	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
+	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
+	orderController := NewOrderController(mokOrdercUseCase)
+	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.ListOrdersInput{
@@ -26,14 +28,36 @@ func TestOrderController_ListOrders(t *testing.T) {
 		Status:     "PENDING",
 		Page:       1,
 		Limit:      10,
-		Writer:     mockResponseWriter,
 	}
 
-	mockListOrdersUseCase.EXPECT().
-		Execute(ctx, input).
-		Return(nil)
+	mockOrders := []*entity.Order{
+		{
+			ID:         1,
+			CustomerID: 1,
+			Status:     "PENDING",
+			TotalBill:  100.0,
+		},
+		{
+			ID:         2,
+			CustomerID: 1,
+			Status:     "PENDING",
+			TotalBill:  200.0,
+		},
+	}
 
-	err := productController.ListOrders(ctx, input)
+	mokOrdercUseCase.EXPECT().
+		List(ctx, input).
+		Return(mockOrders, int64(2), nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.OrderPresenterInput{
+			Result: mockOrders,
+			Total:  int64(2),
+			Page:   1,
+			Limit:  10,
+		})
+
+	err := orderController.ListOrders(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -41,21 +65,33 @@ func TestOrderController_CreateOrder(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockCreateOrderUseCase := mockport.NewMockCreateOrderUseCase(ctrl)
-	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-	productController := NewOrderController(nil, mockCreateOrderUseCase, nil, nil, nil)
+	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
+	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
+	orderController := NewOrderController(mokOrdercUseCase)
+	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.CreateOrderInput{
 		CustomerID: 1,
-		Writer:     mockResponseWriter,
 	}
 
-	mockCreateOrderUseCase.EXPECT().
-		Execute(ctx, input).
-		Return(nil)
+	mockOrder := &entity.Order{
+		ID:         1,
+		CustomerID: 1,
+		Status:     "OPEN",
+		TotalBill:  0.0,
+	}
 
-	err := productController.CreateOrder(ctx, input)
+	mokOrdercUseCase.EXPECT().
+		Create(ctx, input).
+		Return(mockOrder, nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.OrderPresenterInput{
+			Result: mockOrder,
+		})
+
+	err := orderController.CreateOrder(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -63,21 +99,33 @@ func TestOrderController_GetOrder(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockGetOrderUseCase := mockport.NewMockGetOrderUseCase(ctrl)
-	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-	productController := NewOrderController(nil, nil, mockGetOrderUseCase, nil, nil)
+	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
+	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
+	orderController := NewOrderController(mokOrdercUseCase)
+	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.GetOrderInput{
-		ID:     uint64(1),
-		Writer: mockResponseWriter,
+		ID: uint64(1),
 	}
 
-	mockGetOrderUseCase.EXPECT().
-		Execute(ctx, input).
-		Return(nil)
+	mockOrder := &entity.Order{
+		ID:         1,
+		CustomerID: 1,
+		Status:     "PENDING",
+		TotalBill:  100.0,
+	}
 
-	err := productController.GetOrder(ctx, input)
+	mokOrdercUseCase.EXPECT().
+		Get(ctx, input).
+		Return(mockOrder, nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.OrderPresenterInput{
+			Result: mockOrder,
+		})
+
+	err := orderController.GetOrder(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -85,23 +133,35 @@ func TestOrderController_UpdateOrder(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockUpdateOrderUseCase := mockport.NewMockUpdateOrderUseCase(ctrl)
-	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-	productController := NewOrderController(nil, nil, nil, mockUpdateOrderUseCase, nil)
+	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
+	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
+	orderController := NewOrderController(mokOrdercUseCase)
+	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.UpdateOrderInput{
 		ID:         uint64(1),
 		CustomerID: 1,
-		Status:     "PENDING",
-		Writer:     mockResponseWriter,
+		Status:     "OPEN",
 	}
 
-	mockUpdateOrderUseCase.EXPECT().
-		Execute(ctx, input).
-		Return(nil)
+	mockOrder := &entity.Order{
+		ID:         1,
+		CustomerID: 1,
+		Status:     "PENDING",
+		TotalBill:  100.0,
+	}
 
-	err := productController.UpdateOrder(ctx, input)
+	mokOrdercUseCase.EXPECT().
+		Update(ctx, input).
+		Return(mockOrder, nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.OrderPresenterInput{
+			Result: mockOrder,
+		})
+
+	err := orderController.UpdateOrder(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -109,20 +169,32 @@ func TestOrderController_DeleteOrder(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockDeleteOrderUseCase := mockport.NewMockDeleteOrderUseCase(ctrl)
-	mockResponseWriter := mockdto.NewMockResponseWriter(ctrl)
-	productController := NewOrderController(nil, nil, nil, nil, mockDeleteOrderUseCase)
+	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
+	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
+	orderController := NewOrderController(mokOrdercUseCase)
+	orderController.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.DeleteOrderInput{
-		ID:     uint64(1),
-		Writer: mockResponseWriter,
+		ID: uint64(1),
 	}
 
-	mockDeleteOrderUseCase.EXPECT().
-		Execute(ctx, input).
-		Return(nil)
+	mockOrder := &entity.Order{
+		ID:         1,
+		CustomerID: 1,
+		Status:     "PENDING",
+		TotalBill:  100.0,
+	}
 
-	err := productController.DeleteOrder(ctx, input)
+	mokOrdercUseCase.EXPECT().
+		Delete(ctx, input).
+		Return(mockOrder, nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.OrderPresenterInput{
+			Result: mockOrder,
+		})
+
+	err := orderController.DeleteOrder(ctx, input)
 	assert.NoError(t, err)
 }

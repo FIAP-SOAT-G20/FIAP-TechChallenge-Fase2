@@ -9,9 +9,14 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 )
 
-type ErrorResponse struct {
+type ErrorJsonResponse struct {
 	Code    int    `json:"code" example:"400"`
 	Message string `json:"message" example:"Bad Request"`
+}
+
+type ErrorXmlResponse struct {
+	Code    int    `xml:"code" example:"400"`
+	Message string `xml:"message" example:"Bad Request"`
 }
 
 func ErrorHandler(logger *slog.Logger) gin.HandlerFunc {
@@ -29,43 +34,54 @@ func ErrorHandler(logger *slog.Logger) gin.HandlerFunc {
 func handleError(c *gin.Context, err error, logger *slog.Logger) {
 	switch e := err.(type) {
 	case *domain.ValidationError:
-		c.JSON(http.StatusBadRequest, ErrorResponse{
-			Code:    http.StatusBadRequest,
-			Message: e.Error(),
-		})
+		setResponse(c, http.StatusBadRequest, e.Error())
+		logWarning(logger, domain.ErrValidationError, e, c.Request)
 
 	case *domain.NotFoundError:
-		c.JSON(http.StatusNotFound, ErrorResponse{
-			Code:    http.StatusNotFound,
-			Message: e.Error(),
-		})
+		setResponse(c, http.StatusNotFound, e.Error())
+		logWarning(logger, domain.ErrNotFound, e, c.Request)
 
 	case *domain.InvalidInputError:
-		c.JSON(http.StatusBadRequest, ErrorResponse{
-			Code:    http.StatusBadRequest,
-			Message: e.Error(),
-		})
+		setResponse(c, http.StatusBadRequest, e.Error())
+		logWarning(logger, domain.ErrInvalidInput, e, c.Request)
 
 	case *domain.InternalError:
-		logger.Error(domain.ErrInternalError,
-			"error", e.Error(),
-			"path", c.Request.URL.Path,
-			"method", c.Request.Method,
-		)
-		c.JSON(http.StatusInternalServerError, ErrorResponse{
-			Code:    http.StatusInternalServerError,
-			Message: domain.ErrInternalError,
-		})
+		setResponse(c, http.StatusInternalServerError, domain.ErrInternalError)
+		logError(logger, domain.ErrInternalError, e, c.Request)
 
 	default:
-		logger.Error(domain.ErrUnknownError,
-			"error", err.Error(),
-			"path", c.Request.URL.Path,
-			"method", c.Request.Method,
-		)
-		c.JSON(http.StatusInternalServerError, ErrorResponse{
-			Code:    http.StatusInternalServerError,
-			Message: domain.ErrInternalError,
-		})
+		setResponse(c, http.StatusInternalServerError, domain.ErrInternalError)
+		logError(logger, domain.ErrUnknownError, err, c.Request)
 	}
+}
+
+func setResponse(c *gin.Context, status int, message string) {
+	if c.GetHeader("Accept") == "text/xml" {
+		c.XML(status, ErrorXmlResponse{
+			Code:    status,
+			Message: message,
+		})
+		return
+	}
+
+	c.JSON(status, ErrorJsonResponse{
+		Code:    status,
+		Message: message,
+	})
+}
+
+func logError(logger *slog.Logger, msg string, err error, req *http.Request) {
+	logger.Error(msg,
+		"error", err.Error(),
+		"path", req.URL.Path,
+		"method", req.Method,
+	)
+}
+
+func logWarning(logger *slog.Logger, msg string, err error, req *http.Request) {
+	logger.Warn(msg,
+		"error", err.Error(),
+		"path", req.URL.Path,
+		"method", req.Method,
+	)
 }

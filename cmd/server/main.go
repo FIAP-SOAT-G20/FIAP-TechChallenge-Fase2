@@ -1,16 +1,11 @@
 package main
 
 import (
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/staff"
 	"os"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/gateway"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/customer"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/order"
-	orderproduct "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/order_product"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/product"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/database"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/datasource"
@@ -75,100 +70,45 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	// Datasource's
 	productDS := datasource.NewProductDataSource(db.DB)
 	customerDS := datasource.NewCustomerDataSource(db.DB)
-	staffDS := datasource.NewStaffDataSource(db.DB)
 	orderDS := datasource.NewOrderDataSource(db.DB)
 	orderProductDS := datasource.NewOrderProductDataSource(db.DB)
+	staffDS := datasource.NewStaffDataSource(db.DB)
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
 	customerGateway := gateway.NewCustomerGateway(customerDS)
-	staffGateway := gateway.NewStaffGateway(staffDS)
 	orderGateway := gateway.NewOrderGateway(orderDS)
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
+	staffGateway := gateway.NewStaffGateway(staffDS)
 
-	// Presenters
-	productPresenter := presenter.NewProductJsonPresenter()
-	// productPresenter := presenter.NewProductXmlPresenter()
-	customerPresenter := presenter.NewCustomerJsonPresenter()
-	staffPresenter := presenter.NewStaffJsonPresenter()
-	orderPresenter := presenter.NewOrderJsonPresenter()
-	orderProductPresenter := presenter.NewOrderProductJsonPresenter()
-
-	// Use cases - Product
-	listProductsUC := product.NewListProductsUseCase(productGateway, productPresenter)
-	createProductUC := product.NewCreateProductUseCase(productGateway, productPresenter)
-	getProductUC := product.NewGetProductUseCase(productGateway, productPresenter)
-	updateProductUC := product.NewUpdateProductUseCase(productGateway, productPresenter)
-	deleteProductUC := product.NewDeleteProductUseCase(productGateway, productPresenter)
-	// Use cases - Customer
-	listCustomersUC := customer.NewListCustomersUseCase(customerGateway, customerPresenter)
-	createCustomerUC := customer.NewCreateCustomerUseCase(customerGateway, customerPresenter)
-	getCustomerUC := customer.NewGetCustomerUseCase(customerGateway, customerPresenter)
-	updateCustomerUC := customer.NewUpdateCustomerUseCase(customerGateway, customerPresenter)
-	deleteCustomerUC := customer.NewDeleteCustomerUseCase(customerGateway, customerPresenter)
-
-	staffUC := staff.NewStaffUseCase(staffGateway)
-
-	// Use cases - Order
-	listOrdersUC := order.NewListOrdersUseCase(orderGateway, orderPresenter)
-	createOrderUC := order.NewCreateOrderUseCase(orderGateway, orderPresenter)
-	getOrderUC := order.NewGetOrderUseCase(orderGateway, orderPresenter)
-	updateOrderUC := order.NewUpdateOrderUseCase(orderGateway, orderPresenter)
-	deleteOrderUC := order.NewDeleteOrderUseCase(orderGateway, orderPresenter)
-	// Use cases - OrderProduct
-	listOrderProductsUC := orderproduct.NewListOrderProductsUseCase(orderProductGateway, orderProductPresenter)
-	createOrderProductUC := orderproduct.NewCreateOrderProductUseCase(orderProductGateway, orderProductPresenter)
-	getOrderProductUC := orderproduct.NewGetOrderProductUseCase(orderProductGateway, orderProductPresenter)
-	updateOrderProductUC := orderproduct.NewUpdateOrderProductUseCase(orderProductGateway, orderProductPresenter)
-	deleteOrderProductUC := orderproduct.NewDeleteOrderProductUseCase(orderProductGateway, orderProductPresenter)
+	// Use cases
+	productUC := usecase.NewProductUseCase(productGateway)
+	customerUC := usecase.NewCustomerUseCase(customerGateway)
+	orderUC := usecase.NewOrderUseCase(orderGateway)
+	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
+	staffUC := usecase.NewStaffUseCase(staffGateway)
 
 	// Controllers
-	productController := controller.NewProductController(
-		listProductsUC,
-		createProductUC,
-		getProductUC,
-		updateProductUC,
-		deleteProductUC,
-	)
-	customerController := controller.NewCustomerController(
-		listCustomersUC,
-		createCustomerUC,
-		getCustomerUC,
-		updateCustomerUC,
-		deleteCustomerUC,
-	)
-	orderController := controller.NewOrderController(
-		listOrdersUC,
-		createOrderUC,
-		getOrderUC,
-		updateOrderUC,
-		deleteOrderUC,
-	)
-	orderProductController := controller.NewOrderProductController(
-		listOrderProductsUC,
-		createOrderProductUC,
-		getOrderProductUC,
-		updateOrderProductUC,
-		deleteOrderProductUC,
-	)
-
-	staffController := controller.NewStaffController(staffUC, staffPresenter)
+	productController := controller.NewProductController(productUC)
+	customerController := controller.NewCustomerController(customerUC)
+	orderController := controller.NewOrderController(orderUC)
+	orderProductController := controller.NewOrderProductController(orderProductUC)
+	staffController := controller.NewStaffController(staffUC)
 
 	// Handlers
 	productHandler := handler.NewProductHandler(productController)
 	customerHandler := handler.NewCustomerHandler(customerController)
-
-	staffHandler := handler.NewStaffHandler(staffController)
 	orderHandler := handler.NewOrderHandler(orderController)
 	orderProductHandler := handler.NewOrderProductHandler(orderProductController)
+	staffHandler := handler.NewStaffHandler(staffController)
 	healthCheckHandler := handler.NewHealthCheckHandler()
 
 	return &route.Handlers{
 		Product:      productHandler,
 		Customer:     customerHandler,
-		Staff:        staffHandler,
 		Order:        orderHandler,
 		OrderProduct: orderProductHandler,
+		Staff:        staffHandler,
 		HealthCheck:  healthCheckHandler,
 	}
 }

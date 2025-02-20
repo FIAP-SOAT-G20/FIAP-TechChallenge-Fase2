@@ -1,4 +1,4 @@
-package staff
+package usecase
 
 import (
 	"context"
@@ -14,7 +14,119 @@ import (
 	"go.uber.org/mock/gomock"
 )
 
-func TestCreateStaffUseCase_Execute(t *testing.T) {
+func TestStaffsUseCase_List(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockGateway := mockport.NewMockStaffGateway(ctrl)
+	useCase := NewStaffUseCase(mockGateway)
+	ctx := context.Background()
+
+	currentTime := time.Now()
+	mockStaffs := []*entity.Staff{
+		{
+			ID:        1,
+			Name:      "Test Staff 1",
+			Role:      "COOK",
+			CreatedAt: currentTime,
+			UpdatedAt: currentTime,
+		},
+		{
+			ID:        2,
+			Name:      "Test Staff 2",
+			Role:      "COOK",
+			CreatedAt: currentTime,
+			UpdatedAt: currentTime,
+		},
+	}
+
+	tests := []struct {
+		name        string
+		input       dto.ListStaffsInput
+		setupMocks  func()
+		expectError bool
+		errorType   error
+	}{
+		{
+			name: "should list staffs successfully",
+			input: dto.ListStaffsInput{
+				Page:  1,
+				Limit: 10,
+			},
+			setupMocks: func() {
+				var role valueobject.StaffRole
+				mockGateway.EXPECT().
+					FindAll(ctx, "", role, 1, 10).
+					Return(mockStaffs, int64(2), nil)
+			},
+			expectError: false,
+		},
+		{
+			name: "should return error when repository fails",
+			input: dto.ListStaffsInput{
+				Page:  1,
+				Limit: 10,
+			},
+			setupMocks: func() {
+				var role valueobject.StaffRole
+				mockGateway.EXPECT().
+					FindAll(ctx, "", role, 1, 10).
+					Return(nil, int64(0), assert.AnError)
+			},
+			expectError: true,
+			errorType:   &domain.InternalError{},
+		},
+		{
+			name: "should filter by name",
+			input: dto.ListStaffsInput{
+				Name:  "Test",
+				Page:  1,
+				Limit: 10,
+			},
+			setupMocks: func() {
+				var role valueobject.StaffRole
+				mockGateway.EXPECT().
+					FindAll(ctx, "Test", role, 1, 10).
+					Return(mockStaffs, int64(2), nil)
+			},
+			expectError: false,
+		},
+		{
+			name: "should filter by Role",
+			input: dto.ListStaffsInput{
+				Role:  "COOK",
+				Page:  1,
+				Limit: 10,
+			},
+			setupMocks: func() {
+				mockGateway.EXPECT().
+					FindAll(ctx, "", valueobject.COOK, 1, 10).
+					Return(mockStaffs, int64(2), nil)
+
+			},
+			expectError: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.setupMocks()
+
+			_, _, err := useCase.List(ctx, tt.input)
+
+			if tt.expectError {
+				assert.Error(t, err)
+				if tt.errorType != nil {
+					assert.IsType(t, tt.errorType, err)
+				}
+			} else {
+				assert.NoError(t, err)
+			}
+		})
+	}
+}
+
+func TestStaffUseCase_Create(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -76,7 +188,85 @@ func TestCreateStaffUseCase_Execute(t *testing.T) {
 	}
 }
 
-func TestUpdateStaffUseCase_Execute(t *testing.T) {
+func TestStaffUseCase_Get(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockGateway := mockport.NewMockStaffGateway(ctrl)
+	useCase := NewStaffUseCase(mockGateway)
+	ctx := context.Background()
+
+	currentTime := time.Now()
+	mockStaff := &entity.Staff{
+		ID:        1,
+		Name:      "Test Staff",
+		Role:      "COOK",
+		CreatedAt: currentTime,
+		UpdatedAt: currentTime,
+	}
+
+	tests := []struct {
+		name        string
+		id          uint64
+		setupMocks  func()
+		expectError bool
+		errorType   error
+	}{
+		{
+			name: "should get product successfully",
+			id:   1,
+			setupMocks: func() {
+				mockGateway.EXPECT().
+					FindByID(ctx, uint64(1)).
+					Return(mockStaff, nil)
+			},
+			expectError: false,
+		},
+		{
+			name: "should return not found error when staff doesn't exist",
+			id:   1,
+			setupMocks: func() {
+				mockGateway.EXPECT().
+					FindByID(ctx, uint64(1)).
+					Return(nil, nil)
+			},
+			expectError: true,
+			errorType:   &domain.NotFoundError{},
+		},
+		{
+			name: "should return internal error when gateway fails",
+			id:   1,
+			setupMocks: func() {
+				mockGateway.EXPECT().
+					FindByID(ctx, uint64(1)).
+					Return(nil, assert.AnError)
+			},
+			expectError: true,
+			errorType:   &domain.InternalError{},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.setupMocks()
+
+			_, err := useCase.Get(ctx, dto.GetStaffInput{
+				ID: tt.id,
+			})
+
+			if tt.expectError {
+				assert.Error(t, err)
+				if tt.errorType != nil {
+					assert.IsType(t, tt.errorType, err)
+				}
+			} else {
+				assert.NoError(t, err)
+			}
+		})
+	}
+}
+
+func TestStaffUseCase_Update(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -177,7 +367,7 @@ func TestUpdateStaffUseCase_Execute(t *testing.T) {
 	}
 }
 
-func TestDeleteStaffUseCase_Execute(t *testing.T) {
+func TestStaffUseCase_Delete(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -250,196 +440,6 @@ func TestDeleteStaffUseCase_Execute(t *testing.T) {
 			tt.setupMocks()
 
 			_, err := useCase.Delete(ctx, dto.DeleteStaffInput{ID: tt.id})
-
-			if tt.expectError {
-				assert.Error(t, err)
-				if tt.errorType != nil {
-					assert.IsType(t, tt.errorType, err)
-				}
-			} else {
-				assert.NoError(t, err)
-			}
-		})
-	}
-}
-
-func TestGetStaffUseCase_Execute(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockStaffGateway(ctrl)
-	useCase := NewStaffUseCase(mockGateway)
-	ctx := context.Background()
-
-	currentTime := time.Now()
-	mockStaff := &entity.Staff{
-		ID:        1,
-		Name:      "Test Staff",
-		Role:      "COOK",
-		CreatedAt: currentTime,
-		UpdatedAt: currentTime,
-	}
-
-	tests := []struct {
-		name        string
-		id          uint64
-		setupMocks  func()
-		expectError bool
-		errorType   error
-	}{
-		{
-			name: "should get product successfully",
-			id:   1,
-			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
-					Return(mockStaff, nil)
-			},
-			expectError: false,
-		},
-		{
-			name: "should return not found error when staff doesn't exist",
-			id:   1,
-			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
-					Return(nil, nil)
-			},
-			expectError: true,
-			errorType:   &domain.NotFoundError{},
-		},
-		{
-			name: "should return internal error when gateway fails",
-			id:   1,
-			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
-					Return(nil, assert.AnError)
-			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			tt.setupMocks()
-
-			_, err := useCase.Get(ctx, dto.GetStaffInput{
-				ID: tt.id,
-			})
-
-			if tt.expectError {
-				assert.Error(t, err)
-				if tt.errorType != nil {
-					assert.IsType(t, tt.errorType, err)
-				}
-			} else {
-				assert.NoError(t, err)
-			}
-		})
-	}
-}
-
-func TestListStaffsUseCase_Execute(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockStaffGateway(ctrl)
-	useCase := NewStaffUseCase(mockGateway)
-	ctx := context.Background()
-
-	currentTime := time.Now()
-	mockStaffs := []*entity.Staff{
-		{
-			ID:        1,
-			Name:      "Test Staff 1",
-			Role:      "COOK",
-			CreatedAt: currentTime,
-			UpdatedAt: currentTime,
-		},
-		{
-			ID:        2,
-			Name:      "Test Staff 2",
-			Role:      "COOK",
-			CreatedAt: currentTime,
-			UpdatedAt: currentTime,
-		},
-	}
-
-	tests := []struct {
-		name        string
-		input       dto.ListStaffsInput
-		setupMocks  func()
-		expectError bool
-		errorType   error
-	}{
-		{
-			name: "should list staffs successfully",
-			input: dto.ListStaffsInput{
-				Page:  1,
-				Limit: 10,
-			},
-			setupMocks: func() {
-				var role valueobject.StaffRole
-				mockGateway.EXPECT().
-					FindAll(ctx, "", role, 1, 10).
-					Return(mockStaffs, int64(2), nil)
-			},
-			expectError: false,
-		},
-		{
-			name: "should return error when repository fails",
-			input: dto.ListStaffsInput{
-				Page:  1,
-				Limit: 10,
-			},
-			setupMocks: func() {
-				var role valueobject.StaffRole
-				mockGateway.EXPECT().
-					FindAll(ctx, "", role, 1, 10).
-					Return(nil, int64(0), assert.AnError)
-			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
-		},
-		{
-			name: "should filter by name",
-			input: dto.ListStaffsInput{
-				Name:  "Test",
-				Page:  1,
-				Limit: 10,
-			},
-			setupMocks: func() {
-				var role valueobject.StaffRole
-				mockGateway.EXPECT().
-					FindAll(ctx, "Test", role, 1, 10).
-					Return(mockStaffs, int64(2), nil)
-			},
-			expectError: false,
-		},
-		{
-			name: "should filter by Role",
-			input: dto.ListStaffsInput{
-				Role:  "COOK",
-				Page:  1,
-				Limit: 10,
-			},
-			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindAll(ctx, "", valueobject.COOK, 1, 10).
-					Return(mockStaffs, int64(2), nil)
-
-			},
-			expectError: false,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			tt.setupMocks()
-
-			_, _, err := useCase.List(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)

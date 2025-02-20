@@ -7,6 +7,7 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 )
 
@@ -67,16 +68,17 @@ func (h *ProductHandler) Register(router *gin.RouterGroup) {
 //
 //	@Summary		List products
 //	@Description	List all products
+//	@Description	Response can return JSON or XML format (Accept header: application/json or text/xml)
 //	@Tags			products
 //	@Accept			json
-//	@Produce		json
+//	@Produce		json,xml
 //	@Param			page		query		int										false	"Page number"		default(1)
 //	@Param			limit		query		int										false	"Items per page"	default(10)
 //	@Param			name		query		string									false	"Filter by name"
 //	@Param			category_id	query		int										false	"Filter by category ID"
 //	@Success		200			{object}	presenter.ProductJsonPaginatedResponse	"OK"
-//	@Failure		400			{object}	middleware.ErrorResponse				"Bad Request"
-//	@Failure		500			{object}	middleware.ErrorResponse				"Internal Server Error"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse			"Bad Request"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/products [get]
 func (h *ProductHandler) ListProducts(c *gin.Context) {
 	var req ListProductQueryRequest
@@ -90,7 +92,12 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 		CategoryID: req.CategoryID,
 		Page:       req.Page,
 		Limit:      req.Limit,
-		Writer:     c,
+	}
+
+	if c.GetHeader("Accept") == "text/xml" {
+		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
+	} else {
+		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	}
 
 	err := h.controller.ListProducts(c.Request.Context(), input)
@@ -104,13 +111,14 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 //
 //	@Summary		Create product
 //	@Description	Creates a new product
+//	@Description	Response can return JSON or XML format (Accept header: application/json or text/xml)
 //	@Tags			products
 //	@Accept			json
-//	@Produce		json
+//	@Produce		json,xml
 //	@Param			product	body		CreateProductRequest			true	"Product data"
 //	@Success		201		{object}	presenter.ProductJsonResponse	"Created"
-//	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
-//	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
+//	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products [post]
 func (h *ProductHandler) CreateProduct(c *gin.Context) {
 	var req CreateProductRequest
@@ -124,7 +132,12 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 		Description: req.Description,
 		Price:       req.Price,
 		CategoryID:  req.CategoryID,
-		Writer:      c,
+	}
+
+	if c.GetHeader("Accept") == "text/xml" {
+		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
+	} else {
+		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	}
 
 	err := h.controller.CreateProduct(c.Request.Context(), input)
@@ -138,14 +151,15 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 //
 //	@Summary		Get product
 //	@Description	Search for a product by ID
+//	@Description	Response can return JSON or XML format (Accept header: application/json or text/xml)
 //	@Tags			products
 //	@Accept			json
-//	@Produce		json
+//	@Produce		json,xml
 //	@Param			id	path		int								true	"Product ID"
 //	@Success		200	{object}	presenter.ProductJsonResponse	"OK"
-//	@Failure		400	{object}	middleware.ErrorResponse		"Bad Request"
-//	@Failure		404	{object}	middleware.ErrorResponse		"Not Found"
-//	@Failure		500	{object}	middleware.ErrorResponse		"Internal Server Error"
+//	@Failure		400	{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
+//	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products/{id} [get]
 func (h *ProductHandler) GetProduct(c *gin.Context) {
 	var req GetProductUriRequest
@@ -155,8 +169,13 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 	}
 
 	input := dto.GetProductInput{
-		ID:     req.ID,
-		Writer: c,
+		ID: req.ID,
+	}
+
+	if c.GetHeader("Accept") == "text/xml" {
+		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
+	} else {
+		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	}
 
 	err := h.controller.GetProduct(c.Request.Context(), input)
@@ -170,15 +189,16 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 //
 //	@Summary		Update product
 //	@Description	Update an existing product
+//	@Description	Response can return JSON or XML format (Accept header: application/json or text/xml)
 //	@Tags			products
 //	@Accept			json
-//	@Produce		json
+//	@Produce		json,xml
 //	@Param			id		path		int								true	"Product ID"
 //	@Param			product	body		UpdateProductRequest			true	"Product data"
 //	@Success		200		{object}	presenter.ProductJsonResponse	"OK"
-//	@Failure		400		{object}	middleware.ErrorResponse		"Bad Request"
-//	@Failure		404		{object}	middleware.ErrorResponse		"Not Found"
-//	@Failure		500		{object}	middleware.ErrorResponse		"Internal Server Error"
+//	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		404		{object}	middleware.ErrorJsonResponse	"Not Found"
+//	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products/{id} [put]
 func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 	var reqUri UpdateProductUriRequest
@@ -199,7 +219,12 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 		Description: req.Description,
 		Price:       req.Price,
 		CategoryID:  req.CategoryID,
-		Writer:      c,
+	}
+
+	if c.GetHeader("Accept") == "text/xml" {
+		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
+	} else {
+		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	}
 
 	err := h.controller.UpdateProduct(c.Request.Context(), input)
@@ -213,13 +238,15 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 //
 //	@Summary		Delete product
 //	@Description	Deletes a product by ID
+//	@Description	Response can return JSON or XML format (Accept header: application/json or text/xml)
 //	@Tags			products
-//	@Produce		json
+//	@Accept			json
+//	@Produce		json,xml
 //	@Param			id	path		int	true	"Product ID"
 //	@Success		204	{object}	nil
-//	@Failure		400	{object}	middleware.ErrorResponse	"Bad Request"
-//	@Failure		404	{object}	middleware.ErrorResponse	"Not Found"
-//	@Failure		500	{object}	middleware.ErrorResponse	"Internal Server Error"
+//	@Failure		400	{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
+//	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products/{id} [delete]
 func (h *ProductHandler) DeleteProduct(c *gin.Context) {
 	var reqUri DeleteProductUriRequest
@@ -229,8 +256,13 @@ func (h *ProductHandler) DeleteProduct(c *gin.Context) {
 	}
 
 	input := dto.DeleteProductInput{
-		ID:     reqUri.ID,
-		Writer: c,
+		ID: reqUri.ID,
+	}
+
+	if c.GetHeader("Accept") == "text/xml" {
+		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
+	} else {
+		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	}
 
 	if err := h.controller.DeleteProduct(c.Request.Context(), input); err != nil {

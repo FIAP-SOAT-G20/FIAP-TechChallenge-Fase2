@@ -134,7 +134,7 @@ definitions:
     - name
     - price
     type: object
-  middleware.ErrorResponse:
+  middleware.ErrorJsonResponse:
     properties:
       code:
         example: 400
@@ -445,11 +445,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: List orders
       tags:
       - orders
@@ -475,15 +475,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Delete orderProduct
       tags:
       - orders
@@ -512,15 +512,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Get an order product
       tags:
       - orders
@@ -555,7 +555,7 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Create an order product
       tags:
       - orders
@@ -590,15 +590,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Update order
       tags:
       - orders
@@ -632,11 +632,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: List customers
       tags:
       - customers
@@ -661,11 +661,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Create customer
       tags:
       - customers
@@ -687,15 +687,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Delete customer
       tags:
       - customers
@@ -719,15 +719,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Get customer
       tags:
       - customers
@@ -757,15 +757,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Update customer
       tags:
       - customers
@@ -824,11 +824,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: List orders
       tags:
       - orders
@@ -853,11 +853,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Create order
       tags:
       - orders
@@ -878,15 +878,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Delete order
       tags:
       - orders
@@ -910,15 +910,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Get order
       tags:
       - orders
@@ -958,15 +958,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Partial update order
       tags:
       - orders
@@ -1006,15 +1006,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Update order
       tags:
       - orders
@@ -1022,7 +1022,9 @@ paths:
     get:
       consumes:
       - application/json
-      description: List all products
+      description: |-
+        List all products
+        Response can return JSON or XML format (Accept header: application/json or text/xml)
       parameters:
       - default: 1
         description: Page number
@@ -1044,6 +1046,7 @@ paths:
         type: integer
       produces:
       - application/json
+      - text/xml
       responses:
         "200":
           description: OK
@@ -1052,18 +1055,20 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: List products
       tags:
       - products
     post:
       consumes:
       - application/json
-      description: Creates a new product
+      description: |-
+        Creates a new product
+        Response can return JSON or XML format (Accept header: application/json or text/xml)
       parameters:
       - description: Product data
         in: body
@@ -1073,6 +1078,7 @@ paths:
           $ref: '#/definitions/handler.CreateProductRequest'
       produces:
       - application/json
+      - text/xml
       responses:
         "201":
           description: Created
@@ -1081,17 +1087,21 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Create product
       tags:
       - products
   /products/{id}:
     delete:
-      description: Deletes a product by ID
+      consumes:
+      - application/json
+      description: |-
+        Deletes a product by ID
+        Response can return JSON or XML format (Accept header: application/json or text/xml)
       parameters:
       - description: Product ID
         in: path
@@ -1100,28 +1110,31 @@ paths:
         type: integer
       produces:
       - application/json
+      - text/xml
       responses:
         "204":
           description: No Content
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Delete product
       tags:
       - products
     get:
       consumes:
       - application/json
-      description: Search for a product by ID
+      description: |-
+        Search for a product by ID
+        Response can return JSON or XML format (Accept header: application/json or text/xml)
       parameters:
       - description: Product ID
         in: path
@@ -1130,6 +1143,7 @@ paths:
         type: integer
       produces:
       - application/json
+      - text/xml
       responses:
         "200":
           description: OK
@@ -1138,22 +1152,24 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Get product
       tags:
       - products
     put:
       consumes:
       - application/json
-      description: Update an existing product
+      description: |-
+        Update an existing product
+        Response can return JSON or XML format (Accept header: application/json or text/xml)
       parameters:
       - description: Product ID
         in: path
@@ -1168,6 +1184,7 @@ paths:
           $ref: '#/definitions/handler.UpdateProductRequest'
       produces:
       - application/json
+      - text/xml
       responses:
         "200":
           description: OK
@@ -1176,15 +1193,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Update product
       tags:
       - products
@@ -1222,11 +1239,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: List staffs
       tags:
       - staffs
@@ -1251,11 +1268,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Create staff
       tags:
       - staffs
@@ -1276,15 +1293,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Delete staff
       tags:
       - staffs
@@ -1308,15 +1325,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Get staff
       tags:
       - staffs
@@ -1346,15 +1363,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Update staff
       tags:
       - staffs

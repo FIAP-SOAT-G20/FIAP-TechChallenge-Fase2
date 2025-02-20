@@ -13,6 +13,11 @@
 
 ## 💬 About
 
+<p align="center">
+    <img src="docs/gopher.png" alt="Fast Food" />
+</p>
+
+
 Repository for the [FIAP](https://postech.fiap.com.br/) Tech Challenge 2, focused on developing a monolith backend system for managing orders in a fast-food restaurant.
 
 Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
