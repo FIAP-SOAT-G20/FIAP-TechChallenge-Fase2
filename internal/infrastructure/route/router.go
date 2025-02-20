@@ -59,12 +59,9 @@ func (r *Router) RegisterRoutes(handlers *Handlers) {
 		// Order Products
 		orderProducts := v1.Group("/orders/products")
 		handlers.OrderProduct.Register(orderProducts)
-
-		// Health check
-		v1.GET("/health", func(c *gin.Context) {
-			c.JSON(200, gin.H{"status": "UP"})
-		})
 	}
+	// Health check
+	handlers.HealthCheck.Register(r.engine.Group("/health"))
 }
 
 // Engine returns the gin engine
