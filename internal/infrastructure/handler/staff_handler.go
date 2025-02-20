@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 
@@ -16,25 +15,33 @@ import (
 type StaffHandler struct {
 	controller *controller.StaffController
 }
+type ListStaffsQueryRequest struct {
+	Name  string                `form:"name" example:"John Doe" default:""`
+	Role  valueobject.StaffRole `form:"role" binding:"omitempty,staff_role_exists" example:"COOK"`
+	Page  int                   `form:"page,default=1" example:"1"`
+	Limit int                   `form:"limit,default=10" example:"10"`
+}
 
-type StaffRequest struct {
+type CreateStaffBodyRequest struct {
 	Name string                `json:"name" validate:"required,min=3,max=100" example:"John Doe"`
 	Role valueobject.StaffRole `json:"role" validate:"max=500" example:"COOK"`
 }
 
-func (p *StaffRequest) Validate() error {
-	return GetValidator().Struct(p)
+type GetStaffUriRequest struct {
+	ID uint64 `uri:"id" binding:"required"`
 }
 
-type StaffListRequest struct {
-	Name  string                `json:"name" validate:"required,min=3,max=100" example:"John Doe"`
-	Role  valueobject.StaffRole `json:"role" example:"COOK"`
-	Page  int                   `json:"page" validate:"required,gte=1" example:"1"`
-	Limit int                   `json:"limit" validate:"required,gte=1,lte=100" example:"10"`
+type UpdateStaffUriRequest struct {
+	ID uint64 `uri:"id" binding:"required"`
 }
 
-func (p *StaffListRequest) Validate() error {
-	return GetValidator().Struct(p)
+type UpdateStaffBodyRequest struct {
+	Name string                `json:"name" validate:"required,min=3,max=100" example:"John Doe"`
+	Role valueobject.StaffRole `json:"role" validate:"max=500" example:"COOK"`
+}
+
+type DeleteStaffUriRequest struct {
+	ID uint64 `uri:"id" binding:"required"`
 }
 
 func NewStaffHandler(controller *controller.StaffController) *StaffHandler {
@@ -65,14 +72,17 @@ func (h *StaffHandler) Register(router *gin.RouterGroup) {
 //	@Failure		500		{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/staffs [get]
 func (h *StaffHandler) List(c *gin.Context) {
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
+	var query ListStaffsQueryRequest
+	if err := c.ShouldBindQuery(&query); err != nil {
+		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
+		return
+	}
 
 	input := dto.ListStaffsInput{
-		Name:  c.Query("name"),
-		Role:  valueobject.ToStaffRole(c.Query("role")),
-		Page:  page,
-		Limit: limit,
+		Name:  query.Name,
+		Role:  query.Role,
+		Page:  query.Page,
+		Limit: query.Limit,
 	}
 
 	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
@@ -90,29 +100,24 @@ func (h *StaffHandler) List(c *gin.Context) {
 //	@Tags			staffs
 //	@Accept			json
 //	@Produce		json
-//	@Param			staff	body		StaffRequest					true	"Staff data"
+//	@Param			staff	body		CreateStaffBodyRequest			true	"Staff data"
 //	@Success		201		{object}	presenter.StaffJsonResponse		"Created"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs [post]
 func (h *StaffHandler) Create(c *gin.Context) {
-	var req StaffRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
+	var body CreateStaffBodyRequest
+	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 
-	// validate request
-	if err := req.Validate(); err != nil {
-		_ = c.Error(domain.NewInvalidInputError(err.Error()))
-		return
-	}
-
 	input := dto.CreateStaffInput{
-		Name: req.Name,
-		Role: req.Role,
+		Name: body.Name,
+		Role: body.Role,
 	}
 
+	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
 	err := h.controller.Create(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -134,17 +139,18 @@ func (h *StaffHandler) Create(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs/{id} [get]
 func (h *StaffHandler) Get(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
-	if err != nil {
+	var uri GetStaffUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.GetStaffInput{
-		ID: id,
+		ID: uri.ID,
 	}
+
 	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
-	err = h.controller.Get(c.Request.Context(), input)
+	err := h.controller.Get(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -159,37 +165,32 @@ func (h *StaffHandler) Get(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id		path		int								true	"Staff ID"
-//	@Param			staff	body		StaffRequest					true	"Staff data"
+//	@Param			staff	body		UpdateStaffBodyRequest			true	"Staff data"
 //	@Success		200		{object}	presenter.StaffJsonResponse		"OK"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		404		{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs/{id} [put]
 func (h *StaffHandler) Update(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
-	if err != nil {
+	var uri UpdateStaffUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
-	var req StaffRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
+	var body UpdateStaffBodyRequest
+	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 
-	if err := req.Validate(); err != nil {
-		_ = c.Error(domain.NewInvalidInputError(err.Error()))
-		return
-	}
-
 	input := dto.UpdateStaffInput{
-		ID:   id,
-		Name: req.Name,
-		Role: req.Role,
+		ID:   uri.ID,
+		Name: body.Name,
+		Role: body.Role,
 	}
 	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
-	err = h.controller.Update(c.Request.Context(), input)
+	err := h.controller.Update(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -209,14 +210,14 @@ func (h *StaffHandler) Update(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs/{id} [delete]
 func (h *StaffHandler) Delete(c *gin.Context) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
-	if err != nil {
+	var uri DeleteStaffUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.DeleteStaffInput{
-		ID: id,
+		ID: uri.ID,
 	}
 	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
 	if err := h.controller.Delete(c.Request.Context(), input); err != nil {
