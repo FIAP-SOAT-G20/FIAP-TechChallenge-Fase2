@@ -22,6 +22,7 @@ func NewStaffUseCase(gateway port.StaffGateway) port.StaffUseCase {
 	}
 }
 
+// List returns a list of staffs
 func (uc staffUseCase) List(ctx context.Context, input dto.ListStaffsInput) ([]*entity.Staff, int64, error) {
 	role := valueobject.ToStaffRole(input.Role)
 	staffs, total, err := uc.gateway.FindAll(ctx, input.Name, role, input.Page, input.Limit)
@@ -32,6 +33,7 @@ func (uc staffUseCase) List(ctx context.Context, input dto.ListStaffsInput) ([]*
 	return staffs, total, nil
 }
 
+// Create creates a new staff
 func (uc staffUseCase) Create(ctx context.Context, input dto.CreateStaffInput) (*entity.Staff, error) {
 	role := valueobject.ToStaffRole(input.Role)
 	if role == valueobject.UNDEFINED_ROLE {
@@ -47,6 +49,7 @@ func (uc staffUseCase) Create(ctx context.Context, input dto.CreateStaffInput) (
 	return staff, nil
 }
 
+// Get returns a staff by ID
 func (uc staffUseCase) Get(ctx context.Context, input dto.GetStaffInput) (*entity.Staff, error) {
 	staff, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
@@ -60,6 +63,7 @@ func (uc staffUseCase) Get(ctx context.Context, input dto.GetStaffInput) (*entit
 	return staff, nil
 }
 
+// Update updates a staff
 func (uc staffUseCase) Update(ctx context.Context, input dto.UpdateStaffInput) (*entity.Staff, error) {
 	staff, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
@@ -83,6 +87,7 @@ func (uc staffUseCase) Update(ctx context.Context, input dto.UpdateStaffInput) (
 	return staff, nil
 }
 
+// Delete deletes a staff
 func (uc staffUseCase) Delete(ctx context.Context, input dto.DeleteStaffInput) (*entity.Staff, error) {
 	staff, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {

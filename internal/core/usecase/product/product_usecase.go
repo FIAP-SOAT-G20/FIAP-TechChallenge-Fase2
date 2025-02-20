@@ -20,7 +20,7 @@ func NewProductUseCase(gateway port.ProductGateway) port.ProductUseCase {
 	}
 }
 
-// Execute lists all products
+// List returns a list of products
 func (uc *productUseCase) List(ctx context.Context, input dto.ListProductsInput) ([]*entity.Product, int64, error) {
 	products, total, err := uc.gateway.FindAll(ctx, input.Name, input.CategoryID, input.Page, input.Limit)
 	if err != nil {
@@ -30,6 +30,7 @@ func (uc *productUseCase) List(ctx context.Context, input dto.ListProductsInput)
 	return products, total, nil
 }
 
+// Create creates a new product
 func (uc productUseCase) Create(ctx context.Context, input dto.CreateProductInput) (*entity.Product, error) {
 	product := entity.NewProduct(input.Name, input.Description, input.Price, input.CategoryID)
 
@@ -40,6 +41,7 @@ func (uc productUseCase) Create(ctx context.Context, input dto.CreateProductInpu
 	return product, nil
 }
 
+// Get returns a product by ID
 func (uc productUseCase) Get(ctx context.Context, input dto.GetProductInput) (*entity.Product, error) {
 	staff, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
@@ -53,6 +55,7 @@ func (uc productUseCase) Get(ctx context.Context, input dto.GetProductInput) (*e
 	return staff, nil
 }
 
+// Update updates a product
 func (uc productUseCase) Update(ctx context.Context, input dto.UpdateProductInput) (*entity.Product, error) {
 	product, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
@@ -71,6 +74,7 @@ func (uc productUseCase) Update(ctx context.Context, input dto.UpdateProductInpu
 	return product, nil
 }
 
+// Delete deletes a product
 func (uc productUseCase) Delete(ctx context.Context, input dto.DeleteProductInput) (*entity.Product, error) {
 	product, err := uc.gateway.FindByID(ctx, input.ID)
 	if err != nil {
