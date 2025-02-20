@@ -61,7 +61,7 @@ func TestStaffController_ListStaffs(t *testing.T) {
 			Limit:  10,
 		})
 
-	err := productController.ListStaffs(ctx, input)
+	err := productController.List(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -95,7 +95,7 @@ func TestStaffController_CreateStaff(t *testing.T) {
 			Result: mockStaff,
 		})
 
-	err := productController.CreateStaff(ctx, input)
+	err := productController.Create(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -132,7 +132,7 @@ func TestStaffController_GetStaff(t *testing.T) {
 			},
 		})
 
-	err := productController.GetStaff(ctx, input)
+	err := productController.Get(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -171,7 +171,7 @@ func TestStaffController_UpdateStaff(t *testing.T) {
 			},
 		})
 
-	err := productController.UpdateStaff(ctx, input)
+	err := productController.Update(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -204,6 +204,6 @@ func TestStaffController_DeleteStaff(t *testing.T) {
 			Result: mockStaff,
 		})
 
-	err := productController.DeleteStaff(ctx, input)
+	err := productController.Delete(ctx, input)
 	assert.NoError(t, err)
 }

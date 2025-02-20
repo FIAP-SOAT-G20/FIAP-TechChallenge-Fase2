@@ -96,7 +96,7 @@ func (h *OrderHandler) ListOrders(c *gin.Context) {
 		Limit:      req.Limit,
 	}
 	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
-	err := h.controller.ListOrders(c.Request.Context(), input)
+	err := h.controller.List(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -126,7 +126,7 @@ func (h *OrderHandler) CreateOrder(c *gin.Context) {
 		CustomerID: req.CustomerID,
 	}
 	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
-	err := h.controller.CreateOrder(c.Request.Context(), input)
+	err := h.controller.Create(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -157,7 +157,7 @@ func (h *OrderHandler) GetOrder(c *gin.Context) {
 		ID: req.ID,
 	}
 	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
-	err := h.controller.GetOrder(c.Request.Context(), input)
+	err := h.controller.Get(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -206,7 +206,7 @@ func (h *OrderHandler) UpdateOrder(c *gin.Context) {
 		Status:     req.Status,
 	}
 
-	err := h.controller.UpdateOrder(c.Request.Context(), input)
+	err := h.controller.Update(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -256,7 +256,7 @@ func (h *OrderHandler) UpdateOrderPartial(c *gin.Context) {
 		Status:     req.Status,
 	}
 
-	err := h.controller.UpdateOrder(c.Request.Context(), input)
+	err := h.controller.Update(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -286,7 +286,7 @@ func (h *OrderHandler) DeleteOrder(c *gin.Context) {
 		ID: req.ID,
 	}
 	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
-	if err := h.controller.DeleteOrder(c.Request.Context(), input); err != nil {
+	if err := h.controller.Delete(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return
 	}

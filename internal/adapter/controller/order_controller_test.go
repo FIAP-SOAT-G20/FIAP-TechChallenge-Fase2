@@ -57,7 +57,7 @@ func TestOrderController_ListOrders(t *testing.T) {
 			Limit:  10,
 		})
 
-	err := orderController.ListOrders(ctx, input)
+	err := orderController.List(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -91,7 +91,7 @@ func TestOrderController_CreateOrder(t *testing.T) {
 			Result: mockOrder,
 		})
 
-	err := orderController.CreateOrder(ctx, input)
+	err := orderController.Create(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -125,7 +125,7 @@ func TestOrderController_GetOrder(t *testing.T) {
 			Result: mockOrder,
 		})
 
-	err := orderController.GetOrder(ctx, input)
+	err := orderController.Get(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -161,7 +161,7 @@ func TestOrderController_UpdateOrder(t *testing.T) {
 			Result: mockOrder,
 		})
 
-	err := orderController.UpdateOrder(ctx, input)
+	err := orderController.Update(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -195,6 +195,6 @@ func TestOrderController_DeleteOrder(t *testing.T) {
 			Result: mockOrder,
 		})
 
-	err := orderController.DeleteOrder(ctx, input)
+	err := orderController.Delete(ctx, input)
 	assert.NoError(t, err)
 }

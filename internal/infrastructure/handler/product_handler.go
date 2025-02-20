@@ -100,7 +100,7 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	}
 
-	err := h.controller.ListProducts(c.Request.Context(), input)
+	err := h.controller.List(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -140,7 +140,7 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	}
 
-	err := h.controller.CreateProduct(c.Request.Context(), input)
+	err := h.controller.Create(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -178,7 +178,7 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	}
 
-	err := h.controller.GetProduct(c.Request.Context(), input)
+	err := h.controller.Get(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -227,7 +227,7 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	}
 
-	err := h.controller.UpdateProduct(c.Request.Context(), input)
+	err := h.controller.Update(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -265,7 +265,7 @@ func (h *ProductHandler) DeleteProduct(c *gin.Context) {
 		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
 	}
 
-	if err := h.controller.DeleteProduct(c.Request.Context(), input); err != nil {
+	if err := h.controller.Delete(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return
 	}

@@ -10,6 +10,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 )
 
 type StaffHandler struct {
@@ -17,8 +18,8 @@ type StaffHandler struct {
 }
 
 type StaffRequest struct {
-	Name string `json:"name" validate:"required,min=3,max=100" example:"Nome do funcionario"`
-	Role string `json:"role" validate:"max=500" example:"Cargo do funcionario"`
+	Name string                `json:"name" validate:"required,min=3,max=100" example:"John Doe"`
+	Role valueobject.StaffRole `json:"role" validate:"max=500" example:"COOK"`
 }
 
 func (p *StaffRequest) Validate() error {
@@ -26,10 +27,10 @@ func (p *StaffRequest) Validate() error {
 }
 
 type StaffListRequest struct {
-	Name  string `json:"name" validate:"required,min=3,max=100" example:"Funcionario"`
-	Role  string `json:"role" example:"COOK"`
-	Page  int    `json:"page" validate:"required,gte=1" example:"1"`
-	Limit int    `json:"limit" validate:"required,gte=1,lte=100" example:"10"`
+	Name  string                `json:"name" validate:"required,min=3,max=100" example:"John Doe"`
+	Role  valueobject.StaffRole `json:"role" example:"COOK"`
+	Page  int                   `json:"page" validate:"required,gte=1" example:"1"`
+	Limit int                   `json:"limit" validate:"required,gte=1,lte=100" example:"10"`
 }
 
 func (p *StaffListRequest) Validate() error {
@@ -55,10 +56,10 @@ func (h *StaffHandler) Register(router *gin.RouterGroup) {
 //	@Tags			staffs
 //	@Accept			json
 //	@Produce		json
-//	@Param			page	query		int										false	"Page number"		default(1)
-//	@Param			limit	query		int										false	"Items per page"	default(10)
 //	@Param			name	query		string									false	"Filter by name"
 //	@Param			role	query		string									false	"Filter by role. Available options: COOK, ATTENDANT, MANAGER"
+//	@Param			page	query		int										false	"Page number"		default(1)
+//	@Param			limit	query		int										false	"Items per page"	default(10)
 //	@Success		200		{object}	presenter.StaffJsonPaginatedResponse	"OK"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse			"Internal Server Error"
@@ -69,13 +70,13 @@ func (h *StaffHandler) ListStaffs(c *gin.Context) {
 
 	input := dto.ListStaffsInput{
 		Name:  c.Query("name"),
-		Role:  c.Query("role"),
+		Role:  valueobject.ToStaffRole(c.Query("role")),
 		Page:  page,
 		Limit: limit,
 	}
 
 	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
-	err := h.controller.ListStaffs(c.Request.Context(), input)
+	err := h.controller.List(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -112,7 +113,7 @@ func (h *StaffHandler) CreateStaff(c *gin.Context) {
 		Role: req.Role,
 	}
 
-	err := h.controller.CreateStaff(c.Request.Context(), input)
+	err := h.controller.Create(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -143,7 +144,7 @@ func (h *StaffHandler) GetStaff(c *gin.Context) {
 		ID: id,
 	}
 	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
-	err = h.controller.GetStaff(c.Request.Context(), input)
+	err = h.controller.Get(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -188,7 +189,7 @@ func (h *StaffHandler) UpdateStaff(c *gin.Context) {
 		Role: req.Role,
 	}
 	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
-	err = h.controller.UpdateStaff(c.Request.Context(), input)
+	err = h.controller.Update(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -218,7 +219,7 @@ func (h *StaffHandler) DeleteStaff(c *gin.Context) {
 		ID: id,
 	}
 	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
-	if err := h.controller.DeleteStaff(c.Request.Context(), input); err != nil {
+	if err := h.controller.Delete(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return
 	}

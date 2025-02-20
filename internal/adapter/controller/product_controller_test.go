@@ -67,7 +67,7 @@ func TestProductController_ListProducts(t *testing.T) {
 
 	//gomock.Any()//
 
-	err := productController.ListProducts(ctx, input)
+	err := productController.List(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -105,7 +105,7 @@ func TestProductController_CreateProduct(t *testing.T) {
 			Result: mockProduct,
 		})
 
-	err := productController.CreateProduct(ctx, input)
+	err := productController.Create(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -146,7 +146,7 @@ func TestProductController_GetProduct(t *testing.T) {
 			},
 		})
 
-	err := productController.GetProduct(ctx, input)
+	err := productController.Get(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -191,7 +191,7 @@ func TestProductController_UpdateProduct(t *testing.T) {
 			},
 		})
 
-	err := productController.UpdateProduct(ctx, input)
+	err := productController.Update(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -226,6 +226,6 @@ func TestProductController_DeleteProduct(t *testing.T) {
 			Result: mockProduct,
 		})
 
-	err := productController.DeleteProduct(ctx, input)
+	err := productController.Delete(ctx, input)
 	assert.NoError(t, err)
 }

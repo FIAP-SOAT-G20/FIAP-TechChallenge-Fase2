@@ -90,7 +90,7 @@ func (h *OrderProductHandler) ListOrderProducts(c *gin.Context) {
 		Limit:     req.Limit,
 	}
 	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
-	err := h.controller.ListOrderProducts(c.Request.Context(), input)
+	err := h.controller.List(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -131,7 +131,7 @@ func (h *OrderProductHandler) CreateOrderProduct(c *gin.Context) {
 		Quantity:  req.Quantity,
 	}
 	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
-	err := h.controller.CreateOrderProduct(c.Request.Context(), input)
+	err := h.controller.Create(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -164,7 +164,7 @@ func (h *OrderProductHandler) GetOrderProduct(c *gin.Context) {
 		ProductID: req.ProductID,
 	}
 	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
-	err := h.controller.GetOrderProduct(c.Request.Context(), input)
+	err := h.controller.Get(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -204,7 +204,7 @@ func (h *OrderProductHandler) UpdateOrderProduct(c *gin.Context) {
 		Quantity:  req.Quantity,
 	}
 	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
-	err := h.controller.UpdateOrderProduct(c.Request.Context(), input)
+	err := h.controller.Update(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -236,7 +236,7 @@ func (h *OrderProductHandler) DeleteOrderProduct(c *gin.Context) {
 		ProductID: req.ProductID,
 	}
 	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
-	if err := h.controller.DeleteOrderProduct(c.Request.Context(), input); err != nil {
+	if err := h.controller.Delete(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return
 	}

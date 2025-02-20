@@ -82,7 +82,7 @@ func (h *CustomerHandler) ListCustomers(c *gin.Context) {
 		Limit: query.Limit,
 	}
 	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.ListCustomers(c.Request.Context(), input)
+	err := h.controller.List(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -114,7 +114,7 @@ func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
 		CPF:   req.CPF,
 	}
 	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.CreateCustomer(c.Request.Context(), input)
+	err := h.controller.Create(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -145,7 +145,7 @@ func (h *CustomerHandler) GetCustomer(c *gin.Context) {
 		ID: req.ID,
 	}
 	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.GetCustomer(c.Request.Context(), input)
+	err := h.controller.Get(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -185,7 +185,7 @@ func (h *CustomerHandler) UpdateCustomer(c *gin.Context) {
 		Email: req.Email,
 	}
 	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.UpdateCustomer(c.Request.Context(), input)
+	err := h.controller.Update(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -215,7 +215,7 @@ func (h *CustomerHandler) DeleteCustomer(c *gin.Context) {
 		ID: req.ID,
 	}
 	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	if err := h.controller.DeleteCustomer(c.Request.Context(), input); err != nil {
+	if err := h.controller.Delete(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return
 	}

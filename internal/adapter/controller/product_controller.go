@@ -18,7 +18,7 @@ func NewProductController(
 	return &ProductController{useCase, nil}
 }
 
-func (c *ProductController) ListProducts(ctx context.Context, input dto.ListProductsInput) error {
+func (c *ProductController) List(ctx context.Context, input dto.ListProductsInput) error {
 	products, total, err := c.useCase.List(ctx, input)
 	if err != nil {
 		return err
@@ -34,7 +34,7 @@ func (c *ProductController) ListProducts(ctx context.Context, input dto.ListProd
 	return nil
 }
 
-func (c *ProductController) CreateProduct(ctx context.Context, input dto.CreateProductInput) error {
+func (c *ProductController) Create(ctx context.Context, input dto.CreateProductInput) error {
 	product, err := c.useCase.Create(ctx, input)
 	if err != nil {
 		return err
@@ -47,7 +47,7 @@ func (c *ProductController) CreateProduct(ctx context.Context, input dto.CreateP
 	return nil
 }
 
-func (c *ProductController) GetProduct(ctx context.Context, input dto.GetProductInput) error {
+func (c *ProductController) Get(ctx context.Context, input dto.GetProductInput) error {
 	product, err := c.useCase.Get(ctx, input)
 	if err != nil {
 		return err
@@ -60,7 +60,7 @@ func (c *ProductController) GetProduct(ctx context.Context, input dto.GetProduct
 	return nil
 }
 
-func (c *ProductController) UpdateProduct(ctx context.Context, input dto.UpdateProductInput) error {
+func (c *ProductController) Update(ctx context.Context, input dto.UpdateProductInput) error {
 	product, err := c.useCase.Update(ctx, input)
 	if err != nil {
 		return err
@@ -73,7 +73,7 @@ func (c *ProductController) UpdateProduct(ctx context.Context, input dto.UpdateP
 	return nil
 }
 
-func (c *ProductController) DeleteProduct(ctx context.Context, input dto.DeleteProductInput) error {
+func (c *ProductController) Delete(ctx context.Context, input dto.DeleteProductInput) error {
 	product, err := c.useCase.Delete(ctx, input)
 	if err != nil {
 		return err

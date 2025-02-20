@@ -56,7 +56,7 @@ func TestCustomerController_ListCustomers(t *testing.T) {
 			Result: mockCustomers,
 		})
 
-	err := productController.ListCustomers(ctx, input)
+	err := productController.List(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -92,7 +92,7 @@ func TestCustomerController_CreateCustomer(t *testing.T) {
 			Result: mockCustomer,
 		})
 
-	err := productController.CreateCustomer(ctx, input)
+	err := productController.Create(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -126,7 +126,7 @@ func TestCustomerController_GetCustomer(t *testing.T) {
 			Result: mockCustomer,
 		})
 
-	err := productController.GetCustomer(ctx, input)
+	err := productController.Get(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -161,7 +161,7 @@ func TestCustomerController_UpdateCustomer(t *testing.T) {
 			Result: mockCustomer,
 		})
 
-	err := productController.UpdateCustomer(ctx, input)
+	err := productController.Update(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -194,6 +194,6 @@ func TestCustomerController_DeleteCustomer(t *testing.T) {
 			Result: mockCustomer,
 		})
 
-	err := productController.DeleteCustomer(ctx, input)
+	err := productController.Delete(ctx, input)
 	assert.NoError(t, err)
 }
