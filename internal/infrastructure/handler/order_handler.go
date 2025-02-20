@@ -89,17 +89,17 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 //	@Failure		500			{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/orders [get]
 func (h *OrderHandler) List(c *gin.Context) {
-	var req ListOrdersQueryRequest
-	if err := c.ShouldBindQuery(&req); err != nil {
+	var query ListOrdersQueryRequest
+	if err := c.ShouldBindQuery(&query); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.ListOrdersInput{
-		CustomerID: req.CustomerID,
-		Status:     req.Status,
-		Page:       req.Page,
-		Limit:      req.Limit,
+		CustomerID: query.CustomerID,
+		Status:     query.Status,
+		Page:       query.Page,
+		Limit:      query.Limit,
 	}
 	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
 	err := h.controller.List(c.Request.Context(), input)
@@ -122,14 +122,14 @@ func (h *OrderHandler) List(c *gin.Context) {
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/orders [post]
 func (h *OrderHandler) Create(c *gin.Context) {
-	var req CreateOrderBodyRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
+	var body CreateOrderBodyRequest
+	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 
 	input := dto.CreateOrderInput{
-		CustomerID: req.CustomerID,
+		CustomerID: body.CustomerID,
 	}
 	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
 	err := h.controller.Create(c.Request.Context(), input)
@@ -153,14 +153,14 @@ func (h *OrderHandler) Create(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/orders/{id} [get]
 func (h *OrderHandler) Get(c *gin.Context) {
-	var req GetOrderUriRequest
-	if err := c.ShouldBindUri(&req); err != nil {
+	var uri GetOrderUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.GetOrderInput{
-		ID: req.ID,
+		ID: uri.ID,
 	}
 	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
 	err := h.controller.Get(c.Request.Context(), input)
@@ -194,23 +194,23 @@ func (h *OrderHandler) Get(c *gin.Context) {
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/orders/{id} [put]
 func (h *OrderHandler) Update(c *gin.Context) {
-	var reqUri UpdateOrderUriRequest
-	if err := c.ShouldBindUri(&reqUri); err != nil {
+	var uri UpdateOrderUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
-	var req UpdateOrderBodyRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
+	var body UpdateOrderBodyRequest
+	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
 	input := dto.UpdateOrderInput{
-		ID:         reqUri.ID,
-		CustomerID: req.CustomerID,
-		Status:     req.Status,
-		StaffID:    req.StaffID,
+		ID:         uri.ID,
+		CustomerID: body.CustomerID,
+		Status:     body.Status,
+		StaffID:    body.StaffID,
 	}
 
 	err := h.controller.Update(c.Request.Context(), input)
@@ -244,24 +244,24 @@ func (h *OrderHandler) Update(c *gin.Context) {
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/orders/{id} [patch]
 func (h *OrderHandler) UpdatePartial(c *gin.Context) {
-	var reqUri UpdateOrderUriRequest
-	if err := c.ShouldBindUri(&reqUri); err != nil {
+	var uri UpdateOrderUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
-	var req UpdateOrderPartilBodyRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
+	var body UpdateOrderPartilBodyRequest
+	if err := c.ShouldBindJSON(&body); err != nil {
 		fmt.Println(err)
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
 	input := dto.UpdateOrderInput{
-		ID:         reqUri.ID,
-		CustomerID: req.CustomerID,
-		Status:     req.Status,
-		StaffID:    req.StaffID,
+		ID:         uri.ID,
+		CustomerID: body.CustomerID,
+		Status:     body.Status,
+		StaffID:    body.StaffID,
 	}
 
 	err := h.controller.Update(c.Request.Context(), input)
@@ -284,14 +284,14 @@ func (h *OrderHandler) UpdatePartial(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/orders/{id} [delete]
 func (h *OrderHandler) Delete(c *gin.Context) {
-	var req DeleteOrderUriRequest
-	if err := c.ShouldBindUri(&req); err != nil {
+	var uri DeleteOrderUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.DeleteOrderInput{
-		ID: req.ID,
+		ID: uri.ID,
 	}
 	h.controller.Presenter = presenter.NewOrderJsonPresenter(c)
 	if err := h.controller.Delete(c.Request.Context(), input); err != nil {

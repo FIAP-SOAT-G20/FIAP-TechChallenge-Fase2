@@ -22,7 +22,7 @@ type ListProductQueryRequest struct {
 	Limit      int    `form:"limit,default=10" example:"10"`
 }
 
-type CreateProductRequest struct {
+type CreateProductBodyRequest struct {
 	Name        string  `json:"name" validate:"required,min=3,max=100" example:"Product A"`
 	Description string  `json:"description" validate:"max=500" example:"Product A description"`
 	Price       float64 `json:"price" validate:"required,gt=0" example:"99.99"`
@@ -41,7 +41,7 @@ type UpdateProductUriRequest struct {
 	ID uint64 `uri:"id" binding:"required"`
 }
 
-type UpdateProductRequest struct {
+type UpdateProductBodyRequest struct {
 	Name        string  `json:"name" validate:"required,min=3,max=100" example:"Product A"`
 	Description string  `json:"description" validate:"max=500" example:"Product A description"`
 	Price       float64 `json:"price" validate:"required,gt=0" example:"99.99"`
@@ -81,17 +81,17 @@ func (h *ProductHandler) Register(router *gin.RouterGroup) {
 //	@Failure		500			{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/products [get]
 func (h *ProductHandler) List(c *gin.Context) {
-	var req ListProductQueryRequest
-	if err := c.ShouldBindQuery(&req); err != nil {
+	var query ListProductQueryRequest
+	if err := c.ShouldBindQuery(&query); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidQueryParams))
 		return
 	}
 
 	input := dto.ListProductsInput{
 		Name:       c.Query("name"),
-		CategoryID: req.CategoryID,
-		Page:       req.Page,
-		Limit:      req.Limit,
+		CategoryID: query.CategoryID,
+		Page:       query.Page,
+		Limit:      query.Limit,
 	}
 
 	if c.GetHeader("Accept") == "text/xml" {
@@ -121,17 +121,17 @@ func (h *ProductHandler) List(c *gin.Context) {
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products [post]
 func (h *ProductHandler) Create(c *gin.Context) {
-	var req CreateProductRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
+	var body CreateProductBodyRequest
+	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 
 	input := dto.CreateProductInput{
-		Name:        req.Name,
-		Description: req.Description,
-		Price:       req.Price,
-		CategoryID:  req.CategoryID,
+		Name:        body.Name,
+		Description: body.Description,
+		Price:       body.Price,
+		CategoryID:  body.CategoryID,
 	}
 
 	if c.GetHeader("Accept") == "text/xml" {
@@ -162,14 +162,14 @@ func (h *ProductHandler) Create(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products/{id} [get]
 func (h *ProductHandler) Get(c *gin.Context) {
-	var req GetProductUriRequest
-	if err := c.ShouldBindUri(&req); err != nil {
+	var uri GetProductUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.GetProductInput{
-		ID: req.ID,
+		ID: uri.ID,
 	}
 
 	if c.GetHeader("Accept") == "text/xml" {
@@ -201,24 +201,24 @@ func (h *ProductHandler) Get(c *gin.Context) {
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products/{id} [put]
 func (h *ProductHandler) Update(c *gin.Context) {
-	var reqUri UpdateProductUriRequest
-	if err := c.ShouldBindUri(&reqUri); err != nil {
+	var uri UpdateProductUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
-	var req UpdateProductRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
+	var body UpdateProductBodyRequest
+	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 
 	input := dto.UpdateProductInput{
-		ID:          reqUri.ID,
-		Name:        req.Name,
-		Description: req.Description,
-		Price:       req.Price,
-		CategoryID:  req.CategoryID,
+		ID:          uri.ID,
+		Name:        body.Name,
+		Description: body.Description,
+		Price:       body.Price,
+		CategoryID:  body.CategoryID,
 	}
 
 	if c.GetHeader("Accept") == "text/xml" {
@@ -249,14 +249,14 @@ func (h *ProductHandler) Update(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products/{id} [delete]
 func (h *ProductHandler) Delete(c *gin.Context) {
-	var reqUri DeleteProductUriRequest
-	if err := c.ShouldBindUri(&reqUri); err != nil {
+	var uri DeleteProductUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.DeleteProductInput{
-		ID: reqUri.ID,
+		ID: uri.ID,
 	}
 
 	if c.GetHeader("Accept") == "text/xml" {

@@ -102,16 +102,16 @@ func (h *CustomerHandler) List(c *gin.Context) {
 //	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/customers [post]
 func (h *CustomerHandler) Create(c *gin.Context) {
-	var req CreateCustomerBodyRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
+	var body CreateCustomerBodyRequest
+	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 
 	input := dto.CreateCustomerInput{
-		Name:  req.Name,
-		Email: req.Email,
-		CPF:   req.CPF,
+		Name:  body.Name,
+		Email: body.Email,
+		CPF:   body.CPF,
 	}
 	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
 	err := h.controller.Create(c.Request.Context(), input)
@@ -135,14 +135,14 @@ func (h *CustomerHandler) Create(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/customers/{id} [get]
 func (h *CustomerHandler) Get(c *gin.Context) {
-	var req GetCustomerUriRequest
-	if err := c.ShouldBindUri(&req); err != nil {
+	var uri GetCustomerUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.GetCustomerInput{
-		ID: req.ID,
+		ID: uri.ID,
 	}
 	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
 	err := h.controller.Get(c.Request.Context(), input)
@@ -167,22 +167,22 @@ func (h *CustomerHandler) Get(c *gin.Context) {
 //	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/customers/{id} [put]
 func (h *CustomerHandler) Update(c *gin.Context) {
-	var reqUri UpdateCustomerUriRequest
-	if err := c.ShouldBindUri(&reqUri); err != nil {
+	var uri UpdateCustomerUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
-	var req UpdateCustomerBodyRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
+	var body UpdateCustomerBodyRequest
+	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 
 	input := dto.UpdateCustomerInput{
-		ID:    reqUri.ID,
-		Name:  req.Name,
-		Email: req.Email,
+		ID:    uri.ID,
+		Name:  body.Name,
+		Email: body.Email,
 	}
 	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
 	err := h.controller.Update(c.Request.Context(), input)
@@ -205,14 +205,14 @@ func (h *CustomerHandler) Update(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/customers/{id} [delete]
 func (h *CustomerHandler) Delete(c *gin.Context) {
-	var req DeleteCustomerUriRequest
-	if err := c.ShouldBindUri(&req); err != nil {
+	var uri DeleteCustomerUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.DeleteCustomerInput{
-		ID: req.ID,
+		ID: uri.ID,
 	}
 	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
 	if err := h.controller.Delete(c.Request.Context(), input); err != nil {
