@@ -1239,11 +1239,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: List staffs
       tags:
       - staffs
@@ -1268,11 +1268,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Create staff
       tags:
       - staffs
@@ -1293,15 +1293,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Delete staff
       tags:
       - staffs
@@ -1325,15 +1325,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Get staff
       tags:
       - staffs
@@ -1363,15 +1363,15 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/middleware.ErrorResponse'
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Update staff
       tags:
       - staffs
