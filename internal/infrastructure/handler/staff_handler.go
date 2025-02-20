@@ -42,14 +42,14 @@ func NewStaffHandler(controller *controller.StaffController) *StaffHandler {
 }
 
 func (h *StaffHandler) Register(router *gin.RouterGroup) {
-	router.GET("/", h.ListStaffs)
-	router.POST("/", h.CreateStaff)
-	router.GET("/:id", h.GetStaff)
-	router.PUT("/:id", h.UpdateStaff)
-	router.DELETE("/:id", h.DeleteStaff)
+	router.GET("/", h.List)
+	router.POST("/", h.Create)
+	router.GET("/:id", h.Get)
+	router.PUT("/:id", h.Update)
+	router.DELETE("/:id", h.Delete)
 }
 
-// ListStaffs godoc
+// List godoc
 //
 //	@Summary		List staffs
 //	@Description	List all staffs
@@ -64,7 +64,7 @@ func (h *StaffHandler) Register(router *gin.RouterGroup) {
 //	@Failure		400		{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/staffs [get]
-func (h *StaffHandler) ListStaffs(c *gin.Context) {
+func (h *StaffHandler) List(c *gin.Context) {
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
 
@@ -83,7 +83,7 @@ func (h *StaffHandler) ListStaffs(c *gin.Context) {
 	}
 }
 
-// CreateStaff godoc
+// Create godoc
 //
 //	@Summary		Create staff
 //	@Description	Creates a new staff
@@ -95,7 +95,7 @@ func (h *StaffHandler) ListStaffs(c *gin.Context) {
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs [post]
-func (h *StaffHandler) CreateStaff(c *gin.Context) {
+func (h *StaffHandler) Create(c *gin.Context) {
 	var req StaffRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
@@ -120,7 +120,7 @@ func (h *StaffHandler) CreateStaff(c *gin.Context) {
 	}
 }
 
-// GetStaff godoc
+// Get godoc
 //
 //	@Summary		Get staff
 //	@Description	Search for a staff by ID
@@ -133,7 +133,7 @@ func (h *StaffHandler) CreateStaff(c *gin.Context) {
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs/{id} [get]
-func (h *StaffHandler) GetStaff(c *gin.Context) {
+func (h *StaffHandler) Get(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -151,7 +151,7 @@ func (h *StaffHandler) GetStaff(c *gin.Context) {
 	}
 }
 
-// UpdateStaff godoc
+// Update godoc
 //
 //	@Summary		Update staff
 //	@Description	Update an existing staff
@@ -165,7 +165,7 @@ func (h *StaffHandler) GetStaff(c *gin.Context) {
 //	@Failure		404		{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs/{id} [put]
-func (h *StaffHandler) UpdateStaff(c *gin.Context) {
+func (h *StaffHandler) Update(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -196,7 +196,7 @@ func (h *StaffHandler) UpdateStaff(c *gin.Context) {
 	}
 }
 
-// DeleteStaff godoc
+// Delete godoc
 //
 //	@Summary		Delete staff
 //	@Description	Deletes a staff by ID
@@ -208,7 +208,7 @@ func (h *StaffHandler) UpdateStaff(c *gin.Context) {
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs/{id} [delete]
-func (h *StaffHandler) DeleteStaff(c *gin.Context) {
+func (h *StaffHandler) Delete(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))

@@ -59,15 +59,15 @@ func NewOrderHandler(controller *controller.OrderController) *OrderHandler {
 }
 
 func (h *OrderHandler) Register(router *gin.RouterGroup) {
-	router.GET("/", h.ListOrders)
-	router.POST("/", h.CreateOrder)
-	router.GET("/:id", h.GetOrder)
-	router.PUT("/:id", h.UpdateOrder)
-	router.PATCH("/:id", h.UpdateOrderPartial)
-	router.DELETE("/:id", h.DeleteOrder)
+	router.GET("/", h.List)
+	router.POST("/", h.Create)
+	router.GET("/:id", h.Get)
+	router.PUT("/:id", h.Update)
+	router.PATCH("/:id", h.UpdatePartial)
+	router.DELETE("/:id", h.Delete)
 }
 
-// ListOrders godoc
+// List godoc
 //
 //	@Summary		List orders
 //	@Description	List all orders
@@ -82,7 +82,7 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 //	@Failure		400			{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/orders [get]
-func (h *OrderHandler) ListOrders(c *gin.Context) {
+func (h *OrderHandler) List(c *gin.Context) {
 	var req ListOrdersQueryRequest
 	if err := c.ShouldBindQuery(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -103,7 +103,7 @@ func (h *OrderHandler) ListOrders(c *gin.Context) {
 	}
 }
 
-// CreateOrder godoc
+// Create godoc
 //
 //	@Summary		Create order
 //	@Description	Creates a new order
@@ -115,7 +115,7 @@ func (h *OrderHandler) ListOrders(c *gin.Context) {
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/orders [post]
-func (h *OrderHandler) CreateOrder(c *gin.Context) {
+func (h *OrderHandler) Create(c *gin.Context) {
 	var req CreateOrderBodyRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
@@ -133,7 +133,7 @@ func (h *OrderHandler) CreateOrder(c *gin.Context) {
 	}
 }
 
-// GetOrder godoc
+// Get godoc
 //
 //	@Summary		Get order
 //	@Description	Search for a order by ID
@@ -146,7 +146,7 @@ func (h *OrderHandler) CreateOrder(c *gin.Context) {
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/orders/{id} [get]
-func (h *OrderHandler) GetOrder(c *gin.Context) {
+func (h *OrderHandler) Get(c *gin.Context) {
 	var req GetOrderUriRequest
 	if err := c.ShouldBindUri(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -164,7 +164,7 @@ func (h *OrderHandler) GetOrder(c *gin.Context) {
 	}
 }
 
-// UpdateOrder godoc
+// Update godoc
 //
 //	@Summary		Update order
 //	@Description	Update an existing order
@@ -187,7 +187,7 @@ func (h *OrderHandler) GetOrder(c *gin.Context) {
 //	@Failure		404		{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/orders/{id} [put]
-func (h *OrderHandler) UpdateOrder(c *gin.Context) {
+func (h *OrderHandler) Update(c *gin.Context) {
 	var reqUri UpdateOrderUriRequest
 	if err := c.ShouldBindUri(&reqUri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -213,7 +213,7 @@ func (h *OrderHandler) UpdateOrder(c *gin.Context) {
 	}
 }
 
-// UpdateOrderPartial godoc
+// UpdatePartial godoc
 //
 //	@Summary		Partial update order
 //	@Description	Partially updates an existing order
@@ -236,7 +236,7 @@ func (h *OrderHandler) UpdateOrder(c *gin.Context) {
 //	@Failure		404		{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/orders/{id} [patch]
-func (h *OrderHandler) UpdateOrderPartial(c *gin.Context) {
+func (h *OrderHandler) UpdatePartial(c *gin.Context) {
 	var reqUri UpdateOrderUriRequest
 	if err := c.ShouldBindUri(&reqUri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -263,7 +263,7 @@ func (h *OrderHandler) UpdateOrderPartial(c *gin.Context) {
 	}
 }
 
-// DeleteOrder godoc
+// Delete godoc
 //
 //	@Summary		Delete order
 //	@Description	Deletes a order by ID
@@ -275,7 +275,7 @@ func (h *OrderHandler) UpdateOrderPartial(c *gin.Context) {
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/orders/{id} [delete]
-func (h *OrderHandler) DeleteOrder(c *gin.Context) {
+func (h *OrderHandler) Delete(c *gin.Context) {
 	var req DeleteOrderUriRequest
 	if err := c.ShouldBindUri(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))

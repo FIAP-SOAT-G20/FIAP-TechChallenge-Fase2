@@ -48,14 +48,14 @@ func NewCustomerHandler(controller *controller.CustomerController) *CustomerHand
 }
 
 func (h *CustomerHandler) Register(router *gin.RouterGroup) {
-	router.GET("/", h.ListCustomers)
-	router.POST("/", h.CreateCustomer)
-	router.GET("/:id", h.GetCustomer)
-	router.PUT("/:id", h.UpdateCustomer)
-	router.DELETE("/:id", h.DeleteCustomer)
+	router.GET("/", h.List)
+	router.POST("/", h.Create)
+	router.GET("/:id", h.Get)
+	router.PUT("/:id", h.Update)
+	router.DELETE("/:id", h.Delete)
 }
 
-// ListCustomers godoc
+// List godoc
 //
 //	@Summary		List customers
 //	@Description	List all customers
@@ -69,7 +69,7 @@ func (h *CustomerHandler) Register(router *gin.RouterGroup) {
 //	@Failure		400		{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/customers [get]
-func (h *CustomerHandler) ListCustomers(c *gin.Context) {
+func (h *CustomerHandler) List(c *gin.Context) {
 	var query ListCustomersQueryRequest
 	if err := c.ShouldBindQuery(&query); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidQueryParams))
@@ -89,7 +89,7 @@ func (h *CustomerHandler) ListCustomers(c *gin.Context) {
 	}
 }
 
-// CreateCustomer godoc
+// Create godoc
 //
 //	@Summary		Create customer
 //	@Description	Creates a new customer
@@ -101,7 +101,7 @@ func (h *CustomerHandler) ListCustomers(c *gin.Context) {
 //	@Failure		400			{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/customers [post]
-func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
+func (h *CustomerHandler) Create(c *gin.Context) {
 	var req CreateCustomerBodyRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
@@ -121,7 +121,7 @@ func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
 	}
 }
 
-// GetCustomer godoc
+// Get godoc
 //
 //	@Summary		Get customer
 //	@Description	Search for a customer by ID
@@ -134,7 +134,7 @@ func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/customers/{id} [get]
-func (h *CustomerHandler) GetCustomer(c *gin.Context) {
+func (h *CustomerHandler) Get(c *gin.Context) {
 	var req GetCustomerUriRequest
 	if err := c.ShouldBindUri(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -152,7 +152,7 @@ func (h *CustomerHandler) GetCustomer(c *gin.Context) {
 	}
 }
 
-// UpdateCustomer godoc
+// Update godoc
 //
 //	@Summary		Update customer
 //	@Description	Update an existing customer
@@ -166,7 +166,7 @@ func (h *CustomerHandler) GetCustomer(c *gin.Context) {
 //	@Failure		404			{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/customers/{id} [put]
-func (h *CustomerHandler) UpdateCustomer(c *gin.Context) {
+func (h *CustomerHandler) Update(c *gin.Context) {
 	var reqUri UpdateCustomerUriRequest
 	if err := c.ShouldBindUri(&reqUri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -192,7 +192,7 @@ func (h *CustomerHandler) UpdateCustomer(c *gin.Context) {
 	}
 }
 
-// DeleteCustomer godoc
+// Delete godoc
 //
 //	@Summary		Delete customer
 //	@Description	Deletes a customer by ID
@@ -204,7 +204,7 @@ func (h *CustomerHandler) UpdateCustomer(c *gin.Context) {
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/customers/{id} [delete]
-func (h *CustomerHandler) DeleteCustomer(c *gin.Context) {
+func (h *CustomerHandler) Delete(c *gin.Context) {
 	var req DeleteCustomerUriRequest
 	if err := c.ShouldBindUri(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))

@@ -8,8 +8,8 @@ import (
 )
 
 type CustomerController struct {
-	useCase port.CustomerUseCase
-	Presenter  port.CustomerPresenter
+	useCase   port.CustomerUseCase
+	Presenter port.CustomerPresenter
 }
 
 func NewCustomerController(useCase port.CustomerUseCase) *CustomerController {

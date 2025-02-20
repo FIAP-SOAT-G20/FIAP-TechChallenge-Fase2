@@ -57,14 +57,14 @@ func NewProductHandler(controller *controller.ProductController) *ProductHandler
 }
 
 func (h *ProductHandler) Register(router *gin.RouterGroup) {
-	router.GET("/", h.ListProducts)
-	router.POST("/", h.CreateProduct)
-	router.GET("/:id", h.GetProduct)
-	router.PUT("/:id", h.UpdateProduct)
-	router.DELETE("/:id", h.DeleteProduct)
+	router.GET("/", h.List)
+	router.POST("/", h.Create)
+	router.GET("/:id", h.Get)
+	router.PUT("/:id", h.Update)
+	router.DELETE("/:id", h.Delete)
 }
 
-// ListProducts godoc
+// List godoc
 //
 //	@Summary		List products
 //	@Description	List all products
@@ -80,7 +80,7 @@ func (h *ProductHandler) Register(router *gin.RouterGroup) {
 //	@Failure		400			{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/products [get]
-func (h *ProductHandler) ListProducts(c *gin.Context) {
+func (h *ProductHandler) List(c *gin.Context) {
 	var req ListProductQueryRequest
 	if err := c.ShouldBindQuery(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidQueryParams))
@@ -107,7 +107,7 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 	}
 }
 
-// CreateProduct godoc
+// Create godoc
 //
 //	@Summary		Create product
 //	@Description	Creates a new product
@@ -120,7 +120,7 @@ func (h *ProductHandler) ListProducts(c *gin.Context) {
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products [post]
-func (h *ProductHandler) CreateProduct(c *gin.Context) {
+func (h *ProductHandler) Create(c *gin.Context) {
 	var req CreateProductRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
@@ -147,7 +147,7 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 	}
 }
 
-// GetProduct godoc
+// Get godoc
 //
 //	@Summary		Get product
 //	@Description	Search for a product by ID
@@ -161,7 +161,7 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products/{id} [get]
-func (h *ProductHandler) GetProduct(c *gin.Context) {
+func (h *ProductHandler) Get(c *gin.Context) {
 	var req GetProductUriRequest
 	if err := c.ShouldBindUri(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -185,7 +185,7 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 	}
 }
 
-// UpdateProduct godoc
+// Update godoc
 //
 //	@Summary		Update product
 //	@Description	Update an existing product
@@ -200,7 +200,7 @@ func (h *ProductHandler) GetProduct(c *gin.Context) {
 //	@Failure		404		{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products/{id} [put]
-func (h *ProductHandler) UpdateProduct(c *gin.Context) {
+func (h *ProductHandler) Update(c *gin.Context) {
 	var reqUri UpdateProductUriRequest
 	if err := c.ShouldBindUri(&reqUri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -234,7 +234,7 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 	}
 }
 
-// DeleteProduct godoc
+// Delete godoc
 //
 //	@Summary		Delete product
 //	@Description	Deletes a product by ID
@@ -248,7 +248,7 @@ func (h *ProductHandler) UpdateProduct(c *gin.Context) {
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products/{id} [delete]
-func (h *ProductHandler) DeleteProduct(c *gin.Context) {
+func (h *ProductHandler) Delete(c *gin.Context) {
 	var reqUri DeleteProductUriRequest
 	if err := c.ShouldBindUri(&reqUri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))

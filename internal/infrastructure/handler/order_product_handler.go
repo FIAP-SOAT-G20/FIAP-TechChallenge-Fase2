@@ -55,14 +55,14 @@ func NewOrderProductHandler(controller *controller.OrderProductController) *Orde
 }
 
 func (h *OrderProductHandler) Register(router *gin.RouterGroup) {
-	router.GET("/", h.ListOrderProducts)
-	router.POST("/:order_id/:product_id", h.CreateOrderProduct)
-	router.GET("/:order_id/:product_id", h.GetOrderProduct)
-	router.PUT("/:order_id/:product_id", h.UpdateOrderProduct)
-	router.DELETE("/:order_id/:product_id", h.DeleteOrderProduct)
+	router.GET("/", h.List)
+	router.POST("/:order_id/:product_id", h.Create)
+	router.GET("/:order_id/:product_id", h.Get)
+	router.PUT("/:order_id/:product_id", h.Update)
+	router.DELETE("/:order_id/:product_id", h.Delete)
 }
 
-// ListOrderProducts godoc
+// List godoc
 //
 //	@Summary		List orders
 //	@Description	List all orders
@@ -76,7 +76,7 @@ func (h *OrderProductHandler) Register(router *gin.RouterGroup) {
 //	@Failure		400			{object}	middleware.ErrorJsonResponse				"Bad Request"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse				"Internal Server Error"
 //	@Router			/api/v1/orders/products [get]
-func (h *OrderProductHandler) ListOrderProducts(c *gin.Context) {
+func (h *OrderProductHandler) List(c *gin.Context) {
 	var req ListOrderProductsQueryRequest
 	if err := c.ShouldBindQuery(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -99,7 +99,7 @@ func (h *OrderProductHandler) ListOrderProducts(c *gin.Context) {
 
 //	@Router	/orders [post]
 
-// CreateOrderProduct godoc
+// Create godoc
 //
 //	@Summary		Create an order product
 //	@Description	Create an order product
@@ -112,7 +112,7 @@ func (h *OrderProductHandler) ListOrderProducts(c *gin.Context) {
 //	@Success		201			{object}	presenter.OrderProductJsonResponse	"Created"
 //	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [post]
-func (h *OrderProductHandler) CreateOrderProduct(c *gin.Context) {
+func (h *OrderProductHandler) Create(c *gin.Context) {
 	var reqUri CreateOrderProductUriRequest
 	if err := c.ShouldBindUri(&reqUri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -138,7 +138,7 @@ func (h *OrderProductHandler) CreateOrderProduct(c *gin.Context) {
 	}
 }
 
-// GetOrderProduct godoc
+// Get godoc
 //
 //	@Summary		Get an order product
 //	@Description	Get an order product
@@ -152,7 +152,7 @@ func (h *OrderProductHandler) CreateOrderProduct(c *gin.Context) {
 //	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [get]
-func (h *OrderProductHandler) GetOrderProduct(c *gin.Context) {
+func (h *OrderProductHandler) Get(c *gin.Context) {
 	var req GetOrderProductUriRequest
 	if err := c.ShouldBindUri(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -171,7 +171,7 @@ func (h *OrderProductHandler) GetOrderProduct(c *gin.Context) {
 	}
 }
 
-// UpdateOrderProduct godoc
+// Update godoc
 //
 //	@Summary		Update order
 //	@Description	Update an existing order
@@ -186,7 +186,7 @@ func (h *OrderProductHandler) GetOrderProduct(c *gin.Context) {
 //	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [put]
-func (h *OrderProductHandler) UpdateOrderProduct(c *gin.Context) {
+func (h *OrderProductHandler) Update(c *gin.Context) {
 	var reqUri UpdateOrderProductUriRequest
 	if err := c.ShouldBindUri(&reqUri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -211,7 +211,7 @@ func (h *OrderProductHandler) UpdateOrderProduct(c *gin.Context) {
 	}
 }
 
-// DeleteOrderProduct godoc
+// Delete godoc
 //
 //	@Summary		Delete orderProduct
 //	@Description	Deletes a orderProduct by Order ID and Product ID
@@ -224,7 +224,7 @@ func (h *OrderProductHandler) UpdateOrderProduct(c *gin.Context) {
 //	@Failure		404			{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [delete]
-func (h *OrderProductHandler) DeleteOrderProduct(c *gin.Context) {
+func (h *OrderProductHandler) Delete(c *gin.Context) {
 	var req DeleteOrderProductUriRequest
 	if err := c.ShouldBindUri(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))

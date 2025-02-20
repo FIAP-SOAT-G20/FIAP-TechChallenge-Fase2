@@ -8,8 +8,8 @@ import (
 )
 
 type OrderController struct {
-	useCase port.OrderUseCase
-	Presenter    port.OrderPresenter
+	useCase   port.OrderUseCase
+	Presenter port.OrderPresenter
 }
 
 func NewOrderController(
