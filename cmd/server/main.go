@@ -3,14 +3,9 @@ package main
 import (
 	"os"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/staff"
-
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/gateway"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/customer"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/order"
-	orderproduct "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/order_product"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/product"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/database"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/datasource"
@@ -87,11 +82,11 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	staffGateway := gateway.NewStaffGateway(staffDS)
 
 	// Use cases
-	productUC := product.NewProductUseCase(productGateway)
-	customerUC := customer.NewCustomerUseCase(customerGateway)
-	orderUC := order.NewOrderUseCase(orderGateway)
-	orderProductUC := orderproduct.NewOrderProductUseCase(orderProductGateway)
-	staffUC := staff.NewStaffUseCase(staffGateway)
+	productUC := usecase.NewProductUseCase(productGateway)
+	customerUC := usecase.NewCustomerUseCase(customerGateway)
+	orderUC := usecase.NewOrderUseCase(orderGateway)
+	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
+	staffUC := usecase.NewStaffUseCase(staffGateway)
 
 	// Controllers
 	productController := controller.NewProductController(productUC)

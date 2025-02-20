@@ -1,108 +1,108 @@
-package order_test
+package usecase
 
 import (
 	"context"
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
-	"go.uber.org/mock/gomock"
-
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/order"
+	"github.com/stretchr/testify/assert"
+	"go.uber.org/mock/gomock"
 )
 
-func TestOrdersUseCase_List(t *testing.T) {
+func TestStaffsUseCase_List(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	useCase := order.NewOrderUseCase(mockGateway)
+	mockGateway := mockport.NewMockStaffGateway(ctrl)
+	useCase := NewStaffUseCase(mockGateway)
 	ctx := context.Background()
 
 	currentTime := time.Now()
-	mockOrders := []*entity.Order{
+	mockStaffs := []*entity.Staff{
 		{
-			ID:         1,
-			CustomerID: uint64(1),
-			TotalBill:  99.99,
-			Status:     valueobject.PENDING,
-			CreatedAt:  currentTime,
-			UpdatedAt:  currentTime,
+			ID:        1,
+			Name:      "Test Staff 1",
+			Role:      "COOK",
+			CreatedAt: currentTime,
+			UpdatedAt: currentTime,
 		},
 		{
-			ID:         2,
-			CustomerID: uint64(2),
-			TotalBill:  199.99,
-			Status:     valueobject.PENDING,
-			CreatedAt:  currentTime,
-			UpdatedAt:  currentTime,
+			ID:        2,
+			Name:      "Test Staff 2",
+			Role:      "COOK",
+			CreatedAt: currentTime,
+			UpdatedAt: currentTime,
 		},
 	}
 
 	tests := []struct {
 		name        string
-		input       dto.ListOrdersInput
+		input       dto.ListStaffsInput
 		setupMocks  func()
 		expectError bool
 		errorType   error
 	}{
 		{
-			name: "should list orders successfully",
-			input: dto.ListOrdersInput{
+			name: "should list staffs successfully",
+			input: dto.ListStaffsInput{
 				Page:  1,
 				Limit: 10,
 			},
 			setupMocks: func() {
+				var role valueobject.StaffRole
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), valueobject.OrderStatus(""), 1, 10).
-					Return(mockOrders, int64(2), nil)
+					FindAll(ctx, "", role, 1, 10).
+					Return(mockStaffs, int64(2), nil)
 			},
 			expectError: false,
 		},
 		{
 			name: "should return error when repository fails",
-			input: dto.ListOrdersInput{
+			input: dto.ListStaffsInput{
 				Page:  1,
 				Limit: 10,
 			},
 			setupMocks: func() {
+				var role valueobject.StaffRole
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), valueobject.OrderStatus(""), 1, 10).
+					FindAll(ctx, "", role, 1, 10).
 					Return(nil, int64(0), assert.AnError)
 			},
 			expectError: true,
 			errorType:   &domain.InternalError{},
 		},
 		{
-			name: "should filter by status",
-			input: dto.ListOrdersInput{
-				Status: "PENDING",
-				Page:   1,
-				Limit:  10,
+			name: "should filter by name",
+			input: dto.ListStaffsInput{
+				Name:  "Test",
+				Page:  1,
+				Limit: 10,
 			},
 			setupMocks: func() {
+				var role valueobject.StaffRole
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), valueobject.OrderStatus("PENDING"), 1, 10).
-					Return(mockOrders, int64(2), nil)
+					FindAll(ctx, "Test", role, 1, 10).
+					Return(mockStaffs, int64(2), nil)
 			},
 			expectError: false,
 		},
 		{
-			name: "should filter by customer",
-			input: dto.ListOrdersInput{
-				CustomerID: 1,
-				Page:       1,
-				Limit:      10,
+			name: "should filter by Role",
+			input: dto.ListStaffsInput{
+				Role:  "COOK",
+				Page:  1,
+				Limit: 10,
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(1), valueobject.OrderStatus(""), 1, 10).
-					Return(mockOrders, int64(2), nil)
+					FindAll(ctx, "", valueobject.COOK, 1, 10).
+					Return(mockStaffs, int64(2), nil)
+
 			},
 			expectError: false,
 		},
@@ -112,44 +112,40 @@ func TestOrdersUseCase_List(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			orders, total, err := useCase.List(ctx, tt.input)
+			_, _, err := useCase.List(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
-				assert.Nil(t, orders)
-				assert.Zero(t, total)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
-				assert.NotNil(t, orders)
-				assert.Len(t, orders, 2)
-				assert.Equal(t, int64(2), total)
 			}
 		})
 	}
 }
 
-func TestOrderUseCase_Create(t *testing.T) {
+func TestStaffUseCase_Create(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	useCase := order.NewOrderUseCase(mockGateway)
+	mockGateway := mockport.NewMockStaffGateway(ctrl)
+	useCase := NewStaffUseCase(mockGateway)
 	ctx := context.Background()
 
 	tests := []struct {
 		name        string
-		input       dto.CreateOrderInput
+		input       dto.CreateStaffInput
 		setupMocks  func()
 		expectError bool
 		errorType   error
 	}{
 		{
-			name: "should create order successfully",
-			input: dto.CreateOrderInput{
-				CustomerID: 1,
+			name: "should create staff successfully",
+			input: dto.CreateStaffInput{
+				Name: "John Smith",
+				Role: "COOK",
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -160,8 +156,9 @@ func TestOrderUseCase_Create(t *testing.T) {
 		},
 		{
 			name: "should return error when gateway fails",
-			input: dto.CreateOrderInput{
-				CustomerID: 1,
+			input: dto.CreateStaffInput{
+				Name: "John Smith",
+				Role: "COOK",
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -177,39 +174,35 @@ func TestOrderUseCase_Create(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			order, err := useCase.Create(ctx, tt.input)
+			_, err := useCase.Create(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
-				assert.Nil(t, order)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
-				assert.NotNil(t, order)
-				assert.Equal(t, tt.input.CustomerID, order.CustomerID)
 			}
 		})
 	}
 }
 
-func TestOrderUseCase_Get(t *testing.T) {
+func TestStaffUseCase_Get(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	useCase := order.NewOrderUseCase(mockGateway)
+	mockGateway := mockport.NewMockStaffGateway(ctrl)
+	useCase := NewStaffUseCase(mockGateway)
 	ctx := context.Background()
 
 	currentTime := time.Now()
-	mockOrder := &entity.Order{
-		ID:         1,
-		CustomerID: 1,
-		Status:     "PENDING",
-		TotalBill:  100.0,
-		CreatedAt:  currentTime,
-		UpdatedAt:  currentTime,
+	mockStaff := &entity.Staff{
+		ID:        1,
+		Name:      "Test Staff",
+		Role:      "COOK",
+		CreatedAt: currentTime,
+		UpdatedAt: currentTime,
 	}
 
 	tests := []struct {
@@ -220,17 +213,17 @@ func TestOrderUseCase_Get(t *testing.T) {
 		errorType   error
 	}{
 		{
-			name: "should get order successfully",
+			name: "should get product successfully",
 			id:   1,
 			setupMocks: func() {
 				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
-					Return(mockOrder, nil)
+					Return(mockStaff, nil)
 			},
 			expectError: false,
 		},
 		{
-			name: "should return not found error when order doesn't exist",
+			name: "should return not found error when staff doesn't exist",
 			id:   1,
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -257,79 +250,75 @@ func TestOrderUseCase_Get(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			order, err := useCase.Get(ctx, dto.GetOrderInput{
+			_, err := useCase.Get(ctx, dto.GetStaffInput{
 				ID: tt.id,
 			})
 
 			if tt.expectError {
 				assert.Error(t, err)
-				assert.Nil(t, order)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
-				assert.NotNil(t, order)
-				assert.Equal(t, mockOrder.ID, order.ID)
-				assert.Equal(t, mockOrder.CustomerID, order.CustomerID)
-				assert.Equal(t, mockOrder.Status, order.Status)
 			}
 		})
 	}
 }
 
-func TestOrderUseCase_Update(t *testing.T) {
+func TestStaffUseCase_Update(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	useCase := order.NewOrderUseCase(mockGateway)
+	mockGateway := mockport.NewMockStaffGateway(ctrl)
+
+	useCase := NewStaffUseCase(mockGateway)
 	ctx := context.Background()
 
 	currentTime := time.Now()
-	existingOrder := &entity.Order{
-		ID:         1,
-		CustomerID: 1,
-		Status:     "PENDING",
-		TotalBill:  100.0,
-		CreatedAt:  currentTime,
-		UpdatedAt:  currentTime,
+	existingStaff := &entity.Staff{
+		ID:        1,
+		Name:      "John Smith",
+		Role:      "COOK",
+		CreatedAt: currentTime,
+		UpdatedAt: currentTime,
 	}
 
 	tests := []struct {
 		name        string
-		input       dto.UpdateOrderInput
+		input       dto.UpdateStaffInput
 		setupMocks  func()
 		expectError bool
 		errorType   error
 	}{
 		{
-			name: "should update order successfully",
-			input: dto.UpdateOrderInput{
-				ID:         1,
-				CustomerID: 1,
-				Status:     "RECEIVED",
+			name: "should update staff successfully",
+			input: dto.UpdateStaffInput{
+				ID:   1,
+				Name: "New Name",
+				Role: "ATTENDANT",
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
-					Return(existingOrder, nil)
+					Return(existingStaff, nil)
 
 				mockGateway.EXPECT().
 					Update(ctx, gomock.Any()).
-					DoAndReturn(func(_ context.Context, p *entity.Order) error {
-						assert.Equal(t, uint64(1), p.ID)
+					DoAndReturn(func(_ context.Context, p *entity.Staff) error {
+						assert.Equal(t, "New Name", p.Name)
+						assert.Equal(t, "ATTENDANT", string(p.Role))
 						return nil
 					})
 			},
 			expectError: false,
 		},
 		{
-			name: "should return error when order not found",
-			input: dto.UpdateOrderInput{
-				ID:         1,
-				CustomerID: 1,
-				Status:     "RECEIVED",
+			name: "should return error when staff not found",
+			input: dto.UpdateStaffInput{
+				ID:   1,
+				Name: "New Name",
+				Role: "ATTENDANT",
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -341,15 +330,15 @@ func TestOrderUseCase_Update(t *testing.T) {
 		},
 		{
 			name: "should return error when gateway update fails",
-			input: dto.UpdateOrderInput{
-				ID:         1,
-				CustomerID: 1,
-				Status:     "RECEIVED",
+			input: dto.UpdateStaffInput{
+				ID:   1,
+				Name: "New Name",
+				Role: "ATTENDANT",
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
-					Return(existingOrder, nil)
+					Return(existingStaff, nil)
 
 				mockGateway.EXPECT().
 					Update(ctx, gomock.Any()).
@@ -364,29 +353,26 @@ func TestOrderUseCase_Update(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			order, err := useCase.Update(ctx, tt.input)
+			_, err := useCase.Update(ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
-				assert.Nil(t, order)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
-				assert.NotNil(t, order)
-				assert.Equal(t, tt.input.Status, order.Status)
 			}
 		})
 	}
 }
 
-func TestOrderUseCase_Delete(t *testing.T) {
+func TestStaffUseCase_Delete(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	useCase := order.NewOrderUseCase(mockGateway)
+	mockGateway := mockport.NewMockStaffGateway(ctrl)
+	useCase := NewStaffUseCase(mockGateway)
 	ctx := context.Background()
 
 	tests := []struct {
@@ -397,12 +383,12 @@ func TestOrderUseCase_Delete(t *testing.T) {
 		errorType   error
 	}{
 		{
-			name: "should delete order successfully",
+			name: "should delete product successfully",
 			id:   1,
 			setupMocks: func() {
 				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
-					Return(&entity.Order{ID: 1}, nil)
+					Return(&entity.Staff{}, nil)
 
 				mockGateway.EXPECT().
 					Delete(ctx, uint64(1)).
@@ -411,7 +397,7 @@ func TestOrderUseCase_Delete(t *testing.T) {
 			expectError: false,
 		},
 		{
-			name: "should return not found error when order doesn't exist",
+			name: "should return not found error when staff doesn't exist",
 			id:   1,
 			setupMocks: func() {
 				mockGateway.EXPECT().
@@ -438,7 +424,7 @@ func TestOrderUseCase_Delete(t *testing.T) {
 			setupMocks: func() {
 				mockGateway.EXPECT().
 					FindByID(ctx, uint64(1)).
-					Return(&entity.Order{}, nil)
+					Return(&entity.Staff{}, nil)
 
 				mockGateway.EXPECT().
 					Delete(ctx, uint64(1)).
@@ -453,18 +439,15 @@ func TestOrderUseCase_Delete(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			order, err := useCase.Delete(ctx, dto.DeleteOrderInput{ID: tt.id})
+			_, err := useCase.Delete(ctx, dto.DeleteStaffInput{ID: tt.id})
 
 			if tt.expectError {
 				assert.Error(t, err)
-				assert.Nil(t, order)
 				if tt.errorType != nil {
 					assert.IsType(t, tt.errorType, err)
 				}
 			} else {
 				assert.NoError(t, err)
-				assert.NotNil(t, order)
-				assert.Equal(t, tt.id, order.ID)
 			}
 		})
 	}

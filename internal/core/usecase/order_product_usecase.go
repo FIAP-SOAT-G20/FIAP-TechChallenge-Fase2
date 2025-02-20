@@ -1,4 +1,4 @@
-package orderproduct
+package usecase
 
 import (
 	"context"
