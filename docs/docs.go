@@ -973,7 +973,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.CreateProductRequest"
+                            "$ref": "#/definitions/handler.CreateProductBodyRequest"
                         }
                     }
                 ],
@@ -1076,7 +1076,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.UpdateProductRequest"
+                            "$ref": "#/definitions/handler.UpdateProductBodyRequest"
                         }
                     }
                 ],
@@ -1235,7 +1235,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.StaffRequest"
+                            "$ref": "#/definitions/handler.CreateStaffBodyRequest"
                         }
                     }
                 ],
@@ -1336,7 +1336,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.StaffRequest"
+                            "$ref": "#/definitions/handler.UpdateStaffBodyRequest"
                         }
                     }
                 ],
@@ -1460,7 +1460,7 @@ const docTemplate = `{
                 }
             }
         },
-        "handler.CreateProductRequest": {
+        "handler.CreateProductBodyRequest": {
             "type": "object",
             "required": [
                 "category_id",
@@ -1489,7 +1489,7 @@ const docTemplate = `{
                 }
             }
         },
-        "handler.StaffRequest": {
+        "handler.CreateStaffBodyRequest": {
             "type": "object",
             "required": [
                 "name"
@@ -1587,7 +1587,7 @@ const docTemplate = `{
                 }
             }
         },
-        "handler.UpdateProductRequest": {
+        "handler.UpdateProductBodyRequest": {
             "type": "object",
             "required": [
                 "category_id",
@@ -1613,6 +1613,29 @@ const docTemplate = `{
                 "price": {
                     "type": "number",
                     "example": 99.99
+                }
+            }
+        },
+        "handler.UpdateStaffBodyRequest": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "John Doe"
+                },
+                "role": {
+                    "maxLength": 500,
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/valueobject.StaffRole"
+                        }
+                    ],
+                    "example": "COOK"
                 }
             }
         },
