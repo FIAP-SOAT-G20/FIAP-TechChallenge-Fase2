@@ -12,7 +12,7 @@ type UpdateOrderInput struct {
 	ID         uint64
 	CustomerID uint64
 	Status     valueobject.OrderStatus
-	// Payment       Payment
+	StaffID    uint64
 }
 
 type GetOrderInput struct {

@@ -52,9 +52,9 @@ func ToOrderStatus(status string) OrderStatus {
 var OrderStatusTransitions = map[OrderStatus][]OrderStatus{
 	OPEN:      {CANCELLED, PENDING},
 	CANCELLED: {},
-	PENDING:   {OPEN, RECEIVED},
-	RECEIVED:  {PREPARING},
-	PREPARING: {READY},
+	PENDING:   {OPEN, RECEIVED, CANCELLED},
+	RECEIVED:  {PREPARING, CANCELLED},
+	PREPARING: {READY, CANCELLED},
 	READY:     {COMPLETED},
 	COMPLETED: {},
 }

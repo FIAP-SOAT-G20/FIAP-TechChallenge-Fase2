@@ -74,14 +74,9 @@ func (uc *orderUseCase) Update(ctx context.Context, input dto.UpdateOrderInput) 
 			return nil, domain.NewInvalidInputError(domain.ErrInvalidBody)
 		}
 
-		// TODO: Implement this validation when staff is implemented
-		// if entity.StatusTransitionNeedsStaffID(order.Status) && staffID == nil {
-		// 	return domain.NewInternalError(errors.New(domain.ErrOrderMandatoryStaffId))
-		// }
-
-		// if order.Status == entity.PENDING && len(order.OrderProducts) == 0 {
-		// 	return domain.ErrOrderWithoutProducts
-		// }
+		if valueobject.StatusTransitionNeedsStaffID(input.Status) && input.StaffID == 0 {
+			return nil, domain.NewInvalidInputError(domain.ErrStaffIdIsMandatory)
+		}
 	}
 
 	order.Update(input.CustomerID, input.Status)

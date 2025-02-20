@@ -14,11 +14,10 @@ var (
 
 	ErrOrderInvalidStatusTransition = "invalid status transition"
 	ErrOrderWithoutProducts         = "order without products"
-	ErrOrderMandatoryStaffId        = "order mandatory staff id"
-	ErrOrderIdMandatory             = "order id mandatory"
-	ErrOrderIsNotOnStatusOpen       = "order is not on status open"
-
-	ErrProductIdMandatory = "product id mandatory"
+	ErrProductIsMandatory           = "product is mandatory"
+	ErrStaffIdIsMandatory           = "staff is mandatory"
+	ErrOrderIsMandatory             = "order is mandatory"
+	ErrOrderIsNotOpen               = "order is not on status open"
 
 	ErrPageMustBeGreaterThanZero = "page must be greater than zero"
 	ErrLimitMustBeBetween1And100 = "limit must be between 1 and 100"

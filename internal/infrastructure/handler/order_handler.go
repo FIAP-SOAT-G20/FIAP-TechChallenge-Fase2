@@ -37,17 +37,23 @@ type UpdateOrderUriRequest struct {
 }
 
 type UpdateOrderBodyRequest struct {
+	// StaffID is only required when status is PREPARING, READY or COMPLETED
+	StaffID    uint64                  `json:"staff_id" example:"1"`
 	CustomerID uint64                  `json:"customer_id" binding:"required" example:"1"`
 	Status     valueobject.OrderStatus `json:"status" binding:"required,order_status_exists" example:"PENDING"`
 }
 
 type UpdateOrderPartilRequest struct {
-	Status valueobject.OrderStatus `json:"status" example:"PENDING"`
+	// StaffID is only required when status is PREPARING, READY or COMPLETED
+	StaffID uint64                  `json:"staff_id" example:"1"`
+	Status  valueobject.OrderStatus `json:"status" example:"PENDING"`
 }
 
 type UpdateOrderPartilBodyRequest struct {
-	CustomerID uint64                  `json:"customer_id" example:"1"`
-	Status     valueobject.OrderStatus `json:"status" binding:"omitempty,order_status_exists" example:"PENDING"`
+	CustomerID uint64 `json:"customer_id" example:"1"`
+	// StaffID is only required when status is PREPARING, READY or COMPLETED
+	StaffID uint64                  `json:"staff_id" example:"1"`
+	Status  valueobject.OrderStatus `json:"status" binding:"omitempty,order_status_exists" example:"PENDING"`
 }
 
 type DeleteOrderUriRequest struct {
@@ -204,6 +210,7 @@ func (h *OrderHandler) Update(c *gin.Context) {
 		ID:         reqUri.ID,
 		CustomerID: req.CustomerID,
 		Status:     req.Status,
+		StaffID:    req.StaffID,
 	}
 
 	err := h.controller.Update(c.Request.Context(), input)
@@ -254,6 +261,7 @@ func (h *OrderHandler) UpdatePartial(c *gin.Context) {
 		ID:         reqUri.ID,
 		CustomerID: req.CustomerID,
 		Status:     req.Status,
+		StaffID:    req.StaffID,
 	}
 
 	err := h.controller.Update(c.Request.Context(), input)
