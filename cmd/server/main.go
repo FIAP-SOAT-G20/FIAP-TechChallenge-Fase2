@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/staff"
 	"os"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
@@ -74,12 +75,14 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	// Datasource's
 	productDS := datasource.NewProductDataSource(db.DB)
 	customerDS := datasource.NewCustomerDataSource(db.DB)
+	staffDS := datasource.NewStaffDataSource(db.DB)
 	orderDS := datasource.NewOrderDataSource(db.DB)
 	orderProductDS := datasource.NewOrderProductDataSource(db.DB)
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
 	customerGateway := gateway.NewCustomerGateway(customerDS)
+	staffGateway := gateway.NewStaffGateway(staffDS)
 	orderGateway := gateway.NewOrderGateway(orderDS)
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
 
@@ -87,6 +90,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	productPresenter := presenter.NewProductJsonPresenter()
 	// productPresenter := presenter.NewProductXmlPresenter()
 	customerPresenter := presenter.NewCustomerJsonPresenter()
+	staffPresenter := presenter.NewStaffJsonPresenter()
 	orderPresenter := presenter.NewOrderJsonPresenter()
 	orderProductPresenter := presenter.NewOrderProductJsonPresenter()
 
@@ -102,6 +106,9 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	getCustomerUC := customer.NewGetCustomerUseCase(customerGateway, customerPresenter)
 	updateCustomerUC := customer.NewUpdateCustomerUseCase(customerGateway, customerPresenter)
 	deleteCustomerUC := customer.NewDeleteCustomerUseCase(customerGateway, customerPresenter)
+
+	staffUC := staff.NewStaffUseCase(staffGateway)
+
 	// Use cases - Order
 	listOrdersUC := order.NewListOrdersUseCase(orderGateway, orderPresenter)
 	createOrderUC := order.NewCreateOrderUseCase(orderGateway, orderPresenter)
@@ -145,15 +152,20 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		deleteOrderProductUC,
 	)
 
+	staffController := controller.NewStaffController(staffUC, staffPresenter)
+
 	// Handlers
 	productHandler := handler.NewProductHandler(productController)
 	customerHandler := handler.NewCustomerHandler(customerController)
+
+	staffHandler := handler.NewStaffHandler(staffController)
 	orderHandler := handler.NewOrderHandler(orderController)
 	orderProductHandler := handler.NewOrderProductHandler(orderProductController)
 
 	return &route.Handlers{
 		Product:      productHandler,
 		Customer:     customerHandler,
+		Staff:        staffHandler,
 		Order:        orderHandler,
 		OrderProduct: orderProductHandler,
 	}

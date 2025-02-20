@@ -48,13 +48,9 @@ func (r *Router) RegisterRoutes(handlers *Handlers) {
 	// API v1
 	v1 := r.engine.Group("/api/v1")
 	{
-		// Products
-		products := v1.Group("/products")
-		handlers.Product.Register(products)
-
-		// Customers
-		customers := v1.Group("/customers")
-		handlers.Customer.Register(customers)
+		handlers.Product.Register(v1.Group("/products"))
+		handlers.Customer.Register(v1.Group("/customers"))
+		handlers.Staff.Register(v1.Group("/staffs"))
 
 		// Orders
 		orders := v1.Group("/orders")
@@ -80,6 +76,7 @@ func (r *Router) Engine() *gin.Engine {
 type Handlers struct {
 	Product      *handler.ProductHandler
 	Customer     *handler.CustomerHandler
+	Staff        *handler.StaffHandler
 	Order        *handler.OrderHandler
 	OrderProduct *handler.OrderProductHandler
 }
