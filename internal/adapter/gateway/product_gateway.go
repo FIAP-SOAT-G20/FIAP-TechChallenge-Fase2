@@ -17,11 +17,11 @@ func NewProductGateway(dataSource port.ProductDataSource) port.ProductGateway {
 	}
 }
 
-func (pg *productGateway) FindByID(ctx context.Context, id uint64) (*entity.Product, error) {
-	return pg.dataSource.FindByID(ctx, id)
+func (g *productGateway) FindByID(ctx context.Context, id uint64) (*entity.Product, error) {
+	return g.dataSource.FindByID(ctx, id)
 }
 
-func (pg *productGateway) FindAll(ctx context.Context, name string, categoryID uint64, page, limit int) ([]*entity.Product, int64, error) {
+func (g *productGateway) FindAll(ctx context.Context, name string, categoryID uint64, page, limit int) ([]*entity.Product, int64, error) {
 	filters := make(map[string]interface{})
 
 	if name != "" {
@@ -31,17 +31,17 @@ func (pg *productGateway) FindAll(ctx context.Context, name string, categoryID u
 		filters["category_id"] = categoryID
 	}
 
-	return pg.dataSource.FindAll(ctx, filters, page, limit)
+	return g.dataSource.FindAll(ctx, filters, page, limit)
 }
 
-func (pg *productGateway) Create(ctx context.Context, product *entity.Product) error {
-	return pg.dataSource.Create(ctx, product)
+func (g *productGateway) Create(ctx context.Context, product *entity.Product) error {
+	return g.dataSource.Create(ctx, product)
 }
 
-func (pg *productGateway) Update(ctx context.Context, product *entity.Product) error {
-	return pg.dataSource.Update(ctx, product)
+func (g *productGateway) Update(ctx context.Context, product *entity.Product) error {
+	return g.dataSource.Update(ctx, product)
 }
 
-func (pg *productGateway) Delete(ctx context.Context, id uint64) error {
-	return pg.dataSource.Delete(ctx, id)
+func (g *productGateway) Delete(ctx context.Context, id uint64) error {
+	return g.dataSource.Delete(ctx, id)
 }

@@ -7,7 +7,6 @@ import (
 type OrderStatus string
 
 const (
-	UNDEFINDED OrderStatus = "UNDEFINDED"
 	OPEN       OrderStatus = "OPEN"
 	CANCELLED  OrderStatus = "CANCELLED"
 	PENDING    OrderStatus = "PENDING"
@@ -15,6 +14,7 @@ const (
 	PREPARING  OrderStatus = "PREPARING"
 	READY      OrderStatus = "READY"
 	COMPLETED  OrderStatus = "COMPLETED"
+	UNDEFINDED OrderStatus = "UNDEFINDED"
 )
 
 func IsValidOrderStatus(status string) bool {
