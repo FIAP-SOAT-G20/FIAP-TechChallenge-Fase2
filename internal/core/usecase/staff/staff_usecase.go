@@ -15,6 +15,13 @@ type staffUseCase struct {
 	gateway port.StaffGateway
 }
 
+// NewStaffUseCase creates a new StaffUseCase
+func NewStaffUseCase(gateway port.StaffGateway) port.StaffUseCase {
+	return &staffUseCase{
+		gateway: gateway,
+	}
+}
+
 func (s staffUseCase) List(ctx context.Context, input dto.ListStaffsInput) ([]*entity.Staff, int64, error) {
 	role := valueobject.ToStaffRole(input.Role)
 	staffs, total, err := s.gateway.FindAll(ctx, input.Name, role, input.Page, input.Limit)
@@ -90,11 +97,4 @@ func (s staffUseCase) Delete(ctx context.Context, input dto.DeleteStaffInput) (*
 	}
 
 	return staff, nil
-}
-
-// NewStaffUseCase creates a new StaffUseCase
-func NewStaffUseCase(gateway port.StaffGateway) port.StaffUseCase {
-	return &staffUseCase{
-		gateway: gateway,
-	}
 }
