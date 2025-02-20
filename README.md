@@ -45,6 +45,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 │   ├── core
 │   │   ├── domain
 │   │   │   ├── entity
+│   │   │   ├── value_object
 │   │   ├── port
 │   │   └── usecase
 │   └── infrastructure
