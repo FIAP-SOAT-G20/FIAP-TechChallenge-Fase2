@@ -109,7 +109,6 @@ mock:
 	mockgen -source=internal/core/port/staff_gateway_port.go -destination=internal/core/port/mocks/staff_gateway_mock.go
 	mockgen -source=internal/core/port/staff_presenter_port.go -destination=internal/core/port/mocks/staff_presenter_mock.go
 	mockgen -source=internal/core/port/staff_usecase_port.go -destination=internal/core/port/mocks/staff_usecase_mock.go
-	mockgen -source=internal/adapter/dto/response_writer.go -destination=internal/adapter/dto/mocks/response_writer_mock.go
 	mockgen -source=internal/core/port/order_gateway_port.go -destination=internal/core/port/mocks/order_gateway_mock.go
 	mockgen -source=internal/core/port/order_presenter_port.go -destination=internal/core/port/mocks/order_presenter_mock.go
 	mockgen -source=internal/core/port/order_usecase_port.go -destination=internal/core/port/mocks/order_usecase_mock.go
