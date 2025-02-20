@@ -18,9 +18,9 @@ func TestProductController_ListProducts(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockListProductsUseCase := mockport.NewMockListProductsUseCase(ctrl)
+	mockProductsUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	productController := NewProductController(mockListProductsUseCase, nil, nil, nil, nil)
+	productController := NewProductController(mockProductsUseCase)
 	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -53,8 +53,8 @@ func TestProductController_ListProducts(t *testing.T) {
 		},
 	}
 
-	mockListProductsUseCase.EXPECT().
-		Execute(ctx, input).
+	mockProductsUseCase.EXPECT().
+		List(ctx, input).
 		Return(mockProducts, int64(2), nil)
 
 	mockPresenter.EXPECT().
@@ -75,9 +75,9 @@ func TestProductController_CreateProduct(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockCreateProductUseCase := mockport.NewMockCreateProductUseCase(ctrl)
+	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	productController := NewProductController(nil, mockCreateProductUseCase, nil, nil, nil)
+	productController := NewProductController(mockProductUseCase)
 	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -96,8 +96,8 @@ func TestProductController_CreateProduct(t *testing.T) {
 		CategoryID:  1,
 	}
 
-	mockCreateProductUseCase.EXPECT().
-		Execute(ctx, input).
+	mockProductUseCase.EXPECT().
+		Create(ctx, input).
 		Return(mockProduct, nil)
 
 	mockPresenter.EXPECT().
@@ -113,9 +113,9 @@ func TestProductController_GetProduct(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockGetProductUseCase := mockport.NewMockGetProductUseCase(ctrl)
+	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	productController := NewProductController(nil, nil, mockGetProductUseCase, nil, nil)
+	productController := NewProductController(mockProductUseCase)
 	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -131,8 +131,8 @@ func TestProductController_GetProduct(t *testing.T) {
 		CategoryID:  1,
 	}
 
-	mockGetProductUseCase.EXPECT().
-		Execute(ctx, input).
+	mockProductUseCase.EXPECT().
+		Get(ctx, input).
 		Return(mockProduct, nil)
 
 	mockPresenter.EXPECT().
@@ -154,9 +154,9 @@ func TestProductController_UpdateProduct(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockUpdateProductUseCase := mockport.NewMockUpdateProductUseCase(ctrl)
+	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	productController := NewProductController(nil, nil, nil, mockUpdateProductUseCase, nil)
+	productController := NewProductController(mockProductUseCase)
 	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -176,8 +176,8 @@ func TestProductController_UpdateProduct(t *testing.T) {
 		CategoryID:  2,
 	}
 
-	mockUpdateProductUseCase.EXPECT().
-		Execute(ctx, input).
+	mockProductUseCase.EXPECT().
+		Update(ctx, input).
 		Return(mockProduct, nil)
 
 	mockPresenter.EXPECT().
@@ -199,9 +199,9 @@ func TestProductController_DeleteProduct(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockDeleteProductUseCase := mockport.NewMockDeleteProductUseCase(ctrl)
+	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockProductPresenter(ctrl)
-	productController := NewProductController(nil, nil, nil, nil, mockDeleteProductUseCase)
+	productController := NewProductController(mockProductUseCase)
 	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -217,8 +217,8 @@ func TestProductController_DeleteProduct(t *testing.T) {
 		CategoryID:  1,
 	}
 
-	mockDeleteProductUseCase.EXPECT().
-		Execute(ctx, input).
+	mockProductUseCase.EXPECT().
+		Delete(ctx, input).
 		Return(mockProduct, nil)
 
 	mockPresenter.EXPECT().

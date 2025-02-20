@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/staff"
 	"os"
+
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase/staff"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/gateway"
@@ -85,20 +86,15 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderGateway := gateway.NewOrderGateway(orderDS)
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
 
-	// Use cases - Product
-	listProductsUC := product.NewListProductsUseCase(productGateway)
-	createProductUC := product.NewCreateProductUseCase(productGateway)
-	getProductUC := product.NewGetProductUseCase(productGateway)
-	updateProductUC := product.NewUpdateProductUseCase(productGateway)
-	deleteProductUC := product.NewDeleteProductUseCase(productGateway)
+	// Use cases
+	productUC := product.NewProductUseCase(productGateway)
+	staffUC := staff.NewStaffUseCase(staffGateway)
 	// Use cases - Customer
 	listCustomersUC := customer.NewListCustomersUseCase(customerGateway)
 	createCustomerUC := customer.NewCreateCustomerUseCase(customerGateway)
 	getCustomerUC := customer.NewGetCustomerUseCase(customerGateway)
 	updateCustomerUC := customer.NewUpdateCustomerUseCase(customerGateway)
 	deleteCustomerUC := customer.NewDeleteCustomerUseCase(customerGateway)
-  // Use Cases - Staff
-  staffUC := staff.NewStaffUseCase(staffGateway)
 	// Use cases - Order
 	listOrdersUC := order.NewListOrdersUseCase(orderGateway)
 	createOrderUC := order.NewCreateOrderUseCase(orderGateway)
@@ -113,13 +109,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	deleteOrderProductUC := orderproduct.NewDeleteOrderProductUseCase(orderProductGateway)
 
 	// Controllers
-	productController := controller.NewProductController(
-		listProductsUC,
-		createProductUC,
-		getProductUC,
-		updateProductUC,
-		deleteProductUC,
-	)
+	productController := controller.NewProductController(productUC)
 	customerController := controller.NewCustomerController(
 		listCustomersUC,
 		createCustomerUC,
