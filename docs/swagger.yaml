@@ -351,10 +351,38 @@ definitions:
         example: John Doe
         type: string
       role:
-        example: Cook
+        example: COOK, ATTENDANT or MANAGER
         type: string
       updated_at:
         example: "2024-02-09T10:00:00Z"
+        type: string
+    type: object
+  response.HealthCheckResponse:
+    properties:
+      checks:
+        additionalProperties:
+          $ref: '#/definitions/response.HealthCheckVerifications'
+        type: object
+      status:
+        $ref: '#/definitions/response.HealthCheckStatus'
+    type: object
+  response.HealthCheckStatus:
+    enum:
+    - pass
+    - warn
+    - fail
+    type: string
+    x-enum-varnames:
+    - HealthCheckStatusPass
+    - HealthCheckStatusWarn
+    - HealthCheckStatusFail
+  response.HealthCheckVerifications:
+    properties:
+      componentId:
+        type: string
+      status:
+        $ref: '#/definitions/response.HealthCheckStatus'
+      time:
         type: string
     type: object
   valueobject.OrderStatus:
@@ -741,6 +769,27 @@ paths:
       summary: Update customer
       tags:
       - customers
+  /health:
+    get:
+      description: Checks application health
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.HealthCheckResponse'
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/response.HealthCheckResponse'
+      summary: Application HealthCheck
+      tags:
+      - healthcheck
   /orders:
     get:
       consumes:
