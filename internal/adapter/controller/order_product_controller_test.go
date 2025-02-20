@@ -17,9 +17,9 @@ func TestOrderProductController_ListOrderProducts(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockListOrderProductsUseCase := mockport.NewMockListOrderProductsUseCase(ctrl)
+	mockOrderProductUseCase := mockport.NewMockOrderProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
-	orderProductController := NewOrderProductController(mockListOrderProductsUseCase, nil, nil, nil, nil)
+	orderProductController := NewOrderProductController(mockOrderProductUseCase)
 	orderProductController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -42,8 +42,8 @@ func TestOrderProductController_ListOrderProducts(t *testing.T) {
 		},
 	}
 
-	mockListOrderProductsUseCase.EXPECT().
-		Execute(ctx, input).
+	mockOrderProductUseCase.EXPECT().
+		List(ctx, input).
 		Return(mockOrderProducts, int64(2), nil)
 
 	mockPresenter.EXPECT().
@@ -62,9 +62,9 @@ func TestOrderProductController_CreateOrderProduct(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockCreateOrderProductUseCase := mockport.NewMockCreateOrderProductUseCase(ctrl)
+	mockOrderProductUseCase := mockport.NewMockOrderProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
-	orderProductController := NewOrderProductController(nil, mockCreateOrderProductUseCase, nil, nil, nil)
+	orderProductController := NewOrderProductController(mockOrderProductUseCase)
 	orderProductController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -80,8 +80,8 @@ func TestOrderProductController_CreateOrderProduct(t *testing.T) {
 		Quantity:  1,
 	}
 
-	mockCreateOrderProductUseCase.EXPECT().
-		Execute(ctx, input).
+	mockOrderProductUseCase.EXPECT().
+		Create(ctx, input).
 		Return(mockOrderProduct, nil)
 
 	mockPresenter.EXPECT().
@@ -97,9 +97,9 @@ func TestOrderProductController_GetOrderProduct(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockGetOrderProductUseCase := mockport.NewMockGetOrderProductUseCase(ctrl)
+	mockOrderProductUseCase := mockport.NewMockOrderProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
-	orderProductController := NewOrderProductController(nil, nil, mockGetOrderProductUseCase, nil, nil)
+	orderProductController := NewOrderProductController(mockOrderProductUseCase)
 	orderProductController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -114,8 +114,8 @@ func TestOrderProductController_GetOrderProduct(t *testing.T) {
 		Quantity:  1,
 	}
 
-	mockGetOrderProductUseCase.EXPECT().
-		Execute(ctx, input).
+	mockOrderProductUseCase.EXPECT().
+		Get(ctx, input).
 		Return(mockOrderProduct, nil)
 
 	mockPresenter.EXPECT().
@@ -131,9 +131,9 @@ func TestOrderProductController_UpdateOrderProduct(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockUpdateOrderProductUseCase := mockport.NewMockUpdateOrderProductUseCase(ctrl)
+	mockOrderProductUseCase := mockport.NewMockOrderProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
-	orderProductController := NewOrderProductController(nil, nil, nil, mockUpdateOrderProductUseCase, nil)
+	orderProductController := NewOrderProductController(mockOrderProductUseCase)
 	orderProductController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -149,8 +149,8 @@ func TestOrderProductController_UpdateOrderProduct(t *testing.T) {
 		Quantity:  2,
 	}
 
-	mockUpdateOrderProductUseCase.EXPECT().
-		Execute(ctx, input).
+	mockOrderProductUseCase.EXPECT().
+		Update(ctx, input).
 		Return(mockOrderProduct, nil)
 
 	mockPresenter.EXPECT().
@@ -166,9 +166,9 @@ func TestOrderProductController_DeleteOrderProduct(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockDeleteOrderProductUseCase := mockport.NewMockDeleteOrderProductUseCase(ctrl)
+	mockOrderProductUseCase := mockport.NewMockOrderProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
-	orderProductController := NewOrderProductController(nil, nil, nil, nil, mockDeleteOrderProductUseCase)
+	orderProductController := NewOrderProductController(mockOrderProductUseCase)
 	orderProductController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -183,8 +183,8 @@ func TestOrderProductController_DeleteOrderProduct(t *testing.T) {
 		Quantity:  1,
 	}
 
-	mockDeleteOrderProductUseCase.EXPECT().
-		Execute(ctx, input).
+	mockOrderProductUseCase.EXPECT().
+		Delete(ctx, input).
 		Return(mockOrderProduct, nil)
 
 	mockPresenter.EXPECT().

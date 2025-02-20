@@ -75,55 +75,43 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	// Datasource's
 	productDS := datasource.NewProductDataSource(db.DB)
 	customerDS := datasource.NewCustomerDataSource(db.DB)
-	staffDS := datasource.NewStaffDataSource(db.DB)
 	orderDS := datasource.NewOrderDataSource(db.DB)
 	orderProductDS := datasource.NewOrderProductDataSource(db.DB)
+	staffDS := datasource.NewStaffDataSource(db.DB)
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
 	customerGateway := gateway.NewCustomerGateway(customerDS)
-	staffGateway := gateway.NewStaffGateway(staffDS)
 	orderGateway := gateway.NewOrderGateway(orderDS)
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
+	staffGateway := gateway.NewStaffGateway(staffDS)
 
 	// Use cases
 	productUC := product.NewProductUseCase(productGateway)
-	staffUC := staff.NewStaffUseCase(staffGateway)
 	customerUC := customer.NewCustomerUseCase(customerGateway)
 	orderUC := order.NewOrderUseCase(orderGateway)
-	// Use cases - OrderProduct
-	listOrderProductsUC := orderproduct.NewListOrderProductsUseCase(orderProductGateway)
-	createOrderProductUC := orderproduct.NewCreateOrderProductUseCase(orderProductGateway)
-	getOrderProductUC := orderproduct.NewGetOrderProductUseCase(orderProductGateway)
-	updateOrderProductUC := orderproduct.NewUpdateOrderProductUseCase(orderProductGateway)
-	deleteOrderProductUC := orderproduct.NewDeleteOrderProductUseCase(orderProductGateway)
+	orderProductUC := orderproduct.NewOrderProductUseCase(orderProductGateway)
+	staffUC := staff.NewStaffUseCase(staffGateway)
 
 	// Controllers
 	productController := controller.NewProductController(productUC)
 	customerController := controller.NewCustomerController(customerUC)
 	orderController := controller.NewOrderController(orderUC)
-	orderProductController := controller.NewOrderProductController(
-		listOrderProductsUC,
-		createOrderProductUC,
-		getOrderProductUC,
-		updateOrderProductUC,
-		deleteOrderProductUC,
-	)
+	orderProductController := controller.NewOrderProductController(orderProductUC)
 	staffController := controller.NewStaffController(staffUC)
 
 	// Handlers
 	productHandler := handler.NewProductHandler(productController)
 	customerHandler := handler.NewCustomerHandler(customerController)
-
-	staffHandler := handler.NewStaffHandler(staffController)
 	orderHandler := handler.NewOrderHandler(orderController)
 	orderProductHandler := handler.NewOrderProductHandler(orderProductController)
+	staffHandler := handler.NewStaffHandler(staffController)
 
 	return &route.Handlers{
 		Product:      productHandler,
 		Customer:     customerHandler,
-		Staff:        staffHandler,
 		Order:        orderHandler,
 		OrderProduct: orderProductHandler,
+		Staff:        staffHandler,
 	}
 }
