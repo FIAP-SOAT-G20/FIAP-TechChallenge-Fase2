@@ -9,7 +9,7 @@ import (
 
 type OrderProductController struct {
 	orderProductUseCase port.OrderProductUseCase
-	Presenter port.OrderProductPresenter
+	Presenter           port.OrderProductPresenter
 }
 
 func NewOrderProductController(orderProductUseCase port.OrderProductUseCase) *OrderProductController {
