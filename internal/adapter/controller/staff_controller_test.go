@@ -1,0 +1,209 @@
+package controller
+
+import (
+	"context"
+	"testing"
+	"time"
+
+	"github.com/stretchr/testify/assert"
+	"go.uber.org/mock/gomock"
+
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
+)
+
+// TODO: Add more test cenarios
+func TestStaffController_ListStaffs(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockStaffsUseCase := mockport.NewMockStaffUseCase(ctrl)
+	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
+	productController := NewStaffController(mockStaffsUseCase)
+	productController.Presenter = mockPresenter
+
+	ctx := context.Background()
+	input := dto.ListStaffsInput{
+		Name:  "Test",
+		Role:  "COOK",
+		Page:  1,
+		Limit: 10,
+	}
+
+	currentTime := time.Now()
+	mockStaffs := []*entity.Staff{
+		{
+			ID:        1,
+			Name:      "Test Staff 1",
+			Role:      "COOK",
+			CreatedAt: currentTime,
+			UpdatedAt: currentTime,
+		},
+		{
+			ID:        2,
+			Name:      "Test Staff 2",
+			Role:      "COOK",
+			CreatedAt: currentTime,
+			UpdatedAt: currentTime,
+		},
+	}
+
+	mockStaffsUseCase.EXPECT().
+		List(ctx, input).
+		Return(mockStaffs, int64(2), nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.StaffPresenterInput{
+			Result: mockStaffs,
+			Total:  int64(2),
+			Page:   1,
+			Limit:  10,
+		})
+
+	err := productController.ListStaffs(ctx, input)
+	assert.NoError(t, err)
+}
+
+func TestStaffController_CreateStaff(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
+	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
+	productController := NewStaffController(mockStaffUseCase)
+	productController.Presenter = mockPresenter
+
+	ctx := context.Background()
+	input := dto.CreateStaffInput{
+		Name: "Test Staff",
+		Role: "COOK",
+	}
+
+	mockStaff := &entity.Staff{
+		ID:   1,
+		Name: "Test Staff",
+		Role: "COOK",
+	}
+
+	mockStaffUseCase.EXPECT().
+		Create(ctx, input).
+		Return(mockStaff, nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.StaffPresenterInput{
+			Result: mockStaff,
+		})
+
+	err := productController.CreateStaff(ctx, input)
+	assert.NoError(t, err)
+}
+
+func TestStaffController_GetStaff(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
+	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
+	productController := NewStaffController(mockStaffUseCase)
+	productController.Presenter = mockPresenter
+
+	ctx := context.Background()
+	input := dto.GetStaffInput{
+		ID: uint64(1),
+	}
+
+	mockStaff := &entity.Staff{
+		ID:   1,
+		Name: "Test Staff",
+		Role: "COOK",
+	}
+
+	mockStaffUseCase.EXPECT().
+		Get(ctx, input).
+		Return(mockStaff, nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.StaffPresenterInput{
+			Result: &entity.Staff{
+				ID:   1,
+				Name: "Test Staff",
+				Role: "COOK",
+			},
+		})
+
+	err := productController.GetStaff(ctx, input)
+	assert.NoError(t, err)
+}
+
+func TestStaffController_UpdateStaff(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
+	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
+	productController := NewStaffController(mockStaffUseCase)
+	productController.Presenter = mockPresenter
+
+	ctx := context.Background()
+	input := dto.UpdateStaffInput{
+		ID:   uint64(1),
+		Name: "Staff UPDATED",
+		Role: "ATTENDANT",
+	}
+
+	mockStaff := &entity.Staff{
+		ID:   1,
+		Name: "Updated Staff",
+		Role: "ATTENDANT",
+	}
+
+	mockStaffUseCase.EXPECT().
+		Update(ctx, input).
+		Return(mockStaff, nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.StaffPresenterInput{
+			Result: &entity.Staff{
+				ID:   1,
+				Name: "Updated Staff",
+				Role: "ATTENDANT",
+			},
+		})
+
+	err := productController.UpdateStaff(ctx, input)
+	assert.NoError(t, err)
+}
+
+func TestStaffController_DeleteStaff(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
+	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
+	productController := NewStaffController(mockStaffUseCase)
+	productController.Presenter = mockPresenter
+
+	ctx := context.Background()
+	input := dto.DeleteStaffInput{
+		ID: uint64(1),
+	}
+
+	mockStaff := &entity.Staff{
+		ID:   1,
+		Name: "Test Staff",
+		Role: "COOK",
+	}
+
+	mockStaffUseCase.EXPECT().
+		Delete(ctx, input).
+		Return(mockStaff, nil)
+
+	mockPresenter.EXPECT().
+		Present(dto.StaffPresenterInput{
+			Result: mockStaff,
+		})
+
+	err := productController.DeleteStaff(ctx, input)
+	assert.NoError(t, err)
+}
