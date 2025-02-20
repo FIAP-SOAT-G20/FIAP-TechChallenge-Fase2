@@ -8,6 +8,7 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 )
 
@@ -67,13 +68,13 @@ func (h *StaffHandler) ListStaffs(c *gin.Context) {
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
 
 	input := dto.ListStaffsInput{
-		Name:   c.Query("name"),
-		Role:   c.Query("role"),
-		Page:   page,
-		Limit:  limit,
-		Writer: c,
+		Name:  c.Query("name"),
+		Role:  c.Query("role"),
+		Page:  page,
+		Limit: limit,
 	}
 
+	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
 	err := h.controller.ListStaffs(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -107,9 +108,8 @@ func (h *StaffHandler) CreateStaff(c *gin.Context) {
 	}
 
 	input := dto.CreateStaffInput{
-		Name:   req.Name,
-		Role:   req.Role,
-		Writer: c,
+		Name: req.Name,
+		Role: req.Role,
 	}
 
 	err := h.controller.CreateStaff(c.Request.Context(), input)
@@ -140,10 +140,9 @@ func (h *StaffHandler) GetStaff(c *gin.Context) {
 	}
 
 	input := dto.GetStaffInput{
-		ID:     id,
-		Writer: c,
+		ID: id,
 	}
-
+	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
 	err = h.controller.GetStaff(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -184,12 +183,11 @@ func (h *StaffHandler) UpdateStaff(c *gin.Context) {
 	}
 
 	input := dto.UpdateStaffInput{
-		ID:     id,
-		Name:   req.Name,
-		Role:   req.Role,
-		Writer: c,
+		ID:   id,
+		Name: req.Name,
+		Role: req.Role,
 	}
-
+	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
 	err = h.controller.UpdateStaff(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
@@ -217,10 +215,9 @@ func (h *StaffHandler) DeleteStaff(c *gin.Context) {
 	}
 
 	input := dto.DeleteStaffInput{
-		ID:     id,
-		Writer: c,
+		ID: id,
 	}
-
+	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
 	if err := h.controller.DeleteStaff(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return

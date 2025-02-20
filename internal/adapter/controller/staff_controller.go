@@ -9,17 +9,11 @@ import (
 
 type StaffController struct {
 	useCase   port.StaffUseCase
-	presenter port.StaffPresenter
+	Presenter port.StaffPresenter
 }
 
-func NewStaffController(
-	staffUC port.StaffUseCase,
-	presenter port.StaffPresenter,
-) *StaffController {
-	return &StaffController{
-		useCase:   staffUC,
-		presenter: presenter,
-	}
+func NewStaffController(useCase port.StaffUseCase) *StaffController {
+	return &StaffController{useCase, nil}
 }
 
 func (c *StaffController) ListStaffs(ctx context.Context, input dto.ListStaffsInput) error {
@@ -28,8 +22,7 @@ func (c *StaffController) ListStaffs(ctx context.Context, input dto.ListStaffsIn
 		return err
 	}
 
-	c.presenter.Present(dto.StaffPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.StaffPresenterInput{
 		Total:  total,
 		Page:   input.Page,
 		Limit:  input.Limit,
@@ -45,8 +38,7 @@ func (c *StaffController) CreateStaff(ctx context.Context, input dto.CreateStaff
 		return err
 	}
 
-	c.presenter.Present(dto.StaffPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.StaffPresenterInput{
 		Result: staff,
 	})
 
@@ -59,8 +51,7 @@ func (c *StaffController) GetStaff(ctx context.Context, input dto.GetStaffInput)
 		return err
 	}
 
-	c.presenter.Present(dto.StaffPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.StaffPresenterInput{
 		Result: staff,
 	})
 
@@ -73,8 +64,7 @@ func (c *StaffController) UpdateStaff(ctx context.Context, input dto.UpdateStaff
 		return err
 	}
 
-	c.presenter.Present(dto.StaffPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.StaffPresenterInput{
 		Result: staff,
 	})
 
@@ -88,8 +78,7 @@ func (c *StaffController) DeleteStaff(ctx context.Context, input dto.DeleteStaff
 		return err
 	}
 
-	c.presenter.Present(dto.StaffPresenterInput{
-		Writer: input.Writer,
+	c.Presenter.Present(dto.StaffPresenterInput{
 		Result: staff,
 	})
 

@@ -142,7 +142,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		deleteOrderProductUC,
 	)
 
-	staffController := controller.NewStaffController(staffUC, staffPresenter)
+	staffController := controller.NewStaffController(staffUC)
 
 	// Handlers
 	productHandler := handler.NewProductHandler(productController)
