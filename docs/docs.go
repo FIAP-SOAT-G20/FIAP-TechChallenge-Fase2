@@ -1169,6 +1169,18 @@ const docTemplate = `{
                 "summary": "List staffs",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Filter by name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by role. Available options: COOK, ATTENDANT, MANAGER",
+                        "name": "role",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "default": 1,
                         "description": "Page number",
@@ -1180,18 +1192,6 @@ const docTemplate = `{
                         "default": 10,
                         "description": "Items per page",
                         "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Filter by name",
-                        "name": "name",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Filter by role. Available options: COOK, ATTENDANT, MANAGER",
-                        "name": "role",
                         "in": "query"
                     }
                 ],
@@ -1499,12 +1499,16 @@ const docTemplate = `{
                     "type": "string",
                     "maxLength": 100,
                     "minLength": 3,
-                    "example": "Nome do funcionario"
+                    "example": "John Doe"
                 },
                 "role": {
-                    "type": "string",
                     "maxLength": 500,
-                    "example": "Cargo do funcionario"
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/valueobject.StaffRole"
+                        }
+                    ],
+                    "example": "COOK"
                 }
             }
         },
@@ -1538,6 +1542,11 @@ const docTemplate = `{
                     "type": "integer",
                     "example": 1
                 },
+                "staff_id": {
+                    "description": "StaffID is only required when status is PREPARING, READY or COMPLETED",
+                    "type": "integer",
+                    "example": 1
+                },
                 "status": {
                     "allOf": [
                         {
@@ -1551,6 +1560,11 @@ const docTemplate = `{
         "handler.UpdateOrderPartilRequest": {
             "type": "object",
             "properties": {
+                "staff_id": {
+                    "description": "StaffID is only required when status is PREPARING, READY or COMPLETED",
+                    "type": "integer",
+                    "example": 1
+                },
                 "status": {
                     "allOf": [
                         {
@@ -1962,24 +1976,39 @@ const docTemplate = `{
         "valueobject.OrderStatus": {
             "type": "string",
             "enum": [
-                "UNDEFINDED",
                 "OPEN",
                 "CANCELLED",
                 "PENDING",
                 "RECEIVED",
                 "PREPARING",
                 "READY",
-                "COMPLETED"
+                "COMPLETED",
+                "UNDEFINDED"
             ],
             "x-enum-varnames": [
-                "UNDEFINDED",
                 "OPEN",
                 "CANCELLED",
                 "PENDING",
                 "RECEIVED",
                 "PREPARING",
                 "READY",
-                "COMPLETED"
+                "COMPLETED",
+                "UNDEFINDED"
+            ]
+        },
+        "valueobject.StaffRole": {
+            "type": "string",
+            "enum": [
+                "COOK",
+                "ATTENDANT",
+                "MANAGER",
+                ""
+            ],
+            "x-enum-varnames": [
+                "COOK",
+                "ATTENDANT",
+                "MANAGER",
+                "UNDEFINED"
             ]
         }
     },

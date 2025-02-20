@@ -59,14 +59,15 @@ definitions:
   handler.StaffRequest:
     properties:
       name:
-        example: Nome do funcionario
+        example: John Doe
         maxLength: 100
         minLength: 3
         type: string
       role:
-        example: Cargo do funcionario
+        allOf:
+        - $ref: '#/definitions/valueobject.StaffRole'
+        example: COOK
         maxLength: 500
-        type: string
     required:
     - name
     type: object
@@ -89,6 +90,10 @@ definitions:
       customer_id:
         example: 1
         type: integer
+      staff_id:
+        description: StaffID is only required when status is PREPARING, READY or COMPLETED
+        example: 1
+        type: integer
       status:
         allOf:
         - $ref: '#/definitions/valueobject.OrderStatus'
@@ -99,6 +104,10 @@ definitions:
     type: object
   handler.UpdateOrderPartilRequest:
     properties:
+      staff_id:
+        description: StaffID is only required when status is PREPARING, READY or COMPLETED
+        example: 1
+        type: integer
       status:
         allOf:
         - $ref: '#/definitions/valueobject.OrderStatus'
@@ -387,7 +396,6 @@ definitions:
     type: object
   valueobject.OrderStatus:
     enum:
-    - UNDEFINDED
     - OPEN
     - CANCELLED
     - PENDING
@@ -395,9 +403,9 @@ definitions:
     - PREPARING
     - READY
     - COMPLETED
+    - UNDEFINDED
     type: string
     x-enum-varnames:
-    - UNDEFINDED
     - OPEN
     - CANCELLED
     - PENDING
@@ -405,6 +413,19 @@ definitions:
     - PREPARING
     - READY
     - COMPLETED
+    - UNDEFINDED
+  valueobject.StaffRole:
+    enum:
+    - COOK
+    - ATTENDANT
+    - MANAGER
+    - ""
+    type: string
+    x-enum-varnames:
+    - COOK
+    - ATTENDANT
+    - MANAGER
+    - UNDEFINED
 externalDocs:
   description: GitHub Repository
   url: https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2
@@ -1211,6 +1232,14 @@ paths:
       - application/json
       description: List all staffs
       parameters:
+      - description: Filter by name
+        in: query
+        name: name
+        type: string
+      - description: 'Filter by role. Available options: COOK, ATTENDANT, MANAGER'
+        in: query
+        name: role
+        type: string
       - default: 1
         description: Page number
         in: query
@@ -1221,14 +1250,6 @@ paths:
         in: query
         name: limit
         type: integer
-      - description: Filter by name
-        in: query
-        name: name
-        type: string
-      - description: 'Filter by role. Available options: COOK, ATTENDANT, MANAGER'
-        in: query
-        name: role
-        type: string
       produces:
       - application/json
       responses:
