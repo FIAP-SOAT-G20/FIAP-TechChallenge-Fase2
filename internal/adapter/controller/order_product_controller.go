@@ -9,7 +9,7 @@ import (
 
 type OrderProductController struct {
 	useCase   port.OrderProductUseCase
-	Presenter port.OrderProductPresenter
+	Presenter port.Presenter
 }
 
 func NewOrderProductController(useCase port.OrderProductUseCase) *OrderProductController {
@@ -22,7 +22,7 @@ func (c *OrderProductController) List(ctx context.Context, input dto.ListOrderPr
 		return err
 	}
 
-	c.Presenter.Present(dto.OrderProductPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Total:  total,
 		Page:   input.Page,
 		Limit:  input.Limit,
@@ -38,7 +38,7 @@ func (c *OrderProductController) Create(ctx context.Context, input dto.CreateOrd
 		return err
 	}
 
-	c.Presenter.Present(dto.OrderProductPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: orderProduct,
 	})
 
@@ -51,7 +51,7 @@ func (c *OrderProductController) Get(ctx context.Context, input dto.GetOrderProd
 		return err
 	}
 
-	c.Presenter.Present(dto.OrderProductPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: orderProduct,
 	})
 
@@ -64,7 +64,7 @@ func (c *OrderProductController) Update(ctx context.Context, input dto.UpdateOrd
 		return err
 	}
 
-	c.Presenter.Present(dto.OrderProductPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: orderProduct,
 	})
 
@@ -77,7 +77,7 @@ func (c *OrderProductController) Delete(ctx context.Context, input dto.DeleteOrd
 		return err
 	}
 
-	c.Presenter.Present(dto.OrderProductPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: order,
 	})
 

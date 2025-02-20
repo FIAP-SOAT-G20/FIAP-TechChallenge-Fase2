@@ -9,7 +9,7 @@ import (
 
 type CustomerController struct {
 	useCase   port.CustomerUseCase
-	Presenter port.CustomerPresenter
+	Presenter port.Presenter
 }
 
 func NewCustomerController(useCase port.CustomerUseCase) *CustomerController {
@@ -22,7 +22,7 @@ func (c *CustomerController) List(ctx context.Context, input dto.ListCustomersIn
 		return err
 	}
 
-	c.Presenter.Present(dto.CustomerPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Total:  total,
 		Page:   input.Page,
 		Limit:  input.Limit,
@@ -38,7 +38,7 @@ func (c *CustomerController) Create(ctx context.Context, input dto.CreateCustome
 		return err
 	}
 
-	c.Presenter.Present(dto.CustomerPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: customer,
 	})
 
@@ -51,7 +51,7 @@ func (c *CustomerController) Get(ctx context.Context, input dto.GetCustomerInput
 		return err
 	}
 
-	c.Presenter.Present(dto.CustomerPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: customer,
 	})
 
@@ -64,7 +64,7 @@ func (c *CustomerController) Update(ctx context.Context, input dto.UpdateCustome
 		return err
 	}
 
-	c.Presenter.Present(dto.CustomerPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: customer,
 	})
 
@@ -77,7 +77,7 @@ func (c *CustomerController) Delete(ctx context.Context, input dto.DeleteCustome
 		return err
 	}
 
-	c.Presenter.Present(dto.CustomerPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: customer,
 	})
 

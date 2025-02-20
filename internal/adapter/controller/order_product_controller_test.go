@@ -18,7 +18,7 @@ func TestOrderProductController_ListOrderProducts(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockOrderProductUseCase := mockport.NewMockOrderProductUseCase(ctrl)
-	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	orderProductController := NewOrderProductController(mockOrderProductUseCase)
 	orderProductController.Presenter = mockPresenter
 
@@ -47,7 +47,7 @@ func TestOrderProductController_ListOrderProducts(t *testing.T) {
 		Return(mockOrderProducts, int64(2), nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.OrderProductPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockOrderProducts,
 			Total:  int64(2),
 			Page:   1,
@@ -63,7 +63,7 @@ func TestOrderProductController_CreateOrderProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockOrderProductUseCase := mockport.NewMockOrderProductUseCase(ctrl)
-	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	orderProductController := NewOrderProductController(mockOrderProductUseCase)
 	orderProductController.Presenter = mockPresenter
 
@@ -85,7 +85,7 @@ func TestOrderProductController_CreateOrderProduct(t *testing.T) {
 		Return(mockOrderProduct, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.OrderProductPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockOrderProduct,
 		})
 
@@ -98,7 +98,7 @@ func TestOrderProductController_GetOrderProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockOrderProductUseCase := mockport.NewMockOrderProductUseCase(ctrl)
-	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	orderProductController := NewOrderProductController(mockOrderProductUseCase)
 	orderProductController.Presenter = mockPresenter
 
@@ -119,7 +119,7 @@ func TestOrderProductController_GetOrderProduct(t *testing.T) {
 		Return(mockOrderProduct, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.OrderProductPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockOrderProduct,
 		})
 
@@ -132,7 +132,7 @@ func TestOrderProductController_UpdateOrderProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockOrderProductUseCase := mockport.NewMockOrderProductUseCase(ctrl)
-	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	orderProductController := NewOrderProductController(mockOrderProductUseCase)
 	orderProductController.Presenter = mockPresenter
 
@@ -154,7 +154,7 @@ func TestOrderProductController_UpdateOrderProduct(t *testing.T) {
 		Return(mockOrderProduct, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.OrderProductPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockOrderProduct,
 		})
 
@@ -167,7 +167,7 @@ func TestOrderProductController_DeleteOrderProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockOrderProductUseCase := mockport.NewMockOrderProductUseCase(ctrl)
-	mockPresenter := mockport.NewMockOrderProductPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	orderProductController := NewOrderProductController(mockOrderProductUseCase)
 	orderProductController.Presenter = mockPresenter
 
@@ -188,7 +188,7 @@ func TestOrderProductController_DeleteOrderProduct(t *testing.T) {
 		Return(mockOrderProduct, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.OrderProductPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockOrderProduct,
 		})
 

@@ -29,10 +29,3 @@ type ListOrdersInput struct {
 	Page       int
 	Limit      int
 }
-
-type OrderPresenterInput struct {
-	Result any
-	Total  int64
-	Page   int
-	Limit  int
-}

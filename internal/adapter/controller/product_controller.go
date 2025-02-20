@@ -9,7 +9,7 @@ import (
 
 type ProductController struct {
 	useCase   port.ProductUseCase
-	Presenter port.ProductPresenter
+	Presenter port.Presenter
 }
 
 func NewProductController(
@@ -24,7 +24,7 @@ func (c *ProductController) List(ctx context.Context, input dto.ListProductsInpu
 		return err
 	}
 
-	c.Presenter.Present(dto.ProductPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Total:  total,
 		Page:   input.Page,
 		Limit:  input.Limit,
@@ -40,7 +40,7 @@ func (c *ProductController) Create(ctx context.Context, input dto.CreateProductI
 		return err
 	}
 
-	c.Presenter.Present(dto.ProductPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: product,
 	})
 
@@ -53,7 +53,7 @@ func (c *ProductController) Get(ctx context.Context, input dto.GetProductInput) 
 		return err
 	}
 
-	c.Presenter.Present(dto.ProductPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: product,
 	})
 
@@ -66,7 +66,7 @@ func (c *ProductController) Update(ctx context.Context, input dto.UpdateProductI
 		return err
 	}
 
-	c.Presenter.Present(dto.ProductPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: product,
 	})
 
@@ -79,7 +79,7 @@ func (c *ProductController) Delete(ctx context.Context, input dto.DeleteProductI
 		return err
 	}
 
-	c.Presenter.Present(dto.ProductPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: product,
 	})
 

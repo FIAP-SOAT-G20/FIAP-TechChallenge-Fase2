@@ -19,7 +19,7 @@ func TestProductController_ListProducts(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockProductsUseCase := mockport.NewMockProductUseCase(ctrl)
-	mockPresenter := mockport.NewMockProductPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	productController := NewProductController(mockProductsUseCase)
 	productController.Presenter = mockPresenter
 
@@ -58,7 +58,7 @@ func TestProductController_ListProducts(t *testing.T) {
 		Return(mockProducts, int64(2), nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.ProductPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockProducts,
 			Total:  int64(2),
 			Page:   1,
@@ -76,7 +76,7 @@ func TestProductController_CreateProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
-	mockPresenter := mockport.NewMockProductPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	productController := NewProductController(mockProductUseCase)
 	productController.Presenter = mockPresenter
 
@@ -101,7 +101,7 @@ func TestProductController_CreateProduct(t *testing.T) {
 		Return(mockProduct, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.ProductPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockProduct,
 		})
 
@@ -114,7 +114,7 @@ func TestProductController_GetProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
-	mockPresenter := mockport.NewMockProductPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	productController := NewProductController(mockProductUseCase)
 	productController.Presenter = mockPresenter
 
@@ -136,7 +136,7 @@ func TestProductController_GetProduct(t *testing.T) {
 		Return(mockProduct, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.ProductPresenterInput{
+		Present(dto.PresenterInput{
 			Result: &entity.Product{
 				ID:          1,
 				Name:        "Test Product",
@@ -155,7 +155,7 @@ func TestProductController_UpdateProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
-	mockPresenter := mockport.NewMockProductPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	productController := NewProductController(mockProductUseCase)
 	productController.Presenter = mockPresenter
 
@@ -181,7 +181,7 @@ func TestProductController_UpdateProduct(t *testing.T) {
 		Return(mockProduct, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.ProductPresenterInput{
+		Present(dto.PresenterInput{
 			Result: &entity.Product{
 				ID:          1,
 				Name:        "Updated Product",
@@ -200,7 +200,7 @@ func TestProductController_DeleteProduct(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
-	mockPresenter := mockport.NewMockProductPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	productController := NewProductController(mockProductUseCase)
 	productController.Presenter = mockPresenter
 
@@ -222,7 +222,7 @@ func TestProductController_DeleteProduct(t *testing.T) {
 		Return(mockProduct, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.ProductPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockProduct,
 		})
 

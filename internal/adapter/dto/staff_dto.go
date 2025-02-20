@@ -27,10 +27,3 @@ type ListStaffsInput struct {
 	Page  int
 	Limit int
 }
-
-type StaffPresenterInput struct {
-	Result any
-	Total  int64
-	Page   int
-	Limit  int
-}

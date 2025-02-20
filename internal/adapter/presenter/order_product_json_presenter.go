@@ -15,12 +15,12 @@ type orderProductJsonPresenter struct {
 }
 
 // OrderProductJsonResponse represents the response of a orderProduct
-func NewOrderProductJsonPresenter(writer ResponseWriter) port.OrderProductPresenter {
+func NewOrderProductJsonPresenter(writer ResponseWriter) port.Presenter {
 	return &orderProductJsonPresenter{writer}
 }
 
 // Present write the response to the client
-func (p *orderProductJsonPresenter) Present(pp dto.OrderProductPresenterInput) {
+func (p *orderProductJsonPresenter) Present(pp dto.PresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.OrderProduct:
 		output := ToOrderProductJsonResponse(v)

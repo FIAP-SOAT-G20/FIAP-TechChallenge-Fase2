@@ -15,7 +15,7 @@ type customerJsonPresenter struct {
 }
 
 // CustomerJsonResponse represents the response of a customer
-func NewCustomerJsonPresenter(writer ResponseWriter) port.CustomerPresenter {
+func NewCustomerJsonPresenter(writer ResponseWriter) port.Presenter {
 	return &customerJsonPresenter{writer}
 }
 
@@ -32,7 +32,7 @@ func ToCustomerJsonResponse(customer *entity.Customer) CustomerJsonResponse {
 }
 
 // Present write the response to the client
-func (p *customerJsonPresenter) Present(pp dto.CustomerPresenterInput) {
+func (p *customerJsonPresenter) Present(pp dto.PresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.Customer:
 		output := ToCustomerJsonResponse(v)

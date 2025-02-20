@@ -9,7 +9,7 @@ import (
 
 type StaffController struct {
 	useCase   port.StaffUseCase
-	Presenter port.StaffPresenter
+	Presenter port.Presenter
 }
 
 func NewStaffController(useCase port.StaffUseCase) *StaffController {
@@ -22,7 +22,7 @@ func (c *StaffController) List(ctx context.Context, input dto.ListStaffsInput) e
 		return err
 	}
 
-	c.Presenter.Present(dto.StaffPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Total:  total,
 		Page:   input.Page,
 		Limit:  input.Limit,
@@ -38,7 +38,7 @@ func (c *StaffController) Create(ctx context.Context, input dto.CreateStaffInput
 		return err
 	}
 
-	c.Presenter.Present(dto.StaffPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: staff,
 	})
 
@@ -51,7 +51,7 @@ func (c *StaffController) Get(ctx context.Context, input dto.GetStaffInput) erro
 		return err
 	}
 
-	c.Presenter.Present(dto.StaffPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: staff,
 	})
 
@@ -64,7 +64,7 @@ func (c *StaffController) Update(ctx context.Context, input dto.UpdateStaffInput
 		return err
 	}
 
-	c.Presenter.Present(dto.StaffPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: staff,
 	})
 
@@ -78,7 +78,7 @@ func (c *StaffController) Delete(ctx context.Context, input dto.DeleteStaffInput
 		return err
 	}
 
-	c.Presenter.Present(dto.StaffPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: staff,
 	})
 

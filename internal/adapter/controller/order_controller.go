@@ -9,7 +9,7 @@ import (
 
 type OrderController struct {
 	useCase   port.OrderUseCase
-	Presenter port.OrderPresenter
+	Presenter port.Presenter
 }
 
 func NewOrderController(
@@ -24,7 +24,7 @@ func (c *OrderController) List(ctx context.Context, input dto.ListOrdersInput) e
 		return err
 	}
 
-	c.Presenter.Present(dto.OrderPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Total:  total,
 		Page:   input.Page,
 		Limit:  input.Limit,
@@ -40,7 +40,7 @@ func (c *OrderController) Create(ctx context.Context, input dto.CreateOrderInput
 		return err
 	}
 
-	c.Presenter.Present(dto.OrderPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: order,
 	})
 
@@ -53,7 +53,7 @@ func (c *OrderController) Get(ctx context.Context, input dto.GetOrderInput) erro
 		return err
 	}
 
-	c.Presenter.Present(dto.OrderPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: order,
 	})
 
@@ -66,7 +66,7 @@ func (c *OrderController) Update(ctx context.Context, input dto.UpdateOrderInput
 		return err
 	}
 
-	c.Presenter.Present(dto.OrderPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: order,
 	})
 
@@ -79,7 +79,7 @@ func (c *OrderController) Delete(ctx context.Context, input dto.DeleteOrderInput
 		return err
 	}
 
-	c.Presenter.Present(dto.OrderPresenterInput{
+	c.Presenter.Present(dto.PresenterInput{
 		Result: order,
 	})
 

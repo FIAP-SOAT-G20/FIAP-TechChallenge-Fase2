@@ -19,7 +19,7 @@ func TestStaffController_ListStaffs(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockStaffsUseCase := mockport.NewMockStaffUseCase(ctrl)
-	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	productController := NewStaffController(mockStaffsUseCase)
 	productController.Presenter = mockPresenter
 
@@ -54,7 +54,7 @@ func TestStaffController_ListStaffs(t *testing.T) {
 		Return(mockStaffs, int64(2), nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.StaffPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockStaffs,
 			Total:  int64(2),
 			Page:   1,
@@ -70,7 +70,7 @@ func TestStaffController_CreateStaff(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
-	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	productController := NewStaffController(mockStaffUseCase)
 	productController.Presenter = mockPresenter
 
@@ -91,7 +91,7 @@ func TestStaffController_CreateStaff(t *testing.T) {
 		Return(mockStaff, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.StaffPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockStaff,
 		})
 
@@ -104,7 +104,7 @@ func TestStaffController_GetStaff(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
-	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	productController := NewStaffController(mockStaffUseCase)
 	productController.Presenter = mockPresenter
 
@@ -124,7 +124,7 @@ func TestStaffController_GetStaff(t *testing.T) {
 		Return(mockStaff, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.StaffPresenterInput{
+		Present(dto.PresenterInput{
 			Result: &entity.Staff{
 				ID:   1,
 				Name: "Test Staff",
@@ -141,7 +141,7 @@ func TestStaffController_UpdateStaff(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
-	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	productController := NewStaffController(mockStaffUseCase)
 	productController.Presenter = mockPresenter
 
@@ -163,7 +163,7 @@ func TestStaffController_UpdateStaff(t *testing.T) {
 		Return(mockStaff, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.StaffPresenterInput{
+		Present(dto.PresenterInput{
 			Result: &entity.Staff{
 				ID:   1,
 				Name: "Updated Staff",
@@ -180,7 +180,7 @@ func TestStaffController_DeleteStaff(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
-	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
+	mockPresenter := mockport.NewMockPresenter(ctrl)
 	productController := NewStaffController(mockStaffUseCase)
 	productController.Presenter = mockPresenter
 
@@ -200,7 +200,7 @@ func TestStaffController_DeleteStaff(t *testing.T) {
 		Return(mockStaff, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.StaffPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockStaff,
 		})
 

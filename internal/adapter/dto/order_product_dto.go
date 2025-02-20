@@ -6,8 +6,6 @@ type CreateOrderProductInput struct {
 	OrderID   uint64
 	ProductID uint64
 	Quantity  uint32
-	// Order     Order
-	// Product   Product
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
@@ -33,11 +31,4 @@ type ListOrderProductsInput struct {
 	ProductID uint64
 	Page      int
 	Limit     int
-}
-
-type OrderProductPresenterInput struct {
-	Result any
-	Total  int64
-	Page   int
-	Limit  int
 }
