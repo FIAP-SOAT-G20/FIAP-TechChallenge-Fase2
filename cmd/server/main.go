@@ -106,6 +106,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderHandler := handler.NewOrderHandler(orderController)
 	orderProductHandler := handler.NewOrderProductHandler(orderProductController)
 	staffHandler := handler.NewStaffHandler(staffController)
+	healthCheckHandler := handler.NewHealthCheckHandler()
 
 	return &route.Handlers{
 		Product:      productHandler,
@@ -113,5 +114,6 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		Order:        orderHandler,
 		OrderProduct: orderProductHandler,
 		Staff:        staffHandler,
+		HealthCheck:  healthCheckHandler,
 	}
 }
