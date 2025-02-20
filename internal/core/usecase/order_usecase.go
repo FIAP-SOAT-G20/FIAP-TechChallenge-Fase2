@@ -79,11 +79,15 @@ func (uc *orderUseCase) Update(ctx context.Context, input dto.UpdateOrderInput) 
 		}
 	}
 
+	orderProducts := order.OrderProducts
 	order.Update(input.CustomerID, input.Status)
 
 	if err := uc.gateway.Update(ctx, order); err != nil {
 		return nil, domain.NewInternalError(err)
 	}
+
+	// Restore order products, to calculate total bill in the presenter
+	order.OrderProducts = orderProducts
 
 	return order, nil
 }
