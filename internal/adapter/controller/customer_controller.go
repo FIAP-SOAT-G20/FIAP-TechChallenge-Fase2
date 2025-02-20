@@ -8,33 +8,16 @@ import (
 )
 
 type CustomerController struct {
-	listUC    port.ListCustomersUseCase
-	createUC  port.CreateCustomerUseCase
-	getUC     port.GetCustomerUseCase
-	updateUC  port.UpdateCustomerUseCase
-	deleteUC  port.DeleteCustomerUseCase
-	Presenter port.CustomerPresenter
+	customerUC port.CustomerUseCase
+	Presenter  port.CustomerPresenter
 }
 
-func NewCustomerController(
-	listUC port.ListCustomersUseCase,
-	createUC port.CreateCustomerUseCase,
-	getUC port.GetCustomerUseCase,
-	updateUC port.UpdateCustomerUseCase,
-	deleteUC port.DeleteCustomerUseCase,
-) *CustomerController {
-	return &CustomerController{
-		listUC,
-		createUC,
-		getUC,
-		updateUC,
-		deleteUC,
-		nil,
-	}
+func NewCustomerController(customerUC port.CustomerUseCase) *CustomerController {
+	return &CustomerController{customerUC, nil}
 }
 
 func (c *CustomerController) ListCustomers(ctx context.Context, input dto.ListCustomersInput) error {
-	customers, total, err := c.listUC.Execute(ctx, input)
+	customers, total, err := c.customerUC.List(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -50,7 +33,7 @@ func (c *CustomerController) ListCustomers(ctx context.Context, input dto.ListCu
 }
 
 func (c *CustomerController) CreateCustomer(ctx context.Context, input dto.CreateCustomerInput) error {
-	customer, err := c.createUC.Execute(ctx, input)
+	customer, err := c.customerUC.Create(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -63,7 +46,7 @@ func (c *CustomerController) CreateCustomer(ctx context.Context, input dto.Creat
 }
 
 func (c *CustomerController) GetCustomer(ctx context.Context, input dto.GetCustomerInput) error {
-	customer, err := c.getUC.Execute(ctx, input)
+	customer, err := c.customerUC.Get(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -76,7 +59,7 @@ func (c *CustomerController) GetCustomer(ctx context.Context, input dto.GetCusto
 }
 
 func (c *CustomerController) UpdateCustomer(ctx context.Context, input dto.UpdateCustomerInput) error {
-	customer, err := c.updateUC.Execute(ctx, input)
+	customer, err := c.customerUC.Update(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -89,7 +72,7 @@ func (c *CustomerController) UpdateCustomer(ctx context.Context, input dto.Updat
 }
 
 func (c *CustomerController) DeleteCustomer(ctx context.Context, input dto.DeleteCustomerInput) error {
-	customer, err := c.deleteUC.Execute(ctx, input)
+	customer, err := c.customerUC.Delete(ctx, input)
 	if err != nil {
 		return err
 	}

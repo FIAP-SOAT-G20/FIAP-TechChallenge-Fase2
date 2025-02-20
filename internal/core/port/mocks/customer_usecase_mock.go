@@ -18,198 +18,102 @@ import (
 	gomock "go.uber.org/mock/gomock"
 )
 
-// MockListCustomersUseCase is a mock of ListCustomersUseCase interface.
-type MockListCustomersUseCase struct {
+// MockCustomerUseCase is a mock of CustomerUseCase interface.
+type MockCustomerUseCase struct {
 	ctrl     *gomock.Controller
-	recorder *MockListCustomersUseCaseMockRecorder
+	recorder *MockCustomerUseCaseMockRecorder
 	isgomock struct{}
 }
 
-// MockListCustomersUseCaseMockRecorder is the mock recorder for MockListCustomersUseCase.
-type MockListCustomersUseCaseMockRecorder struct {
-	mock *MockListCustomersUseCase
+// MockCustomerUseCaseMockRecorder is the mock recorder for MockCustomerUseCase.
+type MockCustomerUseCaseMockRecorder struct {
+	mock *MockCustomerUseCase
 }
 
-// NewMockListCustomersUseCase creates a new mock instance.
-func NewMockListCustomersUseCase(ctrl *gomock.Controller) *MockListCustomersUseCase {
-	mock := &MockListCustomersUseCase{ctrl: ctrl}
-	mock.recorder = &MockListCustomersUseCaseMockRecorder{mock}
+// NewMockCustomerUseCase creates a new mock instance.
+func NewMockCustomerUseCase(ctrl *gomock.Controller) *MockCustomerUseCase {
+	mock := &MockCustomerUseCase{ctrl: ctrl}
+	mock.recorder = &MockCustomerUseCaseMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockListCustomersUseCase) EXPECT() *MockListCustomersUseCaseMockRecorder {
+func (m *MockCustomerUseCase) EXPECT() *MockCustomerUseCaseMockRecorder {
 	return m.recorder
 }
 
-// Execute mocks base method.
-func (m *MockListCustomersUseCase) Execute(ctx context.Context, input dto.ListCustomersInput) ([]*entity.Customer, int64, error) {
+// Create mocks base method.
+func (m *MockCustomerUseCase) Create(ctx context.Context, input dto.CreateCustomerInput) (*entity.Customer, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Execute", ctx, input)
+	ret := m.ctrl.Call(m, "Create", ctx, input)
+	ret0, _ := ret[0].(*entity.Customer)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Create indicates an expected call of Create.
+func (mr *MockCustomerUseCaseMockRecorder) Create(ctx, input any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockCustomerUseCase)(nil).Create), ctx, input)
+}
+
+// Delete mocks base method.
+func (m *MockCustomerUseCase) Delete(ctx context.Context, input dto.DeleteCustomerInput) (*entity.Customer, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Delete", ctx, input)
+	ret0, _ := ret[0].(*entity.Customer)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Delete indicates an expected call of Delete.
+func (mr *MockCustomerUseCaseMockRecorder) Delete(ctx, input any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockCustomerUseCase)(nil).Delete), ctx, input)
+}
+
+// Get mocks base method.
+func (m *MockCustomerUseCase) Get(ctx context.Context, input dto.GetCustomerInput) (*entity.Customer, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Get", ctx, input)
+	ret0, _ := ret[0].(*entity.Customer)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Get indicates an expected call of Get.
+func (mr *MockCustomerUseCaseMockRecorder) Get(ctx, input any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockCustomerUseCase)(nil).Get), ctx, input)
+}
+
+// List mocks base method.
+func (m *MockCustomerUseCase) List(ctx context.Context, input dto.ListCustomersInput) ([]*entity.Customer, int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "List", ctx, input)
 	ret0, _ := ret[0].([]*entity.Customer)
 	ret1, _ := ret[1].(int64)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2
 }
 
-// Execute indicates an expected call of Execute.
-func (mr *MockListCustomersUseCaseMockRecorder) Execute(ctx, input any) *gomock.Call {
+// List indicates an expected call of List.
+func (mr *MockCustomerUseCaseMockRecorder) List(ctx, input any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockListCustomersUseCase)(nil).Execute), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockCustomerUseCase)(nil).List), ctx, input)
 }
 
-// MockCreateCustomerUseCase is a mock of CreateCustomerUseCase interface.
-type MockCreateCustomerUseCase struct {
-	ctrl     *gomock.Controller
-	recorder *MockCreateCustomerUseCaseMockRecorder
-	isgomock struct{}
-}
-
-// MockCreateCustomerUseCaseMockRecorder is the mock recorder for MockCreateCustomerUseCase.
-type MockCreateCustomerUseCaseMockRecorder struct {
-	mock *MockCreateCustomerUseCase
-}
-
-// NewMockCreateCustomerUseCase creates a new mock instance.
-func NewMockCreateCustomerUseCase(ctrl *gomock.Controller) *MockCreateCustomerUseCase {
-	mock := &MockCreateCustomerUseCase{ctrl: ctrl}
-	mock.recorder = &MockCreateCustomerUseCaseMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockCreateCustomerUseCase) EXPECT() *MockCreateCustomerUseCaseMockRecorder {
-	return m.recorder
-}
-
-// Execute mocks base method.
-func (m *MockCreateCustomerUseCase) Execute(ctx context.Context, input dto.CreateCustomerInput) (*entity.Customer, error) {
+// Update mocks base method.
+func (m *MockCustomerUseCase) Update(ctx context.Context, input dto.UpdateCustomerInput) (*entity.Customer, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Execute", ctx, input)
+	ret := m.ctrl.Call(m, "Update", ctx, input)
 	ret0, _ := ret[0].(*entity.Customer)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Execute indicates an expected call of Execute.
-func (mr *MockCreateCustomerUseCaseMockRecorder) Execute(ctx, input any) *gomock.Call {
+// Update indicates an expected call of Update.
+func (mr *MockCustomerUseCaseMockRecorder) Update(ctx, input any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockCreateCustomerUseCase)(nil).Execute), ctx, input)
-}
-
-// MockGetCustomerUseCase is a mock of GetCustomerUseCase interface.
-type MockGetCustomerUseCase struct {
-	ctrl     *gomock.Controller
-	recorder *MockGetCustomerUseCaseMockRecorder
-	isgomock struct{}
-}
-
-// MockGetCustomerUseCaseMockRecorder is the mock recorder for MockGetCustomerUseCase.
-type MockGetCustomerUseCaseMockRecorder struct {
-	mock *MockGetCustomerUseCase
-}
-
-// NewMockGetCustomerUseCase creates a new mock instance.
-func NewMockGetCustomerUseCase(ctrl *gomock.Controller) *MockGetCustomerUseCase {
-	mock := &MockGetCustomerUseCase{ctrl: ctrl}
-	mock.recorder = &MockGetCustomerUseCaseMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockGetCustomerUseCase) EXPECT() *MockGetCustomerUseCaseMockRecorder {
-	return m.recorder
-}
-
-// Execute mocks base method.
-func (m *MockGetCustomerUseCase) Execute(ctx context.Context, input dto.GetCustomerInput) (*entity.Customer, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Execute", ctx, input)
-	ret0, _ := ret[0].(*entity.Customer)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Execute indicates an expected call of Execute.
-func (mr *MockGetCustomerUseCaseMockRecorder) Execute(ctx, input any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockGetCustomerUseCase)(nil).Execute), ctx, input)
-}
-
-// MockUpdateCustomerUseCase is a mock of UpdateCustomerUseCase interface.
-type MockUpdateCustomerUseCase struct {
-	ctrl     *gomock.Controller
-	recorder *MockUpdateCustomerUseCaseMockRecorder
-	isgomock struct{}
-}
-
-// MockUpdateCustomerUseCaseMockRecorder is the mock recorder for MockUpdateCustomerUseCase.
-type MockUpdateCustomerUseCaseMockRecorder struct {
-	mock *MockUpdateCustomerUseCase
-}
-
-// NewMockUpdateCustomerUseCase creates a new mock instance.
-func NewMockUpdateCustomerUseCase(ctrl *gomock.Controller) *MockUpdateCustomerUseCase {
-	mock := &MockUpdateCustomerUseCase{ctrl: ctrl}
-	mock.recorder = &MockUpdateCustomerUseCaseMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockUpdateCustomerUseCase) EXPECT() *MockUpdateCustomerUseCaseMockRecorder {
-	return m.recorder
-}
-
-// Execute mocks base method.
-func (m *MockUpdateCustomerUseCase) Execute(ctx context.Context, input dto.UpdateCustomerInput) (*entity.Customer, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Execute", ctx, input)
-	ret0, _ := ret[0].(*entity.Customer)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Execute indicates an expected call of Execute.
-func (mr *MockUpdateCustomerUseCaseMockRecorder) Execute(ctx, input any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockUpdateCustomerUseCase)(nil).Execute), ctx, input)
-}
-
-// MockDeleteCustomerUseCase is a mock of DeleteCustomerUseCase interface.
-type MockDeleteCustomerUseCase struct {
-	ctrl     *gomock.Controller
-	recorder *MockDeleteCustomerUseCaseMockRecorder
-	isgomock struct{}
-}
-
-// MockDeleteCustomerUseCaseMockRecorder is the mock recorder for MockDeleteCustomerUseCase.
-type MockDeleteCustomerUseCaseMockRecorder struct {
-	mock *MockDeleteCustomerUseCase
-}
-
-// NewMockDeleteCustomerUseCase creates a new mock instance.
-func NewMockDeleteCustomerUseCase(ctrl *gomock.Controller) *MockDeleteCustomerUseCase {
-	mock := &MockDeleteCustomerUseCase{ctrl: ctrl}
-	mock.recorder = &MockDeleteCustomerUseCaseMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockDeleteCustomerUseCase) EXPECT() *MockDeleteCustomerUseCaseMockRecorder {
-	return m.recorder
-}
-
-// Execute mocks base method.
-func (m *MockDeleteCustomerUseCase) Execute(ctx context.Context, input dto.DeleteCustomerInput) (*entity.Customer, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Execute", ctx, input)
-	ret0, _ := ret[0].(*entity.Customer)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Execute indicates an expected call of Execute.
-func (mr *MockDeleteCustomerUseCaseMockRecorder) Execute(ctx, input any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockDeleteCustomerUseCase)(nil).Execute), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockCustomerUseCase)(nil).Update), ctx, input)
 }

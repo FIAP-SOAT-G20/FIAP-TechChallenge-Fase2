@@ -17,9 +17,7 @@ type staffUseCase struct {
 
 // NewStaffUseCase creates a new StaffUseCase
 func NewStaffUseCase(gateway port.StaffGateway) port.StaffUseCase {
-	return &staffUseCase{
-		gateway: gateway,
-	}
+	return &staffUseCase{gateway: gateway}
 }
 
 // List returns a list of staffs

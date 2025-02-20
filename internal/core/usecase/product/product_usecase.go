@@ -15,9 +15,7 @@ type productUseCase struct {
 
 // NewProductUseCase creates a new StaffUseCase
 func NewProductUseCase(gateway port.ProductGateway) port.ProductUseCase {
-	return &productUseCase{
-		gateway: gateway,
-	}
+	return &productUseCase{gateway: gateway}
 }
 
 // List returns a list of products

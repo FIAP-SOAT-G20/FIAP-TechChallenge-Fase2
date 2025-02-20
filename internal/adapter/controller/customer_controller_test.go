@@ -17,9 +17,9 @@ func TestCustomerController_ListCustomers(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockListCustomersUseCase := mockport.NewMockListCustomersUseCase(ctrl)
+	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
-	productController := NewCustomerController(mockListCustomersUseCase, nil, nil, nil, nil)
+	productController := NewCustomerController(mockCustomerUseCase)
 	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -44,8 +44,8 @@ func TestCustomerController_ListCustomers(t *testing.T) {
 		},
 	}
 
-	mockListCustomersUseCase.EXPECT().
-		Execute(ctx, input).
+	mockCustomerUseCase.EXPECT().
+		List(ctx, input).
 		Return(mockCustomers, int64(2), nil)
 
 	mockPresenter.EXPECT().
@@ -64,9 +64,9 @@ func TestCustomerController_CreateCustomer(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockCreateCustomerUseCase := mockport.NewMockCreateCustomerUseCase(ctrl)
+	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
-	productController := NewCustomerController(nil, mockCreateCustomerUseCase, nil, nil, nil)
+	productController := NewCustomerController(mockCustomerUseCase)
 	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -83,8 +83,8 @@ func TestCustomerController_CreateCustomer(t *testing.T) {
 		CPF:   "123.456.789-00",
 	}
 
-	mockCreateCustomerUseCase.EXPECT().
-		Execute(ctx, input).
+	mockCustomerUseCase.EXPECT().
+		Create(ctx, input).
 		Return(mockCustomer, nil)
 
 	mockPresenter.EXPECT().
@@ -100,9 +100,9 @@ func TestCustomerController_GetCustomer(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockGetCustomerUseCase := mockport.NewMockGetCustomerUseCase(ctrl)
+	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
-	productController := NewCustomerController(nil, nil, mockGetCustomerUseCase, nil, nil)
+	productController := NewCustomerController(mockCustomerUseCase)
 	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -117,8 +117,8 @@ func TestCustomerController_GetCustomer(t *testing.T) {
 		CPF:   "12345678901",
 	}
 
-	mockGetCustomerUseCase.EXPECT().
-		Execute(ctx, input).
+	mockCustomerUseCase.EXPECT().
+		Get(ctx, input).
 		Return(mockCustomer, nil)
 
 	mockPresenter.EXPECT().
@@ -134,9 +134,9 @@ func TestCustomerController_UpdateCustomer(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockUpdateCustomerUseCase := mockport.NewMockUpdateCustomerUseCase(ctrl)
+	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
-	productController := NewCustomerController(nil, nil, nil, mockUpdateCustomerUseCase, nil)
+	productController := NewCustomerController(mockCustomerUseCase)
 	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -152,8 +152,8 @@ func TestCustomerController_UpdateCustomer(t *testing.T) {
 		Email: "updated.customer@email.com",
 	}
 
-	mockUpdateCustomerUseCase.EXPECT().
-		Execute(ctx, input).
+	mockCustomerUseCase.EXPECT().
+		Update(ctx, input).
 		Return(mockCustomer, nil)
 
 	mockPresenter.EXPECT().
@@ -169,9 +169,9 @@ func TestCustomerController_DeleteCustomer(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockDeleteCustomerUseCase := mockport.NewMockDeleteCustomerUseCase(ctrl)
+	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockCustomerPresenter(ctrl)
-	productController := NewCustomerController(nil, nil, nil, nil, mockDeleteCustomerUseCase)
+	productController := NewCustomerController(mockCustomerUseCase)
 	productController.Presenter = mockPresenter
 
 	ctx := context.Background()
@@ -185,8 +185,8 @@ func TestCustomerController_DeleteCustomer(t *testing.T) {
 		Email: "test.customer@email.com",
 	}
 
-	mockDeleteCustomerUseCase.EXPECT().
-		Execute(ctx, input).
+	mockCustomerUseCase.EXPECT().
+		Delete(ctx, input).
 		Return(mockCustomer, nil)
 
 	mockPresenter.EXPECT().
