@@ -115,7 +115,7 @@ func (h *ProductHandler) List(c *gin.Context) {
 //	@Tags			products
 //	@Accept			json
 //	@Produce		json,xml
-//	@Param			product	body		CreateProductRequest			true	"Product data"
+//	@Param			product	body		CreateProductBodyRequest		true	"Product data"
 //	@Success		201		{object}	presenter.ProductJsonResponse	"Created"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
@@ -194,7 +194,7 @@ func (h *ProductHandler) Get(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json,xml
 //	@Param			id		path		int								true	"Product ID"
-//	@Param			product	body		UpdateProductRequest			true	"Product data"
+//	@Param			product	body		UpdateProductBodyRequest		true	"Product data"
 //	@Success		200		{object}	presenter.ProductJsonResponse	"OK"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		404		{object}	middleware.ErrorJsonResponse	"Not Found"
