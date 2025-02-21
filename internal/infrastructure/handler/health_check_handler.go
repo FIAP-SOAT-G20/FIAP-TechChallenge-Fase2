@@ -2,10 +2,12 @@ package handler
 
 import (
 	"database/sql"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/response"
+	"fmt"
 	"net/http"
-	"os"
 	"time"
+
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/response"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,10 +24,6 @@ func (h *HealthCheckHandler) Register(router *gin.RouterGroup) {
 	router.GET("/", h.HealthCheck)
 }
 
-func (h *HealthCheckHandler) GroupRouterPattern() string {
-	return "/health"
-}
-
 // HealthCheck godoc
 //
 //	@Summary		Application HealthCheck
@@ -37,6 +35,7 @@ func (h *HealthCheckHandler) GroupRouterPattern() string {
 //	@Failure		503	{object}	response.HealthCheckResponse	"Service Unavailable"
 //	@Router			/health [GET]
 func (h *HealthCheckHandler) HealthCheck(c *gin.Context) {
+	cfg := config.LoadConfig()
 	hc := &response.HealthCheckResponse{
 		Status: response.HealthCheckStatusPass,
 		Checks: map[string]response.HealthCheckVerifications{
@@ -48,7 +47,8 @@ func (h *HealthCheckHandler) HealthCheck(c *gin.Context) {
 		},
 	}
 
-	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	dbURL := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable", cfg.DBUser, cfg.DBPassword, cfg.DBHost, cfg.DBPort, cfg.DBName)
+	db, err := sql.Open("postgres", dbURL)
 	if err != nil {
 		_ = c.Error(err)
 		return

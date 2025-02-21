@@ -15,12 +15,12 @@ type productJsonPresenter struct {
 }
 
 // ProductJsonResponse represents the response of a product
-func NewProductJsonPresenter(writer ResponseWriter) port.ProductPresenter {
+func NewProductJsonPresenter(writer ResponseWriter) port.Presenter {
 	return &productJsonPresenter{writer}
 }
 
 // Present write the response to the client
-func (p *productJsonPresenter) Present(pp dto.ProductPresenterInput) {
+func (p *productJsonPresenter) Present(pp dto.PresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.Product:
 		output := ToProductJsonResponse(v)
@@ -41,10 +41,10 @@ func (p *productJsonPresenter) Present(pp dto.ProductPresenterInput) {
 		}
 		p.writer.JSON(http.StatusOK, output)
 	default:
-		err := p.writer.Error(domain.NewInternalError(errors.New(domain.ErrInternalError)))
-		if err != nil {
-			p.writer.JSON(http.StatusInternalServerError, err)
-		}
+		p.writer.JSON(
+			http.StatusInternalServerError,
+			domain.NewInternalError(errors.New(domain.ErrInternalError)),
+		)
 	}
 }
 

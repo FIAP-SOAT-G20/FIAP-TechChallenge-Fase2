@@ -17,11 +17,11 @@ func NewOrderProductGateway(dataSource port.OrderProductDataSource) port.OrderPr
 	}
 }
 
-func (pg *orderProductGateway) FindByID(ctx context.Context, orderId, productId uint64) (*entity.OrderProduct, error) {
-	return pg.dataSource.FindByID(ctx, orderId, productId)
+func (g *orderProductGateway) FindByID(ctx context.Context, orderId, productId uint64) (*entity.OrderProduct, error) {
+	return g.dataSource.FindByID(ctx, orderId, productId)
 }
 
-func (pg *orderProductGateway) FindAll(ctx context.Context, orderId uint64, productId uint64, page, limit int) ([]*entity.OrderProduct, int64, error) {
+func (g *orderProductGateway) FindAll(ctx context.Context, orderId uint64, productId uint64, page, limit int) ([]*entity.OrderProduct, int64, error) {
 	filters := make(map[string]interface{})
 
 	if orderId != 0 {
@@ -32,17 +32,17 @@ func (pg *orderProductGateway) FindAll(ctx context.Context, orderId uint64, prod
 		filters["product_id"] = productId
 	}
 
-	return pg.dataSource.FindAll(ctx, filters, page, limit)
+	return g.dataSource.FindAll(ctx, filters, page, limit)
 }
 
-func (pg *orderProductGateway) Create(ctx context.Context, orderProduct *entity.OrderProduct) error {
-	return pg.dataSource.Create(ctx, orderProduct)
+func (g *orderProductGateway) Create(ctx context.Context, orderProduct *entity.OrderProduct) error {
+	return g.dataSource.Create(ctx, orderProduct)
 }
 
-func (pg *orderProductGateway) Update(ctx context.Context, orderProduct *entity.OrderProduct) error {
-	return pg.dataSource.Update(ctx, orderProduct)
+func (g *orderProductGateway) Update(ctx context.Context, orderProduct *entity.OrderProduct) error {
+	return g.dataSource.Update(ctx, orderProduct)
 }
 
-func (pg *orderProductGateway) Delete(ctx context.Context, orderId, productId uint64) error {
-	return pg.dataSource.Delete(ctx, orderId, productId)
+func (g *orderProductGateway) Delete(ctx context.Context, orderId, productId uint64) error {
+	return g.dataSource.Delete(ctx, orderId, productId)
 }

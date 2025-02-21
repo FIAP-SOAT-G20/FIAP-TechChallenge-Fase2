@@ -9,38 +9,11 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
 )
 
 type CustomerHandler struct {
 	controller *controller.CustomerController
-}
-
-type ListCustomersQueryRequest struct {
-	Name  string `form:"name" example:"John Doe"`
-	Page  int    `form:"page,default=1" example:"1"`
-	Limit int    `form:"limit,default=10" example:"10"`
-}
-
-type CreateCustomerBodyRequest struct {
-	Name  string `json:"name" validate:"required,min=3,max=100" example:"Produto A"`
-	Email string `json:"email" validate:"required,email" example:"test.customer.1@email.com"`
-	CPF   string `json:"cpf" validate:"required" example:"123.456.789-00"`
-}
-type UpdateCustomerUriRequest struct {
-	ID uint64 `uri:"id" binding:"required"`
-}
-
-type UpdateCustomerBodyRequest struct {
-	Name  string `json:"name" validate:"required,min=3,max=100" example:"Produto A"`
-	Email string `json:"email" validate:"required,email" example:"test.customer.1@email.com"`
-}
-
-type GetCustomerUriRequest struct {
-	ID uint64 `uri:"id" binding:"required"`
-}
-
-type DeleteCustomerUriRequest struct {
-	ID uint64 `uri:"id" binding:"required"`
 }
 
 func NewCustomerHandler(controller *controller.CustomerController) *CustomerHandler {
@@ -48,14 +21,14 @@ func NewCustomerHandler(controller *controller.CustomerController) *CustomerHand
 }
 
 func (h *CustomerHandler) Register(router *gin.RouterGroup) {
-	router.GET("/", h.ListCustomers)
-	router.POST("/", h.CreateCustomer)
-	router.GET("/:id", h.GetCustomer)
-	router.PUT("/:id", h.UpdateCustomer)
-	router.DELETE("/:id", h.DeleteCustomer)
+	router.GET("/", h.List)
+	router.POST("/", h.Create)
+	router.GET("/:id", h.Get)
+	router.PUT("/:id", h.Update)
+	router.DELETE("/:id", h.Delete)
 }
 
-// ListCustomers godoc
+// List godoc
 //
 //	@Summary		List customers
 //	@Description	List all customers
@@ -69,8 +42,8 @@ func (h *CustomerHandler) Register(router *gin.RouterGroup) {
 //	@Failure		400		{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/customers [get]
-func (h *CustomerHandler) ListCustomers(c *gin.Context) {
-	var query ListCustomersQueryRequest
+func (h *CustomerHandler) List(c *gin.Context) {
+	var query request.ListCustomersQueryRequest
 	if err := c.ShouldBindQuery(&query); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidQueryParams))
 		return
@@ -82,46 +55,46 @@ func (h *CustomerHandler) ListCustomers(c *gin.Context) {
 		Limit: query.Limit,
 	}
 	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.ListCustomers(c.Request.Context(), input)
+	err := h.controller.List(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
 }
 
-// CreateCustomer godoc
+// Create godoc
 //
 //	@Summary		Create customer
 //	@Description	Creates a new customer
 //	@Tags			customers, sign-up
 //	@Accept			json
 //	@Produce		json
-//	@Param			customer	body		CreateCustomerBodyRequest		true	"Customer data"
-//	@Success		201			{object}	presenter.CustomerJsonResponse	"Created"
-//	@Failure		400			{object}	middleware.ErrorJsonResponse	"Bad Request"
-//	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
+//	@Param			customer	body		request.CreateCustomerBodyRequest	true	"Customer data"
+//	@Success		201			{object}	presenter.CustomerJsonResponse		"Created"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/customers [post]
-func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
-	var req CreateCustomerBodyRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
+func (h *CustomerHandler) Create(c *gin.Context) {
+	var body request.CreateCustomerBodyRequest
+	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 
 	input := dto.CreateCustomerInput{
-		Name:  req.Name,
-		Email: req.Email,
-		CPF:   req.CPF,
+		Name:  body.Name,
+		Email: body.Email,
+		CPF:   body.CPF,
 	}
 	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.CreateCustomer(c.Request.Context(), input)
+	err := h.controller.Create(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
 }
 
-// GetCustomer godoc
+// Get godoc
 //
 //	@Summary		Get customer
 //	@Description	Search for a customer by ID
@@ -134,65 +107,65 @@ func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/customers/{id} [get]
-func (h *CustomerHandler) GetCustomer(c *gin.Context) {
-	var req GetCustomerUriRequest
-	if err := c.ShouldBindUri(&req); err != nil {
+func (h *CustomerHandler) Get(c *gin.Context) {
+	var uri request.GetCustomerUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.GetCustomerInput{
-		ID: req.ID,
+		ID: uri.ID,
 	}
 	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.GetCustomer(c.Request.Context(), input)
+	err := h.controller.Get(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
 }
 
-// UpdateCustomer godoc
+// Update godoc
 //
 //	@Summary		Update customer
 //	@Description	Update an existing customer
 //	@Tags			customers
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		int								true	"Customer ID"
-//	@Param			customer	body		UpdateCustomerBodyRequest		true	"Customer data"
-//	@Success		200			{object}	presenter.CustomerJsonResponse	"OK"
-//	@Failure		400			{object}	middleware.ErrorJsonResponse	"Bad Request"
-//	@Failure		404			{object}	middleware.ErrorJsonResponse	"Not Found"
-//	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
+//	@Param			id			path		int									true	"Customer ID"
+//	@Param			customer	body		request.UpdateCustomerBodyRequest	true	"Customer data"
+//	@Success		200			{object}	presenter.CustomerJsonResponse		"OK"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/customers/{id} [put]
-func (h *CustomerHandler) UpdateCustomer(c *gin.Context) {
-	var reqUri UpdateCustomerUriRequest
-	if err := c.ShouldBindUri(&reqUri); err != nil {
+func (h *CustomerHandler) Update(c *gin.Context) {
+	var uri request.UpdateCustomerUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
-	var req UpdateCustomerBodyRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
+	var body request.UpdateCustomerBodyRequest
+	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
 	}
 
 	input := dto.UpdateCustomerInput{
-		ID:    reqUri.ID,
-		Name:  req.Name,
-		Email: req.Email,
+		ID:    uri.ID,
+		Name:  body.Name,
+		Email: body.Email,
 	}
 	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.UpdateCustomer(c.Request.Context(), input)
+	err := h.controller.Update(c.Request.Context(), input)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
 }
 
-// DeleteCustomer godoc
+// Delete godoc
 //
 //	@Summary		Delete customer
 //	@Description	Deletes a customer by ID
@@ -204,18 +177,18 @@ func (h *CustomerHandler) UpdateCustomer(c *gin.Context) {
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/customers/{id} [delete]
-func (h *CustomerHandler) DeleteCustomer(c *gin.Context) {
-	var req DeleteCustomerUriRequest
-	if err := c.ShouldBindUri(&req); err != nil {
+func (h *CustomerHandler) Delete(c *gin.Context) {
+	var uri request.DeleteCustomerUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.DeleteCustomerInput{
-		ID: req.ID,
+		ID: uri.ID,
 	}
 	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	if err := h.controller.DeleteCustomer(c.Request.Context(), input); err != nil {
+	if err := h.controller.Delete(c.Request.Context(), input); err != nil {
 		_ = c.Error(err)
 		return
 	}

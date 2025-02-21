@@ -100,20 +100,16 @@ clean:
 .PHONY: mock
 mock:
 	@echo  "🟢 Generating mocks..."
+	mockgen -source=internal/core/port/presenter_port.go -destination=internal/core/port/mocks/presenter_mock.go
 	mockgen -source=internal/core/port/product_gateway_port.go -destination=internal/core/port/mocks/product_gateway_mock.go
-	mockgen -source=internal/core/port/product_presenter_port.go -destination=internal/core/port/mocks/product_presenter_mock.go
 	mockgen -source=internal/core/port/product_usecase_port.go -destination=internal/core/port/mocks/product_usecase_mock.go
 	mockgen -source=internal/core/port/customer_gateway_port.go -destination=internal/core/port/mocks/customer_gateway_mock.go
-	mockgen -source=internal/core/port/customer_presenter_port.go -destination=internal/core/port/mocks/customer_presenter_mock.go
 	mockgen -source=internal/core/port/customer_usecase_port.go -destination=internal/core/port/mocks/customer_usecase_mock.go
 	mockgen -source=internal/core/port/staff_gateway_port.go -destination=internal/core/port/mocks/staff_gateway_mock.go
-	mockgen -source=internal/core/port/staff_presenter_port.go -destination=internal/core/port/mocks/staff_presenter_mock.go
 	mockgen -source=internal/core/port/staff_usecase_port.go -destination=internal/core/port/mocks/staff_usecase_mock.go
 	mockgen -source=internal/core/port/order_gateway_port.go -destination=internal/core/port/mocks/order_gateway_mock.go
-	mockgen -source=internal/core/port/order_presenter_port.go -destination=internal/core/port/mocks/order_presenter_mock.go
 	mockgen -source=internal/core/port/order_usecase_port.go -destination=internal/core/port/mocks/order_usecase_mock.go
 	mockgen -source=internal/core/port/order_product_gateway_port.go -destination=internal/core/port/mocks/order_product_gateway_mock.go
-	mockgen -source=internal/core/port/order_product_presenter_port.go -destination=internal/core/port/mocks/order_product_presenter_mock.go
 	mockgen -source=internal/core/port/order_product_usecase_port.go -destination=internal/core/port/mocks/order_product_usecase_mock.go
 
 

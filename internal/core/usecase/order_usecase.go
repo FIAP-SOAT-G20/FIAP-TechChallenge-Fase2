@@ -74,21 +74,20 @@ func (uc *orderUseCase) Update(ctx context.Context, input dto.UpdateOrderInput) 
 			return nil, domain.NewInvalidInputError(domain.ErrInvalidBody)
 		}
 
-		// TODO: Implement this validation when staff is implemented
-		// if entity.StatusTransitionNeedsStaffID(order.Status) && staffID == nil {
-		// 	return domain.NewInternalError(errors.New(domain.ErrOrderMandatoryStaffId))
-		// }
-
-		// if order.Status == entity.PENDING && len(order.OrderProducts) == 0 {
-		// 	return domain.ErrOrderWithoutProducts
-		// }
+		if valueobject.StatusTransitionNeedsStaffID(input.Status) && input.StaffID == 0 {
+			return nil, domain.NewInvalidInputError(domain.ErrStaffIdIsMandatory)
+		}
 	}
 
+	orderProducts := order.OrderProducts
 	order.Update(input.CustomerID, input.Status)
 
 	if err := uc.gateway.Update(ctx, order); err != nil {
 		return nil, domain.NewInternalError(err)
 	}
+
+	// Restore order products, to calculate total bill in the presenter
+	order.OrderProducts = orderProducts
 
 	return order, nil
 }

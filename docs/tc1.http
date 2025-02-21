@@ -2,7 +2,7 @@
 # https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
 @baseUrl = http://localhost:8080
-@num = 4
+@num = 6
 @name = John Doe {{num}}
 @email = john.doe.{{num}}@email.com
 @cpf = 123.456.789-0{{num}}
@@ -70,7 +70,7 @@ GET {{baseUrl}}/api/v1/products/{{productId}} HTTP/1.1
 
 ###
 
-# @name editProduct
+# @name updateProduct
 PUT {{baseUrl}}/api/v1/products/{{productId}} HTTP/1.1
 
 {
@@ -88,7 +88,7 @@ GET {{baseUrl}}/api/v1/products/{{productId}} HTTP/1.1
 
 ###
 
-# @name removeProduct
+# @name deleteProduct
 DELETE {{baseUrl}}/api/v1/products/{{productId}} HTTP/1.1
 
 ###
@@ -171,6 +171,35 @@ PATCH {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
 }
 
 ###
+
+# @name getOrder
+GET {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
+
+###
+
+# @name updateOrderStatus2
+PATCH {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
+
+{
+    "status": "RECEIVED"
+}
+
+### 
+
+# @name getOrder
+GET {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
+
+###
+
+# @name updateOrderStatusWithStaff
+PATCH {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
+
+{
+    "staff_id": 1,
+    "status": "READY"
+}
+
+### 
 
 # @name getOrder
 GET {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1

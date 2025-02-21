@@ -12,7 +12,7 @@ type UpdateOrderInput struct {
 	ID         uint64
 	CustomerID uint64
 	Status     valueobject.OrderStatus
-	// Payment       Payment
+	StaffID    uint64
 }
 
 type GetOrderInput struct {
@@ -28,11 +28,4 @@ type ListOrdersInput struct {
 	Status     valueobject.OrderStatus
 	Page       int
 	Limit      int
-}
-
-type OrderPresenterInput struct {
-	Result any
-	Total  int64
-	Page   int
-	Limit  int
 }

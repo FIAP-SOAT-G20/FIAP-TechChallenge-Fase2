@@ -7,7 +7,6 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/docs"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/middleware"
 )
@@ -34,7 +33,6 @@ func NewRouter(logger *slog.Logger, environment string) *Router {
 		middleware.CORS(),
 	)
 
-	docs.SwaggerInfo.BasePath = "/api/v1"
 	engine.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return &Router{
@@ -59,12 +57,9 @@ func (r *Router) RegisterRoutes(handlers *Handlers) {
 		// Order Products
 		orderProducts := v1.Group("/orders/products")
 		handlers.OrderProduct.Register(orderProducts)
-
-		// Health check
-		v1.GET("/health", func(c *gin.Context) {
-			c.JSON(200, gin.H{"status": "UP"})
-		})
 	}
+	// Health check
+	handlers.HealthCheck.Register(r.engine.Group("/health"))
 }
 
 // Engine returns the gin engine

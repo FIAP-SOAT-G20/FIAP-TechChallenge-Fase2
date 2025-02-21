@@ -19,9 +19,9 @@ func TestStaffController_ListStaffs(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockStaffsUseCase := mockport.NewMockStaffUseCase(ctrl)
-	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
-	productController := NewStaffController(mockStaffsUseCase)
-	productController.Presenter = mockPresenter
+	mockPresenter := mockport.NewMockPresenter(ctrl)
+	controller := NewStaffController(mockStaffsUseCase)
+	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.ListStaffsInput{
@@ -54,14 +54,14 @@ func TestStaffController_ListStaffs(t *testing.T) {
 		Return(mockStaffs, int64(2), nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.StaffPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockStaffs,
 			Total:  int64(2),
 			Page:   1,
 			Limit:  10,
 		})
 
-	err := productController.ListStaffs(ctx, input)
+	err := controller.List(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -70,9 +70,9 @@ func TestStaffController_CreateStaff(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
-	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
-	productController := NewStaffController(mockStaffUseCase)
-	productController.Presenter = mockPresenter
+	mockPresenter := mockport.NewMockPresenter(ctrl)
+	controller := NewStaffController(mockStaffUseCase)
+	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.CreateStaffInput{
@@ -91,11 +91,11 @@ func TestStaffController_CreateStaff(t *testing.T) {
 		Return(mockStaff, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.StaffPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockStaff,
 		})
 
-	err := productController.CreateStaff(ctx, input)
+	err := controller.Create(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -104,9 +104,9 @@ func TestStaffController_GetStaff(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
-	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
-	productController := NewStaffController(mockStaffUseCase)
-	productController.Presenter = mockPresenter
+	mockPresenter := mockport.NewMockPresenter(ctrl)
+	controller := NewStaffController(mockStaffUseCase)
+	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.GetStaffInput{
@@ -124,7 +124,7 @@ func TestStaffController_GetStaff(t *testing.T) {
 		Return(mockStaff, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.StaffPresenterInput{
+		Present(dto.PresenterInput{
 			Result: &entity.Staff{
 				ID:   1,
 				Name: "Test Staff",
@@ -132,7 +132,7 @@ func TestStaffController_GetStaff(t *testing.T) {
 			},
 		})
 
-	err := productController.GetStaff(ctx, input)
+	err := controller.Get(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -141,9 +141,9 @@ func TestStaffController_UpdateStaff(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
-	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
-	productController := NewStaffController(mockStaffUseCase)
-	productController.Presenter = mockPresenter
+	mockPresenter := mockport.NewMockPresenter(ctrl)
+	controller := NewStaffController(mockStaffUseCase)
+	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.UpdateStaffInput{
@@ -163,7 +163,7 @@ func TestStaffController_UpdateStaff(t *testing.T) {
 		Return(mockStaff, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.StaffPresenterInput{
+		Present(dto.PresenterInput{
 			Result: &entity.Staff{
 				ID:   1,
 				Name: "Updated Staff",
@@ -171,7 +171,7 @@ func TestStaffController_UpdateStaff(t *testing.T) {
 			},
 		})
 
-	err := productController.UpdateStaff(ctx, input)
+	err := controller.Update(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -180,9 +180,9 @@ func TestStaffController_DeleteStaff(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
-	mockPresenter := mockport.NewMockStaffPresenter(ctrl)
-	productController := NewStaffController(mockStaffUseCase)
-	productController.Presenter = mockPresenter
+	mockPresenter := mockport.NewMockPresenter(ctrl)
+	controller := NewStaffController(mockStaffUseCase)
+	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.DeleteStaffInput{
@@ -200,10 +200,10 @@ func TestStaffController_DeleteStaff(t *testing.T) {
 		Return(mockStaff, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.StaffPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockStaff,
 		})
 
-	err := productController.DeleteStaff(ctx, input)
+	err := controller.Delete(ctx, input)
 	assert.NoError(t, err)
 }

@@ -17,32 +17,32 @@ func NewCustomerGateway(dataSource port.CustomerDataSource) port.CustomerGateway
 	}
 }
 
-func (cg *customerGateway) FindByID(ctx context.Context, id uint64) (*entity.Customer, error) {
-	return cg.dataSource.FindByID(ctx, id)
+func (g *customerGateway) FindByID(ctx context.Context, id uint64) (*entity.Customer, error) {
+	return g.dataSource.FindByID(ctx, id)
 }
 
-func (cg *customerGateway) FindByCPF(ctx context.Context, cpf string) (*entity.Customer, error) {
-	return cg.dataSource.FindByCPF(ctx, cpf)
+func (g *customerGateway) FindByCPF(ctx context.Context, cpf string) (*entity.Customer, error) {
+	return g.dataSource.FindByCPF(ctx, cpf)
 }
 
-func (cg *customerGateway) FindAll(ctx context.Context, name string, page, limit int) ([]*entity.Customer, int64, error) {
+func (g *customerGateway) FindAll(ctx context.Context, name string, page, limit int) ([]*entity.Customer, int64, error) {
 	filters := make(map[string]interface{})
 
 	if name != "" {
 		filters["name"] = name
 	}
 
-	return cg.dataSource.FindAll(ctx, filters, page, limit)
+	return g.dataSource.FindAll(ctx, filters, page, limit)
 }
 
-func (cg *customerGateway) Create(ctx context.Context, customer *entity.Customer) error {
-	return cg.dataSource.Create(ctx, customer)
+func (g *customerGateway) Create(ctx context.Context, customer *entity.Customer) error {
+	return g.dataSource.Create(ctx, customer)
 }
 
-func (cg *customerGateway) Update(ctx context.Context, customer *entity.Customer) error {
-	return cg.dataSource.Update(ctx, customer)
+func (g *customerGateway) Update(ctx context.Context, customer *entity.Customer) error {
+	return g.dataSource.Update(ctx, customer)
 }
 
-func (cg *customerGateway) Delete(ctx context.Context, id uint64) error {
-	return cg.dataSource.Delete(ctx, id)
+func (g *customerGateway) Delete(ctx context.Context, id uint64) error {
+	return g.dataSource.Delete(ctx, id)
 }

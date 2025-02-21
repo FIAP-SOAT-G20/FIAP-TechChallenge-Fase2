@@ -1,0 +1,46 @@
+package request
+
+import valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
+
+type ListOrdersQueryRequest struct {
+	CustomerID uint64                  `form:"customer_id" example:"1" default:"0"`
+	Status     valueobject.OrderStatus `form:"status" binding:"omitempty,order_status_exists" example:"PENDING"`
+	Page       int                     `form:"page,default=1" example:"1"`
+	Limit      int                     `form:"limit,default=10" example:"10"`
+}
+
+type CreateOrderBodyRequest struct {
+	CustomerID uint64 `json:"customer_id" binding:"required" example:"1"`
+}
+
+type GetOrderUriRequest struct {
+	ID uint64 `uri:"id" binding:"required"`
+}
+
+type UpdateOrderUriRequest struct {
+	ID uint64 `uri:"id" binding:"required"`
+}
+
+type UpdateOrderBodyRequest struct {
+	// StaffID is only required when status is PREPARING, READY or COMPLETED
+	StaffID    uint64                  `json:"staff_id" example:"1"`
+	CustomerID uint64                  `json:"customer_id" binding:"required" example:"1"`
+	Status     valueobject.OrderStatus `json:"status" binding:"required,order_status_exists" example:"PENDING"`
+}
+
+type UpdateOrderPartilRequest struct {
+	// StaffID is only required when status is PREPARING, READY or COMPLETED
+	StaffID uint64                  `json:"staff_id" example:"1"`
+	Status  valueobject.OrderStatus `json:"status" example:"PENDING"`
+}
+
+type UpdateOrderPartilBodyRequest struct {
+	CustomerID uint64 `json:"customer_id" example:"1"`
+	// StaffID is only required when status is PREPARING, READY or COMPLETED
+	StaffID uint64                  `json:"staff_id" example:"1"`
+	Status  valueobject.OrderStatus `json:"status" binding:"omitempty,order_status_exists" example:"PENDING"`
+}
+
+type DeleteOrderUriRequest struct {
+	ID uint64 `uri:"id" binding:"required"`
+}

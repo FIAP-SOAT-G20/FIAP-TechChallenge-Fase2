@@ -5,11 +5,15 @@ import "strings"
 type StaffRole string
 
 const (
-	COOK           StaffRole = "COOK"
-	ATTENDANT      StaffRole = "ATTENDANT"
-	MANAGER        StaffRole = "MANAGER"
-	UNDEFINED_ROLE StaffRole = ""
+	COOK      StaffRole = "COOK"
+	ATTENDANT StaffRole = "ATTENDANT"
+	MANAGER   StaffRole = "MANAGER"
+	UNDEFINED StaffRole = ""
 )
+
+func (o StaffRole) String() string {
+	return strings.ToUpper(string(o))
+}
 
 func ToStaffRole(status string) StaffRole {
 	switch strings.ToUpper(status) {
@@ -20,10 +24,6 @@ func ToStaffRole(status string) StaffRole {
 	case "MANAGER":
 		return MANAGER
 	default:
-		return UNDEFINED_ROLE
+		return UNDEFINED
 	}
-}
-
-func (o StaffRole) String() string {
-	return strings.ToUpper(string(o))
 }

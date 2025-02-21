@@ -78,10 +78,11 @@ func (ds *orderDataSource) Create(ctx context.Context, order *entity.Order) erro
 }
 
 func (ds *orderDataSource) Update(ctx context.Context, order *entity.Order) error {
-	result := ds.db.WithContext(ctx).Model(order).Updates(order)
+	result := ds.db.WithContext(ctx).Preload("OrderProducts").Model(order).Updates(order)
 	if result.Error != nil {
 		return fmt.Errorf("error updating order: %w", result.Error)
 	}
+
 	if result.RowsAffected == 0 {
 		return nil
 	}

@@ -161,7 +161,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.UpdateOrderProductBodyRequest"
+                            "$ref": "#/definitions/request.UpdateOrderProductBodyRequest"
                         }
                     }
                 ],
@@ -225,7 +225,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.CreateOrderProductBodyRequest"
+                            "$ref": "#/definitions/request.CreateOrderProductBodyRequest"
                         }
                     }
                 ],
@@ -370,7 +370,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.CreateCustomerBodyRequest"
+                            "$ref": "#/definitions/request.CreateCustomerBodyRequest"
                         }
                     }
                 ],
@@ -471,7 +471,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.UpdateCustomerBodyRequest"
+                            "$ref": "#/definitions/request.UpdateCustomerBodyRequest"
                         }
                     }
                 ],
@@ -658,7 +658,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.CreateOrderBodyRequest"
+                            "$ref": "#/definitions/request.CreateOrderBodyRequest"
                         }
                     }
                 ],
@@ -759,7 +759,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.UpdateOrderBodyRequest"
+                            "$ref": "#/definitions/request.UpdateOrderBodyRequest"
                         }
                     }
                 ],
@@ -858,7 +858,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.UpdateOrderPartilRequest"
+                            "$ref": "#/definitions/request.UpdateOrderPartilRequest"
                         }
                     }
                 ],
@@ -973,7 +973,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.CreateProductRequest"
+                            "$ref": "#/definitions/request.CreateProductBodyRequest"
                         }
                     }
                 ],
@@ -1076,7 +1076,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.UpdateProductRequest"
+                            "$ref": "#/definitions/request.UpdateProductBodyRequest"
                         }
                     }
                 ],
@@ -1169,6 +1169,18 @@ const docTemplate = `{
                 "summary": "List staffs",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Filter by name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by role. Available options: COOK, ATTENDANT, MANAGER",
+                        "name": "role",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "default": 1,
                         "description": "Page number",
@@ -1180,18 +1192,6 @@ const docTemplate = `{
                         "default": 10,
                         "description": "Items per page",
                         "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Filter by name",
-                        "name": "name",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Filter by role. Available options: COOK, ATTENDANT, MANAGER",
-                        "name": "role",
                         "in": "query"
                     }
                 ],
@@ -1235,7 +1235,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.StaffRequest"
+                            "$ref": "#/definitions/request.CreateStaffBodyRequest"
                         }
                     }
                 ],
@@ -1336,7 +1336,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.StaffRequest"
+                            "$ref": "#/definitions/request.UpdateStaffBodyRequest"
                         }
                     }
                 ],
@@ -1412,196 +1412,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "handler.CreateCustomerBodyRequest": {
-            "type": "object",
-            "required": [
-                "cpf",
-                "email",
-                "name"
-            ],
-            "properties": {
-                "cpf": {
-                    "type": "string",
-                    "example": "123.456.789-00"
-                },
-                "email": {
-                    "type": "string",
-                    "example": "test.customer.1@email.com"
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 3,
-                    "example": "Produto A"
-                }
-            }
-        },
-        "handler.CreateOrderBodyRequest": {
-            "type": "object",
-            "required": [
-                "customer_id"
-            ],
-            "properties": {
-                "customer_id": {
-                    "type": "integer",
-                    "example": 1
-                }
-            }
-        },
-        "handler.CreateOrderProductBodyRequest": {
-            "type": "object",
-            "required": [
-                "quantity"
-            ],
-            "properties": {
-                "quantity": {
-                    "type": "integer",
-                    "example": 1
-                }
-            }
-        },
-        "handler.CreateProductRequest": {
-            "type": "object",
-            "required": [
-                "category_id",
-                "name",
-                "price"
-            ],
-            "properties": {
-                "category_id": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "description": {
-                    "type": "string",
-                    "maxLength": 500,
-                    "example": "Product A description"
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 3,
-                    "example": "Product A"
-                },
-                "price": {
-                    "type": "number",
-                    "example": 99.99
-                }
-            }
-        },
-        "handler.StaffRequest": {
-            "type": "object",
-            "required": [
-                "name"
-            ],
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 3,
-                    "example": "Nome do funcionario"
-                },
-                "role": {
-                    "type": "string",
-                    "maxLength": 500,
-                    "example": "Cargo do funcionario"
-                }
-            }
-        },
-        "handler.UpdateCustomerBodyRequest": {
-            "type": "object",
-            "required": [
-                "email",
-                "name"
-            ],
-            "properties": {
-                "email": {
-                    "type": "string",
-                    "example": "test.customer.1@email.com"
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 3,
-                    "example": "Produto A"
-                }
-            }
-        },
-        "handler.UpdateOrderBodyRequest": {
-            "type": "object",
-            "required": [
-                "customer_id",
-                "status"
-            ],
-            "properties": {
-                "customer_id": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "status": {
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/valueobject.OrderStatus"
-                        }
-                    ],
-                    "example": "PENDING"
-                }
-            }
-        },
-        "handler.UpdateOrderPartilRequest": {
-            "type": "object",
-            "properties": {
-                "status": {
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/valueobject.OrderStatus"
-                        }
-                    ],
-                    "example": "PENDING"
-                }
-            }
-        },
-        "handler.UpdateOrderProductBodyRequest": {
-            "type": "object",
-            "required": [
-                "quantity"
-            ],
-            "properties": {
-                "quantity": {
-                    "type": "integer",
-                    "example": 1
-                }
-            }
-        },
-        "handler.UpdateProductRequest": {
-            "type": "object",
-            "required": [
-                "category_id",
-                "name",
-                "price"
-            ],
-            "properties": {
-                "category_id": {
-                    "type": "integer",
-                    "example": 1
-                },
-                "description": {
-                    "type": "string",
-                    "maxLength": 500,
-                    "example": "Product A description"
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "minLength": 3,
-                    "example": "Product A"
-                },
-                "price": {
-                    "type": "number",
-                    "example": 99.99
-                }
-            }
-        },
         "middleware.ErrorJsonResponse": {
             "type": "object",
             "properties": {
@@ -1918,6 +1728,233 @@ const docTemplate = `{
                 }
             }
         },
+        "request.CreateCustomerBodyRequest": {
+            "type": "object",
+            "required": [
+                "cpf",
+                "email",
+                "name"
+            ],
+            "properties": {
+                "cpf": {
+                    "type": "string",
+                    "example": "123.456.789-00"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "john.doe@email.com"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "John Doe"
+                }
+            }
+        },
+        "request.CreateOrderBodyRequest": {
+            "type": "object",
+            "required": [
+                "customer_id"
+            ],
+            "properties": {
+                "customer_id": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "request.CreateOrderProductBodyRequest": {
+            "type": "object",
+            "required": [
+                "quantity"
+            ],
+            "properties": {
+                "quantity": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "request.CreateProductBodyRequest": {
+            "type": "object",
+            "required": [
+                "category_id",
+                "name",
+                "price"
+            ],
+            "properties": {
+                "category_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "description": {
+                    "type": "string",
+                    "maxLength": 500,
+                    "example": "Product A description"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "Product A"
+                },
+                "price": {
+                    "type": "number",
+                    "example": 99.99
+                }
+            }
+        },
+        "request.CreateStaffBodyRequest": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "John Doe"
+                },
+                "role": {
+                    "maxLength": 500,
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/valueobject.StaffRole"
+                        }
+                    ],
+                    "example": "COOK"
+                }
+            }
+        },
+        "request.UpdateCustomerBodyRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "name"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "test.customer.1@email.com"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "Produto A"
+                }
+            }
+        },
+        "request.UpdateOrderBodyRequest": {
+            "type": "object",
+            "required": [
+                "customer_id",
+                "status"
+            ],
+            "properties": {
+                "customer_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "staff_id": {
+                    "description": "StaffID is only required when status is PREPARING, READY or COMPLETED",
+                    "type": "integer",
+                    "example": 1
+                },
+                "status": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/valueobject.OrderStatus"
+                        }
+                    ],
+                    "example": "PENDING"
+                }
+            }
+        },
+        "request.UpdateOrderPartilRequest": {
+            "type": "object",
+            "properties": {
+                "staff_id": {
+                    "description": "StaffID is only required when status is PREPARING, READY or COMPLETED",
+                    "type": "integer",
+                    "example": 1
+                },
+                "status": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/valueobject.OrderStatus"
+                        }
+                    ],
+                    "example": "PENDING"
+                }
+            }
+        },
+        "request.UpdateOrderProductBodyRequest": {
+            "type": "object",
+            "required": [
+                "quantity"
+            ],
+            "properties": {
+                "quantity": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "request.UpdateProductBodyRequest": {
+            "type": "object",
+            "required": [
+                "category_id",
+                "name",
+                "price"
+            ],
+            "properties": {
+                "category_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "description": {
+                    "type": "string",
+                    "maxLength": 500,
+                    "example": "Product A description"
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "Product A"
+                },
+                "price": {
+                    "type": "number",
+                    "example": 99.99
+                }
+            }
+        },
+        "request.UpdateStaffBodyRequest": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 3,
+                    "example": "John Doe"
+                },
+                "role": {
+                    "maxLength": 500,
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/valueobject.StaffRole"
+                        }
+                    ],
+                    "example": "COOK"
+                }
+            }
+        },
         "response.HealthCheckResponse": {
             "type": "object",
             "properties": {
@@ -1962,24 +1999,39 @@ const docTemplate = `{
         "valueobject.OrderStatus": {
             "type": "string",
             "enum": [
-                "UNDEFINDED",
                 "OPEN",
                 "CANCELLED",
                 "PENDING",
                 "RECEIVED",
                 "PREPARING",
                 "READY",
-                "COMPLETED"
+                "COMPLETED",
+                "UNDEFINDED"
             ],
             "x-enum-varnames": [
-                "UNDEFINDED",
                 "OPEN",
                 "CANCELLED",
                 "PENDING",
                 "RECEIVED",
                 "PREPARING",
                 "READY",
-                "COMPLETED"
+                "COMPLETED",
+                "UNDEFINDED"
+            ]
+        },
+        "valueobject.StaffRole": {
+            "type": "string",
+            "enum": [
+                "COOK",
+                "ATTENDANT",
+                "MANAGER",
+                ""
+            ],
+            "x-enum-varnames": [
+                "COOK",
+                "ATTENDANT",
+                "MANAGER",
+                "UNDEFINED"
             ]
         }
     },

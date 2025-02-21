@@ -29,10 +29,3 @@ type ListProductsInput struct {
 	Page       int
 	Limit      int
 }
-
-type ProductPresenterInput struct {
-	Result any
-	Total  int64
-	Page   int
-	Limit  int
-}

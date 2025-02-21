@@ -15,12 +15,12 @@ type productXmlPresenter struct {
 }
 
 // NewProductXmlPresenter creates a new ProductXmlPresenter
-func NewProductXmlPresenter(writer ResponseWriter) port.ProductPresenter {
+func NewProductXmlPresenter(writer ResponseWriter) port.Presenter {
 	return &productXmlPresenter{writer}
 }
 
 // Present writes the response to the client
-func (p *productXmlPresenter) Present(pp dto.ProductPresenterInput) {
+func (p *productXmlPresenter) Present(pp dto.PresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.Product:
 		output := toProductXmlResponse(v)
@@ -41,10 +41,10 @@ func (p *productXmlPresenter) Present(pp dto.ProductPresenterInput) {
 		}
 		p.writer.XML(http.StatusOK, output)
 	default:
-		err := p.writer.Error(domain.NewInternalError(errors.New(domain.ErrInternalError)))
-		if err != nil {
-			p.writer.JSON(http.StatusInternalServerError, err)
-		}
+		p.writer.JSON(
+			http.StatusInternalServerError,
+			domain.NewInternalError(errors.New(domain.ErrInternalError)),
+		)
 	}
 }
 

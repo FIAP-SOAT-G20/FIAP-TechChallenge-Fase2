@@ -18,9 +18,9 @@ func TestOrderController_ListOrders(t *testing.T) {
 	defer ctrl.Finish()
 
 	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
-	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	orderController := NewOrderController(mokOrdercUseCase)
-	orderController.Presenter = mockPresenter
+	mockPresenter := mockport.NewMockPresenter(ctrl)
+	controller := NewOrderController(mokOrdercUseCase)
+	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.ListOrdersInput{
@@ -50,14 +50,14 @@ func TestOrderController_ListOrders(t *testing.T) {
 		Return(mockOrders, int64(2), nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.OrderPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockOrders,
 			Total:  int64(2),
 			Page:   1,
 			Limit:  10,
 		})
 
-	err := orderController.ListOrders(ctx, input)
+	err := controller.List(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -66,9 +66,9 @@ func TestOrderController_CreateOrder(t *testing.T) {
 	defer ctrl.Finish()
 
 	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
-	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	orderController := NewOrderController(mokOrdercUseCase)
-	orderController.Presenter = mockPresenter
+	mockPresenter := mockport.NewMockPresenter(ctrl)
+	controller := NewOrderController(mokOrdercUseCase)
+	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.CreateOrderInput{
@@ -87,11 +87,11 @@ func TestOrderController_CreateOrder(t *testing.T) {
 		Return(mockOrder, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.OrderPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockOrder,
 		})
 
-	err := orderController.CreateOrder(ctx, input)
+	err := controller.Create(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -100,9 +100,9 @@ func TestOrderController_GetOrder(t *testing.T) {
 	defer ctrl.Finish()
 
 	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
-	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	orderController := NewOrderController(mokOrdercUseCase)
-	orderController.Presenter = mockPresenter
+	mockPresenter := mockport.NewMockPresenter(ctrl)
+	controller := NewOrderController(mokOrdercUseCase)
+	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.GetOrderInput{
@@ -121,11 +121,11 @@ func TestOrderController_GetOrder(t *testing.T) {
 		Return(mockOrder, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.OrderPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockOrder,
 		})
 
-	err := orderController.GetOrder(ctx, input)
+	err := controller.Get(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -134,9 +134,9 @@ func TestOrderController_UpdateOrder(t *testing.T) {
 	defer ctrl.Finish()
 
 	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
-	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	orderController := NewOrderController(mokOrdercUseCase)
-	orderController.Presenter = mockPresenter
+	mockPresenter := mockport.NewMockPresenter(ctrl)
+	controller := NewOrderController(mokOrdercUseCase)
+	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.UpdateOrderInput{
@@ -157,11 +157,11 @@ func TestOrderController_UpdateOrder(t *testing.T) {
 		Return(mockOrder, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.OrderPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockOrder,
 		})
 
-	err := orderController.UpdateOrder(ctx, input)
+	err := controller.Update(ctx, input)
 	assert.NoError(t, err)
 }
 
@@ -170,9 +170,9 @@ func TestOrderController_DeleteOrder(t *testing.T) {
 	defer ctrl.Finish()
 
 	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
-	mockPresenter := mockport.NewMockOrderPresenter(ctrl)
-	orderController := NewOrderController(mokOrdercUseCase)
-	orderController.Presenter = mockPresenter
+	mockPresenter := mockport.NewMockPresenter(ctrl)
+	controller := NewOrderController(mokOrdercUseCase)
+	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.DeleteOrderInput{
@@ -191,10 +191,10 @@ func TestOrderController_DeleteOrder(t *testing.T) {
 		Return(mockOrder, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.OrderPresenterInput{
+		Present(dto.PresenterInput{
 			Result: mockOrder,
 		})
 
-	err := orderController.DeleteOrder(ctx, input)
+	err := controller.Delete(ctx, input)
 	assert.NoError(t, err)
 }
