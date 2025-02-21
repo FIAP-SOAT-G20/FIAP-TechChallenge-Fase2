@@ -9,47 +9,11 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
 )
 
 type ProductHandler struct {
 	controller *controller.ProductController
-}
-
-type ListProductQueryRequest struct {
-	Name       string `form:"name" example:"Product A"`
-	CategoryID uint64 `form:"category_id" example:"1"`
-	Page       int    `form:"page,default=1" example:"1"`
-	Limit      int    `form:"limit,default=10" example:"10"`
-}
-
-type CreateProductBodyRequest struct {
-	Name        string  `json:"name" binding:"required,min=3,max=100" example:"Product A"`
-	Description string  `json:"description" binding:"max=500" example:"Product A description"`
-	Price       float64 `json:"price" binding:"required,gt=0" example:"99.99"`
-	CategoryID  uint64  `json:"category_id" binding:"required,gt=0" example:"1"`
-}
-
-// func (p *CreateProductRequest) Validate() error {
-// 	return GetValidator().Struct(p)
-// }
-
-type GetProductUriRequest struct {
-	ID uint64 `uri:"id" binding:"required"`
-}
-
-type UpdateProductUriRequest struct {
-	ID uint64 `uri:"id" binding:"required"`
-}
-
-type UpdateProductBodyRequest struct {
-	Name        string  `json:"name" binding:"required,min=3,max=100" example:"Product A"`
-	Description string  `json:"description" binding:"max=500" example:"Product A description"`
-	Price       float64 `json:"price" binding:"required,gt=0" example:"99.99"`
-	CategoryID  uint64  `json:"category_id" binding:"required,gt=0" example:"1"`
-}
-
-type DeleteProductUriRequest struct {
-	ID uint64 `uri:"id" binding:"required"`
 }
 
 func NewProductHandler(controller *controller.ProductController) *ProductHandler {
@@ -81,7 +45,7 @@ func (h *ProductHandler) Register(router *gin.RouterGroup) {
 //	@Failure		500			{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/products [get]
 func (h *ProductHandler) List(c *gin.Context) {
-	var query ListProductQueryRequest
+	var query request.ListProductQueryRequest
 	if err := c.ShouldBindQuery(&query); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidQueryParams))
 		return
@@ -115,13 +79,13 @@ func (h *ProductHandler) List(c *gin.Context) {
 //	@Tags			products
 //	@Accept			json
 //	@Produce		json,xml
-//	@Param			product	body		CreateProductBodyRequest		true	"Product data"
+//	@Param			product	body		request.CreateProductBodyRequest		true	"Product data"
 //	@Success		201		{object}	presenter.ProductJsonResponse	"Created"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products [post]
 func (h *ProductHandler) Create(c *gin.Context) {
-	var body CreateProductBodyRequest
+	var body request.CreateProductBodyRequest
 	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
@@ -162,7 +126,7 @@ func (h *ProductHandler) Create(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products/{id} [get]
 func (h *ProductHandler) Get(c *gin.Context) {
-	var uri GetProductUriRequest
+	var uri request.GetProductUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
@@ -194,20 +158,20 @@ func (h *ProductHandler) Get(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json,xml
 //	@Param			id		path		int								true	"Product ID"
-//	@Param			product	body		UpdateProductBodyRequest		true	"Product data"
+//	@Param			product	body		request.UpdateProductBodyRequest		true	"Product data"
 //	@Success		200		{object}	presenter.ProductJsonResponse	"OK"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		404		{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products/{id} [put]
 func (h *ProductHandler) Update(c *gin.Context) {
-	var uri UpdateProductUriRequest
+	var uri request.UpdateProductUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
-	var body UpdateProductBodyRequest
+	var body request.UpdateProductBodyRequest
 	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
@@ -249,7 +213,7 @@ func (h *ProductHandler) Update(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/products/{id} [delete]
 func (h *ProductHandler) Delete(c *gin.Context) {
-	var uri DeleteProductUriRequest
+	var uri request.DeleteProductUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return

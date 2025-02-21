@@ -9,39 +9,11 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
-	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
 )
 
 type StaffHandler struct {
 	controller *controller.StaffController
-}
-type ListStaffsQueryRequest struct {
-	Name  string                `form:"name" example:"John Doe" default:""`
-	Role  valueobject.StaffRole `form:"role" binding:"omitempty,staff_role_exists" example:"COOK"`
-	Page  int                   `form:"page,default=1" example:"1"`
-	Limit int                   `form:"limit,default=10" example:"10"`
-}
-
-type CreateStaffBodyRequest struct {
-	Name string                `json:"name" binding:"required,min=3,max=100" example:"John Doe"`
-	Role valueobject.StaffRole `json:"role" binding:"max=500" example:"COOK"`
-}
-
-type GetStaffUriRequest struct {
-	ID uint64 `uri:"id" binding:"required"`
-}
-
-type UpdateStaffUriRequest struct {
-	ID uint64 `uri:"id" binding:"required"`
-}
-
-type UpdateStaffBodyRequest struct {
-	Name string                `json:"name" binding:"required,min=3,max=100" example:"John Doe"`
-	Role valueobject.StaffRole `json:"role" binding:"max=500" example:"COOK"`
-}
-
-type DeleteStaffUriRequest struct {
-	ID uint64 `uri:"id" binding:"required"`
 }
 
 func NewStaffHandler(controller *controller.StaffController) *StaffHandler {
@@ -72,7 +44,7 @@ func (h *StaffHandler) Register(router *gin.RouterGroup) {
 //	@Failure		500		{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/staffs [get]
 func (h *StaffHandler) List(c *gin.Context) {
-	var query ListStaffsQueryRequest
+	var query request.ListStaffsQueryRequest
 	if err := c.ShouldBindQuery(&query); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
@@ -100,13 +72,13 @@ func (h *StaffHandler) List(c *gin.Context) {
 //	@Tags			staffs
 //	@Accept			json
 //	@Produce		json
-//	@Param			staff	body		CreateStaffBodyRequest			true	"Staff data"
+//	@Param			staff	body		request.CreateStaffBodyRequest			true	"Staff data"
 //	@Success		201		{object}	presenter.StaffJsonResponse		"Created"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs [post]
 func (h *StaffHandler) Create(c *gin.Context) {
-	var body CreateStaffBodyRequest
+	var body request.CreateStaffBodyRequest
 	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
@@ -139,7 +111,7 @@ func (h *StaffHandler) Create(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs/{id} [get]
 func (h *StaffHandler) Get(c *gin.Context) {
-	var uri GetStaffUriRequest
+	var uri request.GetStaffUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
@@ -165,20 +137,20 @@ func (h *StaffHandler) Get(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id		path		int								true	"Staff ID"
-//	@Param			staff	body		UpdateStaffBodyRequest			true	"Staff data"
+//	@Param			staff	body		request.UpdateStaffBodyRequest			true	"Staff data"
 //	@Success		200		{object}	presenter.StaffJsonResponse		"OK"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		404		{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs/{id} [put]
 func (h *StaffHandler) Update(c *gin.Context) {
-	var uri UpdateStaffUriRequest
+	var uri request.UpdateStaffUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
-	var body UpdateStaffBodyRequest
+	var body request.UpdateStaffBodyRequest
 	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
 		return
@@ -210,7 +182,7 @@ func (h *StaffHandler) Update(c *gin.Context) {
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/staffs/{id} [delete]
 func (h *StaffHandler) Delete(c *gin.Context) {
-	var uri DeleteStaffUriRequest
+	var uri request.DeleteStaffUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
