@@ -12,7 +12,7 @@ package mock_port
 import (
 	reflect "reflect"
 
-	dto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	dto "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	gomock "go.uber.org/mock/gomock"
 )
 
