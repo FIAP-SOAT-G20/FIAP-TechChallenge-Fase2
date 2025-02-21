@@ -52,9 +52,9 @@ func (p *staffJsonPresenter) Present(pp dto.PresenterInput) {
 		}
 		p.writer.JSON(http.StatusOK, output)
 	default:
-		err := p.writer.Error(domain.NewInternalError(errors.New(domain.ErrInternalError)))
-		if err != nil {
-			p.writer.JSON(http.StatusInternalServerError, err)
-		}
+		p.writer.JSON(
+			http.StatusInternalServerError,
+			domain.NewInternalError(errors.New(domain.ErrInternalError)),
+		)
 	}
 }
