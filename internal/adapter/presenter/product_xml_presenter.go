@@ -41,7 +41,7 @@ func (p *productXmlPresenter) Present(pp dto.PresenterInput) {
 		}
 		p.writer.XML(http.StatusOK, output)
 	default:
-		p.writer.JSON(
+		p.writer.XML(
 			http.StatusInternalServerError,
 			domain.NewInternalError(errors.New(domain.ErrInternalError)),
 		)
