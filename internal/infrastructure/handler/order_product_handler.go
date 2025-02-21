@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
@@ -183,12 +181,12 @@ func (h *OrderProductHandler) Update(c *gin.Context) {
 //	@Description	Deletes a orderProduct by Order ID and Product ID
 //	@Tags			orders
 //	@Produce		json
-//	@Param			order_id	path		int	true	"Order ID"
-//	@Param			product_id	path		int	true	"Product ID"
-//	@Success		204			{object}	nil
-//	@Failure		400			{object}	middleware.ErrorJsonResponse	"Bad Request"
-//	@Failure		404			{object}	middleware.ErrorJsonResponse	"Not Found"
-//	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
+//	@Param			order_id	path		int									true	"Order ID"
+//	@Param			product_id	path		int									true	"Product ID"
+//	@Success		200			{object}	presenter.OrderProductJsonResponse	"OK"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [delete]
 func (h *OrderProductHandler) Delete(c *gin.Context) {
 	var uri request.DeleteOrderProductUriRequest
@@ -206,6 +204,4 @@ func (h *OrderProductHandler) Delete(c *gin.Context) {
 		_ = c.Error(err)
 		return
 	}
-
-	c.Status(http.StatusNoContent)
 }

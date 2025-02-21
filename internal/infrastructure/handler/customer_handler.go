@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
@@ -35,9 +33,9 @@ func (h *CustomerHandler) Register(router *gin.RouterGroup) {
 //	@Tags			customers
 //	@Accept			json
 //	@Produce		json
+//	@Param			name	query		string									false	"Filter by name"
 //	@Param			page	query		int										false	"Page number"		default(1)
 //	@Param			limit	query		int										false	"Items per page"	default(10)
-//	@Param			name	query		string									false	"Filter by name"
 //	@Success		200		{object}	presenter.CustomerJsonPaginatedResponse	"OK"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse			"Internal Server Error"
@@ -171,8 +169,8 @@ func (h *CustomerHandler) Update(c *gin.Context) {
 //	@Description	Deletes a customer by ID
 //	@Tags			customers
 //	@Produce		json
-//	@Param			id	path		int	true	"Customer ID"
-//	@Success		204	{object}	nil
+//	@Param			id	path		int								true	"Customer ID"
+//	@Success		200	{object}	presenter.CustomerJsonResponse	"OK"
 //	@Failure		400	{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
@@ -192,6 +190,4 @@ func (h *CustomerHandler) Delete(c *gin.Context) {
 		_ = c.Error(err)
 		return
 	}
-
-	c.Status(http.StatusNoContent)
 }

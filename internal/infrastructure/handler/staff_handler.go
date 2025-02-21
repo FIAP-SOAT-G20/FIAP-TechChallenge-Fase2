@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
@@ -175,8 +173,8 @@ func (h *StaffHandler) Update(c *gin.Context) {
 //	@Description	Deletes a staff by ID
 //	@Tags			staffs
 //	@Produce		json
-//	@Param			id	path		int	true	"Staff ID"
-//	@Success		204	{object}	nil
+//	@Param			id	path		int								true	"Staff ID"
+//	@Success		200	{object}	presenter.StaffJsonResponse		"OK"
 //	@Failure		400	{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
@@ -196,6 +194,4 @@ func (h *StaffHandler) Delete(c *gin.Context) {
 		_ = c.Error(err)
 		return
 	}
-
-	c.Status(http.StatusNoContent)
 }

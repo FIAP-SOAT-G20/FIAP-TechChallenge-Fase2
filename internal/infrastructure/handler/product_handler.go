@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
@@ -36,10 +34,10 @@ func (h *ProductHandler) Register(router *gin.RouterGroup) {
 //	@Tags			products
 //	@Accept			json
 //	@Produce		json,xml
-//	@Param			page		query		int										false	"Page number"		default(1)
-//	@Param			limit		query		int										false	"Items per page"	default(10)
 //	@Param			name		query		string									false	"Filter by name"
 //	@Param			category_id	query		int										false	"Filter by category ID"
+//	@Param			page		query		int										false	"Page number"		default(1)
+//	@Param			limit		query		int										false	"Items per page"	default(10)
 //	@Success		200			{object}	presenter.ProductJsonPaginatedResponse	"OK"
 //	@Failure		400			{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse			"Internal Server Error"
@@ -206,8 +204,8 @@ func (h *ProductHandler) Update(c *gin.Context) {
 //	@Tags			products
 //	@Accept			json
 //	@Produce		json,xml
-//	@Param			id	path		int	true	"Product ID"
-//	@Success		204	{object}	nil
+//	@Param			id	path		int								true	"Product ID"
+//	@Success		200	{object}	presenter.ProductJsonResponse	"OK"
 //	@Failure		400	{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
@@ -233,6 +231,4 @@ func (h *ProductHandler) Delete(c *gin.Context) {
 		_ = c.Error(err)
 		return
 	}
-
-	c.Status(http.StatusNoContent)
 }
