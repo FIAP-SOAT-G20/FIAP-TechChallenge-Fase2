@@ -1,163 +1,5 @@
 basePath: /api/v1
 definitions:
-  handler.CreateCustomerBodyRequest:
-    properties:
-      cpf:
-        example: 123.456.789-00
-        type: string
-      email:
-        example: test.customer.1@email.com
-        type: string
-      name:
-        example: Produto A
-        maxLength: 100
-        minLength: 3
-        type: string
-    required:
-    - cpf
-    - email
-    - name
-    type: object
-  handler.CreateOrderBodyRequest:
-    properties:
-      customer_id:
-        example: 1
-        type: integer
-    required:
-    - customer_id
-    type: object
-  handler.CreateOrderProductBodyRequest:
-    properties:
-      quantity:
-        example: 1
-        type: integer
-    required:
-    - quantity
-    type: object
-  handler.CreateProductBodyRequest:
-    properties:
-      category_id:
-        example: 1
-        type: integer
-      description:
-        example: Product A description
-        maxLength: 500
-        type: string
-      name:
-        example: Product A
-        maxLength: 100
-        minLength: 3
-        type: string
-      price:
-        example: 99.99
-        type: number
-    required:
-    - category_id
-    - name
-    - price
-    type: object
-  handler.CreateStaffBodyRequest:
-    properties:
-      name:
-        example: John Doe
-        maxLength: 100
-        minLength: 3
-        type: string
-      role:
-        allOf:
-        - $ref: '#/definitions/valueobject.StaffRole'
-        example: COOK
-        maxLength: 500
-    required:
-    - name
-    type: object
-  handler.UpdateCustomerBodyRequest:
-    properties:
-      email:
-        example: test.customer.1@email.com
-        type: string
-      name:
-        example: Produto A
-        maxLength: 100
-        minLength: 3
-        type: string
-    required:
-    - email
-    - name
-    type: object
-  handler.UpdateOrderBodyRequest:
-    properties:
-      customer_id:
-        example: 1
-        type: integer
-      staff_id:
-        description: StaffID is only required when status is PREPARING, READY or COMPLETED
-        example: 1
-        type: integer
-      status:
-        allOf:
-        - $ref: '#/definitions/valueobject.OrderStatus'
-        example: PENDING
-    required:
-    - customer_id
-    - status
-    type: object
-  handler.UpdateOrderPartilRequest:
-    properties:
-      staff_id:
-        description: StaffID is only required when status is PREPARING, READY or COMPLETED
-        example: 1
-        type: integer
-      status:
-        allOf:
-        - $ref: '#/definitions/valueobject.OrderStatus'
-        example: PENDING
-    type: object
-  handler.UpdateOrderProductBodyRequest:
-    properties:
-      quantity:
-        example: 1
-        type: integer
-    required:
-    - quantity
-    type: object
-  handler.UpdateProductBodyRequest:
-    properties:
-      category_id:
-        example: 1
-        type: integer
-      description:
-        example: Product A description
-        maxLength: 500
-        type: string
-      name:
-        example: Product A
-        maxLength: 100
-        minLength: 3
-        type: string
-      price:
-        example: 99.99
-        type: number
-    required:
-    - category_id
-    - name
-    - price
-    type: object
-  handler.UpdateStaffBodyRequest:
-    properties:
-      name:
-        example: John Doe
-        maxLength: 100
-        minLength: 3
-        type: string
-      role:
-        allOf:
-        - $ref: '#/definitions/valueobject.StaffRole'
-        example: COOK
-        maxLength: 500
-    required:
-    - name
-    type: object
   middleware.ErrorJsonResponse:
     properties:
       code:
@@ -381,6 +223,164 @@ definitions:
         example: "2024-02-09T10:00:00Z"
         type: string
     type: object
+  request.CreateCustomerBodyRequest:
+    properties:
+      cpf:
+        example: 123.456.789-00
+        type: string
+      email:
+        example: john.doe@email.com
+        type: string
+      name:
+        example: John Doe
+        maxLength: 100
+        minLength: 3
+        type: string
+    required:
+    - cpf
+    - email
+    - name
+    type: object
+  request.CreateOrderBodyRequest:
+    properties:
+      customer_id:
+        example: 1
+        type: integer
+    required:
+    - customer_id
+    type: object
+  request.CreateOrderProductBodyRequest:
+    properties:
+      quantity:
+        example: 1
+        type: integer
+    required:
+    - quantity
+    type: object
+  request.CreateProductBodyRequest:
+    properties:
+      category_id:
+        example: 1
+        type: integer
+      description:
+        example: Product A description
+        maxLength: 500
+        type: string
+      name:
+        example: Product A
+        maxLength: 100
+        minLength: 3
+        type: string
+      price:
+        example: 99.99
+        type: number
+    required:
+    - category_id
+    - name
+    - price
+    type: object
+  request.CreateStaffBodyRequest:
+    properties:
+      name:
+        example: John Doe
+        maxLength: 100
+        minLength: 3
+        type: string
+      role:
+        allOf:
+        - $ref: '#/definitions/valueobject.StaffRole'
+        example: COOK
+        maxLength: 500
+    required:
+    - name
+    type: object
+  request.UpdateCustomerBodyRequest:
+    properties:
+      email:
+        example: test.customer.1@email.com
+        type: string
+      name:
+        example: Produto A
+        maxLength: 100
+        minLength: 3
+        type: string
+    required:
+    - email
+    - name
+    type: object
+  request.UpdateOrderBodyRequest:
+    properties:
+      customer_id:
+        example: 1
+        type: integer
+      staff_id:
+        description: StaffID is only required when status is PREPARING, READY or COMPLETED
+        example: 1
+        type: integer
+      status:
+        allOf:
+        - $ref: '#/definitions/valueobject.OrderStatus'
+        example: PENDING
+    required:
+    - customer_id
+    - status
+    type: object
+  request.UpdateOrderPartilRequest:
+    properties:
+      staff_id:
+        description: StaffID is only required when status is PREPARING, READY or COMPLETED
+        example: 1
+        type: integer
+      status:
+        allOf:
+        - $ref: '#/definitions/valueobject.OrderStatus'
+        example: PENDING
+    type: object
+  request.UpdateOrderProductBodyRequest:
+    properties:
+      quantity:
+        example: 1
+        type: integer
+    required:
+    - quantity
+    type: object
+  request.UpdateProductBodyRequest:
+    properties:
+      category_id:
+        example: 1
+        type: integer
+      description:
+        example: Product A description
+        maxLength: 500
+        type: string
+      name:
+        example: Product A
+        maxLength: 100
+        minLength: 3
+        type: string
+      price:
+        example: 99.99
+        type: number
+    required:
+    - category_id
+    - name
+    - price
+    type: object
+  request.UpdateStaffBodyRequest:
+    properties:
+      name:
+        example: John Doe
+        maxLength: 100
+        minLength: 3
+        type: string
+      role:
+        allOf:
+        - $ref: '#/definitions/valueobject.StaffRole'
+        example: COOK
+        maxLength: 500
+    required:
+    - name
+    type: object
   response.HealthCheckResponse:
     properties:
       checks:
@@ -580,7 +580,7 @@ paths:
         name: order
         required: true
         schema:
-          $ref: '#/definitions/handler.CreateOrderProductBodyRequest'
+          $ref: '#/definitions/request.CreateOrderProductBodyRequest'
       produces:
       - application/json
       responses:
@@ -615,7 +615,7 @@ paths:
         name: order
         required: true
         schema:
-          $ref: '#/definitions/handler.UpdateOrderProductBodyRequest'
+          $ref: '#/definitions/request.UpdateOrderProductBodyRequest'
       produces:
       - application/json
       responses:
@@ -686,7 +686,7 @@ paths:
         name: customer
         required: true
         schema:
-          $ref: '#/definitions/handler.CreateCustomerBodyRequest'
+          $ref: '#/definitions/request.CreateCustomerBodyRequest'
       produces:
       - application/json
       responses:
@@ -782,7 +782,7 @@ paths:
         name: customer
         required: true
         schema:
-          $ref: '#/definitions/handler.UpdateCustomerBodyRequest'
+          $ref: '#/definitions/request.UpdateCustomerBodyRequest'
       produces:
       - application/json
       responses:
@@ -878,7 +878,7 @@ paths:
         name: order
         required: true
         schema:
-          $ref: '#/definitions/handler.CreateOrderBodyRequest'
+          $ref: '#/definitions/request.CreateOrderBodyRequest'
       produces:
       - application/json
       responses:
@@ -983,7 +983,7 @@ paths:
         name: order
         required: true
         schema:
-          $ref: '#/definitions/handler.UpdateOrderPartilRequest'
+          $ref: '#/definitions/request.UpdateOrderPartilRequest'
       produces:
       - application/json
       responses:
@@ -1031,7 +1031,7 @@ paths:
         name: order
         required: true
         schema:
-          $ref: '#/definitions/handler.UpdateOrderBodyRequest'
+          $ref: '#/definitions/request.UpdateOrderBodyRequest'
       produces:
       - application/json
       responses:
@@ -1111,7 +1111,7 @@ paths:
         name: product
         required: true
         schema:
-          $ref: '#/definitions/handler.CreateProductBodyRequest'
+          $ref: '#/definitions/request.CreateProductBodyRequest'
       produces:
       - application/json
       - text/xml
@@ -1217,7 +1217,7 @@ paths:
         name: product
         required: true
         schema:
-          $ref: '#/definitions/handler.UpdateProductBodyRequest'
+          $ref: '#/definitions/request.UpdateProductBodyRequest'
       produces:
       - application/json
       - text/xml
@@ -1293,7 +1293,7 @@ paths:
         name: staff
         required: true
         schema:
-          $ref: '#/definitions/handler.CreateStaffBodyRequest'
+          $ref: '#/definitions/request.CreateStaffBodyRequest'
       produces:
       - application/json
       responses:
@@ -1388,7 +1388,7 @@ paths:
         name: staff
         required: true
         schema:
-          $ref: '#/definitions/handler.UpdateStaffBodyRequest'
+          $ref: '#/definitions/request.UpdateStaffBodyRequest'
       produces:
       - application/json
       responses:
