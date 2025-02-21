@@ -23,10 +23,10 @@ type ListProductQueryRequest struct {
 }
 
 type CreateProductBodyRequest struct {
-	Name        string  `json:"name" validate:"required,min=3,max=100" example:"Product A"`
-	Description string  `json:"description" validate:"max=500" example:"Product A description"`
-	Price       float64 `json:"price" validate:"required,gt=0" example:"99.99"`
-	CategoryID  uint64  `json:"category_id" validate:"required,gt=0" example:"1"`
+	Name        string  `json:"name" binding:"required,min=3,max=100" example:"Product A"`
+	Description string  `json:"description" binding:"max=500" example:"Product A description"`
+	Price       float64 `json:"price" binding:"required,gt=0" example:"99.99"`
+	CategoryID  uint64  `json:"category_id" binding:"required,gt=0" example:"1"`
 }
 
 // func (p *CreateProductRequest) Validate() error {
@@ -42,10 +42,10 @@ type UpdateProductUriRequest struct {
 }
 
 type UpdateProductBodyRequest struct {
-	Name        string  `json:"name" validate:"required,min=3,max=100" example:"Product A"`
-	Description string  `json:"description" validate:"max=500" example:"Product A description"`
-	Price       float64 `json:"price" validate:"required,gt=0" example:"99.99"`
-	CategoryID  uint64  `json:"category_id" validate:"required,gt=0" example:"1"`
+	Name        string  `json:"name" binding:"required,min=3,max=100" example:"Product A"`
+	Description string  `json:"description" binding:"max=500" example:"Product A description"`
+	Price       float64 `json:"price" binding:"required,gt=0" example:"99.99"`
+	CategoryID  uint64  `json:"category_id" binding:"required,gt=0" example:"1"`
 }
 
 type DeleteProductUriRequest struct {

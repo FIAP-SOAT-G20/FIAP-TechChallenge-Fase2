@@ -23,8 +23,8 @@ type ListStaffsQueryRequest struct {
 }
 
 type CreateStaffBodyRequest struct {
-	Name string                `json:"name" validate:"required,min=3,max=100" example:"John Doe"`
-	Role valueobject.StaffRole `json:"role" validate:"max=500" example:"COOK"`
+	Name string                `json:"name" binding:"required,min=3,max=100" example:"John Doe"`
+	Role valueobject.StaffRole `json:"role" binding:"max=500" example:"COOK"`
 }
 
 type GetStaffUriRequest struct {
@@ -36,8 +36,8 @@ type UpdateStaffUriRequest struct {
 }
 
 type UpdateStaffBodyRequest struct {
-	Name string                `json:"name" validate:"required,min=3,max=100" example:"John Doe"`
-	Role valueobject.StaffRole `json:"role" validate:"max=500" example:"COOK"`
+	Name string                `json:"name" binding:"required,min=3,max=100" example:"John Doe"`
+	Role valueobject.StaffRole `json:"role" binding:"max=500" example:"COOK"`
 }
 
 type DeleteStaffUriRequest struct {
