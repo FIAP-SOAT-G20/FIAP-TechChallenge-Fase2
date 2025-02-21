@@ -73,7 +73,7 @@ func (h *OrderHandler) List(c *gin.Context) {
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
-//	@Param			order	body		request.CreateOrderBodyRequest			true	"Order data"
+//	@Param			order	body		request.CreateOrderBodyRequest	true	"Order data"
 //	@Success		201		{object}	presenter.OrderJsonResponse		"Created"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
@@ -144,7 +144,7 @@ func (h *OrderHandler) Get(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id		path		int								true	"Order ID"
-//	@Param			order	body		request.UpdateOrderBodyRequest			true	"Order data"
+//	@Param			order	body		request.UpdateOrderBodyRequest	true	"Order data"
 //	@Success		200		{object}	presenter.OrderJsonResponse		"OK"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		404		{object}	middleware.ErrorJsonResponse	"Not Found"
@@ -193,12 +193,12 @@ func (h *OrderHandler) Update(c *gin.Context) {
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
-//	@Param			id		path		int								true	"Order ID"
-//	@Param			order	body		request.UpdateOrderPartilRequest		true	"Order data"
-//	@Success		200		{object}	presenter.OrderJsonResponse		"OK"
-//	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
-//	@Failure		404		{object}	middleware.ErrorJsonResponse	"Not Found"
-//	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
+//	@Param			id		path		int									true	"Order ID"
+//	@Param			order	body		request.UpdateOrderPartilRequest	true	"Order data"
+//	@Success		200		{object}	presenter.OrderJsonResponse			"OK"
+//	@Failure		400		{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		404		{object}	middleware.ErrorJsonResponse		"Not Found"
+//	@Failure		500		{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/orders/{id} [patch]
 func (h *OrderHandler) UpdatePartial(c *gin.Context) {
 	var uri request.UpdateOrderUriRequest

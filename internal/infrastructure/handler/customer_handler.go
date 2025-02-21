@@ -69,10 +69,10 @@ func (h *CustomerHandler) List(c *gin.Context) {
 //	@Tags			customers, sign-up
 //	@Accept			json
 //	@Produce		json
-//	@Param			customer	body		request.CreateCustomerBodyRequest		true	"Customer data"
-//	@Success		201			{object}	presenter.CustomerJsonResponse	"Created"
-//	@Failure		400			{object}	middleware.ErrorJsonResponse	"Bad Request"
-//	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
+//	@Param			customer	body		request.CreateCustomerBodyRequest	true	"Customer data"
+//	@Success		201			{object}	presenter.CustomerJsonResponse		"Created"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/customers [post]
 func (h *CustomerHandler) Create(c *gin.Context) {
 	var body request.CreateCustomerBodyRequest
@@ -132,12 +132,12 @@ func (h *CustomerHandler) Get(c *gin.Context) {
 //	@Tags			customers
 //	@Accept			json
 //	@Produce		json
-//	@Param			id			path		int								true	"Customer ID"
-//	@Param			customer	body		request.UpdateCustomerBodyRequest		true	"Customer data"
-//	@Success		200			{object}	presenter.CustomerJsonResponse	"OK"
-//	@Failure		400			{object}	middleware.ErrorJsonResponse	"Bad Request"
-//	@Failure		404			{object}	middleware.ErrorJsonResponse	"Not Found"
-//	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
+//	@Param			id			path		int									true	"Customer ID"
+//	@Param			customer	body		request.UpdateCustomerBodyRequest	true	"Customer data"
+//	@Success		200			{object}	presenter.CustomerJsonResponse		"OK"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/customers/{id} [put]
 func (h *CustomerHandler) Update(c *gin.Context) {
 	var uri request.UpdateCustomerUriRequest

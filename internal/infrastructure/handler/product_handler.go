@@ -79,10 +79,10 @@ func (h *ProductHandler) List(c *gin.Context) {
 //	@Tags			products
 //	@Accept			json
 //	@Produce		json,xml
-//	@Param			product	body		request.CreateProductBodyRequest		true	"Product data"
-//	@Success		201		{object}	presenter.ProductJsonResponse	"Created"
-//	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
-//	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
+//	@Param			product	body		request.CreateProductBodyRequest	true	"Product data"
+//	@Success		201		{object}	presenter.ProductJsonResponse		"Created"
+//	@Failure		400		{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		500		{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/products [post]
 func (h *ProductHandler) Create(c *gin.Context) {
 	var body request.CreateProductBodyRequest
@@ -157,12 +157,12 @@ func (h *ProductHandler) Get(c *gin.Context) {
 //	@Tags			products
 //	@Accept			json
 //	@Produce		json,xml
-//	@Param			id		path		int								true	"Product ID"
-//	@Param			product	body		request.UpdateProductBodyRequest		true	"Product data"
-//	@Success		200		{object}	presenter.ProductJsonResponse	"OK"
-//	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
-//	@Failure		404		{object}	middleware.ErrorJsonResponse	"Not Found"
-//	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
+//	@Param			id		path		int									true	"Product ID"
+//	@Param			product	body		request.UpdateProductBodyRequest	true	"Product data"
+//	@Success		200		{object}	presenter.ProductJsonResponse		"OK"
+//	@Failure		400		{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		404		{object}	middleware.ErrorJsonResponse		"Not Found"
+//	@Failure		500		{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/products/{id} [put]
 func (h *ProductHandler) Update(c *gin.Context) {
 	var uri request.UpdateProductUriRequest

@@ -72,11 +72,11 @@ func (h *OrderProductHandler) List(c *gin.Context) {
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
-//	@Param			order_id	path		int									true	"Order ID"
-//	@Param			product_id	path		int									true	"Product ID"
-//	@Param			order		body		request.CreateOrderProductBodyRequest		true	"OrderProduct data"
-//	@Success		201			{object}	presenter.OrderProductJsonResponse	"Created"
-//	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Param			order_id	path		int										true	"Order ID"
+//	@Param			product_id	path		int										true	"Product ID"
+//	@Param			order		body		request.CreateOrderProductBodyRequest	true	"OrderProduct data"
+//	@Success		201			{object}	presenter.OrderProductJsonResponse		"Created"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [post]
 func (h *OrderProductHandler) Create(c *gin.Context) {
 	var uri request.CreateOrderProductUriRequest
@@ -144,13 +144,13 @@ func (h *OrderProductHandler) Get(c *gin.Context) {
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
-//	@Param			order_id	path		int									true	"Order ID"
-//	@Param			product_id	path		int									true	"Product ID"
-//	@Param			order		body		request.UpdateOrderProductBodyRequest		true	"OrderProduct data"
-//	@Success		200			{object}	presenter.OrderProductJsonResponse	"OK"
-//	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
-//	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
-//	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
+//	@Param			order_id	path		int										true	"Order ID"
+//	@Param			product_id	path		int										true	"Product ID"
+//	@Param			order		body		request.UpdateOrderProductBodyRequest	true	"OrderProduct data"
+//	@Success		200			{object}	presenter.OrderProductJsonResponse		"OK"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse			"Bad Request"
+//	@Failure		404			{object}	middleware.ErrorJsonResponse			"Not Found"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [put]
 func (h *OrderProductHandler) Update(c *gin.Context) {
 	var uri request.UpdateOrderProductUriRequest

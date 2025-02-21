@@ -72,7 +72,7 @@ func (h *StaffHandler) List(c *gin.Context) {
 //	@Tags			staffs
 //	@Accept			json
 //	@Produce		json
-//	@Param			staff	body		request.CreateStaffBodyRequest			true	"Staff data"
+//	@Param			staff	body		request.CreateStaffBodyRequest	true	"Staff data"
 //	@Success		201		{object}	presenter.StaffJsonResponse		"Created"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse	"Internal Server Error"
@@ -137,7 +137,7 @@ func (h *StaffHandler) Get(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id		path		int								true	"Staff ID"
-//	@Param			staff	body		request.UpdateStaffBodyRequest			true	"Staff data"
+//	@Param			staff	body		request.UpdateStaffBodyRequest	true	"Staff data"
 //	@Success		200		{object}	presenter.StaffJsonResponse		"OK"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		404		{object}	middleware.ErrorJsonResponse	"Not Found"
