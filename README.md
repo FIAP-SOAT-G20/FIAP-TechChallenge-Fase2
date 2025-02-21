@@ -62,7 +62,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 │       ├── middleware
 │       ├── route
 │       └── server
-├── k8s
+└── k8s
 ```
 
 <details>
@@ -257,16 +257,9 @@ make test
 - [Hexagonal Architecture, Ports and Adapters in Go](https://medium.com/@kyodo-tech/hexagonal-architecture-ports-and-adapters-in-go-f1af950726b)
 - [Building RESTful API with Hexagonal Architecture in Go](https://dev.to/bagashiz/building-restful-api-with-hexagonal-architecture-in-go-1mij)
 - [Hexagonal Architecture in Go](https://medium.com/@matiasvarela/hexagonal-architecture-in-go-cfd4e436faa3)
-- [DBML](https://www.dbml.org/)
-- [PostgreSQL](https://www.postgresql.org/)
-- [GORM](https://gorm.io/)
-- [Gin Web Framework](https://gin-gonic.com/)
-- [Docker](https://www.docker.com/)
-- [Kubernetes](https://kubernetes.io/)
 - [The S.O.L.I.D Principles in Pictures](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
 - [Health Check Response Format for HTTP APIs](https://datatracker.ietf.org/doc/html/draft-inadarei-api-health-check-06)
 - [Event Storming](https://www.eventstorming.com/)
-- [Swagger](https://swagger.io/)
 - [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 - [Alistair in the "Hexagone" 1/3](https://www.youtube.com/watch?v=th4AgBcrEHA&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&ab_channel=DDDFR)
 - [Alistair in the "Hexagone" 2/3](https://www.youtube.com/watch?v=iALcE8BPs94&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&index=2&ab_channel=DDDFR)
@@ -287,6 +280,8 @@ make test
 - [[Hands-on Guide] How to Implement Clean Architecture in Golang?](https://reliasoftware.com/blog/clean-architecture-golang)
 - [Clean DDD lessons: presenters](https://medium.com/unil-ci-software-engineering/clean-ddd-lessons-presenters-6f092308b75e)
 - [Clean Architecture: Understanding the Role of Presenters](https://medium.com/@erickzanetti/clean-architecture-understanding-the-role-of-presenters-8707ff018aa3)
+- [Golang Microservices Boilerplate - Clean Architecture](https://github.com/gbrayhan/microservices-go)
+- [GRACEFULL SHUTDOWN EM GOLANG - Finalizando requisições antes de desligar o projeto!](https://www.youtube.com/watch?v=V52Th2h_8FM&ab_channel=HunCoding)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
