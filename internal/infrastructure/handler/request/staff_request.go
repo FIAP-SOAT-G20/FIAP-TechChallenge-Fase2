@@ -3,7 +3,7 @@ package request
 import valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 
 type ListStaffsQueryRequest struct {
-	Name  string                `form:"name" example:"John Doe" default:""`
+	Name  string                `form:"name" example:"John Doe"`
 	Role  valueobject.StaffRole `form:"role" binding:"omitempty,staff_role_exists" example:"COOK"`
 	Page  int                   `form:"page,default=1" example:"1"`
 	Limit int                   `form:"limit,default=10" example:"10"`
