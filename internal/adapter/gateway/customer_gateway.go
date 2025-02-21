@@ -12,9 +12,7 @@ type customerGateway struct {
 }
 
 func NewCustomerGateway(dataSource port.CustomerDataSource) port.CustomerGateway {
-	return &customerGateway{
-		dataSource: dataSource,
-	}
+	return &customerGateway{dataSource}
 }
 
 func (g *customerGateway) FindByID(ctx context.Context, id uint64) (*entity.Customer, error) {

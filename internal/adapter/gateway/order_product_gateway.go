@@ -12,9 +12,7 @@ type orderProductGateway struct {
 }
 
 func NewOrderProductGateway(dataSource port.OrderProductDataSource) port.OrderProductGateway {
-	return &orderProductGateway{
-		dataSource: dataSource,
-	}
+	return &orderProductGateway{dataSource}
 }
 
 func (g *orderProductGateway) FindByID(ctx context.Context, orderId, productId uint64) (*entity.OrderProduct, error) {
