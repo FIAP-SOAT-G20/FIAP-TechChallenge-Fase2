@@ -1,3 +1,5 @@
+.DEFAULT_GOAL := help
+
 APP_NAME=app
 MAIN_FILE=cmd/server/main.go
 DOCKER_REGISTRY=your-registry
