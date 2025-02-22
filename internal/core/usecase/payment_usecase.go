@@ -2,13 +2,13 @@ package usecase
 
 import (
 	"context"
-	"os"
 	"strconv"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 )
 
 type createPaymentUseCase struct {
@@ -74,6 +74,8 @@ func (uc *createPaymentUseCase) Execute(ctx context.Context, OrderID uint64) (*e
 }
 
 func (ps *createPaymentUseCase) createPaymentPayload(order *entity.Order) *entity.CreatePaymentIN {
+	cfg := config.LoadConfig()
+
 	var items []entity.ItemsIN
 
 	externalReference := strconv.FormatUint(order.ID, 10)
@@ -96,6 +98,6 @@ func (ps *createPaymentUseCase) createPaymentPayload(order *entity.Order) *entit
 		Items:             items,
 		Title:             "FIAP Tech Challenge - Product Order",
 		Description:       "Purchases made at the FIAP Tech Challenge store",
-		NotificationUrl:   os.Getenv("MERCADO_PAGO_NOTIFICATION_URL"),
+		NotificationUrl:   cfg.MercadoPagoNotificationURL,
 	}
 }

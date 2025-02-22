@@ -2,11 +2,12 @@ package datasource
 
 import (
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/response"
 	"github.com/go-resty/resty/v2"
 )
 
@@ -18,18 +19,20 @@ func NewPaymentExternal() port.PaymentExternalDatasource {
 }
 
 func (ps *PaymentExternalDataSource) CreatePayment(payment *entity.CreatePaymentIN) (*entity.CreatePaymentOUT, error) {
+	cfg := config.LoadConfig()
+
 	body := entity.NewPaymentRequest(payment)
 
 	client := resty.New().
 		SetTimeout(10*time.Second).
 		SetRetryCount(2).
-		SetHeader("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("MERCADO_PAGO_TOKEN"))).
+		SetHeader("Authorization", fmt.Sprintf("Bearer %s", cfg.MercadoPagoToken)).
 		SetHeader("Content-Type", "application/json")
 
 	resp, err := client.R().
 		SetBody(body).
-		SetResult(&entity.CreatePaymentResponse{}).
-		Post(os.Getenv("MERCADO_PAGO_URL"))
+		SetResult(&response.CreatePaymentResponse{}).
+		Post(cfg.MercadoPagoURL)
 	if err != nil {
 		return nil, fmt.Errorf("error to create payment: %w", err)
 	}
@@ -38,7 +41,7 @@ func (ps *PaymentExternalDataSource) CreatePayment(payment *entity.CreatePayment
 		return nil, fmt.Errorf("error: response status %d", resp.StatusCode())
 	}
 
-	response := entity.ToCreatePaymentOUTDomain(resp.Result().(*entity.CreatePaymentResponse))
+	response := response.ToCreatePaymentOUTDomain(resp.Result().(*response.CreatePaymentResponse))
 
 	return response, nil
 }

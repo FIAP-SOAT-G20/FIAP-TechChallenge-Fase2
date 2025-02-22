@@ -95,15 +95,3 @@ func NewPaymentRequest(payment *CreatePaymentIN) *CreatePaymentRequest {
 		NotificationURL:   payment.NotificationUrl,
 	}
 }
-
-type CreatePaymentResponse struct {
-	InStoreOrderID string `json:"in_store_order_id"`
-	QrData         string `json:"qr_data"`
-}
-
-func ToCreatePaymentOUTDomain(payment *CreatePaymentResponse) *CreatePaymentOUT {
-	return &CreatePaymentOUT{
-		InStoreOrderID: payment.InStoreOrderID,
-		QrData:         payment.QrData,
-	}
-}
