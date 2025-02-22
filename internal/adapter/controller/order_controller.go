@@ -8,23 +8,20 @@ import (
 )
 
 type OrderController struct {
-	useCase   port.OrderUseCase
-	Presenter port.Presenter
+	useCase port.OrderUseCase
 }
 
-func NewOrderController(
-	useCase port.OrderUseCase,
-) *OrderController {
-	return &OrderController{useCase, nil}
+func NewOrderController(useCase port.OrderUseCase) port.OrderController {
+	return &OrderController{useCase}
 }
 
-func (c *OrderController) List(ctx context.Context, input dto.ListOrdersInput) error {
+func (c *OrderController) List(ctx context.Context, presenter port.Presenter, input dto.ListOrdersInput) error {
 	orders, total, err := c.useCase.List(ctx, input)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
+	presenter.Present(dto.PresenterInput{
 		Total:  total,
 		Page:   input.Page,
 		Limit:  input.Limit,
@@ -34,52 +31,52 @@ func (c *OrderController) List(ctx context.Context, input dto.ListOrdersInput) e
 	return nil
 }
 
-func (c *OrderController) Create(ctx context.Context, input dto.CreateOrderInput) error {
+func (c *OrderController) Create(ctx context.Context, presenter port.Presenter, input dto.CreateOrderInput) error {
 	order, err := c.useCase.Create(ctx, input)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
+	presenter.Present(dto.PresenterInput{
 		Result: order,
 	})
 
 	return nil
 }
 
-func (c *OrderController) Get(ctx context.Context, input dto.GetOrderInput) error {
+func (c *OrderController) Get(ctx context.Context, presenter port.Presenter, input dto.GetOrderInput) error {
 	order, err := c.useCase.Get(ctx, input)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
+	presenter.Present(dto.PresenterInput{
 		Result: order,
 	})
 
 	return nil
 }
 
-func (c *OrderController) Update(ctx context.Context, input dto.UpdateOrderInput) error {
+func (c *OrderController) Update(ctx context.Context, presenter port.Presenter, input dto.UpdateOrderInput) error {
 	order, err := c.useCase.Update(ctx, input)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
+	presenter.Present(dto.PresenterInput{
 		Result: order,
 	})
 
 	return nil
 }
 
-func (c *OrderController) Delete(ctx context.Context, input dto.DeleteOrderInput) error {
+func (c *OrderController) Delete(ctx context.Context, presenter port.Presenter, input dto.DeleteOrderInput) error {
 	order, err := c.useCase.Delete(ctx, input)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
+	presenter.Present(dto.PresenterInput{
 		Result: order,
 	})
 

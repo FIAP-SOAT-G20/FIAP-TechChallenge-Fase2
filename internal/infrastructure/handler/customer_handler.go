@@ -3,19 +3,19 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
 )
 
 type CustomerHandler struct {
-	controller *controller.CustomerController
+	controller port.CustomerController
 }
 
-func NewCustomerHandler(controller *controller.CustomerController) *CustomerHandler {
-	return &CustomerHandler{controller: controller}
+func NewCustomerHandler(controller port.CustomerController) *CustomerHandler {
+	return &CustomerHandler{controller}
 }
 
 func (h *CustomerHandler) Register(router *gin.RouterGroup) {
@@ -52,8 +52,12 @@ func (h *CustomerHandler) List(c *gin.Context) {
 		Page:  query.Page,
 		Limit: query.Limit,
 	}
-	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.List(c.Request.Context(), input)
+
+	err := h.controller.List(
+		c.Request.Context(),
+		presenter.NewCustomerJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -84,8 +88,12 @@ func (h *CustomerHandler) Create(c *gin.Context) {
 		Email: body.Email,
 		CPF:   body.CPF,
 	}
-	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.Create(c.Request.Context(), input)
+
+	err := h.controller.Create(
+		c.Request.Context(),
+		presenter.NewCustomerJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -115,8 +123,12 @@ func (h *CustomerHandler) Get(c *gin.Context) {
 	input := dto.GetCustomerInput{
 		ID: uri.ID,
 	}
-	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.Get(c.Request.Context(), input)
+
+	err := h.controller.Get(
+		c.Request.Context(),
+		presenter.NewCustomerJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -155,8 +167,12 @@ func (h *CustomerHandler) Update(c *gin.Context) {
 		Name:  body.Name,
 		Email: body.Email,
 	}
-	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.Update(c.Request.Context(), input)
+
+	err := h.controller.Update(
+		c.Request.Context(),
+		presenter.NewCustomerJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -185,8 +201,13 @@ func (h *CustomerHandler) Delete(c *gin.Context) {
 	input := dto.DeleteCustomerInput{
 		ID: uri.ID,
 	}
-	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	if err := h.controller.Delete(c.Request.Context(), input); err != nil {
+
+	err := h.controller.Delete(
+		c.Request.Context(),
+		presenter.NewCustomerJsonPresenter(c),
+		input,
+	)
+	if err != nil {
 		_ = c.Error(err)
 		return
 	}

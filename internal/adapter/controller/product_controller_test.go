@@ -21,7 +21,6 @@ func TestProductController_ListProducts(t *testing.T) {
 	mockProductsUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
 	controller := NewProductController(mockProductsUseCase)
-	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.ListProductsInput{
@@ -67,7 +66,7 @@ func TestProductController_ListProducts(t *testing.T) {
 
 	//gomock.Any()//
 
-	err := controller.List(ctx, input)
+	err := controller.List(ctx, mockPresenter, input)
 	assert.NoError(t, err)
 }
 
@@ -78,7 +77,6 @@ func TestProductController_CreateProduct(t *testing.T) {
 	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
 	controller := NewProductController(mockProductUseCase)
-	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.CreateProductInput{
@@ -105,7 +103,7 @@ func TestProductController_CreateProduct(t *testing.T) {
 			Result: mockProduct,
 		})
 
-	err := controller.Create(ctx, input)
+	err := controller.Create(ctx, mockPresenter, input)
 	assert.NoError(t, err)
 }
 
@@ -116,7 +114,6 @@ func TestProductController_GetProduct(t *testing.T) {
 	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
 	controller := NewProductController(mockProductUseCase)
-	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.GetProductInput{
@@ -146,7 +143,7 @@ func TestProductController_GetProduct(t *testing.T) {
 			},
 		})
 
-	err := controller.Get(ctx, input)
+	err := controller.Get(ctx, mockPresenter, input)
 	assert.NoError(t, err)
 }
 
@@ -157,7 +154,6 @@ func TestProductController_UpdateProduct(t *testing.T) {
 	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
 	controller := NewProductController(mockProductUseCase)
-	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.UpdateProductInput{
@@ -191,7 +187,7 @@ func TestProductController_UpdateProduct(t *testing.T) {
 			},
 		})
 
-	err := controller.Update(ctx, input)
+	err := controller.Update(ctx, mockPresenter, input)
 	assert.NoError(t, err)
 }
 
@@ -202,7 +198,6 @@ func TestProductController_DeleteProduct(t *testing.T) {
 	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
 	controller := NewProductController(mockProductUseCase)
-	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.DeleteProductInput{
@@ -226,6 +221,6 @@ func TestProductController_DeleteProduct(t *testing.T) {
 			Result: mockProduct,
 		})
 
-	err := controller.Delete(ctx, input)
+	err := controller.Delete(ctx, mockPresenter, input)
 	assert.NoError(t, err)
 }

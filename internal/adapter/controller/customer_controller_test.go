@@ -20,7 +20,6 @@ func TestCustomerController_ListCustomers(t *testing.T) {
 	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
 	controller := NewCustomerController(mockCustomerUseCase)
-	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.ListCustomersInput{
@@ -56,7 +55,7 @@ func TestCustomerController_ListCustomers(t *testing.T) {
 			Result: mockCustomers,
 		})
 
-	err := controller.List(ctx, input)
+	err := controller.List(ctx, mockPresenter, input)
 	assert.NoError(t, err)
 }
 
@@ -67,7 +66,6 @@ func TestCustomerController_CreateCustomer(t *testing.T) {
 	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
 	controller := NewCustomerController(mockCustomerUseCase)
-	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.CreateCustomerInput{
@@ -92,7 +90,7 @@ func TestCustomerController_CreateCustomer(t *testing.T) {
 			Result: mockCustomer,
 		})
 
-	err := controller.Create(ctx, input)
+	err := controller.Create(ctx, mockPresenter, input)
 	assert.NoError(t, err)
 }
 
@@ -103,7 +101,6 @@ func TestCustomerController_GetCustomer(t *testing.T) {
 	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
 	controller := NewCustomerController(mockCustomerUseCase)
-	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.GetCustomerInput{
@@ -126,7 +123,7 @@ func TestCustomerController_GetCustomer(t *testing.T) {
 			Result: mockCustomer,
 		})
 
-	err := controller.Get(ctx, input)
+	err := controller.Get(ctx, mockPresenter, input)
 	assert.NoError(t, err)
 }
 
@@ -137,7 +134,6 @@ func TestCustomerController_UpdateCustomer(t *testing.T) {
 	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
 	controller := NewCustomerController(mockCustomerUseCase)
-	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.UpdateCustomerInput{
@@ -161,7 +157,7 @@ func TestCustomerController_UpdateCustomer(t *testing.T) {
 			Result: mockCustomer,
 		})
 
-	err := controller.Update(ctx, input)
+	err := controller.Update(ctx, mockPresenter, input)
 	assert.NoError(t, err)
 }
 
@@ -172,7 +168,6 @@ func TestCustomerController_DeleteCustomer(t *testing.T) {
 	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
 	controller := NewCustomerController(mockCustomerUseCase)
-	controller.Presenter = mockPresenter
 
 	ctx := context.Background()
 	input := dto.DeleteCustomerInput{
@@ -194,6 +189,6 @@ func TestCustomerController_DeleteCustomer(t *testing.T) {
 			Result: mockCustomer,
 		})
 
-	err := controller.Delete(ctx, input)
+	err := controller.Delete(ctx, mockPresenter, input)
 	assert.NoError(t, err)
 }

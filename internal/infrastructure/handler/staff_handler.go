@@ -3,18 +3,18 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
 )
 
 type StaffHandler struct {
-	controller *controller.StaffController
+	controller port.StaffController
 }
 
-func NewStaffHandler(controller *controller.StaffController) *StaffHandler {
+func NewStaffHandler(controller port.StaffController) *StaffHandler {
 	return &StaffHandler{controller: controller}
 }
 
@@ -55,8 +55,11 @@ func (h *StaffHandler) List(c *gin.Context) {
 		Limit: query.Limit,
 	}
 
-	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
-	err := h.controller.List(c.Request.Context(), input)
+	err := h.controller.List(
+		c.Request.Context(),
+		presenter.NewStaffJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -87,8 +90,11 @@ func (h *StaffHandler) Create(c *gin.Context) {
 		Role: body.Role,
 	}
 
-	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
-	err := h.controller.Create(c.Request.Context(), input)
+	err := h.controller.Create(
+		c.Request.Context(),
+		presenter.NewStaffJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -119,8 +125,11 @@ func (h *StaffHandler) Get(c *gin.Context) {
 		ID: uri.ID,
 	}
 
-	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
-	err := h.controller.Get(c.Request.Context(), input)
+	err := h.controller.Get(
+		c.Request.Context(),
+		presenter.NewStaffJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -159,8 +168,11 @@ func (h *StaffHandler) Update(c *gin.Context) {
 		Name: body.Name,
 		Role: body.Role,
 	}
-	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
-	err := h.controller.Update(c.Request.Context(), input)
+	err := h.controller.Update(
+		c.Request.Context(),
+		presenter.NewStaffJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -189,8 +201,13 @@ func (h *StaffHandler) Delete(c *gin.Context) {
 	input := dto.DeleteStaffInput{
 		ID: uri.ID,
 	}
-	h.controller.Presenter = presenter.NewStaffJsonPresenter(c)
-	if err := h.controller.Delete(c.Request.Context(), input); err != nil {
+	err := h.controller.Delete(
+		c.Request.Context(),
+		presenter.NewStaffJsonPresenter(c),
+		input,
+	)
+
+	if err != nil {
 		_ = c.Error(err)
 		return
 	}
