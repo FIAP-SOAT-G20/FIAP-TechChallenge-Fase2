@@ -198,8 +198,6 @@ cp .env.example .env
 make compose-build
 ```
 
-> The binary will be created in the `bin` folder
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## :runner: Running
@@ -210,7 +208,6 @@ make compose-build
 make compose-up
 ```
 
-> [!NOTE]
 > To stop the application, run `compose-down`  
 > To remove the application, run `compose-clean`  
 
@@ -244,6 +241,9 @@ kubectl apply -f k8s/
 12. Update the swagger documentation by running `make swagger`
 13. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard
 14. Push to the branch and Open a new PR by running `make pull-request`
+15. After the PR is approved, merge it to the main branch
+16. The GitHub Actions will run the tests, lint, and build the Docker image
+<!-- 17. The Kubernetes deployment will be updated automatically -->
 
 > [!NOTE]
 > `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
