@@ -164,9 +164,9 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
 ### Build/Run with Docker
 
-- [Docker 1.23+](https://www.docker.com/)
+- [Docker](https://www.docker.com/)
 
-### Build/Run Locally
+### Build/Run Locally (development)
 
 - [Go](https://golang.org/)
 - [Docker](https://www.docker.com/)
