@@ -11,12 +11,12 @@
     <img src="https://img.shields.io/badge/Tools-Kubernetes-informational?style=flat-square&logo=kubernetes&color=326CE5" alt="Kubernetes" />
 </p>
 
-## 💬 About
 
 <p align="center">
     <img src="docs/gopher.png" alt="Fast Food" />
 </p>
 
+## 💬 About
 
 Repository for the [FIAP](https://postech.fiap.com.br/) Tech Challenge 2, focused on developing a monolith backend system for managing orders in a fast-food restaurant.
 
