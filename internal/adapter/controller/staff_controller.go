@@ -8,79 +8,69 @@ import (
 )
 
 type StaffController struct {
-	useCase   port.StaffUseCase
-	Presenter port.Presenter
+	useCase port.StaffUseCase
 }
 
 func NewStaffController(useCase port.StaffUseCase) *StaffController {
-	return &StaffController{useCase, nil}
+	return &StaffController{useCase}
 }
 
-func (c *StaffController) List(ctx context.Context, presenter port.Presenter, input dto.ListStaffsInput) error {
-	staffs, total, err := c.useCase.List(ctx, input)
+func (c *StaffController) List(ctx context.Context, p port.Presenter, i dto.ListStaffsInput) error {
+	staffs, total, err := c.useCase.List(ctx, i)
 	if err != nil {
 		return err
 	}
 
-	presenter.Present(dto.PresenterInput{
+	p.Present(dto.PresenterInput{
 		Total:  total,
-		Page:   input.Page,
-		Limit:  input.Limit,
+		Page:   i.Page,
+		Limit:  i.Limit,
 		Result: staffs,
 	})
 
 	return nil
 }
 
-func (c *StaffController) Create(ctx context.Context, presenter port.Presenter, input dto.CreateStaffInput) error {
-	staff, err := c.useCase.Create(ctx, input)
+func (c *StaffController) Create(ctx context.Context, p port.Presenter, i dto.CreateStaffInput) error {
+	staff, err := c.useCase.Create(ctx, i)
 	if err != nil {
 		return err
 	}
 
-	presenter.Present(dto.PresenterInput{
-		Result: staff,
-	})
+	p.Present(dto.PresenterInput{Result: staff})
 
 	return nil
 }
 
-func (c *StaffController) Get(ctx context.Context, presenter port.Presenter, input dto.GetStaffInput) error {
-	staff, err := c.useCase.Get(ctx, input)
+func (c *StaffController) Get(ctx context.Context, p port.Presenter, i dto.GetStaffInput) error {
+	staff, err := c.useCase.Get(ctx, i)
 	if err != nil {
 		return err
 	}
 
-	presenter.Present(dto.PresenterInput{
-		Result: staff,
-	})
+	p.Present(dto.PresenterInput{Result: staff})
 
 	return nil
 }
 
-func (c *StaffController) Update(ctx context.Context, presenter port.Presenter, input dto.UpdateStaffInput) error {
-	staff, err := c.useCase.Update(ctx, input)
+func (c *StaffController) Update(ctx context.Context, p port.Presenter, i dto.UpdateStaffInput) error {
+	staff, err := c.useCase.Update(ctx, i)
 	if err != nil {
 		return err
 	}
 
-	presenter.Present(dto.PresenterInput{
-		Result: staff,
-	})
+	p.Present(dto.PresenterInput{Result: staff})
 
 	return nil
 }
 
-func (c *StaffController) Delete(ctx context.Context, presenter port.Presenter, input dto.DeleteStaffInput) error {
-	staff, err := c.useCase.Delete(ctx, input)
+func (c *StaffController) Delete(ctx context.Context, p port.Presenter, i dto.DeleteStaffInput) error {
+	staff, err := c.useCase.Delete(ctx, i)
 
 	if err != nil {
 		return err
 	}
-
-	presenter.Present(dto.PresenterInput{
-		Result: staff,
-	})
+	p.Present(dto.PresenterInput{Result: staff})
 
 	return nil
 }
