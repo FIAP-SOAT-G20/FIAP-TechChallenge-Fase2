@@ -2,18 +2,21 @@ package presenter
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
-type paymentJsonPresenter struct{}
+type paymentJsonPresenter struct {
+	writer ResponseWriter
+}
 
 // PaymentJsonResponse represents the response of a payment
-func NewPaymentJsonPresenter() port.PaymentPresenter {
+func NewPaymentJsonPresenter(writer ResponseWriter) port.Presenter {
 	return &paymentJsonPresenter{}
 }
 
@@ -23,15 +26,16 @@ func ToPaymentJsonResponse(customer *entity.Payment) PaymentJsonResponse {
 }
 
 // Present write the response to the client
-func (p *paymentJsonPresenter) Present(pp dto.PaymentPresenterInput) {
+func (p *paymentJsonPresenter) Present(pp dto.PresenterInput) {
 	switch v := pp.Result.(type) {
 	case *entity.Payment:
 		output := ToPaymentJsonResponse(v)
-		pp.Writer.JSON(http.StatusOK, output)
+		p.writer.JSON(http.StatusOK, output)
 	default:
-		err := pp.Writer.Error(domain.NewInternalError(errors.New(domain.ErrInternalError)))
-		if err != nil {
-			pp.Writer.JSON(http.StatusInternalServerError, err)
-		}
+		fmt.Println("paymentJsonPresenter Unknown type")
+		p.writer.JSON(
+			http.StatusInternalServerError,
+			domain.NewInternalError(errors.New(domain.ErrInternalError)),
+		)
 	}
 }

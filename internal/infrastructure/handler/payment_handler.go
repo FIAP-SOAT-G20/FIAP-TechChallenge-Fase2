@@ -3,19 +3,17 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
 )
 
-type CreatePaymentUriRequest struct {
-	OrderID uint64 `uri:"order_id" binding:"required"`
-}
-
 type PaymentHandler struct {
-	controller *controller.PaymentController
+	controller port.PaymentController
 }
 
-func NewPaymentHandler(controller *controller.PaymentController) *PaymentHandler {
+func NewPaymentHandler(controller port.PaymentController) *PaymentHandler {
 	return &PaymentHandler{controller: controller}
 }
 
@@ -24,13 +22,20 @@ func (h *PaymentHandler) Register(router *gin.RouterGroup) {
 }
 
 func (h *PaymentHandler) CreatePayment(c *gin.Context) {
-	var req CreatePaymentUriRequest
+	var req request.CreatePaymentUriRequest
 	if err := c.ShouldBindUri(&req); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
-	err := h.controller.CreatePayment(c.Request.Context(), req.OrderID, c)
+	var p port.Presenter
+	if c.GetHeader("Accept") == "text/xml" {
+		p = presenter.NewProductXmlPresenter(c)
+	} else {
+		p = presenter.NewProductJsonPresenter(c)
+	}
+
+	err := h.controller.CreatePayment(c.Request.Context(), p, req.OrderID)
 	if err != nil {
 		_ = c.Error(err)
 		return

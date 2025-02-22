@@ -1,11 +1,10 @@
-package payment
+package usecase
 
 import (
 	"context"
 	"os"
 	"strconv"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
@@ -16,49 +15,42 @@ type createPaymentUseCase struct {
 	paymentGateway  port.PaymentGateway
 	orderGateway    port.OrderGateway
 	paymentExternal port.PaymentExternalDatasource
-	presenter       port.PaymentPresenter
 }
 
 // NewCreatePaymentUseCase creates a new createPaymentUseCase
-func NewCreatePaymentUseCase(paymentGateway port.PaymentGateway, orderGateway port.OrderGateway, paymentExternal port.PaymentExternalDatasource, presenter port.PaymentPresenter) port.CreatePaymentUseCase {
+func NewPaymentUseCase(paymentGateway port.PaymentGateway, orderGateway port.OrderGateway, paymentExternal port.PaymentExternalDatasource) port.CreatePaymentUseCase {
 	return &createPaymentUseCase{
 		paymentGateway:  paymentGateway,
 		orderGateway:    orderGateway,
 		paymentExternal: paymentExternal,
-		presenter:       presenter,
 	}
 }
 
 // Execute create a new payment
-func (uc *createPaymentUseCase) Execute(ctx context.Context, OrderID uint64, writer dto.ResponseWriter) error {
+func (uc *createPaymentUseCase) Execute(ctx context.Context, OrderID uint64) (*entity.Payment, error) {
 	existentPedingPayment, err := uc.paymentGateway.GetPaymentByOrderIDAndStatus(ctx, valueobject.PROCESSING, OrderID)
 	if err != nil {
-		return domain.NewInternalError(err)
+		return nil, domain.NewInternalError(err)
 	}
 
 	if existentPedingPayment.ID != 0 {
-
-		uc.presenter.Present(dto.PaymentPresenterInput{
-			Result: existentPedingPayment,
-			Writer: writer,
-		})
-		return nil
+		return existentPedingPayment, nil
 	}
 
 	order, err := uc.orderGateway.FindByID(ctx, OrderID)
 	if err != nil {
-		return domain.NewNotFoundError("order not found")
+		return nil, domain.NewNotFoundError(domain.ErrOrderIsMandatory)
 	}
 
 	if len(order.OrderProducts) == 0 {
-		return domain.NewNotFoundError("no products")
+		return nil, domain.NewNotFoundError("no products")
 	}
 
 	paymentPayload := uc.createPaymentPayload(order)
 
 	extPayment, err := uc.paymentExternal.CreatePayment(paymentPayload)
 	if err != nil {
-		return domain.NewInternalError(err)
+		return nil, domain.NewInternalError(err)
 	}
 
 	iPayment := &entity.Payment{
@@ -70,20 +62,15 @@ func (uc *createPaymentUseCase) Execute(ctx context.Context, OrderID uint64, wri
 
 	payment, err := uc.paymentGateway.Create(ctx, iPayment)
 	if err != nil {
-		return nil
+		return nil, domain.NewInternalError(err)
 	}
 
 	order.Status = valueobject.PENDING
 	if err := uc.orderGateway.Update(ctx, order); err != nil {
-		return err
+		return nil, err
 	}
 
-	uc.presenter.Present(dto.PaymentPresenterInput{
-		Writer: writer,
-		Result: payment,
-	})
-
-	return nil
+	return payment, nil
 }
 
 func (ps *createPaymentUseCase) createPaymentPayload(order *entity.Order) *entity.CreatePaymentIN {
