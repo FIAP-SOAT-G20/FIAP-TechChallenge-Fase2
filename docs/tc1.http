@@ -74,8 +74,8 @@ GET {{baseUrl}}/api/v1/products/{{productId}} HTTP/1.1
 PUT {{baseUrl}}/api/v1/products/{{productId}} HTTP/1.1
 
 {
-    "name": "Product X EDITED",
-    "description": "Product X description EDITED",
+    "name": "Product X UPDATED",
+    "description": "Product X description UPDATED",
     "price": 13,
     "category_id": 1,
     "active": false
@@ -85,6 +85,11 @@ PUT {{baseUrl}}/api/v1/products/{{productId}} HTTP/1.1
 
 # @name getProduct
 GET {{baseUrl}}/api/v1/products/{{productId}} HTTP/1.1
+
+###
+
+# @name getProducts
+GET {{baseUrl}}/api/v1/products HTTP/1.1
 
 ###
 
@@ -100,6 +105,11 @@ GET {{baseUrl}}/api/v1/products HTTP/1.1
 
 # @name getProductsByCategory
 GET {{baseUrl}}/api/v1/products?category_id=1 HTTP/1.1
+
+###
+
+# @name getOrders
+GET {{baseUrl}}/api/v1/orders HTTP/1.1
 
 ###
 
@@ -120,7 +130,7 @@ GET {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
 
 ###
 
-# @name addProductToOrder
+# @name addProduct1ToOrder
 POST {{baseUrl}}/api/v1/orders/products/{{orderId}}/1 HTTP/1.1
 
 {
@@ -196,7 +206,7 @@ PATCH {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
 
 {
     "staff_id": 1,
-    "status": "READY"
+    "status": "PREPARING"
 }
 
 ### 

@@ -506,8 +506,10 @@ paths:
       produces:
       - application/json
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.OrderProductJsonResponse'
         "400":
           description: Bad Request
           schema:
@@ -644,6 +646,10 @@ paths:
       - application/json
       description: List all customers
       parameters:
+      - description: Filter by name
+        in: query
+        name: name
+        type: string
       - default: 1
         description: Page number
         in: query
@@ -654,10 +660,6 @@ paths:
         in: query
         name: limit
         type: integer
-      - description: Filter by name
-        in: query
-        name: name
-        type: string
       produces:
       - application/json
       responses:
@@ -718,8 +720,10 @@ paths:
       produces:
       - application/json
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.CustomerJsonResponse'
         "400":
           description: Bad Request
           schema:
@@ -832,6 +836,14 @@ paths:
       - application/json
       description: List all orders
       parameters:
+      - description: Filter by name
+        in: query
+        name: name
+        type: string
+      - description: Filter by category ID
+        in: query
+        name: category_id
+        type: integer
       - default: 1
         description: Page number
         in: query
@@ -841,14 +853,6 @@ paths:
         description: Items per page
         in: query
         name: limit
-        type: integer
-      - description: Filter by name
-        in: query
-        name: name
-        type: string
-      - description: Filter by category ID
-        in: query
-        name: category_id
         type: integer
       produces:
       - application/json
@@ -909,8 +913,10 @@ paths:
       produces:
       - application/json
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.OrderJsonResponse'
         "400":
           description: Bad Request
           schema:
@@ -1062,6 +1068,14 @@ paths:
         List all products
         Response can return JSON or XML format (Accept header: application/json or text/xml)
       parameters:
+      - description: Filter by name
+        in: query
+        name: name
+        type: string
+      - description: Filter by category ID
+        in: query
+        name: category_id
+        type: integer
       - default: 1
         description: Page number
         in: query
@@ -1071,14 +1085,6 @@ paths:
         description: Items per page
         in: query
         name: limit
-        type: integer
-      - description: Filter by name
-        in: query
-        name: name
-        type: string
-      - description: Filter by category ID
-        in: query
-        name: category_id
         type: integer
       produces:
       - application/json
@@ -1148,8 +1154,10 @@ paths:
       - application/json
       - text/xml
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.ProductJsonResponse'
         "400":
           description: Bad Request
           schema:
@@ -1324,8 +1332,10 @@ paths:
       produces:
       - application/json
       responses:
-        "204":
-          description: No Content
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.StaffJsonResponse'
         "400":
           description: Bad Request
           schema:

@@ -3,83 +3,74 @@ package controller
 import (
 	"context"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
 type OrderProductController struct {
-	useCase   port.OrderProductUseCase
-	Presenter port.Presenter
+	useCase port.OrderProductUseCase
 }
 
 func NewOrderProductController(useCase port.OrderProductUseCase) *OrderProductController {
-	return &OrderProductController{useCase, nil}
+	return &OrderProductController{useCase}
 }
 
-func (c *OrderProductController) List(ctx context.Context, input dto.ListOrderProductsInput) error {
-	orderProducts, total, err := c.useCase.List(ctx, input)
+func (c *OrderProductController) List(ctx context.Context, p port.Presenter, i dto.ListOrderProductsInput) error {
+	orderProducts, total, err := c.useCase.List(ctx, i)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
+	p.Present(dto.PresenterInput{
 		Total:  total,
-		Page:   input.Page,
-		Limit:  input.Limit,
+		Page:   i.Page,
+		Limit:  i.Limit,
 		Result: orderProducts,
 	})
 
 	return nil
 }
 
-func (c *OrderProductController) Create(ctx context.Context, input dto.CreateOrderProductInput) error {
-	orderProduct, err := c.useCase.Create(ctx, input)
+func (c *OrderProductController) Create(ctx context.Context, p port.Presenter, i dto.CreateOrderProductInput) error {
+	orderProduct, err := c.useCase.Create(ctx, i)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
-		Result: orderProduct,
-	})
+	p.Present(dto.PresenterInput{Result: orderProduct})
 
 	return nil
 }
 
-func (c *OrderProductController) Get(ctx context.Context, input dto.GetOrderProductInput) error {
-	orderProduct, err := c.useCase.Get(ctx, input)
+func (c *OrderProductController) Get(ctx context.Context, p port.Presenter, i dto.GetOrderProductInput) error {
+	orderProduct, err := c.useCase.Get(ctx, i)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
-		Result: orderProduct,
-	})
+	p.Present(dto.PresenterInput{Result: orderProduct})
 
 	return nil
 }
 
-func (c *OrderProductController) Update(ctx context.Context, input dto.UpdateOrderProductInput) error {
-	orderProduct, err := c.useCase.Update(ctx, input)
+func (c *OrderProductController) Update(ctx context.Context, p port.Presenter, i dto.UpdateOrderProductInput) error {
+	orderProduct, err := c.useCase.Update(ctx, i)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
-		Result: orderProduct,
-	})
+	p.Present(dto.PresenterInput{Result: orderProduct})
 
 	return nil
 }
 
-func (c *OrderProductController) Delete(ctx context.Context, input dto.DeleteOrderProductInput) error {
-	order, err := c.useCase.Delete(ctx, input)
+func (c *OrderProductController) Delete(ctx context.Context, p port.Presenter, i dto.DeleteOrderProductInput) error {
+	order, err := c.useCase.Delete(ctx, i)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
-		Result: order,
-	})
+	p.Present(dto.PresenterInput{Result: order})
 
 	return nil
 }

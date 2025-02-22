@@ -1,22 +1,20 @@
 package handler
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
 )
 
 type OrderProductHandler struct {
-	controller *controller.OrderProductController
+	controller port.OrderProductController
 }
 
-func NewOrderProductHandler(controller *controller.OrderProductController) *OrderProductHandler {
+func NewOrderProductHandler(controller port.OrderProductController) *OrderProductHandler {
 	return &OrderProductHandler{controller: controller}
 }
 
@@ -55,8 +53,12 @@ func (h *OrderProductHandler) List(c *gin.Context) {
 		Page:      query.Page,
 		Limit:     query.Limit,
 	}
-	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
-	err := h.controller.List(c.Request.Context(), input)
+
+	err := h.controller.List(
+		c.Request.Context(),
+		presenter.NewOrderProductJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -96,8 +98,12 @@ func (h *OrderProductHandler) Create(c *gin.Context) {
 		ProductID: uri.ProductID,
 		Quantity:  body.Quantity,
 	}
-	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
-	err := h.controller.Create(c.Request.Context(), input)
+
+	err := h.controller.Create(
+		c.Request.Context(),
+		presenter.NewOrderProductJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -129,8 +135,12 @@ func (h *OrderProductHandler) Get(c *gin.Context) {
 		OrderID:   uri.OrderID,
 		ProductID: uri.ProductID,
 	}
-	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
-	err := h.controller.Get(c.Request.Context(), input)
+
+	err := h.controller.Get(
+		c.Request.Context(),
+		presenter.NewOrderProductJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -169,8 +179,12 @@ func (h *OrderProductHandler) Update(c *gin.Context) {
 		ProductID: uri.ProductID,
 		Quantity:  body.Quantity,
 	}
-	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
-	err := h.controller.Update(c.Request.Context(), input)
+
+	err := h.controller.Update(
+		c.Request.Context(),
+		presenter.NewOrderProductJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -183,12 +197,12 @@ func (h *OrderProductHandler) Update(c *gin.Context) {
 //	@Description	Deletes a orderProduct by Order ID and Product ID
 //	@Tags			orders
 //	@Produce		json
-//	@Param			order_id	path		int	true	"Order ID"
-//	@Param			product_id	path		int	true	"Product ID"
-//	@Success		204			{object}	nil
-//	@Failure		400			{object}	middleware.ErrorJsonResponse	"Bad Request"
-//	@Failure		404			{object}	middleware.ErrorJsonResponse	"Not Found"
-//	@Failure		500			{object}	middleware.ErrorJsonResponse	"Internal Server Error"
+//	@Param			order_id	path		int									true	"Order ID"
+//	@Param			product_id	path		int									true	"Product ID"
+//	@Success		200			{object}	presenter.OrderProductJsonResponse	"OK"
+//	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
+//	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/api/v1/orders/products/{order_id}/{product_id} [delete]
 func (h *OrderProductHandler) Delete(c *gin.Context) {
 	var uri request.DeleteOrderProductUriRequest
@@ -201,11 +215,15 @@ func (h *OrderProductHandler) Delete(c *gin.Context) {
 		OrderID:   uri.OrderID,
 		ProductID: uri.ProductID,
 	}
-	h.controller.Presenter = presenter.NewOrderProductJsonPresenter(c)
-	if err := h.controller.Delete(c.Request.Context(), input); err != nil {
+
+	err := h.controller.Delete(
+		c.Request.Context(),
+		presenter.NewOrderProductJsonPresenter(c),
+		input,
+	)
+
+	if err != nil {
 		_ = c.Error(err)
 		return
 	}
-
-	c.Status(http.StatusNoContent)
 }

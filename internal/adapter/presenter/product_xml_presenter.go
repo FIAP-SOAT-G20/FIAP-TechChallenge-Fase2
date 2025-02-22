@@ -4,9 +4,9 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
@@ -41,7 +41,7 @@ func (p *productXmlPresenter) Present(pp dto.PresenterInput) {
 		}
 		p.writer.XML(http.StatusOK, output)
 	default:
-		p.writer.JSON(
+		p.writer.XML(
 			http.StatusInternalServerError,
 			domain.NewInternalError(errors.New(domain.ErrInternalError)),
 		)

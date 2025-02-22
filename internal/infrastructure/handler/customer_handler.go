@@ -1,23 +1,21 @@
 package handler
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
 )
 
 type CustomerHandler struct {
-	controller *controller.CustomerController
+	controller port.CustomerController
 }
 
-func NewCustomerHandler(controller *controller.CustomerController) *CustomerHandler {
-	return &CustomerHandler{controller: controller}
+func NewCustomerHandler(controller port.CustomerController) *CustomerHandler {
+	return &CustomerHandler{controller}
 }
 
 func (h *CustomerHandler) Register(router *gin.RouterGroup) {
@@ -35,9 +33,9 @@ func (h *CustomerHandler) Register(router *gin.RouterGroup) {
 //	@Tags			customers
 //	@Accept			json
 //	@Produce		json
+//	@Param			name	query		string									false	"Filter by name"
 //	@Param			page	query		int										false	"Page number"		default(1)
 //	@Param			limit	query		int										false	"Items per page"	default(10)
-//	@Param			name	query		string									false	"Filter by name"
 //	@Success		200		{object}	presenter.CustomerJsonPaginatedResponse	"OK"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse			"Internal Server Error"
@@ -54,8 +52,12 @@ func (h *CustomerHandler) List(c *gin.Context) {
 		Page:  query.Page,
 		Limit: query.Limit,
 	}
-	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.List(c.Request.Context(), input)
+
+	err := h.controller.List(
+		c.Request.Context(),
+		presenter.NewCustomerJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -86,8 +88,12 @@ func (h *CustomerHandler) Create(c *gin.Context) {
 		Email: body.Email,
 		CPF:   body.CPF,
 	}
-	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.Create(c.Request.Context(), input)
+
+	err := h.controller.Create(
+		c.Request.Context(),
+		presenter.NewCustomerJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -117,8 +123,12 @@ func (h *CustomerHandler) Get(c *gin.Context) {
 	input := dto.GetCustomerInput{
 		ID: uri.ID,
 	}
-	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.Get(c.Request.Context(), input)
+
+	err := h.controller.Get(
+		c.Request.Context(),
+		presenter.NewCustomerJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -157,8 +167,12 @@ func (h *CustomerHandler) Update(c *gin.Context) {
 		Name:  body.Name,
 		Email: body.Email,
 	}
-	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	err := h.controller.Update(c.Request.Context(), input)
+
+	err := h.controller.Update(
+		c.Request.Context(),
+		presenter.NewCustomerJsonPresenter(c),
+		input,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -171,8 +185,8 @@ func (h *CustomerHandler) Update(c *gin.Context) {
 //	@Description	Deletes a customer by ID
 //	@Tags			customers
 //	@Produce		json
-//	@Param			id	path		int	true	"Customer ID"
-//	@Success		204	{object}	nil
+//	@Param			id	path		int								true	"Customer ID"
+//	@Success		200	{object}	presenter.CustomerJsonResponse	"OK"
 //	@Failure		400	{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
@@ -187,11 +201,14 @@ func (h *CustomerHandler) Delete(c *gin.Context) {
 	input := dto.DeleteCustomerInput{
 		ID: uri.ID,
 	}
-	h.controller.Presenter = presenter.NewCustomerJsonPresenter(c)
-	if err := h.controller.Delete(c.Request.Context(), input); err != nil {
+
+	err := h.controller.Delete(
+		c.Request.Context(),
+		presenter.NewCustomerJsonPresenter(c),
+		input,
+	)
+	if err != nil {
 		_ = c.Error(err)
 		return
 	}
-
-	c.Status(http.StatusNoContent)
 }

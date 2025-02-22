@@ -1,22 +1,20 @@
 package handler
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
 )
 
 type ProductHandler struct {
-	controller *controller.ProductController
+	controller port.ProductController
 }
 
-func NewProductHandler(controller *controller.ProductController) *ProductHandler {
+func NewProductHandler(controller port.ProductController) *ProductHandler {
 	return &ProductHandler{controller: controller}
 }
 
@@ -36,10 +34,10 @@ func (h *ProductHandler) Register(router *gin.RouterGroup) {
 //	@Tags			products
 //	@Accept			json
 //	@Produce		json,xml
-//	@Param			page		query		int										false	"Page number"		default(1)
-//	@Param			limit		query		int										false	"Items per page"	default(10)
 //	@Param			name		query		string									false	"Filter by name"
 //	@Param			category_id	query		int										false	"Filter by category ID"
+//	@Param			page		query		int										false	"Page number"		default(1)
+//	@Param			limit		query		int										false	"Items per page"	default(10)
 //	@Success		200			{object}	presenter.ProductJsonPaginatedResponse	"OK"
 //	@Failure		400			{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse			"Internal Server Error"
@@ -58,13 +56,14 @@ func (h *ProductHandler) List(c *gin.Context) {
 		Limit:      query.Limit,
 	}
 
+	var p port.Presenter
 	if c.GetHeader("Accept") == "text/xml" {
-		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
+		p = presenter.NewProductXmlPresenter(c)
 	} else {
-		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
+		p = presenter.NewProductJsonPresenter(c)
 	}
 
-	err := h.controller.List(c.Request.Context(), input)
+	err := h.controller.List(c.Request.Context(), p, input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -98,13 +97,14 @@ func (h *ProductHandler) Create(c *gin.Context) {
 		CategoryID:  body.CategoryID,
 	}
 
+	var p port.Presenter
 	if c.GetHeader("Accept") == "text/xml" {
-		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
+		p = presenter.NewProductXmlPresenter(c)
 	} else {
-		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
+		p = presenter.NewProductJsonPresenter(c)
 	}
 
-	err := h.controller.Create(c.Request.Context(), input)
+	err := h.controller.Create(c.Request.Context(), p, input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -136,13 +136,14 @@ func (h *ProductHandler) Get(c *gin.Context) {
 		ID: uri.ID,
 	}
 
+	var p port.Presenter
 	if c.GetHeader("Accept") == "text/xml" {
-		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
+		p = presenter.NewProductXmlPresenter(c)
 	} else {
-		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
+		p = presenter.NewProductJsonPresenter(c)
 	}
 
-	err := h.controller.Get(c.Request.Context(), input)
+	err := h.controller.Get(c.Request.Context(), p, input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -185,13 +186,14 @@ func (h *ProductHandler) Update(c *gin.Context) {
 		CategoryID:  body.CategoryID,
 	}
 
+	var p port.Presenter
 	if c.GetHeader("Accept") == "text/xml" {
-		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
+		p = presenter.NewProductXmlPresenter(c)
 	} else {
-		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
+		p = presenter.NewProductJsonPresenter(c)
 	}
 
-	err := h.controller.Update(c.Request.Context(), input)
+	err := h.controller.Update(c.Request.Context(), p, input)
 	if err != nil {
 		_ = c.Error(err)
 		return
@@ -206,8 +208,8 @@ func (h *ProductHandler) Update(c *gin.Context) {
 //	@Tags			products
 //	@Accept			json
 //	@Produce		json,xml
-//	@Param			id	path		int	true	"Product ID"
-//	@Success		204	{object}	nil
+//	@Param			id	path		int								true	"Product ID"
+//	@Success		200	{object}	presenter.ProductJsonResponse	"OK"
 //	@Failure		400	{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
@@ -223,16 +225,15 @@ func (h *ProductHandler) Delete(c *gin.Context) {
 		ID: uri.ID,
 	}
 
+	var p port.Presenter
 	if c.GetHeader("Accept") == "text/xml" {
-		h.controller.Presenter = presenter.NewProductXmlPresenter(c)
+		p = presenter.NewProductXmlPresenter(c)
 	} else {
-		h.controller.Presenter = presenter.NewProductJsonPresenter(c)
+		p = presenter.NewProductJsonPresenter(c)
 	}
 
-	if err := h.controller.Delete(c.Request.Context(), input); err != nil {
+	if err := h.controller.Delete(c.Request.Context(), p, input); err != nil {
 		_ = c.Error(err)
 		return
 	}
-
-	c.Status(http.StatusNoContent)
 }

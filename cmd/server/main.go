@@ -67,7 +67,7 @@ func main() {
 }
 
 func setupHandlers(db *database.Database) *route.Handlers {
-	// Datasource's
+	// Datasources
 	productDS := datasource.NewProductDataSource(db.DB)
 	customerDS := datasource.NewCustomerDataSource(db.DB)
 	orderDS := datasource.NewOrderDataSource(db.DB)

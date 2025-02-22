@@ -13,9 +13,7 @@ type staffGateway struct {
 }
 
 func NewStaffGateway(dataSource port.StaffDataSource) port.StaffGateway {
-	return &staffGateway{
-		dataSource: dataSource,
-	}
+	return &staffGateway{dataSource}
 }
 
 func (g *staffGateway) FindByID(ctx context.Context, id uint64) (*entity.Staff, error) {

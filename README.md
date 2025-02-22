@@ -11,12 +11,12 @@
     <img src="https://img.shields.io/badge/Tools-Kubernetes-informational?style=flat-square&logo=kubernetes&color=326CE5" alt="Kubernetes" />
 </p>
 
-## 💬 About
 
 <p align="center">
     <img src="docs/gopher.png" alt="Fast Food" />
 </p>
 
+## 💬 About
 
 Repository for the [FIAP](https://postech.fiap.com.br/) Tech Challenge 2, focused on developing a monolith backend system for managing orders in a fast-food restaurant.
 
@@ -62,7 +62,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 │       ├── middleware
 │       ├── route
 │       └── server
-├── k8s
+└── k8s
 ```
 
 <details>
@@ -91,6 +91,17 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - `datasource/`: Concrete implementations of data sources.
 
 </details>
+
+### :bulb: Decisions
+
+- **Clean Architecture structure**: The project was structured using the Clean Architecture pattern, which aims to separate the application into layers, making it easier to maintain and test. The project is divided into three layers: Core, Adapter, and Infrastructure.
+- **Presenter**: The presenter (from Adapter layer) was created to format the data to be returned to the client. This layer is responsible for transforming the data into the desired format, such as JSON, XML, etc. Also, it is responsible for handling errors and returning the appropriate HTTP status code.
+- **Use Case**: The use case (from Core layer) was created to define the business rules of the application. This layer is responsible for orchestrating the flow of data between the entities and the data sources.
+- **Middleware to handle errors**: A middleware was created to handle errors and return the appropriate HTTP status code. This middleware is responsible for catching errors and returning the appropriate response to the client.
+- **Structured Logger**: A structured logger was created to provide detailed logs. This logger is responsible for logging information about the application, such as requests, responses, errors, etc.
+- **Database Connection**: The database connection was created using GORM, a popular ORM library for Go. This library provides an easy way to interact with the database and perform CRUD operations.
+- **Database Migrations**: Database migrations were created to manage the database schema. This allows us to version control the database schema and apply changes to the database in a structured way.
+- **HTTP Server**: The HTTP server was created using the Gin framework, a lightweight web framework for Go. This framework provides a fast and easy way to create web applications in Go.
 
 ### ✨ Features
 
@@ -153,9 +164,9 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
 ### Build/Run with Docker
 
-- [Docker 1.23+](https://www.docker.com/)
+- [Docker](https://www.docker.com/)
 
-### Build/Run Locally
+### Build/Run Locally (development)
 
 - [Go](https://golang.org/)
 - [Docker](https://www.docker.com/)
@@ -187,8 +198,6 @@ cp .env.example .env
 make compose-build
 ```
 
-> The binary will be created in the `bin` folder
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## :runner: Running
@@ -199,7 +208,6 @@ make compose-build
 make compose-up
 ```
 
-> [!NOTE]
 > To stop the application, run `compose-down`  
 > To remove the application, run `compose-clean`  
 
@@ -233,6 +241,9 @@ kubectl apply -f k8s/
 12. Update the swagger documentation by running `make swagger`
 13. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard
 14. Push to the branch and Open a new PR by running `make pull-request`
+15. After the PR is approved, merge it to the main branch
+16. The GitHub Actions will run the tests, lint, and build the Docker image
+<!-- 17. The Kubernetes deployment will be updated automatically -->
 
 > [!NOTE]
 > `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
@@ -257,16 +268,9 @@ make test
 - [Hexagonal Architecture, Ports and Adapters in Go](https://medium.com/@kyodo-tech/hexagonal-architecture-ports-and-adapters-in-go-f1af950726b)
 - [Building RESTful API with Hexagonal Architecture in Go](https://dev.to/bagashiz/building-restful-api-with-hexagonal-architecture-in-go-1mij)
 - [Hexagonal Architecture in Go](https://medium.com/@matiasvarela/hexagonal-architecture-in-go-cfd4e436faa3)
-- [DBML](https://www.dbml.org/)
-- [PostgreSQL](https://www.postgresql.org/)
-- [GORM](https://gorm.io/)
-- [Gin Web Framework](https://gin-gonic.com/)
-- [Docker](https://www.docker.com/)
-- [Kubernetes](https://kubernetes.io/)
 - [The S.O.L.I.D Principles in Pictures](https://medium.com/backticks-tildes/the-s-o-l-i-d-principles-in-pictures-b34ce2f1e898)
 - [Health Check Response Format for HTTP APIs](https://datatracker.ietf.org/doc/html/draft-inadarei-api-health-check-06)
 - [Event Storming](https://www.eventstorming.com/)
-- [Swagger](https://swagger.io/)
 - [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 - [Alistair in the "Hexagone" 1/3](https://www.youtube.com/watch?v=th4AgBcrEHA&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&ab_channel=DDDFR)
 - [Alistair in the "Hexagone" 2/3](https://www.youtube.com/watch?v=iALcE8BPs94&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&index=2&ab_channel=DDDFR)
@@ -287,6 +291,8 @@ make test
 - [[Hands-on Guide] How to Implement Clean Architecture in Golang?](https://reliasoftware.com/blog/clean-architecture-golang)
 - [Clean DDD lessons: presenters](https://medium.com/unil-ci-software-engineering/clean-ddd-lessons-presenters-6f092308b75e)
 - [Clean Architecture: Understanding the Role of Presenters](https://medium.com/@erickzanetti/clean-architecture-understanding-the-role-of-presenters-8707ff018aa3)
+- [Golang Microservices Boilerplate - Clean Architecture](https://github.com/gbrayhan/microservices-go)
+- [GRACEFULL SHUTDOWN EM GOLANG - Finalizando requisições antes de desligar o projeto!](https://www.youtube.com/watch?v=V52Th2h_8FM&ab_channel=HunCoding)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

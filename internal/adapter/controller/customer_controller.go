@@ -3,83 +3,74 @@ package controller
 import (
 	"context"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
-type CustomerController struct {
-	useCase   port.CustomerUseCase
-	Presenter port.Presenter
+type customerController struct {
+	useCase port.CustomerUseCase
 }
 
-func NewCustomerController(useCase port.CustomerUseCase) *CustomerController {
-	return &CustomerController{useCase, nil}
+func NewCustomerController(useCase port.CustomerUseCase) port.CustomerController {
+	return &customerController{useCase}
 }
 
-func (c *CustomerController) List(ctx context.Context, input dto.ListCustomersInput) error {
-	customers, total, err := c.useCase.List(ctx, input)
+func (c *customerController) List(ctx context.Context, p port.Presenter, i dto.ListCustomersInput) error {
+	customers, total, err := c.useCase.List(ctx, i)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
+	p.Present(dto.PresenterInput{
 		Total:  total,
-		Page:   input.Page,
-		Limit:  input.Limit,
+		Page:   i.Page,
+		Limit:  i.Limit,
 		Result: customers,
 	})
 
 	return nil
 }
 
-func (c *CustomerController) Create(ctx context.Context, input dto.CreateCustomerInput) error {
-	customer, err := c.useCase.Create(ctx, input)
+func (c *customerController) Create(ctx context.Context, p port.Presenter, i dto.CreateCustomerInput) error {
+	customer, err := c.useCase.Create(ctx, i)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
-		Result: customer,
-	})
+	p.Present(dto.PresenterInput{Result: customer})
 
 	return nil
 }
 
-func (c *CustomerController) Get(ctx context.Context, input dto.GetCustomerInput) error {
-	customer, err := c.useCase.Get(ctx, input)
+func (c *customerController) Get(ctx context.Context, p port.Presenter, i dto.GetCustomerInput) error {
+	customer, err := c.useCase.Get(ctx, i)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
-		Result: customer,
-	})
+	p.Present(dto.PresenterInput{Result: customer})
 
 	return nil
 }
 
-func (c *CustomerController) Update(ctx context.Context, input dto.UpdateCustomerInput) error {
-	customer, err := c.useCase.Update(ctx, input)
+func (c *customerController) Update(ctx context.Context, p port.Presenter, i dto.UpdateCustomerInput) error {
+	customer, err := c.useCase.Update(ctx, i)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
-		Result: customer,
-	})
+	p.Present(dto.PresenterInput{Result: customer})
 
 	return nil
 }
 
-func (c *CustomerController) Delete(ctx context.Context, input dto.DeleteCustomerInput) error {
-	customer, err := c.useCase.Delete(ctx, input)
+func (c *customerController) Delete(ctx context.Context, p port.Presenter, i dto.DeleteCustomerInput) error {
+	customer, err := c.useCase.Delete(ctx, i)
 	if err != nil {
 		return err
 	}
 
-	c.Presenter.Present(dto.PresenterInput{
-		Result: customer,
-	})
+	p.Present(dto.PresenterInput{Result: customer})
 
 	return nil
 }
