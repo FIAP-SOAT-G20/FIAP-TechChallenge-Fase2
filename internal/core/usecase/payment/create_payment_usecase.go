@@ -15,12 +15,12 @@ import (
 type createPaymentUseCase struct {
 	paymentGateway  port.PaymentGateway
 	orderGateway    port.OrderGateway
-	paymentExternal port.PaymentExternal
+	paymentExternal port.PaymentExternalDatasource
 	presenter       port.PaymentPresenter
 }
 
 // NewCreatePaymentUseCase creates a new createPaymentUseCase
-func NewCreatePaymentUseCase(paymentGateway port.PaymentGateway, orderGateway port.OrderGateway, paymentExternal port.PaymentExternal, presenter port.PaymentPresenter) port.CreatePaymentUseCase {
+func NewCreatePaymentUseCase(paymentGateway port.PaymentGateway, orderGateway port.OrderGateway, paymentExternal port.PaymentExternalDatasource, presenter port.PaymentPresenter) port.CreatePaymentUseCase {
 	return &createPaymentUseCase{
 		paymentGateway:  paymentGateway,
 		orderGateway:    orderGateway,
@@ -31,7 +31,7 @@ func NewCreatePaymentUseCase(paymentGateway port.PaymentGateway, orderGateway po
 
 // Execute create a new payment
 func (uc *createPaymentUseCase) Execute(ctx context.Context, OrderID uint64, writer dto.ResponseWriter) error {
-	existentPedingPayment, err := uc.paymentGateway.GetPaymentByOrderIDAndStatus(ctx, entity.PROCESSING, OrderID)
+	existentPedingPayment, err := uc.paymentGateway.GetPaymentByOrderIDAndStatus(ctx, valueobject.PROCESSING, OrderID)
 	if err != nil {
 		return domain.NewInternalError(err)
 	}
@@ -56,13 +56,13 @@ func (uc *createPaymentUseCase) Execute(ctx context.Context, OrderID uint64, wri
 
 	paymentPayload := uc.createPaymentPayload(order)
 
-	extPayment, err := uc.paymentExternal.CreatePaymentMock(paymentPayload)
+	extPayment, err := uc.paymentExternal.CreatePayment(paymentPayload)
 	if err != nil {
 		return domain.NewInternalError(err)
 	}
 
 	iPayment := &entity.Payment{
-		Status:            entity.PROCESSING,
+		Status:            valueobject.PROCESSING,
 		ExternalPaymentID: extPayment.InStoreOrderID,
 		OrderID:           OrderID,
 		QrData:            extPayment.QrData,

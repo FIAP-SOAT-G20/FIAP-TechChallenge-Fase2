@@ -1,19 +1,14 @@
 package entity
 
-import "time"
+import (
+	"time"
 
-type PaymentStatus string
-
-const (
-	PROCESSING PaymentStatus = "PROCESSING"
-	CONFIRMED  PaymentStatus = "CONFIRMED"
-	FAILED     PaymentStatus = "FAILED"
-	CANCELED   PaymentStatus = "CANCELED"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 )
 
 type Payment struct {
 	ID                uint64
-	Status            PaymentStatus
+	Status            valueobject.PaymentStatus
 	ExternalPaymentID string
 	QrData            string
 	OrderID           uint64
@@ -101,22 +96,14 @@ func NewPaymentRequest(payment *CreatePaymentIN) *CreatePaymentRequest {
 	}
 }
 
-func ToCreatePaymentOUTDomain(payment *CreatePaymentResponse) *CreatePaymentOUT {
-	return &CreatePaymentOUT{
-		InStoreOrderID: payment.InStoreOrderID,
-		QrData:         payment.QrData,
-	}
-}
-
 type CreatePaymentResponse struct {
 	InStoreOrderID string `json:"in_store_order_id"`
 	QrData         string `json:"qr_data"`
 }
 
-type PaymentResponse struct {
-	ID                uint64        `json:"id"`
-	Status            PaymentStatus `json:"status"`
-	OrderID           uint64        `json:"order_id"`
-	ExternalPaymentID string        `json:"external_payment_id"`
-	QrData            string        `json:"qr_data"`
+func ToCreatePaymentOUTDomain(payment *CreatePaymentResponse) *CreatePaymentOUT {
+	return &CreatePaymentOUT{
+		InStoreOrderID: payment.InStoreOrderID,
+		QrData:         payment.QrData,
+	}
 }

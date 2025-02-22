@@ -1,4 +1,4 @@
-package external
+package datasource
 
 import (
 	"fmt"
@@ -6,18 +6,18 @@ import (
 	"time"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/go-resty/resty/v2"
-	"github.com/google/uuid"
 )
 
-type PaymentExternal struct {
+type PaymentExternalDataSource struct {
 }
 
-func NewPaymentExternal() *PaymentExternal {
-	return &PaymentExternal{}
+func NewPaymentExternal() port.PaymentExternalDatasource {
+	return &PaymentExternalDataSource{}
 }
 
-func (ps *PaymentExternal) CreatePayment(payment *entity.CreatePaymentIN) (*entity.CreatePaymentOUT, error) {
+func (ps *PaymentExternalDataSource) CreatePayment(payment *entity.CreatePaymentIN) (*entity.CreatePaymentOUT, error) {
 	body := entity.NewPaymentRequest(payment)
 
 	client := resty.New().
@@ -41,11 +41,4 @@ func (ps *PaymentExternal) CreatePayment(payment *entity.CreatePaymentIN) (*enti
 	response := entity.ToCreatePaymentOUTDomain(resp.Result().(*entity.CreatePaymentResponse))
 
 	return response, nil
-}
-
-func (ps *PaymentExternal) CreatePaymentMock(payment *entity.CreatePaymentIN) (*entity.CreatePaymentOUT, error) {
-	return &entity.CreatePaymentOUT{
-		InStoreOrderID: uuid.New().String(),
-		QrData:         "https://www.fiap-10-soat-g20.com.br/qr/123456",
-	}, nil
 }

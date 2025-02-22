@@ -11,7 +11,6 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/database"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/datasource"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/external"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/route"
@@ -109,7 +108,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	paymentPresenter := presenter.NewPaymentJsonPresenter()
 
 	// Externals
-	paymentExternal := external.NewPaymentExternal()
+	paymentExternal := datasource.NewPaymentExternal()
 
 	// Use cases - Product
 	listProductsUC := product.NewListProductsUseCase(productGateway, productPresenter)

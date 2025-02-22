@@ -29,6 +29,9 @@ type Config struct {
 
 	// Environment
 	Environment string
+
+	// Mercado Pago
+	MercadoPagoToken string
 }
 
 func LoadConfig() *Config {
@@ -66,6 +69,9 @@ func LoadConfig() *Config {
 
 		// Environment
 		Environment: getEnv("ENVIRONMENT", "development"),
+
+		// Mercado Pago
+		MercadoPagoToken: getEnv("MERCADO_TOKEN", "token"),
 	}
 }
 

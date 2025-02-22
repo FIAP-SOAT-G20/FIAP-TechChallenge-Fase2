@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
@@ -30,7 +31,7 @@ func (ds *PaymentDataSource) Create(ctx context.Context, payment *entity.Payment
 	return payment, nil
 }
 
-func (ds *PaymentDataSource) GetPaymentByOrderIDAndStatus(ctx context.Context, status entity.PaymentStatus, orderID uint64) (*entity.Payment, error) {
+func (ds *PaymentDataSource) GetPaymentByOrderIDAndStatus(ctx context.Context, status valueobject.PaymentStatus, orderID uint64) (*entity.Payment, error) {
 	var payment entity.Payment
 
 	if err := ds.db.WithContext(ctx).Where("order_id = ? AND status = ?", orderID, status).First(&payment).Error; err != nil {
@@ -43,7 +44,7 @@ func (ds *PaymentDataSource) GetPaymentByOrderIDAndStatus(ctx context.Context, s
 	return &payment, nil
 }
 
-func (ds *PaymentDataSource) UpdateStatus(status entity.PaymentStatus, externalPaymentID string) error {
+func (ds *PaymentDataSource) UpdateStatus(status valueobject.PaymentStatus, externalPaymentID string) error {
 	if err := ds.db.Model(&entity.Payment{}).Where("external_payment_id = ?", externalPaymentID).Update("status", status).Error; err != nil {
 		return err
 	}
