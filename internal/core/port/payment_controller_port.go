@@ -5,5 +5,5 @@ import (
 )
 
 type PaymentController interface {
-	CreatePayment(ctx context.Context, presenter Presenter, OrderID uint64) error
+	Create(ctx context.Context, presenter Presenter, OrderID uint64) error
 }

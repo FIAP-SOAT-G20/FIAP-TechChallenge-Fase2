@@ -8,26 +8,20 @@ import (
 )
 
 type PaymentController struct {
-	createPaymentUseCase port.CreatePaymentUseCase
+	useCase port.PaymentUseCase
 }
 
-func NewPaymentController(
-	createUC port.CreatePaymentUseCase,
-) *PaymentController {
-	return &PaymentController{
-		createPaymentUseCase: createUC,
-	}
+func NewPaymentController(useCase port.PaymentUseCase) *PaymentController {
+	return &PaymentController{useCase}
 }
 
-func (c *PaymentController) CreatePayment(ctx context.Context, p port.Presenter, OrderID uint64) error {
-	payment, err := c.createPaymentUseCase.Execute(ctx, OrderID)
+func (c *PaymentController) Create(ctx context.Context, p port.Presenter, i dto.CreatePaymentInput) error {
+	payment, err := c.useCase.Create(ctx, i.OrderID)
 	if err != nil {
 		return err
 	}
 
-	p.Present(dto.PresenterInput{
-		Result: payment,
-	})
+	p.Present(dto.PresenterInput{Result: payment})
 
 	return nil
 }
