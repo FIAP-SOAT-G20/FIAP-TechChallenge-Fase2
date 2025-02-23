@@ -7,6 +7,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/response"
 	"github.com/go-resty/resty/v2"
 )
@@ -21,7 +22,7 @@ func NewPaymentExternal() port.PaymentExternalDatasource {
 func (ps *PaymentExternalDataSource) CreatePayment(payment *entity.CreatePaymentIN) (*entity.CreatePaymentOUT, error) {
 	cfg := config.LoadConfig()
 
-	body := entity.NewPaymentRequest(payment)
+	body := request.NewPaymentRequest(payment)
 
 	client := resty.New().
 		SetTimeout(10*time.Second).
