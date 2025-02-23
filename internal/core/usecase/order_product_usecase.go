@@ -19,8 +19,8 @@ func NewOrderProductUseCase(gateway port.OrderProductGateway) port.OrderProductU
 }
 
 // List lists all orderProducts
-func (uc *orderProductUseCase) List(ctx context.Context, input dto.ListOrderProductsInput) ([]*entity.OrderProduct, int64, error) {
-	orderProducts, total, err := uc.gateway.FindAll(ctx, input.OrderID, input.ProductID, input.Page, input.Limit)
+func (uc *orderProductUseCase) List(ctx context.Context, i dto.ListOrderProductsInput) ([]*entity.OrderProduct, int64, error) {
+	orderProducts, total, err := uc.gateway.FindAll(ctx, i.OrderID, i.ProductID, i.Page, i.Limit)
 	if err != nil {
 		return nil, 0, domain.NewInternalError(err)
 	}
@@ -28,8 +28,8 @@ func (uc *orderProductUseCase) List(ctx context.Context, input dto.ListOrderProd
 }
 
 // Create creates a new orderProduct
-func (uc *orderProductUseCase) Create(ctx context.Context, input dto.CreateOrderProductInput) (*entity.OrderProduct, error) {
-	orderProduct := entity.NewOrderProduct(input.OrderID, input.ProductID, input.Quantity)
+func (uc *orderProductUseCase) Create(ctx context.Context, i dto.CreateOrderProductInput) (*entity.OrderProduct, error) {
+	orderProduct := i.ToEntity()
 
 	if err := uc.gateway.Create(ctx, orderProduct); err != nil {
 		return nil, domain.NewInternalError(err)
@@ -39,8 +39,8 @@ func (uc *orderProductUseCase) Create(ctx context.Context, input dto.CreateOrder
 }
 
 // Get returns a orderProduct by ID
-func (uc *orderProductUseCase) Get(ctx context.Context, input dto.GetOrderProductInput) (*entity.OrderProduct, error) {
-	orderProduct, err := uc.gateway.FindByID(ctx, input.OrderID, input.ProductID)
+func (uc *orderProductUseCase) Get(ctx context.Context, i dto.GetOrderProductInput) (*entity.OrderProduct, error) {
+	orderProduct, err := uc.gateway.FindByID(ctx, i.OrderID, i.ProductID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -52,8 +52,8 @@ func (uc *orderProductUseCase) Get(ctx context.Context, input dto.GetOrderProduc
 	return orderProduct, nil
 }
 
-func (uc *orderProductUseCase) Update(ctx context.Context, input dto.UpdateOrderProductInput) (*entity.OrderProduct, error) {
-	orderProduct, err := uc.gateway.FindByID(ctx, input.OrderID, input.ProductID)
+func (uc *orderProductUseCase) Update(ctx context.Context, i dto.UpdateOrderProductInput) (*entity.OrderProduct, error) {
+	orderProduct, err := uc.gateway.FindByID(ctx, i.OrderID, i.ProductID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -62,7 +62,7 @@ func (uc *orderProductUseCase) Update(ctx context.Context, input dto.UpdateOrder
 		return nil, domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
-	orderProduct.Update(input.Quantity)
+	orderProduct.Update(i.Quantity)
 
 	if err := uc.gateway.Update(ctx, orderProduct); err != nil {
 		return nil, domain.NewInternalError(err)
@@ -71,8 +71,8 @@ func (uc *orderProductUseCase) Update(ctx context.Context, input dto.UpdateOrder
 	return orderProduct, nil
 }
 
-func (uc *orderProductUseCase) Delete(ctx context.Context, input dto.DeleteOrderProductInput) (*entity.OrderProduct, error) {
-	order, err := uc.gateway.FindByID(ctx, input.OrderID, input.ProductID)
+func (uc *orderProductUseCase) Delete(ctx context.Context, i dto.DeleteOrderProductInput) (*entity.OrderProduct, error) {
+	order, err := uc.gateway.FindByID(ctx, i.OrderID, i.ProductID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -80,7 +80,7 @@ func (uc *orderProductUseCase) Delete(ctx context.Context, input dto.DeleteOrder
 		return nil, domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
-	if err := uc.gateway.Delete(ctx, input.OrderID, input.ProductID); err != nil {
+	if err := uc.gateway.Delete(ctx, i.OrderID, i.ProductID); err != nil {
 		return nil, domain.NewInternalError(err)
 	}
 

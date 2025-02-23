@@ -19,8 +19,8 @@ func NewCustomerUseCase(gateway port.CustomerGateway) port.CustomerUseCase {
 }
 
 // List returns a list of Customers
-func (uc *customerUseCase) List(ctx context.Context, input dto.ListCustomersInput) ([]*entity.Customer, int64, error) {
-	customers, total, err := uc.gateway.FindAll(ctx, input.Name, input.Page, input.Limit)
+func (uc *customerUseCase) List(ctx context.Context, i dto.ListCustomersInput) ([]*entity.Customer, int64, error) {
+	customers, total, err := uc.gateway.FindAll(ctx, i.Name, i.Page, i.Limit)
 	if err != nil {
 		return nil, 0, domain.NewInternalError(err)
 	}
@@ -29,8 +29,8 @@ func (uc *customerUseCase) List(ctx context.Context, input dto.ListCustomersInpu
 }
 
 // Create creates a new Customer
-func (uc *customerUseCase) Create(ctx context.Context, input dto.CreateCustomerInput) (*entity.Customer, error) {
-	customer := entity.NewCustomer(input.Name, input.Email, input.CPF)
+func (uc *customerUseCase) Create(ctx context.Context, i dto.CreateCustomerInput) (*entity.Customer, error) {
+	customer := i.ToEntity()
 
 	if err := uc.gateway.Create(ctx, customer); err != nil {
 		return nil, domain.NewInternalError(err)
@@ -40,8 +40,8 @@ func (uc *customerUseCase) Create(ctx context.Context, input dto.CreateCustomerI
 }
 
 // Get returns a Customer by ID
-func (uc *customerUseCase) Get(ctx context.Context, input dto.GetCustomerInput) (*entity.Customer, error) {
-	customer, err := uc.gateway.FindByID(ctx, input.ID)
+func (uc *customerUseCase) Get(ctx context.Context, i dto.GetCustomerInput) (*entity.Customer, error) {
+	customer, err := uc.gateway.FindByID(ctx, i.ID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -54,8 +54,8 @@ func (uc *customerUseCase) Get(ctx context.Context, input dto.GetCustomerInput) 
 }
 
 // Update updates a Customer
-func (uc *customerUseCase) Update(ctx context.Context, input dto.UpdateCustomerInput) (*entity.Customer, error) {
-	customer, err := uc.gateway.FindByID(ctx, input.ID)
+func (uc *customerUseCase) Update(ctx context.Context, i dto.UpdateCustomerInput) (*entity.Customer, error) {
+	customer, err := uc.gateway.FindByID(ctx, i.ID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -63,7 +63,7 @@ func (uc *customerUseCase) Update(ctx context.Context, input dto.UpdateCustomerI
 		return nil, domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
-	customer.Update(input.Name, input.Email)
+	customer.Update(i.Name, i.Email)
 
 	if err := uc.gateway.Update(ctx, customer); err != nil {
 		return nil, domain.NewInternalError(err)
@@ -73,8 +73,8 @@ func (uc *customerUseCase) Update(ctx context.Context, input dto.UpdateCustomerI
 }
 
 // Delete deletes a Customer
-func (uc *customerUseCase) Delete(ctx context.Context, input dto.DeleteCustomerInput) (*entity.Customer, error) {
-	customer, err := uc.gateway.FindByID(ctx, input.ID)
+func (uc *customerUseCase) Delete(ctx context.Context, i dto.DeleteCustomerInput) (*entity.Customer, error) {
+	customer, err := uc.gateway.FindByID(ctx, i.ID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -82,7 +82,7 @@ func (uc *customerUseCase) Delete(ctx context.Context, input dto.DeleteCustomerI
 		return nil, domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
-	if err := uc.gateway.Delete(ctx, input.ID); err != nil {
+	if err := uc.gateway.Delete(ctx, i.ID); err != nil {
 		return nil, domain.NewInternalError(err)
 	}
 
