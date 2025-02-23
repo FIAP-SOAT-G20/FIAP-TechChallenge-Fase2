@@ -2,11 +2,9 @@ package usecase
 
 import (
 	"context"
-	"errors"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
-	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
@@ -32,11 +30,6 @@ func (uc *staffUseCase) List(ctx context.Context, i dto.ListStaffsInput) ([]*ent
 
 // Create creates a new staff
 func (uc *staffUseCase) Create(ctx context.Context, i dto.CreateStaffInput) (*entity.Staff, error) {
-	// TODO: Validate input in handler
-	if i.Role == valueobject.UNDEFINED {
-		return nil, domain.NewValidationError(errors.New(domain.ErrRoleInvalid))
-	}
-
 	staff := i.ToEntity()
 
 	if err := uc.gateway.Create(ctx, staff); err != nil {
@@ -68,11 +61,6 @@ func (uc *staffUseCase) Update(ctx context.Context, i dto.UpdateStaffInput) (*en
 	}
 	if staff == nil {
 		return nil, domain.NewNotFoundError(domain.ErrNotFound)
-	}
-
-	// TODO: Validate input in handler
-	if i.Role == valueobject.UNDEFINED {
-		return nil, domain.NewValidationError(errors.New(domain.ErrRoleInvalid))
 	}
 
 	staff.Update(i.Name, i.Role)
