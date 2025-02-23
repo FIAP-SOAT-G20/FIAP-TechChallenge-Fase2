@@ -1,10 +1,20 @@
 package dto
 
-import valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
+import (
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
+)
 
 type CreateStaffInput struct {
 	Name string
 	Role valueobject.StaffRole
+}
+
+func (i CreateStaffInput) ToEntity() *entity.Staff {
+	return &entity.Staff{
+		Name: i.Name,
+		Role: i.Role,
+	}
 }
 
 type UpdateStaffInput struct {

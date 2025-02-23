@@ -32,11 +32,12 @@ func (uc *staffUseCase) List(ctx context.Context, i dto.ListStaffsInput) ([]*ent
 
 // Create creates a new staff
 func (uc *staffUseCase) Create(ctx context.Context, i dto.CreateStaffInput) (*entity.Staff, error) {
+	// TODO: Validate input in handler
 	if i.Role == valueobject.UNDEFINED {
-		return nil, domain.NewValidationError(errors.New("Invalid role"))
+		return nil, domain.NewValidationError(errors.New(domain.ErrRoleInvalid))
 	}
 
-	staff := entity.NewStaff(i.Name, i.Role)
+	staff := i.ToEntity()
 
 	if err := uc.gateway.Create(ctx, staff); err != nil {
 		return nil, domain.NewInternalError(err)
@@ -69,8 +70,9 @@ func (uc *staffUseCase) Update(ctx context.Context, i dto.UpdateStaffInput) (*en
 		return nil, domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
+	// TODO: Validate input in handler
 	if i.Role == valueobject.UNDEFINED {
-		return nil, domain.NewValidationError(errors.New("Invalid role"))
+		return nil, domain.NewValidationError(errors.New(domain.ErrRoleInvalid))
 	}
 
 	staff.Update(i.Name, i.Role)

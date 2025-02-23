@@ -30,7 +30,7 @@ func (uc *productUseCase) List(ctx context.Context, i dto.ListProductsInput) ([]
 
 // Create creates a new product
 func (uc *productUseCase) Create(ctx context.Context, i dto.CreateProductInput) (*entity.Product, error) {
-	product := entity.NewProduct(i.Name, i.Description, i.Price, i.CategoryID)
+	product := i.ToEntity()
 
 	if err := uc.gateway.Create(ctx, product); err != nil {
 		return nil, domain.NewInternalError(err)
