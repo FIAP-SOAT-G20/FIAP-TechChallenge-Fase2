@@ -13,18 +13,18 @@ import (
 )
 
 type paymentUseCase struct {
-	paymentGateway  port.PaymentGateway
-	orderGateway    port.OrderGateway
-	paymentExternal port.PaymentExternalDatasource // TODO: add this ds into paymentGateway
+	orderGateway           port.OrderGateway
+	paymentGateway         port.PaymentGateway
+	paymentExternalGateway port.PaymentExternalGateway
 }
 
 // NewPaymentUseCase create a new payment use case
 func NewPaymentUseCase(
-	paymentGateway port.PaymentGateway,
 	orderGateway port.OrderGateway,
-	paymentExternal port.PaymentExternalDatasource,
+	paymentGateway port.PaymentGateway,
+	paymentExternalGayeway port.PaymentExternalGateway,
 ) port.PaymentUseCase {
-	return &paymentUseCase{paymentGateway, orderGateway, paymentExternal}
+	return &paymentUseCase{orderGateway, paymentGateway, paymentExternalGayeway}
 }
 
 // Create create a new payment
@@ -49,7 +49,7 @@ func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) 
 
 	paymentPayload := uc.createPaymentPayload(order)
 
-	extPayment, err := uc.paymentExternal.CreatePayment(paymentPayload)
+	extPayment, err := uc.paymentExternalGateway.Create(ctx, paymentPayload)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}

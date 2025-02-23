@@ -83,6 +83,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
 	staffGateway := gateway.NewStaffGateway(staffDS)
 	paymentGateway := gateway.NewPaymentGateway(paymentDS)
+	paymentExternalGateway := gateway.NewPaymentExternalGateway(paymentExternalDS)
 
 	// Use cases
 	productUC := usecase.NewProductUseCase(productGateway)
@@ -90,7 +91,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderUC := usecase.NewOrderUseCase(orderGateway)
 	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
 	staffUC := usecase.NewStaffUseCase(staffGateway)
-	paymentUC := usecase.NewPaymentUseCase(paymentGateway, orderGateway, paymentExternalDS)
+	paymentUC := usecase.NewPaymentUseCase(orderGateway, paymentGateway, paymentExternalGateway)
 
 	// Controllers
 	productController := controller.NewProductController(productUC)

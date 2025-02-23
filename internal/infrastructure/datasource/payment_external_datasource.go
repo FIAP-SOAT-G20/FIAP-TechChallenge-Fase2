@@ -1,6 +1,7 @@
 package datasource
 
 import (
+	"context"
 	"fmt"
 	"time"
 
@@ -19,11 +20,11 @@ func NewPaymentExternal() port.PaymentExternalDatasource {
 	return &PaymentExternalDataSource{}
 }
 
-func (ps *PaymentExternalDataSource) CreatePayment(payment *entity.CreatePaymentExternalInput) (*entity.CreatePaymentExternalOutput, error) {
+func (ps *PaymentExternalDataSource) Create(ctx context.Context, payment *entity.CreatePaymentExternalInput) (*entity.CreatePaymentExternalOutput, error) {
 	cfg := config.LoadConfig()
 
 	client := resty.New().
-		SetTimeout(10*time.Second).
+		SetTimeout(10*time.Second). // TODO: set timeout in config (ENV)
 		SetRetryCount(2).
 		SetHeader("Authorization", fmt.Sprintf("Bearer %s", cfg.MercadoPagoToken)).
 		SetHeader("Content-Type", "application/json")

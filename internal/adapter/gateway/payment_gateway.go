@@ -13,15 +13,13 @@ type paymentGayeway struct {
 }
 
 func NewPaymentGateway(dataSource port.PaymentDataSource) port.PaymentGateway {
-	return &paymentGayeway{
-		dataSource: dataSource,
-	}
+	return &paymentGayeway{dataSource}
 }
 
-func (pg *paymentGayeway) GetPaymentByOrderIDAndStatus(ctx context.Context, status valueobject.PaymentStatus, orderID uint64) (*entity.Payment, error) {
-	return pg.dataSource.GetPaymentByOrderIDAndStatus(ctx, status, orderID)
+func (g *paymentGayeway) GetPaymentByOrderIDAndStatus(ctx context.Context, status valueobject.PaymentStatus, orderID uint64) (*entity.Payment, error) {
+	return g.dataSource.GetPaymentByOrderIDAndStatus(ctx, status, orderID)
 }
 
-func (pg *paymentGayeway) Create(ctx context.Context, payment *entity.Payment) (*entity.Payment, error) {
-	return pg.dataSource.Create(ctx, payment)
+func (g *paymentGayeway) Create(ctx context.Context, p *entity.Payment) (*entity.Payment, error) {
+	return g.dataSource.Create(ctx, p)
 }

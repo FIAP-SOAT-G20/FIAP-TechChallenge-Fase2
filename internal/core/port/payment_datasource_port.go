@@ -13,7 +13,3 @@ type PaymentDataSource interface {
 	UpdateStatus(status valueobject.PaymentStatus, externalPaymentID string) error
 	GetByExternalPaymentID(externalPaymentID string) (*entity.Payment, error)
 }
-
-type PaymentExternalDatasource interface {
-	CreatePayment(payment *entity.CreatePaymentExternalInput) (*entity.CreatePaymentExternalOutput, error)
-}
