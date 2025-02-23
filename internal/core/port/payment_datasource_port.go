@@ -15,5 +15,5 @@ type PaymentDataSource interface {
 }
 
 type PaymentExternalDatasource interface {
-	CreatePayment(payment *entity.CreatePaymentIN) (*entity.CreatePaymentOUT, error)
+	CreatePayment(payment *entity.CreatePaymentInput) (*entity.CreatePaymentOutput, error)
 }

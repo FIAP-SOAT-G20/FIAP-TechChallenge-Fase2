@@ -16,7 +16,7 @@ func NewPaymentController(useCase port.PaymentUseCase) *PaymentController {
 }
 
 func (c *PaymentController) Create(ctx context.Context, p port.Presenter, i dto.CreatePaymentInput) error {
-	payment, err := c.useCase.Create(ctx, i.OrderID)
+	payment, err := c.useCase.Create(ctx, i)
 	if err != nil {
 		return err
 	}

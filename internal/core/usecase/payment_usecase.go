@@ -7,6 +7,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 )
@@ -14,21 +15,21 @@ import (
 type paymentUseCase struct {
 	paymentGateway  port.PaymentGateway
 	orderGateway    port.OrderGateway
-	paymentExternal port.PaymentExternalDatasource // add this ds into paymentGateway
+	paymentExternal port.PaymentExternalDatasource // TODO: add this ds into paymentGateway
 }
 
 // NewPaymentUseCase create a new payment use case
-func NewPaymentUseCase(paymentGateway port.PaymentGateway, orderGateway port.OrderGateway, paymentExternal port.PaymentExternalDatasource) port.PaymentUseCase {
-	return &paymentUseCase{
-		paymentGateway:  paymentGateway,
-		orderGateway:    orderGateway,
-		paymentExternal: paymentExternal,
-	}
+func NewPaymentUseCase(
+	paymentGateway port.PaymentGateway,
+	orderGateway port.OrderGateway,
+	paymentExternal port.PaymentExternalDatasource,
+) port.PaymentUseCase {
+	return &paymentUseCase{paymentGateway, orderGateway, paymentExternal}
 }
 
 // Create create a new payment
-func (uc *paymentUseCase) Create(ctx context.Context, OrderID uint64) (*entity.Payment, error) {
-	existentPedingPayment, err := uc.paymentGateway.GetPaymentByOrderIDAndStatus(ctx, valueobject.PROCESSING, OrderID)
+func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) (*entity.Payment, error) {
+	existentPedingPayment, err := uc.paymentGateway.GetPaymentByOrderIDAndStatus(ctx, valueobject.PROCESSING, i.OrderID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -37,7 +38,7 @@ func (uc *paymentUseCase) Create(ctx context.Context, OrderID uint64) (*entity.P
 		return existentPedingPayment, nil
 	}
 
-	order, err := uc.orderGateway.FindByID(ctx, OrderID)
+	order, err := uc.orderGateway.FindByID(ctx, i.OrderID)
 	if err != nil {
 		return nil, domain.NewNotFoundError(domain.ErrOrderIsMandatory)
 	}
@@ -56,7 +57,7 @@ func (uc *paymentUseCase) Create(ctx context.Context, OrderID uint64) (*entity.P
 	iPayment := &entity.Payment{
 		Status:            valueobject.PROCESSING,
 		ExternalPaymentID: extPayment.InStoreOrderID,
-		OrderID:           OrderID,
+		OrderID:           i.OrderID,
 		QrData:            extPayment.QrData,
 	}
 
@@ -73,15 +74,15 @@ func (uc *paymentUseCase) Create(ctx context.Context, OrderID uint64) (*entity.P
 	return payment, nil
 }
 
-func (ps *paymentUseCase) createPaymentPayload(order *entity.Order) *entity.CreatePaymentIN {
+func (ps *paymentUseCase) createPaymentPayload(order *entity.Order) *entity.CreatePaymentInput {
 	cfg := config.LoadConfig()
 
-	var items []entity.ItemsIN
+	var items []entity.ItemsInput
 
 	externalReference := strconv.FormatUint(order.ID, 10)
 
 	for _, v := range order.OrderProducts {
-		items = append(items, entity.ItemsIN{
+		items = append(items, entity.ItemsInput{
 			Title:       v.Product.Name,
 			Description: v.Product.Description,
 			UnitPrice:   float32(v.Product.Price),
@@ -92,7 +93,7 @@ func (ps *paymentUseCase) createPaymentPayload(order *entity.Order) *entity.Crea
 		})
 	}
 
-	return &entity.CreatePaymentIN{
+	return &entity.CreatePaymentInput{
 		ExternalReference: externalReference,
 		TotalAmount:       order.TotalBill,
 		Items:             items,
