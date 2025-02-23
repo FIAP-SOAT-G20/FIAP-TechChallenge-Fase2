@@ -19,10 +19,8 @@ func NewPaymentExternal() port.PaymentExternalDatasource {
 	return &PaymentExternalDataSource{}
 }
 
-func (ps *PaymentExternalDataSource) CreatePayment(payment *entity.CreatePaymentInput) (*entity.CreatePaymentOutput, error) {
+func (ps *PaymentExternalDataSource) CreatePayment(payment *entity.CreatePaymentExternalInput) (*entity.CreatePaymentExternalOutput, error) {
 	cfg := config.LoadConfig()
-
-	body := request.NewPaymentRequest(payment)
 
 	client := resty.New().
 		SetTimeout(10*time.Second).
@@ -30,9 +28,10 @@ func (ps *PaymentExternalDataSource) CreatePayment(payment *entity.CreatePayment
 		SetHeader("Authorization", fmt.Sprintf("Bearer %s", cfg.MercadoPagoToken)).
 		SetHeader("Content-Type", "application/json")
 
+	var result response.CreatePaymentResponse
 	resp, err := client.R().
-		SetBody(body).
-		SetResult(&response.CreatePaymentResponse{}).
+		SetBody(request.NewPaymentRequest(payment)).
+		SetResult(&result).
 		Post(cfg.MercadoPagoURL)
 	if err != nil {
 		return nil, fmt.Errorf("error to create payment: %w", err)
@@ -42,7 +41,5 @@ func (ps *PaymentExternalDataSource) CreatePayment(payment *entity.CreatePayment
 		return nil, fmt.Errorf("error: response status %d", resp.StatusCode())
 	}
 
-	response := response.ToCreatePaymentOUTDomain(resp.Result().(*response.CreatePaymentResponse))
-
-	return response, nil
+	return result.ToEntity(), nil
 }

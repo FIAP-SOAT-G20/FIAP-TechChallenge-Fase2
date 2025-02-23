@@ -25,7 +25,7 @@ type ItemsRequest struct {
 	TotalAmount float32 `json:"total_amount"`
 }
 
-func NewPaymentRequest(payment *entity.CreatePaymentInput) *CreatePaymentRequest {
+func NewPaymentRequest(payment *entity.CreatePaymentExternalInput) *CreatePaymentRequest {
 	if payment == nil {
 		return nil
 	}

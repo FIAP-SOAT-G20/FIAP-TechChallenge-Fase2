@@ -16,16 +16,16 @@ type Payment struct {
 	UpdatedAt         time.Time
 }
 
-type CreatePaymentInput struct {
+type CreatePaymentExternalInput struct {
 	ExternalReference string
 	TotalAmount       float32
-	Items             []ItemsInput
+	Items             []PaymentExternalItemsInput
 	Title             string
 	Description       string
 	NotificationUrl   string
 }
 
-type ItemsInput struct {
+type PaymentExternalItemsInput struct {
 	Category    string
 	Title       string
 	Description string
@@ -35,16 +35,7 @@ type ItemsInput struct {
 	TotalAmount float32
 }
 
-type CreatePaymentOutput struct {
+type CreatePaymentExternalOutput struct {
 	InStoreOrderID string
 	QrData         string
-}
-
-type UpdatePaymentInput struct {
-	Resource string
-	Topic    string
-}
-
-type GetPaymentOutput struct {
-	ExternalReference string
 }

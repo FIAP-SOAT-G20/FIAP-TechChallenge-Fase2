@@ -74,15 +74,15 @@ func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) 
 	return payment, nil
 }
 
-func (ps *paymentUseCase) createPaymentPayload(order *entity.Order) *entity.CreatePaymentInput {
+func (ps *paymentUseCase) createPaymentPayload(order *entity.Order) *entity.CreatePaymentExternalInput {
 	cfg := config.LoadConfig()
 
-	var items []entity.ItemsInput
+	var items []entity.PaymentExternalItemsInput
 
 	externalReference := strconv.FormatUint(order.ID, 10)
 
 	for _, v := range order.OrderProducts {
-		items = append(items, entity.ItemsInput{
+		items = append(items, entity.PaymentExternalItemsInput{
 			Title:       v.Product.Name,
 			Description: v.Product.Description,
 			UnitPrice:   float32(v.Product.Price),
@@ -93,7 +93,7 @@ func (ps *paymentUseCase) createPaymentPayload(order *entity.Order) *entity.Crea
 		})
 	}
 
-	return &entity.CreatePaymentInput{
+	return &entity.CreatePaymentExternalInput{
 		ExternalReference: externalReference,
 		TotalAmount:       order.TotalBill,
 		Items:             items,

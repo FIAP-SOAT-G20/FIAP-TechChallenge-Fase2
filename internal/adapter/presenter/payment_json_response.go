@@ -9,11 +9,3 @@ type PaymentJsonResponse struct {
 	ExternalPaymentID string                    `json:"external_payment_id" example:"a0aa0f26-6e0a-4b90-8c49-9f1a9c03ebcc"`
 	QrData            string                    `json:"qr_data" example:"qr_data_a0aa0f26-6e0a-4b90-8c49-9f1a9c03ebcc"`
 }
-
-type PaymentResponse struct {
-	ID                uint64                    `json:"id"`
-	Status            valueobject.PaymentStatus `json:"status"`
-	OrderID           uint64                    `json:"order_id"`
-	ExternalPaymentID string                    `json:"external_payment_id"`
-	QrData            string                    `json:"qr_data"`
-}
