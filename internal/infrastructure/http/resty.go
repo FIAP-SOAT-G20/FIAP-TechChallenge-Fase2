@@ -9,7 +9,11 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-func NewRestyClient(cfg *config.Config, logger *slog.Logger) *resty.Client {
+type HTTPClient struct {
+	*resty.Client
+}
+
+func NewRestyClient(cfg *config.Config, logger *slog.Logger) *HTTPClient {
 	httpCLient := resty.New().
 		SetTimeout(10*time.Second). // TODO: set timeout in config (ENV)
 		SetRetryCount(2).
@@ -18,5 +22,5 @@ func NewRestyClient(cfg *config.Config, logger *slog.Logger) *resty.Client {
 
 	logger.Info("resty client created")
 
-	return httpCLient
+	return &HTTPClient{httpCLient}
 }

@@ -14,7 +14,6 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/route"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/server"
-	"github.com/go-resty/resty/v2"
 )
 
 // @title						FIAP Tech Challenge Fase 2 - 10SOAT - G18
@@ -70,7 +69,7 @@ func main() {
 	}
 }
 
-func setupHandlers(db *database.Database, httpClient *resty.Client) *route.Handlers {
+func setupHandlers(db *database.Database, httpClient *http.HTTPClient) *route.Handlers {
 	// Datasources
 	productDS := datasource.NewProductDataSource(db.DB)
 	customerDS := datasource.NewCustomerDataSource(db.DB)
@@ -78,7 +77,7 @@ func setupHandlers(db *database.Database, httpClient *resty.Client) *route.Handl
 	orderProductDS := datasource.NewOrderProductDataSource(db.DB)
 	staffDS := datasource.NewStaffDataSource(db.DB)
 	paymentDS := datasource.NewPaymentDataSource(db.DB)
-	paymentExternalDS := datasource.NewPaymentExternalDataSource(httpClient)
+	paymentExternalDS := datasource.NewPaymentExternalDataSource(httpClient.Client)
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
