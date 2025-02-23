@@ -19,18 +19,18 @@ func NewPaymentHandler(controller port.PaymentController) *PaymentHandler {
 }
 
 func (h *PaymentHandler) Register(router *gin.RouterGroup) {
-	router.POST("/:order_id/checkout", h.CreatePayment)
+	router.POST("/:order_id/checkout", h.Create)
 }
 
-func (h *PaymentHandler) CreatePayment(c *gin.Context) {
-	var req request.CreatePaymentUriRequest
-	if err := c.ShouldBindUri(&req); err != nil {
+func (h *PaymentHandler) Create(c *gin.Context) {
+	var uri request.CreatePaymentUriRequest
+	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
 
 	input := dto.CreatePaymentInput{
-		OrderID: req.OrderID,
+		OrderID: uri.OrderID,
 	}
 
 	err := h.controller.Create(
