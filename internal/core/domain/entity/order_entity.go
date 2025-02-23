@@ -18,17 +18,6 @@ type Order struct {
 	UpdatedAt     time.Time
 }
 
-func NewOrder(consumerID uint64) *Order {
-	order := &Order{
-		CustomerID: consumerID,
-		Status:     valueobject.OPEN,
-		CreatedAt:  time.Now(),
-		UpdatedAt:  time.Now(),
-	}
-
-	return order
-}
-
 func (p *Order) Update(customerID uint64, status valueobject.OrderStatus) {
 	if customerID != 0 {
 		p.CustomerID = customerID

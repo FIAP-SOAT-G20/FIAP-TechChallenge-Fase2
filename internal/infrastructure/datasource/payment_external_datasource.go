@@ -19,7 +19,7 @@ func NewPaymentExternal() port.PaymentExternalDatasource {
 	return &PaymentExternalDataSource{}
 }
 
-func (ps *PaymentExternalDataSource) CreatePayment(payment *entity.CreatePaymentIN) (*entity.CreatePaymentOUT, error) {
+func (ps *PaymentExternalDataSource) CreatePayment(payment *entity.CreatePaymentInput) (*entity.CreatePaymentOutput, error) {
 	cfg := config.LoadConfig()
 
 	body := request.NewPaymentRequest(payment)

@@ -7,8 +7,8 @@ type CreatePaymentResponse struct {
 	QrData         string `json:"qr_data"`
 }
 
-func ToCreatePaymentOUTDomain(payment *CreatePaymentResponse) *entity.CreatePaymentOUT {
-	return &entity.CreatePaymentOUT{
+func ToCreatePaymentOUTDomain(payment *CreatePaymentResponse) *entity.CreatePaymentOutput {
+	return &entity.CreatePaymentOutput{
 		InStoreOrderID: payment.InStoreOrderID,
 		QrData:         payment.QrData,
 	}
