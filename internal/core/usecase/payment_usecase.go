@@ -11,23 +11,23 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 )
 
-type createPaymentUseCase struct {
+type paymentUseCase struct {
 	paymentGateway  port.PaymentGateway
 	orderGateway    port.OrderGateway
-	paymentExternal port.PaymentExternalDatasource
+	paymentExternal port.PaymentExternalDatasource // add this ds into paymentGateway
 }
 
-// NewCreatePaymentUseCase creates a new createPaymentUseCase
-func NewPaymentUseCase(paymentGateway port.PaymentGateway, orderGateway port.OrderGateway, paymentExternal port.PaymentExternalDatasource) port.CreatePaymentUseCase {
-	return &createPaymentUseCase{
+// NewPaymentUseCase create a new payment use case
+func NewPaymentUseCase(paymentGateway port.PaymentGateway, orderGateway port.OrderGateway, paymentExternal port.PaymentExternalDatasource) port.PaymentUseCase {
+	return &paymentUseCase{
 		paymentGateway:  paymentGateway,
 		orderGateway:    orderGateway,
 		paymentExternal: paymentExternal,
 	}
 }
 
-// Execute create a new payment
-func (uc *createPaymentUseCase) Execute(ctx context.Context, OrderID uint64) (*entity.Payment, error) {
+// Create create a new payment
+func (uc *paymentUseCase) Create(ctx context.Context, OrderID uint64) (*entity.Payment, error) {
 	existentPedingPayment, err := uc.paymentGateway.GetPaymentByOrderIDAndStatus(ctx, valueobject.PROCESSING, OrderID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
@@ -43,7 +43,7 @@ func (uc *createPaymentUseCase) Execute(ctx context.Context, OrderID uint64) (*e
 	}
 
 	if len(order.OrderProducts) == 0 {
-		return nil, domain.NewNotFoundError("no products")
+		return nil, domain.NewNotFoundError(domain.ErrOrderWithoutProducts)
 	}
 
 	paymentPayload := uc.createPaymentPayload(order)
@@ -73,7 +73,7 @@ func (uc *createPaymentUseCase) Execute(ctx context.Context, OrderID uint64) (*e
 	return payment, nil
 }
 
-func (ps *createPaymentUseCase) createPaymentPayload(order *entity.Order) *entity.CreatePaymentIN {
+func (ps *paymentUseCase) createPaymentPayload(order *entity.Order) *entity.CreatePaymentIN {
 	cfg := config.LoadConfig()
 
 	var items []entity.ItemsIN
