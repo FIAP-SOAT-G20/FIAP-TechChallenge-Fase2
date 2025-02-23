@@ -55,7 +55,6 @@ func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) 
 	}
 
 	iPayment := &entity.Payment{
-		Status:            valueobject.PROCESSING,
 		ExternalPaymentID: extPayment.InStoreOrderID,
 		OrderID:           i.OrderID,
 		QrData:            extPayment.QrData,
