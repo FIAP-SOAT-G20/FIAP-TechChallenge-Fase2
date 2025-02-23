@@ -22,6 +22,17 @@ func (h *PaymentHandler) Register(router *gin.RouterGroup) {
 	router.POST("/:order_id/checkout", h.Create)
 }
 
+// Create godoc
+//
+//	@Summary		Create a payment
+//	@Description	Creates a new payment
+//	@Tags			payments
+//	@Accept			json
+//	@Produce		json
+//	@Param			product	body		request.CreatePaymentRequest	true		"Payment data"
+//	@Success		201		{object}	presenter.PaymentJsonResponse		"Created"
+//	@Failure		400		{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		500		{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 func (h *PaymentHandler) Create(c *gin.Context) {
 	var uri request.CreatePaymentUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
