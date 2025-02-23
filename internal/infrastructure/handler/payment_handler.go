@@ -5,6 +5,7 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
 )
@@ -28,10 +29,14 @@ func (h *PaymentHandler) CreatePayment(c *gin.Context) {
 		return
 	}
 
+	input := dto.CreatePaymentInput{
+		OrderID: req.OrderID,
+	}
+
 	err := h.controller.Create(
 		c.Request.Context(),
 		presenter.NewPaymentJsonPresenter(c),
-		req.OrderID,
+		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
