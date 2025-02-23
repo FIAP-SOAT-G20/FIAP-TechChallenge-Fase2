@@ -18,9 +18,7 @@ type paymentDataSource struct {
 type PaymentKey string
 
 func NewPaymentDataSource(db *gorm.DB) port.PaymentDataSource {
-	return &paymentDataSource{
-		db: db,
-	}
+	return &paymentDataSource{db}
 }
 
 func (ds *paymentDataSource) Create(ctx context.Context, payment *entity.Payment) (*entity.Payment, error) {

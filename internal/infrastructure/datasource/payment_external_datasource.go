@@ -3,7 +3,6 @@ package datasource
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
@@ -14,24 +13,19 @@ import (
 )
 
 type PaymentExternalDataSource struct {
+	httpClient *resty.Client
 }
 
-func NewPaymentExternal() port.PaymentExternalDatasource {
-	return &PaymentExternalDataSource{}
+func NewPaymentExternalDataSource(client *resty.Client) port.PaymentExternalDatasource {
+	return &PaymentExternalDataSource{client}
 }
 
-func (ps *PaymentExternalDataSource) Create(ctx context.Context, payment *entity.CreatePaymentExternalInput) (*entity.CreatePaymentExternalOutput, error) {
+func (ds *PaymentExternalDataSource) Create(ctx context.Context, p *entity.CreatePaymentExternalInput) (*entity.CreatePaymentExternalOutput, error) {
 	cfg := config.LoadConfig()
 
-	client := resty.New().
-		SetTimeout(10*time.Second). // TODO: set timeout in config (ENV)
-		SetRetryCount(2).
-		SetHeader("Authorization", fmt.Sprintf("Bearer %s", cfg.MercadoPagoToken)).
-		SetHeader("Content-Type", "application/json")
-
 	var result response.CreatePaymentResponse
-	resp, err := client.R().
-		SetBody(request.NewPaymentRequest(payment)).
+	resp, err := ds.httpClient.R().
+		SetBody(request.NewPaymentRequest(p)).
 		SetResult(&result).
 		Post(cfg.MercadoPagoURL)
 	if err != nil {
