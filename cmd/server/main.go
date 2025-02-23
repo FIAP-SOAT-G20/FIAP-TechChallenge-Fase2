@@ -73,10 +73,12 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderDS := datasource.NewOrderDataSource(db.DB)
 	orderProductDS := datasource.NewOrderProductDataSource(db.DB)
 	staffDS := datasource.NewStaffDataSource(db.DB)
+	orderHistoryDS := datasource.NewOrderHistoryDataSource(db.DB)
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
 	customerGateway := gateway.NewCustomerGateway(customerDS)
+	orderHistoryGateway := gateway.NewOrderHistoryGateway(orderHistoryDS)
 	orderGateway := gateway.NewOrderGateway(orderDS)
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
 	staffGateway := gateway.NewStaffGateway(staffDS)
@@ -84,7 +86,8 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	// Use cases
 	productUC := usecase.NewProductUseCase(productGateway)
 	customerUC := usecase.NewCustomerUseCase(customerGateway)
-	orderUC := usecase.NewOrderUseCase(orderGateway)
+	orderHistoryUC := usecase.NewOrderHistoryUseCase(orderHistoryGateway)
+	orderUC := usecase.NewOrderUseCase(orderGateway, orderHistoryUC)
 	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
 	staffUC := usecase.NewStaffUseCase(staffGateway)
 
@@ -94,6 +97,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderController := controller.NewOrderController(orderUC)
 	orderProductController := controller.NewOrderProductController(orderProductUC)
 	staffController := controller.NewStaffController(staffUC)
+	orderHistoryController := controller.NewOrderHistoryController(orderHistoryUC)
 
 	// Handlers
 	productHandler := handler.NewProductHandler(productController)
@@ -102,12 +106,14 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderProductHandler := handler.NewOrderProductHandler(orderProductController)
 	staffHandler := handler.NewStaffHandler(staffController)
 	healthCheckHandler := handler.NewHealthCheckHandler()
+	orderHistoryHandler := handler.NewOrderHistoryHandler(orderHistoryController)
 
 	return &route.Handlers{
 		Product:      productHandler,
 		Customer:     customerHandler,
 		Order:        orderHandler,
 		OrderProduct: orderProductHandler,
+		OrderHistory: orderHistoryHandler,
 		Staff:        staffHandler,
 		HealthCheck:  healthCheckHandler,
 	}
