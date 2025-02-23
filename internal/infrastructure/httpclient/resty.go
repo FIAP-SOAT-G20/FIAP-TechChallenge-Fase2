@@ -15,7 +15,7 @@ type HTTPClient struct {
 func NewRestyClient(cfg *config.Config, logger *slog.Logger) *HTTPClient {
 	httpCLient := resty.New().
 		SetTimeout(cfg.MercadoPagoTimeout).
-		SetRetryCount(2).
+		SetRetryCount(cfg.MercadoPagoRetryCount).
 		SetHeader("Authorization", fmt.Sprintf("Bearer %s", cfg.MercadoPagoToken)).
 		SetHeader("Content-Type", "application/json")
 
