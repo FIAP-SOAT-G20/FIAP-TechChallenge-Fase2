@@ -14,7 +14,7 @@ type PaymentHandler struct {
 }
 
 func NewPaymentHandler(controller port.PaymentController) *PaymentHandler {
-	return &PaymentHandler{controller: controller}
+	return &PaymentHandler{controller}
 }
 
 func (h *PaymentHandler) Register(router *gin.RouterGroup) {
@@ -28,14 +28,11 @@ func (h *PaymentHandler) CreatePayment(c *gin.Context) {
 		return
 	}
 
-	var p port.Presenter
-	if c.GetHeader("Accept") == "text/xml" {
-		p = presenter.NewProductXmlPresenter(c)
-	} else {
-		p = presenter.NewProductJsonPresenter(c)
-	}
-
-	err := h.controller.CreatePayment(c.Request.Context(), p, req.OrderID)
+	err := h.controller.Create(
+		c.Request.Context(),
+		presenter.NewPaymentJsonPresenter(c),
+		req.OrderID,
+	)
 	if err != nil {
 		_ = c.Error(err)
 		return
