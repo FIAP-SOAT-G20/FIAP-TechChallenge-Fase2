@@ -10,7 +10,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/database"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/datasource"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/http"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/httpclient"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/route"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/server"
@@ -58,7 +58,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	httpClient := http.NewRestyClient(cfg, loggerInstance.Logger)
+	httpClient := httpclient.NewRestyClient(cfg, loggerInstance.Logger)
 
 	handlers := setupHandlers(db, httpClient)
 
@@ -69,7 +69,7 @@ func main() {
 	}
 }
 
-func setupHandlers(db *database.Database, httpClient *http.HTTPClient) *route.Handlers {
+func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *route.Handlers {
 	// Datasources
 	productDS := datasource.NewProductDataSource(db.DB)
 	customerDS := datasource.NewCustomerDataSource(db.DB)
