@@ -25,3 +25,14 @@ func (c *PaymentController) Create(ctx context.Context, p port.Presenter, i dto.
 
 	return nil
 }
+
+func (c *PaymentController) Update(ctx context.Context, p port.Presenter, i dto.UpdatePaymentInput) error {
+	payment, err := c.useCase.Update(ctx, i)
+	if err != nil {
+		return err
+	}
+
+	p.Present(dto.PresenterInput{Result: payment})
+
+	return nil
+}

@@ -8,4 +8,5 @@ import (
 
 type PaymentController interface {
 	Create(ctx context.Context, presenter Presenter, input dto.CreatePaymentInput) error
+	Update(ctx context.Context, p Presenter, i dto.UpdatePaymentInput) error
 }

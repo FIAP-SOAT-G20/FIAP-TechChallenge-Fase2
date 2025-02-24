@@ -41,17 +41,18 @@ func (ds *paymentDataSource) GetByOrderID(ctx context.Context, orderID uint64) (
 	return &p, nil
 }
 
-func (ds *paymentDataSource) UpdateStatus(status valueobject.PaymentStatus, epID string) error {
-	if err := ds.db.Model(&entity.Payment{}).Where("external_payment_id = ?", epID).Update("status", status).Error; err != nil {
+func (ds *paymentDataSource) UpdateStatus(ctx context.Context, status valueobject.PaymentStatus, epID string) error {
+	if err := ds.db.WithContext(ctx).Model(&entity.Payment{}).Where("external_payment_id = ?", epID).Update("status", status).Error; err != nil {
 		return err
 	}
 
 	return nil
 }
-func (ds *paymentDataSource) GetByExternalPaymentID(epID string) (*entity.Payment, error) {
+
+func (ds *paymentDataSource) GetByExternalPaymentID(ctx context.Context, epID string) (*entity.Payment, error) {
 	var payment entity.Payment
 
-	if err := ds.db.Where("external_payment_id = ?", epID).First(&payment); errors.Is(err.Error, gorm.ErrRecordNotFound) {
+	if err := ds.db.WithContext(ctx).Where("external_payment_id = ?", epID).First(&payment); errors.Is(err.Error, gorm.ErrRecordNotFound) {
 		return nil, gorm.ErrRecordNotFound
 	}
 

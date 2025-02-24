@@ -82,6 +82,29 @@ func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) 
 	return payment, nil
 }
 
+func (uc *paymentUseCase) Update(ctx context.Context, payment dto.UpdatePaymentInput) (*entity.Payment, error) {
+	if err := uc.paymentGateway.UpdateStatus(ctx, valueobject.CONFIRMED, payment.Resource); err != nil {
+		return nil, err
+	}
+
+	paymentOUT, err := uc.paymentGateway.GetByExternalPaymentID(ctx, payment.Resource)
+	if err != nil {
+		return nil, err
+	}
+
+	order, err := uc.orderGateway.FindByID(ctx, paymentOUT.OrderID)
+	if err != nil {
+		return nil, err
+	}
+
+	order.Status = valueobject.RECEIVED
+	if err := uc.orderGateway.Update(ctx, order); err != nil {
+		return nil, err
+	}
+
+	return paymentOUT, nil
+}
+
 func (ps *paymentUseCase) createPaymentPayload(order *entity.Order) *entity.CreatePaymentExternalInput {
 	cfg := config.LoadConfig()
 
