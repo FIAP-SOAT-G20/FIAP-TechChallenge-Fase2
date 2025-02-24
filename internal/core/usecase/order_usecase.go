@@ -31,7 +31,7 @@ func (uc *orderUseCase) List(ctx context.Context, i dto.ListOrdersInput) ([]*ent
 
 // Create creates a new Order
 func (uc *orderUseCase) Create(ctx context.Context, i dto.CreateOrderInput) (*entity.Order, error) {
-	order := &entity.Order{CustomerID: i.CustomerID}
+	order := &entity.Order{CustomerID: i.CustomerID, Status: valueobject.OPEN}
 
 	if err := uc.gateway.Create(ctx, order); err != nil {
 		return nil, domain.NewInternalError(err)
