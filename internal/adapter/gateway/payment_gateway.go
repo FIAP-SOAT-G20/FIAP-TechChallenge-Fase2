@@ -24,10 +24,10 @@ func (g *paymentGayeway) Create(ctx context.Context, p *entity.Payment) (*entity
 	return g.dataSource.Create(ctx, p)
 }
 
-func (g *paymentGayeway) UpdateStatus(ctx context.Context, status valueobject.PaymentStatus, resource string) error {
-	return g.dataSource.UpdateStatus(ctx, status, resource)
-}
-
 func (g *paymentGayeway) GetByExternalPaymentID(ctx context.Context, externalPaymentId string) (*entity.Payment, error) {
 	return g.dataSource.GetByExternalPaymentID(ctx, externalPaymentId)
+}
+
+func (g *paymentGayeway) Update(ctx context.Context, status valueobject.PaymentStatus, resource string) error {
+	return g.dataSource.UpdateStatus(ctx, status, resource)
 }

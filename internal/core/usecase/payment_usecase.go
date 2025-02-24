@@ -83,7 +83,7 @@ func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) 
 }
 
 func (uc *paymentUseCase) Update(ctx context.Context, payment dto.UpdatePaymentInput) (*entity.Payment, error) {
-	if err := uc.paymentGateway.UpdateStatus(ctx, valueobject.CONFIRMED, payment.Resource); err != nil {
+	if err := uc.paymentGateway.Update(ctx, valueobject.CONFIRMED, payment.Resource); err != nil {
 		return nil, err
 	}
 
