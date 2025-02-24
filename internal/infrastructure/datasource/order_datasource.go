@@ -19,9 +19,7 @@ type orderDataSource struct {
 type orderKey string
 
 func NewOrderDataSource(db *gorm.DB) port.OrderDataSource {
-	return &orderDataSource{
-		db: db,
-	}
+	return &orderDataSource{db}
 }
 
 func (ds *orderDataSource) FindByID(ctx context.Context, id uint64) (*entity.Order, error) {
@@ -78,7 +76,7 @@ func (ds *orderDataSource) Create(ctx context.Context, order *entity.Order) erro
 }
 
 func (ds *orderDataSource) Update(ctx context.Context, order *entity.Order) error {
-	result := ds.db.WithContext(ctx).Preload("OrderProducts").Model(order).Updates(order)
+	result := ds.db.WithContext(ctx).Preload("OrderProducts").Save(order)
 	if result.Error != nil {
 		return fmt.Errorf("error updating order: %w", result.Error)
 	}

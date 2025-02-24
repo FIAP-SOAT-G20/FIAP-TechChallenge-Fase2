@@ -297,6 +297,52 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/payments/{order_id}/checkout": {
+            "post": {
+                "description": "Creates a new payment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "payments"
+                ],
+                "summary": "Create a payment",
+                "parameters": [
+                    {
+                        "description": "Payment data",
+                        "name": "product",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreatePaymentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.PaymentJsonResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/customers": {
             "get": {
                 "description": "List all customers",
@@ -1603,6 +1649,35 @@ const docTemplate = `{
                 }
             }
         },
+        "presenter.PaymentJsonResponse": {
+            "type": "object",
+            "properties": {
+                "external_payment_id": {
+                    "type": "string",
+                    "example": "a0aa0f26-6e0a-4b90-8c49-9f1a9c03ebcc"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "order_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "qr_data": {
+                    "type": "string",
+                    "example": "qr_data_a0aa0f26-6e0a-4b90-8c49-9f1a9c03ebcc"
+                },
+                "status": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/valueobject.PaymentStatus"
+                        }
+                    ],
+                    "example": "pending"
+                }
+            }
+        },
         "presenter.ProductJsonPaginatedResponse": {
             "type": "object",
             "properties": {
@@ -1791,6 +1866,32 @@ const docTemplate = `{
                 }
             }
         },
+        "request.CreatePaymentRequest": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "external_reference": {
+                    "type": "string"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/request.ItemsRequest"
+                    }
+                },
+                "notification_url": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "total_amount": {
+                    "type": "number"
+                }
+            }
+        },
         "request.CreateProductBodyRequest": {
             "type": "object",
             "required": [
@@ -1823,7 +1924,8 @@ const docTemplate = `{
         "request.CreateStaffBodyRequest": {
             "type": "object",
             "required": [
-                "name"
+                "name",
+                "role"
             ],
             "properties": {
                 "name": {
@@ -1840,6 +1942,32 @@ const docTemplate = `{
                         }
                     ],
                     "example": "COOK"
+                }
+            }
+        },
+        "request.ItemsRequest": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "total_amount": {
+                    "type": "number"
+                },
+                "unit_measure": {
+                    "type": "string"
+                },
+                "unit_price": {
+                    "type": "number"
                 }
             }
         },
@@ -1950,7 +2078,8 @@ const docTemplate = `{
         "request.UpdateStaffBodyRequest": {
             "type": "object",
             "required": [
-                "name"
+                "name",
+                "role"
             ],
             "properties": {
                 "name": {
@@ -2032,6 +2161,23 @@ const docTemplate = `{
                 "READY",
                 "COMPLETED",
                 "UNDEFINDED"
+            ]
+        },
+        "valueobject.PaymentStatus": {
+            "type": "string",
+            "enum": [
+                "PROCESSING",
+                "CONFIRMED",
+                "FAILED",
+                "CANCELED",
+                ""
+            ],
+            "x-enum-varnames": [
+                "PROCESSING",
+                "CONFIRMED",
+                "FAILED",
+                "CANCELED",
+                "UNDEFINDED_P"
             ]
         },
         "valueobject.StaffRole": {

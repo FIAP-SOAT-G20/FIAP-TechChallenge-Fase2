@@ -18,9 +18,7 @@ type customerDataSource struct {
 type customerKey string
 
 func NewCustomerDataSource(db *gorm.DB) port.CustomerDataSource {
-	return &customerDataSource{
-		db: db,
-	}
+	return &customerDataSource{db}
 }
 
 func (ds *customerDataSource) FindByID(ctx context.Context, id uint64) (*entity.Customer, error) {

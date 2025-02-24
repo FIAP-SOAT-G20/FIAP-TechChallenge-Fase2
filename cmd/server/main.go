@@ -10,6 +10,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/database"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/datasource"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/httpclient"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/route"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/server"
@@ -57,7 +58,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	handlers := setupHandlers(db)
+	httpClient := httpclient.NewRestyClient(cfg, loggerInstance.Logger)
+
+	handlers := setupHandlers(db, httpClient)
 
 	srv := server.NewServer(cfg, loggerInstance.Logger, handlers)
 	if err := srv.Start(); err != nil {
@@ -66,13 +69,15 @@ func main() {
 	}
 }
 
-func setupHandlers(db *database.Database) *route.Handlers {
+func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *route.Handlers {
 	// Datasources
 	productDS := datasource.NewProductDataSource(db.DB)
 	customerDS := datasource.NewCustomerDataSource(db.DB)
 	orderDS := datasource.NewOrderDataSource(db.DB)
 	orderProductDS := datasource.NewOrderProductDataSource(db.DB)
 	staffDS := datasource.NewStaffDataSource(db.DB)
+	paymentDS := datasource.NewPaymentDataSource(db.DB)
+	paymentExternalDS := datasource.NewPaymentExternalDataSource(httpClient.Client)
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
@@ -80,6 +85,9 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderGateway := gateway.NewOrderGateway(orderDS)
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
 	staffGateway := gateway.NewStaffGateway(staffDS)
+	paymentGateway := gateway.NewPaymentGateway(paymentDS)
+	// paymentExternalGateway := gateway.NewPaymentExternalGateway(paymentExternalDS)
+	paymentExternalFakeGateway := gateway.NewPaymentExternalFakeGateway(paymentExternalDS)
 
 	// Use cases
 	productUC := usecase.NewProductUseCase(productGateway)
@@ -87,6 +95,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderUC := usecase.NewOrderUseCase(orderGateway)
 	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
 	staffUC := usecase.NewStaffUseCase(staffGateway)
+	paymentUC := usecase.NewPaymentUseCase(orderGateway, paymentGateway, paymentExternalFakeGateway)
 
 	// Controllers
 	productController := controller.NewProductController(productUC)
@@ -94,6 +103,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderController := controller.NewOrderController(orderUC)
 	orderProductController := controller.NewOrderProductController(orderProductUC)
 	staffController := controller.NewStaffController(staffUC)
+	paymentController := controller.NewPaymentController(paymentUC)
 
 	// Handlers
 	productHandler := handler.NewProductHandler(productController)
@@ -102,6 +112,7 @@ func setupHandlers(db *database.Database) *route.Handlers {
 	orderProductHandler := handler.NewOrderProductHandler(orderProductController)
 	staffHandler := handler.NewStaffHandler(staffController)
 	healthCheckHandler := handler.NewHealthCheckHandler()
+	paymentHandler := handler.NewPaymentHandler(paymentController)
 
 	return &route.Handlers{
 		Product:      productHandler,
@@ -110,5 +121,6 @@ func setupHandlers(db *database.Database) *route.Handlers {
 		OrderProduct: orderProductHandler,
 		Staff:        staffHandler,
 		HealthCheck:  healthCheckHandler,
+		Payment:      paymentHandler,
 	}
 }

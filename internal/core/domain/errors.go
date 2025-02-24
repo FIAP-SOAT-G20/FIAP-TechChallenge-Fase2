@@ -18,6 +18,7 @@ var (
 	ErrStaffIdIsMandatory           = "staff is mandatory"
 	ErrOrderIsMandatory             = "order is mandatory"
 	ErrOrderIsNotOpen               = "order is not on status open"
+	ErrRoleInvalid                  = "invalid role"
 
 	ErrPageMustBeGreaterThanZero = "page must be greater than zero"
 	ErrLimitMustBeBetween1And100 = "limit must be between 1 and 100"
