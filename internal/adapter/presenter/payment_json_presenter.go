@@ -2,7 +2,6 @@ package presenter
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
@@ -17,12 +16,7 @@ type paymentJsonPresenter struct {
 
 // PaymentJsonResponse represents the response of a payment
 func NewPaymentJsonPresenter(writer ResponseWriter) port.Presenter {
-	return &paymentJsonPresenter{}
-}
-
-// ToCustomerJsonResponse convert entity.Payment to PaymentJsonResponse
-func ToPaymentJsonResponse(customer *entity.Payment) PaymentJsonResponse {
-	return PaymentJsonResponse{}
+	return &paymentJsonPresenter{writer}
 }
 
 // Present write the response to the client
@@ -32,10 +26,20 @@ func (p *paymentJsonPresenter) Present(pp dto.PresenterInput) {
 		output := ToPaymentJsonResponse(v)
 		p.writer.JSON(http.StatusOK, output)
 	default:
-		fmt.Println("paymentJsonPresenter Unknown type")
 		p.writer.JSON(
 			http.StatusInternalServerError,
 			domain.NewInternalError(errors.New(domain.ErrInternalError)),
 		)
+	}
+}
+
+// ToPaymentJsonResponse convert entity.Payment to PaymentJsonResponse
+func ToPaymentJsonResponse(p *entity.Payment) PaymentJsonResponse {
+	return PaymentJsonResponse{
+		ID:                p.ID,
+		Status:            p.Status,
+		OrderID:           p.OrderID,
+		ExternalPaymentID: p.ExternalPaymentID,
+		QrData:            p.QrData,
 	}
 }
