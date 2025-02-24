@@ -18,9 +18,7 @@ type staffDataSource struct {
 type staffKey string
 
 func NewStaffDataSource(db *gorm.DB) port.StaffDataSource {
-	return &staffDataSource{
-		db: db,
-	}
+	return &staffDataSource{db}
 }
 
 func (ds *staffDataSource) FindByID(ctx context.Context, id uint64) (*entity.Staff, error) {

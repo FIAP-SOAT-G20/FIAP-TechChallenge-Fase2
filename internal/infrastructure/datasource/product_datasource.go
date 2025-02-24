@@ -18,9 +18,7 @@ type productDataSource struct {
 type productKey string
 
 func NewProductDataSource(db *gorm.DB) port.ProductDataSource {
-	return &productDataSource{
-		db: db,
-	}
+	return &productDataSource{db}
 }
 
 func (ds *productDataSource) FindByID(ctx context.Context, id uint64) (*entity.Product, error) {

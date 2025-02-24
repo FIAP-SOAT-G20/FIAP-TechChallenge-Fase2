@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"strconv"
+	"time"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
@@ -29,7 +30,7 @@ func NewPaymentUseCase(
 
 // Create create a new payment
 func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) (*entity.Payment, error) {
-	existentPedingPayment, err := uc.paymentGateway.GetPaymentByOrderIDAndStatus(ctx, valueobject.PROCESSING, i.OrderID)
+	existentPedingPayment, err := uc.paymentGateway.GetByOrderID(ctx, i.OrderID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -58,6 +59,7 @@ func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) 
 		ExternalPaymentID: extPayment.InStoreOrderID,
 		OrderID:           i.OrderID,
 		QrData:            extPayment.QrData,
+		Status:            valueobject.PROCESSING,
 	}
 
 	payment, err := uc.paymentGateway.Create(ctx, iPayment)
@@ -65,8 +67,15 @@ func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) 
 		return nil, domain.NewInternalError(err)
 	}
 
-	order.Status = valueobject.PENDING
-	if err := uc.orderGateway.Update(ctx, order); err != nil {
+	orderUpdated := &entity.Order{
+		ID:         order.ID,
+		CustomerID: order.CustomerID,
+		Status:     valueobject.PENDING,
+		CreatedAt:  order.CreatedAt,
+		UpdatedAt:  time.Now(),
+	}
+
+	if err := uc.orderGateway.Update(ctx, orderUpdated); err != nil {
 		return nil, err
 	}
 

@@ -9,7 +9,7 @@ import (
 
 type PaymentDataSource interface {
 	Create(context context.Context, payment *entity.Payment) (*entity.Payment, error)
-	GetPaymentByOrderIDAndStatus(context context.Context, status valueobject.PaymentStatus, orderID uint64) (*entity.Payment, error)
+	GetByOrderID(context context.Context, orderID uint64) (*entity.Payment, error)
 	UpdateStatus(status valueobject.PaymentStatus, externalPaymentID string) error
 	GetByExternalPaymentID(externalPaymentID string) (*entity.Payment, error)
 }
