@@ -97,8 +97,15 @@ func (uc *paymentUseCase) Update(ctx context.Context, payment dto.UpdatePaymentI
 		return nil, err
 	}
 
-	order.Status = valueobject.RECEIVED
-	if err := uc.orderGateway.Update(ctx, order); err != nil {
+	orderUpdated := &entity.Order{
+		ID:         order.ID,
+		CustomerID: order.CustomerID,
+		Status:     valueobject.RECEIVED,
+		CreatedAt:  order.CreatedAt,
+		UpdatedAt:  time.Now(),
+	}
+
+	if err := uc.orderGateway.Update(ctx, orderUpdated); err != nil {
 		return nil, err
 	}
 
