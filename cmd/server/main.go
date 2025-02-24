@@ -86,7 +86,8 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *ro
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
 	staffGateway := gateway.NewStaffGateway(staffDS)
 	paymentGateway := gateway.NewPaymentGateway(paymentDS)
-	paymentExternalGateway := gateway.NewPaymentExternalGateway(paymentExternalDS)
+	// paymentExternalGateway := gateway.NewPaymentExternalGateway(paymentExternalDS)
+	paymentExternalFakeGateway := gateway.NewPaymentExternalFakeGateway(paymentExternalDS)
 
 	// Use cases
 	productUC := usecase.NewProductUseCase(productGateway)
@@ -94,7 +95,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *ro
 	orderUC := usecase.NewOrderUseCase(orderGateway)
 	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
 	staffUC := usecase.NewStaffUseCase(staffGateway)
-	paymentUC := usecase.NewPaymentUseCase(orderGateway, paymentGateway, paymentExternalGateway)
+	paymentUC := usecase.NewPaymentUseCase(orderGateway, paymentGateway, paymentExternalFakeGateway)
 
 	// Controllers
 	productController := controller.NewProductController(productUC)
