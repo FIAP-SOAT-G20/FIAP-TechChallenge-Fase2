@@ -76,7 +76,7 @@ func (ds *orderDataSource) Create(ctx context.Context, order *entity.Order) erro
 }
 
 func (ds *orderDataSource) Update(ctx context.Context, order *entity.Order) error {
-	result := ds.db.WithContext(ctx).Preload("OrderProducts").Model(entity.Order{ID: order.ID}).Update("status", order.Status)
+	result := ds.db.WithContext(ctx).Preload("OrderProducts").Save(order)
 	if result.Error != nil {
 		return fmt.Errorf("error updating order: %w", result.Error)
 	}
