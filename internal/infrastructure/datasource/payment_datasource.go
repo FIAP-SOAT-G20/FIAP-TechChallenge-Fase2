@@ -21,38 +21,37 @@ func NewPaymentDataSource(db *gorm.DB) port.PaymentDataSource {
 	return &paymentDataSource{db}
 }
 
-func (ds *paymentDataSource) Create(ctx context.Context, payment *entity.Payment) (*entity.Payment, error) {
-	if err := ds.db.WithContext(ctx).Create(payment).Error; err != nil {
+func (ds *paymentDataSource) Create(ctx context.Context, p *entity.Payment) (*entity.Payment, error) {
+	if err := ds.db.WithContext(ctx).Create(p).Error; err != nil {
 		return nil, err
 	}
 
-	return payment, nil
+	return p, nil
 }
 
-func (ds *paymentDataSource) GetPaymentByOrderIDAndStatus(ctx context.Context, status valueobject.PaymentStatus, orderID uint64) (*entity.Payment, error) {
-	var payment entity.Payment
-
-	if err := ds.db.WithContext(ctx).Where("order_id = ? AND status = ?", orderID, status).First(&payment).Error; err != nil {
+func (ds *paymentDataSource) GetByOrderID(ctx context.Context, orderID uint64) (*entity.Payment, error) {
+	var p entity.Payment
+	if err := ds.db.WithContext(ctx).Where("order_id = ? AND status = ?", orderID, valueobject.PROCESSING).First(&p).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return &payment, nil
+			return &p, nil
 		}
 		return nil, err
 	}
 
-	return &payment, nil
+	return &p, nil
 }
 
-func (ds *paymentDataSource) UpdateStatus(status valueobject.PaymentStatus, externalPaymentID string) error {
-	if err := ds.db.Model(&entity.Payment{}).Where("external_payment_id = ?", externalPaymentID).Update("status", status).Error; err != nil {
+func (ds *paymentDataSource) UpdateStatus(status valueobject.PaymentStatus, epID string) error {
+	if err := ds.db.Model(&entity.Payment{}).Where("external_payment_id = ?", epID).Update("status", status).Error; err != nil {
 		return err
 	}
 
 	return nil
 }
-func (ds *paymentDataSource) GetByExternalPaymentID(externalPaymentID string) (*entity.Payment, error) {
+func (ds *paymentDataSource) GetByExternalPaymentID(epID string) (*entity.Payment, error) {
 	var payment entity.Payment
 
-	if err := ds.db.Where("external_payment_id = ?", externalPaymentID).First(&payment); errors.Is(err.Error, gorm.ErrRecordNotFound) {
+	if err := ds.db.Where("external_payment_id = ?", epID).First(&payment); errors.Is(err.Error, gorm.ErrRecordNotFound) {
 		return nil, gorm.ErrRecordNotFound
 	}
 
