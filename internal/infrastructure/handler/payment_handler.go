@@ -33,6 +33,7 @@ func (h *PaymentHandler) Register(router *gin.RouterGroup) {
 //	@Success		201		{object}	presenter.PaymentJsonResponse		"Created"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse		"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse		"Internal Server Error"
+//	@Router			/api/v1/payments/{order_id}/checkout	[post]
 func (h *PaymentHandler) Create(c *gin.Context) {
 	var uri request.CreatePaymentUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
