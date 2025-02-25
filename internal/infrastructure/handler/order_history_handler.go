@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
@@ -53,15 +55,17 @@ func (h *OrderHistoryHandler) List(c *gin.Context) {
 		Limit:   query.Limit,
 	}
 
-	err := h.controller.List(
+	output, err := h.controller.List(
 		c.Request.Context(),
-		presenter.NewOrderHistoryJsonPresenter(c),
+		presenter.NewOrderHistoryJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusOK, "application/json", output)
 }
 
 // Get godoc
@@ -88,15 +92,17 @@ func (h *OrderHistoryHandler) Get(c *gin.Context) {
 		ID: uri.ID,
 	}
 
-	err := h.controller.Get(
+	output, err := h.controller.Get(
 		c.Request.Context(),
-		presenter.NewOrderHistoryJsonPresenter(c),
+		presenter.NewOrderHistoryJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusOK, "application/json", output)
 }
 
 // Delete godoc
@@ -121,14 +127,15 @@ func (h *OrderHistoryHandler) Delete(c *gin.Context) {
 	input := dto.DeleteOrderHistoryInput{
 		ID: uri.ID,
 	}
-	err := h.controller.Delete(
+	output, err := h.controller.Delete(
 		c.Request.Context(),
-		presenter.NewOrderHistoryJsonPresenter(c),
+		presenter.NewOrderHistoryJsonPresenter(),
 		input,
 	)
-
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusOK, "application/json", output)
 }
