@@ -14,19 +14,6 @@ type Product struct {
 	UpdatedAt   time.Time
 }
 
-func NewProduct(name string, description string, price float64, categoryID uint64) *Product {
-	product := &Product{
-		Name:        name,
-		Description: description,
-		Price:       price,
-		CategoryID:  categoryID,
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
-	}
-
-	return product
-}
-
 func (p *Product) Update(name string, description string, price float64, categoryID uint64) {
 	p.Name = name
 	p.Description = description

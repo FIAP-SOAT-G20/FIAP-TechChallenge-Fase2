@@ -13,18 +13,6 @@ type Customer struct {
 	UpdatedAt time.Time
 }
 
-func NewCustomer(name string, email string, cpf string) *Customer {
-	product := &Customer{
-		Name:      name,
-		Email:     email,
-		CPF:       cpf,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-	}
-
-	return product
-}
-
 func (p *Customer) Update(name string, email string) {
 	p.Name = name
 	p.Email = email

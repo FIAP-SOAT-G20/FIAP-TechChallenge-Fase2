@@ -21,8 +21,8 @@ func NewOrderUseCase(gateway port.OrderGateway, orderHistoryUseCase port.OrderHi
 }
 
 // List returns a list of Orders
-func (uc *orderUseCase) List(ctx context.Context, input dto.ListOrdersInput) ([]*entity.Order, int64, error) {
-	orders, total, err := uc.gateway.FindAll(ctx, input.CustomerID, input.Status, input.Page, input.Limit)
+func (uc *orderUseCase) List(ctx context.Context, i dto.ListOrdersInput) ([]*entity.Order, int64, error) {
+	orders, total, err := uc.gateway.FindAll(ctx, i.CustomerID, i.Status, i.Page, i.Limit)
 	if err != nil {
 		return nil, 0, domain.NewInternalError(err)
 	}
@@ -31,8 +31,8 @@ func (uc *orderUseCase) List(ctx context.Context, input dto.ListOrdersInput) ([]
 }
 
 // Create creates a new Order
-func (uc *orderUseCase) Create(ctx context.Context, input dto.CreateOrderInput) (*entity.Order, error) {
-	order := entity.NewOrder(input.CustomerID)
+func (uc *orderUseCase) Create(ctx context.Context, i dto.CreateOrderInput) (*entity.Order, error) {
+	order := &entity.Order{CustomerID: i.CustomerID, Status: valueobject.OPEN}
 
 	if err := uc.gateway.Create(ctx, order); err != nil {
 		return nil, domain.NewInternalError(err)
@@ -51,8 +51,8 @@ func (uc *orderUseCase) Create(ctx context.Context, input dto.CreateOrderInput) 
 }
 
 // Get returns a Order by ID
-func (uc *orderUseCase) Get(ctx context.Context, input dto.GetOrderInput) (*entity.Order, error) {
-	order, err := uc.gateway.FindByID(ctx, input.ID)
+func (uc *orderUseCase) Get(ctx context.Context, i dto.GetOrderInput) (*entity.Order, error) {
+	order, err := uc.gateway.FindByID(ctx, i.ID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -65,8 +65,8 @@ func (uc *orderUseCase) Get(ctx context.Context, input dto.GetOrderInput) (*enti
 }
 
 // Update updates a Order
-func (uc *orderUseCase) Update(ctx context.Context, input dto.UpdateOrderInput) (*entity.Order, error) {
-	order, err := uc.gateway.FindByID(ctx, input.ID)
+func (uc *orderUseCase) Update(ctx context.Context, i dto.UpdateOrderInput) (*entity.Order, error) {
+	order, err := uc.gateway.FindByID(ctx, i.ID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -75,22 +75,22 @@ func (uc *orderUseCase) Update(ctx context.Context, input dto.UpdateOrderInput) 
 		return nil, domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
-	if input.CustomerID != 0 && order.CustomerID != input.CustomerID {
+	if i.CustomerID != 0 && order.CustomerID != i.CustomerID {
 		return nil, domain.NewInvalidInputError(domain.ErrInvalidBody)
 	}
 
-	if input.Status != "" && order.Status != input.Status {
-		if !valueobject.StatusCanTransitionTo(order.Status, input.Status) {
+	if i.Status != "" && order.Status != i.Status {
+		if !valueobject.StatusCanTransitionTo(order.Status, i.Status) {
 			return nil, domain.NewInvalidInputError(domain.ErrInvalidBody)
 		}
 
-		if valueobject.StatusTransitionNeedsStaffID(input.Status) && input.StaffID == 0 {
+		if valueobject.StatusTransitionNeedsStaffID(i.Status) && i.StaffID == 0 {
 			return nil, domain.NewInvalidInputError(domain.ErrStaffIdIsMandatory)
 		}
 	}
 
 	orderProducts := order.OrderProducts
-	order.Update(input.CustomerID, input.Status)
+	order.Update(i.CustomerID, i.Status)
 
 	if err := uc.gateway.Update(ctx, order); err != nil {
 		return nil, domain.NewInternalError(err)
@@ -114,8 +114,8 @@ func (uc *orderUseCase) Update(ctx context.Context, input dto.UpdateOrderInput) 
 }
 
 // Delete deletes a Order
-func (uc *orderUseCase) Delete(ctx context.Context, input dto.DeleteOrderInput) (*entity.Order, error) {
-	order, err := uc.gateway.FindByID(ctx, input.ID)
+func (uc *orderUseCase) Delete(ctx context.Context, i dto.DeleteOrderInput) (*entity.Order, error) {
+	order, err := uc.gateway.FindByID(ctx, i.ID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -123,7 +123,7 @@ func (uc *orderUseCase) Delete(ctx context.Context, input dto.DeleteOrderInput) 
 		return nil, domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
-	if err := uc.gateway.Delete(ctx, input.ID); err != nil {
+	if err := uc.gateway.Delete(ctx, i.ID); err != nil {
 		return nil, domain.NewInternalError(err)
 	}
 

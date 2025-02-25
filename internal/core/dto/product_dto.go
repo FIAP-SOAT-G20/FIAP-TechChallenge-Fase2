@@ -1,10 +1,21 @@
 package dto
 
+import "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+
 type CreateProductInput struct {
 	Name        string
 	Description string
 	Price       float64
 	CategoryID  uint64
+}
+
+func (i CreateProductInput) ToEntity() *entity.Product {
+	return &entity.Product{
+		Name:        i.Name,
+		Description: i.Description,
+		Price:       i.Price,
+		CategoryID:  i.CategoryID,
+	}
 }
 
 type UpdateProductInput struct {

@@ -7,4 +7,4 @@ DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS customers;
 
-DROP TYPE order_status;
+DROP TYPE IF EXISTS order_status;

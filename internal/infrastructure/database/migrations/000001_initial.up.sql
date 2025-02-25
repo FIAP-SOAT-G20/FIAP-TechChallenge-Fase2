@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS orders
     id          SERIAL PRIMARY KEY,
     customer_id INT REFERENCES customers (id),
     status     order_status DEFAULT 'OPEN',
-    total_bill  DECIMAL(19, 2),
+    total_bill  DECIMAL(19, 2), -- TODO: REMOVE
     created_at  TIMESTAMP NOT NULL DEFAULT now(),
     updated_at  TIMESTAMP NOT NULL DEFAULT now()
 );
@@ -81,7 +81,6 @@ CREATE TABLE IF NOT EXISTS payments
     created_at          TIMESTAMP NOT NULL                                             DEFAULT now(),
     updated_at          TIMESTAMP NOT NULL                                             DEFAULT now()
 );
-
 
 INSERT INTO categories (name)
 VALUES ('Lanches'),

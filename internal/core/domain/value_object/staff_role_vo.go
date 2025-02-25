@@ -11,6 +11,10 @@ const (
 	UNDEFINED StaffRole = ""
 )
 
+func IsValidStaffRole(status string) bool {
+	return ToStaffRole(status) != UNDEFINED
+}
+
 func (o StaffRole) String() string {
 	return strings.ToUpper(string(o))
 }

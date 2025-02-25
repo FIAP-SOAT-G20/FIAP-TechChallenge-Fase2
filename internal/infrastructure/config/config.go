@@ -29,6 +29,13 @@ type Config struct {
 
 	// Environment
 	Environment string
+
+	// Mercado Pago
+	MercadoPagoToken           string
+	MercadoPagoURL             string
+	MercadoPagoTimeout         time.Duration
+	MercadoPagoRetryCount      int
+	MercadoPagoNotificationURL string
 }
 
 func LoadConfig() *Config {
@@ -45,6 +52,9 @@ func LoadConfig() *Config {
 	serverWriteTimeout, _ := time.ParseDuration(getEnv("SERVER_WRITE_TIMEOUT", "10s"))
 	serverIdleTimeout, _ := time.ParseDuration(getEnv("SERVER_IDLE_TIMEOUT", "60s"))
 	serverGracefulShutdownTimeout, _ := time.ParseDuration(getEnv("SERVER_GRACEFUL_SHUTDOWN_SEC_TIMEOUT", "5s"))
+
+	mercadoPagoTimeout, _ := time.ParseDuration(getEnv("MERCADO_PAGO_TIMEOUT", "10s"))
+	mercadoPagoRetryCount, _ := strconv.Atoi(getEnv("MERCADO_PAGO_RETRY_COUNT", "2"))
 
 	return &Config{
 		// Database settings
@@ -66,6 +76,13 @@ func LoadConfig() *Config {
 
 		// Environment
 		Environment: getEnv("ENVIRONMENT", "development"),
+
+		// Mercado Pago
+		MercadoPagoToken:           getEnv("MERCADO_PAGO_TOKEN", "token"),
+		MercadoPagoURL:             getEnv("MERCADO_PAGO_URL", "url"),
+		MercadoPagoTimeout:         mercadoPagoTimeout,
+		MercadoPagoRetryCount:      mercadoPagoRetryCount,
+		MercadoPagoNotificationURL: getEnv("MERCADO_PAGO_NOTIFICATION_URL", "url"),
 	}
 }
 

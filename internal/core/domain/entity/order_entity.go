@@ -7,26 +7,15 @@ import (
 )
 
 type Order struct {
-	ID         uint64
-	CustomerID uint64
-	TotalBill  float32
-	Status     valueobject.OrderStatus
-	// Payment       Payment // TODO: Add payment when payment is implemented
+	ID            uint64
+	CustomerID    uint64
+	TotalBill     float32 // TODO: change to virtual field
+	Status        valueobject.OrderStatus
+	Payment       Payment
 	Customer      Customer
 	OrderProducts []OrderProduct
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
-}
-
-func NewOrder(consumerID uint64) *Order {
-	order := &Order{
-		CustomerID: consumerID,
-		Status:     valueobject.OPEN,
-		CreatedAt:  time.Now(),
-		UpdatedAt:  time.Now(),
-	}
-
-	return order
 }
 
 func (p *Order) Update(customerID uint64, status valueobject.OrderStatus) {
