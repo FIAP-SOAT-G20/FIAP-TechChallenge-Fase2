@@ -43,11 +43,12 @@ func (m *MockOrderHistoryController) EXPECT() *MockOrderHistoryControllerMockRec
 }
 
 // Create mocks base method.
-func (m *MockOrderHistoryController) Create(ctx context.Context, presenter port.Presenter, input dto.CreateOrderHistoryInput) error {
+func (m *MockOrderHistoryController) Create(ctx context.Context, presenter port.Presenter, input dto.CreateOrderHistoryInput) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, presenter, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Create indicates an expected call of Create.
@@ -56,12 +57,28 @@ func (mr *MockOrderHistoryControllerMockRecorder) Create(ctx, presenter, input a
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockOrderHistoryController)(nil).Create), ctx, presenter, input)
 }
 
+// Delete mocks base method.
+func (m *MockOrderHistoryController) Delete(ctx context.Context, presenter port.Presenter, input dto.DeleteOrderHistoryInput) ([]byte, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Delete", ctx, presenter, input)
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Delete indicates an expected call of Delete.
+func (mr *MockOrderHistoryControllerMockRecorder) Delete(ctx, presenter, input any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockOrderHistoryController)(nil).Delete), ctx, presenter, input)
+}
+
 // Get mocks base method.
-func (m *MockOrderHistoryController) Get(ctx context.Context, presenter port.Presenter, input dto.GetOrderHistoryInput) error {
+func (m *MockOrderHistoryController) Get(ctx context.Context, presenter port.Presenter, input dto.GetOrderHistoryInput) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", ctx, presenter, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Get indicates an expected call of Get.
@@ -71,11 +88,12 @@ func (mr *MockOrderHistoryControllerMockRecorder) Get(ctx, presenter, input any)
 }
 
 // List mocks base method.
-func (m *MockOrderHistoryController) List(ctx context.Context, presenter port.Presenter, input dto.ListOrderHistoriesInput) error {
+func (m *MockOrderHistoryController) List(ctx context.Context, presenter port.Presenter, input dto.ListOrderHistoriesInput) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "List", ctx, presenter, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // List indicates an expected call of List.

@@ -2,9 +2,10 @@ package controller
 
 import (
 	"context"
-	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"testing"
 	"time"
+
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
@@ -63,10 +64,12 @@ func TestOrderHistoryController_ListOrderHistories(t *testing.T) {
 			Total:  int64(3),
 			Page:   1,
 			Limit:  10,
-		})
+		}).
+		Return([]byte{}, nil)
 
-	err := controller.List(ctx, mockPresenter, input)
+	output, err := controller.List(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestOrderHistoryController_CreateOrderHistory(t *testing.T) {
@@ -94,12 +97,12 @@ func TestOrderHistoryController_CreateOrderHistory(t *testing.T) {
 		Return(mockOrderHistory, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: mockOrderHistory,
-		})
+		Present(dto.PresenterInput{Result: mockOrderHistory}).
+		Return([]byte{}, nil)
 
-	err := controller.Create(ctx, mockPresenter, input)
+	output, err := controller.Create(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestOrderHistoryController_GetOrderHistory(t *testing.T) {
@@ -126,16 +129,12 @@ func TestOrderHistoryController_GetOrderHistory(t *testing.T) {
 		Return(mockOrderHistory, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: &entity.OrderHistory{
-				ID:      1,
-				OrderID: 1,
-				Status:  valueobject.OPEN,
-			},
-		})
+		Present(dto.PresenterInput{Result: mockOrderHistory}).
+		Return([]byte{}, nil)
 
-	err := controller.Get(ctx, mockPresenter, input)
+	output, err := controller.Get(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestOrderHistoryController_DeleteOrderHistory(t *testing.T) {
@@ -162,10 +161,10 @@ func TestOrderHistoryController_DeleteOrderHistory(t *testing.T) {
 		Return(mockOrderHistory, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: mockOrderHistory,
-		})
+		Present(dto.PresenterInput{Result: mockOrderHistory}).
+		Return([]byte{}, nil)
 
-	err := controller.Delete(ctx, mockPresenter, input)
+	output, err := controller.Delete(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
