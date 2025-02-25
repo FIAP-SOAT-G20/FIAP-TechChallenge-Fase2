@@ -9,7 +9,7 @@
 
 
 # @name healthCheck
-GET {{baseUrl}}/health HTTP/1.1
+GET {{baseUrl}}/api/v1/health HTTP/1.1
 
 @healthStatus = {{healthCheck.response.body.status}}
 
