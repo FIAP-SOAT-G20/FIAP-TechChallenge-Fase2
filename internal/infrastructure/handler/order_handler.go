@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 
@@ -58,15 +59,17 @@ func (h *OrderHandler) List(c *gin.Context) {
 		Limit:      query.Limit,
 	}
 
-	err := h.controller.List(
+	output, err := h.controller.List(
 		c.Request.Context(),
-		presenter.NewOrderJsonPresenter(c),
+		presenter.NewOrderJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusOK, "application/json", output)
 }
 
 // Create godoc
@@ -92,15 +95,17 @@ func (h *OrderHandler) Create(c *gin.Context) {
 		CustomerID: body.CustomerID,
 	}
 
-	err := h.controller.Create(
+	output, err := h.controller.Create(
 		c.Request.Context(),
-		presenter.NewOrderJsonPresenter(c),
+		presenter.NewOrderJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusCreated, "application/json", output)
 }
 
 // Get godoc
@@ -127,15 +132,17 @@ func (h *OrderHandler) Get(c *gin.Context) {
 		ID: uri.ID,
 	}
 
-	err := h.controller.Get(
+	output, err := h.controller.Get(
 		c.Request.Context(),
-		presenter.NewOrderJsonPresenter(c),
+		presenter.NewOrderJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusOK, "application/json", output)
 }
 
 // Update godoc
@@ -181,15 +188,17 @@ func (h *OrderHandler) Update(c *gin.Context) {
 		StaffID:    body.StaffID,
 	}
 
-	err := h.controller.Update(
+	output, err := h.controller.Update(
 		c.Request.Context(),
-		presenter.NewOrderJsonPresenter(c),
+		presenter.NewOrderJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusOK, "application/json", output)
 }
 
 // UpdatePartial godoc
@@ -236,15 +245,17 @@ func (h *OrderHandler) UpdatePartial(c *gin.Context) {
 		StaffID:    body.StaffID,
 	}
 
-	err := h.controller.Update(
+	output, err := h.controller.Update(
 		c.Request.Context(),
-		presenter.NewOrderJsonPresenter(c),
+		presenter.NewOrderJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusOK, "application/json", output)
 }
 
 // Delete godoc
@@ -270,14 +281,15 @@ func (h *OrderHandler) Delete(c *gin.Context) {
 		ID: uri.ID,
 	}
 
-	err := h.controller.Delete(
+	output, err := h.controller.Delete(
 		c.Request.Context(),
-		presenter.NewOrderJsonPresenter(c),
+		presenter.NewOrderJsonPresenter(),
 		input,
 	)
-
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusOK, "application/json", output)
 }
