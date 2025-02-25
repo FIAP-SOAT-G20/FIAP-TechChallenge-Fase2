@@ -293,6 +293,8 @@ make test
 - [Clean Architecture: Understanding the Role of Presenters](https://medium.com/@erickzanetti/clean-architecture-understanding-the-role-of-presenters-8707ff018aa3)
 - [Golang Microservices Boilerplate - Clean Architecture](https://github.com/gbrayhan/microservices-go)
 - [GRACEFULL SHUTDOWN EM GOLANG - Finalizando requisições antes de desligar o projeto!](https://www.youtube.com/watch?v=V52Th2h_8FM&ab_channel=HunCoding)
+- [Implement value objects with Domain-Driven Design (DDD)](https://medium.com/@nirajranasinghe/implement-value-objects-with-domain-driven-design-ddd-3aeb4e88cee5)
+- [Entendendo Presenters na Clean Architecture](https://www.youtube.com/watch?v=zrYAnqA-VQs&ab_channel=FullCycle)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
