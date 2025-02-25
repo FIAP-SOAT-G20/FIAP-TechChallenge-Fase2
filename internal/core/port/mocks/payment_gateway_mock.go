@@ -14,6 +14,7 @@ import (
 	reflect "reflect"
 
 	entity "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -56,17 +57,61 @@ func (mr *MockPaymentGatewayMockRecorder) Create(ctx, payment any) *gomock.Call 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockPaymentGateway)(nil).Create), ctx, payment)
 }
 
-// GetByOrderID mocks base method.
-func (m *MockPaymentGateway) GetByOrderID(ctx context.Context, orderID uint64) (*entity.Payment, error) {
+// CreateExternal mocks base method.
+func (m *MockPaymentGateway) CreateExternal(ctx context.Context, payment *entity.CreatePaymentExternalInput) (*entity.CreatePaymentExternalOutput, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetByOrderID", ctx, orderID)
+	ret := m.ctrl.Call(m, "CreateExternal", ctx, payment)
+	ret0, _ := ret[0].(*entity.CreatePaymentExternalOutput)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateExternal indicates an expected call of CreateExternal.
+func (mr *MockPaymentGatewayMockRecorder) CreateExternal(ctx, payment any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateExternal", reflect.TypeOf((*MockPaymentGateway)(nil).CreateExternal), ctx, payment)
+}
+
+// FindByExternalPaymentID mocks base method.
+func (m *MockPaymentGateway) FindByExternalPaymentID(ctx context.Context, resource string) (*entity.Payment, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindByExternalPaymentID", ctx, resource)
 	ret0, _ := ret[0].(*entity.Payment)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetByOrderID indicates an expected call of GetByOrderID.
-func (mr *MockPaymentGatewayMockRecorder) GetByOrderID(ctx, orderID any) *gomock.Call {
+// FindByExternalPaymentID indicates an expected call of FindByExternalPaymentID.
+func (mr *MockPaymentGatewayMockRecorder) FindByExternalPaymentID(ctx, resource any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByOrderID", reflect.TypeOf((*MockPaymentGateway)(nil).GetByOrderID), ctx, orderID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByExternalPaymentID", reflect.TypeOf((*MockPaymentGateway)(nil).FindByExternalPaymentID), ctx, resource)
+}
+
+// FindByOrderID mocks base method.
+func (m *MockPaymentGateway) FindByOrderID(ctx context.Context, orderID uint64) (*entity.Payment, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindByOrderID", ctx, orderID)
+	ret0, _ := ret[0].(*entity.Payment)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FindByOrderID indicates an expected call of FindByOrderID.
+func (mr *MockPaymentGatewayMockRecorder) FindByOrderID(ctx, orderID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByOrderID", reflect.TypeOf((*MockPaymentGateway)(nil).FindByOrderID), ctx, orderID)
+}
+
+// Update mocks base method.
+func (m *MockPaymentGateway) Update(ctx context.Context, status valueobject.PaymentStatus, resource string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Update", ctx, status, resource)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Update indicates an expected call of Update.
+func (mr *MockPaymentGatewayMockRecorder) Update(ctx, status, resource any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockPaymentGateway)(nil).Update), ctx, status, resource)
 }
