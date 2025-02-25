@@ -43,11 +43,12 @@ func (m *MockStaffController) EXPECT() *MockStaffControllerMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockStaffController) Create(ctx context.Context, presenter port.Presenter, input dto.CreateStaffInput) error {
+func (m *MockStaffController) Create(ctx context.Context, presenter port.Presenter, input dto.CreateStaffInput) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, presenter, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Create indicates an expected call of Create.
@@ -57,11 +58,12 @@ func (mr *MockStaffControllerMockRecorder) Create(ctx, presenter, input any) *go
 }
 
 // Delete mocks base method.
-func (m *MockStaffController) Delete(ctx context.Context, presenter port.Presenter, input dto.DeleteStaffInput) error {
+func (m *MockStaffController) Delete(ctx context.Context, presenter port.Presenter, input dto.DeleteStaffInput) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Delete", ctx, presenter, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Delete indicates an expected call of Delete.
@@ -71,11 +73,12 @@ func (mr *MockStaffControllerMockRecorder) Delete(ctx, presenter, input any) *go
 }
 
 // Get mocks base method.
-func (m *MockStaffController) Get(ctx context.Context, presenter port.Presenter, input dto.GetStaffInput) error {
+func (m *MockStaffController) Get(ctx context.Context, presenter port.Presenter, input dto.GetStaffInput) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", ctx, presenter, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Get indicates an expected call of Get.
@@ -85,11 +88,12 @@ func (mr *MockStaffControllerMockRecorder) Get(ctx, presenter, input any) *gomoc
 }
 
 // List mocks base method.
-func (m *MockStaffController) List(ctx context.Context, presenter port.Presenter, input dto.ListStaffsInput) error {
+func (m *MockStaffController) List(ctx context.Context, presenter port.Presenter, input dto.ListStaffsInput) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "List", ctx, presenter, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // List indicates an expected call of List.
@@ -99,11 +103,12 @@ func (mr *MockStaffControllerMockRecorder) List(ctx, presenter, input any) *gomo
 }
 
 // Update mocks base method.
-func (m *MockStaffController) Update(ctx context.Context, presenter port.Presenter, input dto.UpdateStaffInput) error {
+func (m *MockStaffController) Update(ctx context.Context, presenter port.Presenter, input dto.UpdateStaffInput) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", ctx, presenter, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Update indicates an expected call of Update.

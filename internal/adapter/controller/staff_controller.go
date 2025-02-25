@@ -11,66 +11,56 @@ type StaffController struct {
 	useCase port.StaffUseCase
 }
 
-func NewStaffController(useCase port.StaffUseCase) *StaffController {
+func NewStaffController(useCase port.StaffUseCase) port.StaffController {
 	return &StaffController{useCase}
 }
 
-func (c *StaffController) List(ctx context.Context, p port.Presenter, i dto.ListStaffsInput) error {
+func (c *StaffController) List(ctx context.Context, p port.Presenter, i dto.ListStaffsInput) ([]byte, error) {
 	staffs, total, err := c.useCase.List(ctx, i)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	p.Present(dto.PresenterInput{
+	return p.Present(dto.PresenterInput{
 		Total:  total,
 		Page:   i.Page,
 		Limit:  i.Limit,
 		Result: staffs,
 	})
-
-	return nil
 }
 
-func (c *StaffController) Create(ctx context.Context, p port.Presenter, i dto.CreateStaffInput) error {
+func (c *StaffController) Create(ctx context.Context, p port.Presenter, i dto.CreateStaffInput) ([]byte, error) {
 	staff, err := c.useCase.Create(ctx, i)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	p.Present(dto.PresenterInput{Result: staff})
-
-	return nil
+	return p.Present(dto.PresenterInput{Result: staff})
 }
 
-func (c *StaffController) Get(ctx context.Context, p port.Presenter, i dto.GetStaffInput) error {
+func (c *StaffController) Get(ctx context.Context, p port.Presenter, i dto.GetStaffInput) ([]byte, error) {
 	staff, err := c.useCase.Get(ctx, i)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	p.Present(dto.PresenterInput{Result: staff})
-
-	return nil
+	return p.Present(dto.PresenterInput{Result: staff})
 }
 
-func (c *StaffController) Update(ctx context.Context, p port.Presenter, i dto.UpdateStaffInput) error {
+func (c *StaffController) Update(ctx context.Context, p port.Presenter, i dto.UpdateStaffInput) ([]byte, error) {
 	staff, err := c.useCase.Update(ctx, i)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	p.Present(dto.PresenterInput{Result: staff})
-
-	return nil
+	return p.Present(dto.PresenterInput{Result: staff})
 }
 
-func (c *StaffController) Delete(ctx context.Context, p port.Presenter, i dto.DeleteStaffInput) error {
+func (c *StaffController) Delete(ctx context.Context, p port.Presenter, i dto.DeleteStaffInput) ([]byte, error) {
 	staff, err := c.useCase.Delete(ctx, i)
-
 	if err != nil {
-		return err
+		return nil, err
 	}
-	p.Present(dto.PresenterInput{Result: staff})
 
-	return nil
+	return p.Present(dto.PresenterInput{Result: staff})
 }

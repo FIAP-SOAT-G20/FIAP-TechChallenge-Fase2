@@ -41,9 +41,12 @@ func (m *MockPresenter) EXPECT() *MockPresenterMockRecorder {
 }
 
 // Present mocks base method.
-func (m *MockPresenter) Present(arg0 dto.PresenterInput) {
+func (m *MockPresenter) Present(arg0 dto.PresenterInput) ([]byte, error) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Present", arg0)
+	ret := m.ctrl.Call(m, "Present", arg0)
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Present indicates an expected call of Present.

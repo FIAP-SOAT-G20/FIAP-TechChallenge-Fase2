@@ -1,9 +1,8 @@
 package presenter
 
 import (
+	"encoding/json"
 	"errors"
-	"fmt"
-	"net/http"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
@@ -11,21 +10,19 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
-type orderProductJsonPresenter struct {
-	writer ResponseWriter
-}
+type orderProductJsonPresenter struct{}
 
 // OrderProductJsonResponse represents the response of a orderProduct
-func NewOrderProductJsonPresenter(writer ResponseWriter) port.Presenter {
-	return &orderProductJsonPresenter{writer}
+func NewOrderProductJsonPresenter() port.Presenter {
+	return &orderProductJsonPresenter{}
 }
 
 // Present write the response to the client
-func (p *orderProductJsonPresenter) Present(pp dto.PresenterInput) {
+func (p *orderProductJsonPresenter) Present(pp dto.PresenterInput) ([]byte, error) {
 	switch v := pp.Result.(type) {
 	case *entity.OrderProduct:
 		output := ToOrderProductJsonResponse(v)
-		p.writer.JSON(http.StatusOK, output)
+		return json.Marshal(output)
 	case []*entity.OrderProduct:
 		orderProductOutputs := make([]OrderProductJsonResponse, len(v))
 		for i, orderProduct := range v {
@@ -40,13 +37,9 @@ func (p *orderProductJsonPresenter) Present(pp dto.PresenterInput) {
 			},
 			OrderProducts: orderProductOutputs,
 		}
-		p.writer.JSON(http.StatusOK, output)
+		return json.Marshal(output)
 	default:
-		fmt.Println("orderProductJsonPresenter Unknown type")
-		p.writer.JSON(
-			http.StatusInternalServerError,
-			domain.NewInternalError(errors.New(domain.ErrInternalError)),
-		)
+		return nil, domain.NewInternalError(errors.New(domain.ErrInternalError))
 	}
 }
 

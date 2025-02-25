@@ -14,23 +14,21 @@ import (
 )
 
 type paymentUseCase struct {
-	orderGateway           port.OrderGateway
-	paymentGateway         port.PaymentGateway
-	paymentExternalGateway port.PaymentExternalGateway
+	orderGateway   port.OrderGateway
+	paymentGateway port.PaymentGateway
 }
 
 // NewPaymentUseCase create a new payment use case
 func NewPaymentUseCase(
 	orderGateway port.OrderGateway,
 	paymentGateway port.PaymentGateway,
-	paymentExternalGayeway port.PaymentExternalGateway,
 ) port.PaymentUseCase {
-	return &paymentUseCase{orderGateway, paymentGateway, paymentExternalGayeway}
+	return &paymentUseCase{orderGateway, paymentGateway}
 }
 
 // Create create a new payment
 func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) (*entity.Payment, error) {
-	existentPedingPayment, err := uc.paymentGateway.GetByOrderID(ctx, i.OrderID)
+	existentPedingPayment, err := uc.paymentGateway.FindByOrderID(ctx, i.OrderID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -50,7 +48,7 @@ func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) 
 
 	paymentPayload := uc.createPaymentPayload(order)
 
-	extPayment, err := uc.paymentExternalGateway.Create(ctx, paymentPayload)
+	extPayment, err := uc.paymentGateway.CreateExternal(ctx, paymentPayload)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -82,12 +80,12 @@ func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) 
 	return payment, nil
 }
 
-func (uc *paymentUseCase) Update(ctx context.Context, payment dto.UpdatePaymentInput) (*entity.Payment, error) {
-	if err := uc.paymentGateway.Update(ctx, valueobject.CONFIRMED, payment.Resource); err != nil {
+func (uc *paymentUseCase) Update(ctx context.Context, p dto.UpdatePaymentInput) (*entity.Payment, error) {
+	if err := uc.paymentGateway.Update(ctx, valueobject.CONFIRMED, p.Resource); err != nil {
 		return nil, err
 	}
 
-	paymentOUT, err := uc.paymentGateway.GetByExternalPaymentID(ctx, payment.Resource)
+	paymentOUT, err := uc.paymentGateway.FindByExternalPaymentID(ctx, p.Resource)
 	if err != nil {
 		return nil, err
 	}
@@ -112,14 +110,14 @@ func (uc *paymentUseCase) Update(ctx context.Context, payment dto.UpdatePaymentI
 	return paymentOUT, nil
 }
 
-func (ps *paymentUseCase) createPaymentPayload(order *entity.Order) *entity.CreatePaymentExternalInput {
+func (ps *paymentUseCase) createPaymentPayload(o *entity.Order) *entity.CreatePaymentExternalInput {
 	cfg := config.LoadConfig()
 
 	var items []entity.PaymentExternalItemsInput
 
-	externalReference := strconv.FormatUint(order.ID, 10)
+	externalReference := strconv.FormatUint(o.ID, 10)
 
-	for _, v := range order.OrderProducts {
+	for _, v := range o.OrderProducts {
 		items = append(items, entity.PaymentExternalItemsInput{
 			Title:       v.Product.Name,
 			Description: v.Product.Description,
@@ -133,7 +131,7 @@ func (ps *paymentUseCase) createPaymentPayload(order *entity.Order) *entity.Crea
 
 	return &entity.CreatePaymentExternalInput{
 		ExternalReference: externalReference,
-		TotalAmount:       order.TotalBill,
+		TotalAmount:       o.TotalBill,
 		Items:             items,
 		Title:             "FIAP Tech Challenge - Product Order",
 		Description:       "Purchases made at the FIAP Tech Challenge store",

@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 
+	_ "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/docs"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/gateway"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
@@ -23,7 +24,7 @@ import (
 // @host						localhost:8080
 // @BasePath					/api/v1
 // @tag.name					sign-up
-// @tag.description			Regiter a new customer or staff
+// @tag.description			Regiter a new customer
 // @tag.name					sign-in
 // @tag.description			Sign in to the system
 // @tag.name					customers
@@ -34,6 +35,10 @@ import (
 // @tag.description			List, create, update and delete orders
 // @tag.name					payments
 // @tag.description			Process payments
+// @tag.name					staffs
+// @tag.description			List, create, update and delete staff
+// @tag.name					health-check
+// @tag.description			Health check
 //
 // @externalDocs.description	GitHub Repository
 // @externalDocs.url			https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2
@@ -78,7 +83,8 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *ro
 	staffDS := datasource.NewStaffDataSource(db.DB)
 	orderHistoryDS := datasource.NewOrderHistoryDataSource(db.DB)
 	paymentDS := datasource.NewPaymentDataSource(db.DB)
-	paymentExternalDS := datasource.NewPaymentExternalDataSource(httpClient.Client)
+	// paymentExternalDS := datasource.NewPaymentExternalDataSource(httpClient.Client) // Mercado Pago
+	paymentExternalFakeDS := datasource.NewFakePaymentExternalDataSource() // Fake
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
@@ -87,9 +93,8 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *ro
 	orderGateway := gateway.NewOrderGateway(orderDS)
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
 	staffGateway := gateway.NewStaffGateway(staffDS)
-	paymentGateway := gateway.NewPaymentGateway(paymentDS)
-	// paymentExternalGateway := gateway.NewPaymentExternalGateway(paymentExternalDS)
-	paymentExternalFakeGateway := gateway.NewPaymentExternalFakeGateway(paymentExternalDS)
+	// paymentGateway := gateway.NewPaymentGateway(paymentDS, paymentExternalDS) // Mercado Pago
+	paymentGateway := gateway.NewPaymentGateway(paymentDS, paymentExternalFakeDS) // Fake
 
 	// Use cases
 	productUC := usecase.NewProductUseCase(productGateway)
@@ -98,7 +103,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *ro
 	orderUC := usecase.NewOrderUseCase(orderGateway, orderHistoryUC)
 	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
 	staffUC := usecase.NewStaffUseCase(staffGateway)
-	paymentUC := usecase.NewPaymentUseCase(orderGateway, paymentGateway, paymentExternalFakeGateway)
+	paymentUC := usecase.NewPaymentUseCase(orderGateway, paymentGateway)
 
 	// Controllers
 	productController := controller.NewProductController(productUC)

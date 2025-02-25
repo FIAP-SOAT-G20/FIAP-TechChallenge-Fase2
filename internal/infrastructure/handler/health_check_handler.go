@@ -28,7 +28,7 @@ func (h *HealthCheckHandler) Register(router *gin.RouterGroup) {
 //
 //	@Summary		Application HealthCheck
 //	@Description	Checks application health
-//	@Tags			healthcheck
+//	@Tags			health-check
 //	@Produce		json
 //	@Success		200	{object}	response.HealthCheckResponse
 //	@Failure		500	{object}	string							"Internal server error"

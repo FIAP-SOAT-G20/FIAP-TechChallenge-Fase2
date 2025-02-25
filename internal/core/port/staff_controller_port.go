@@ -7,9 +7,9 @@ import (
 )
 
 type StaffController interface {
-	List(ctx context.Context, presenter Presenter, input dto.ListStaffsInput) error
-	Create(ctx context.Context, presenter Presenter, input dto.CreateStaffInput) error
-	Get(ctx context.Context, presenter Presenter, input dto.GetStaffInput) error
-	Update(ctx context.Context, presenter Presenter, input dto.UpdateStaffInput) error
-	Delete(ctx context.Context, presenter Presenter, input dto.DeleteStaffInput) error
+	List(ctx context.Context, presenter Presenter, input dto.ListStaffsInput) ([]byte, error)
+	Create(ctx context.Context, presenter Presenter, input dto.CreateStaffInput) ([]byte, error)
+	Get(ctx context.Context, presenter Presenter, input dto.GetStaffInput) ([]byte, error)
+	Update(ctx context.Context, presenter Presenter, input dto.UpdateStaffInput) ([]byte, error)
+	Delete(ctx context.Context, presenter Presenter, input dto.DeleteStaffInput) ([]byte, error)
 }

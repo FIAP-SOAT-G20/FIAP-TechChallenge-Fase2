@@ -1,5 +1,7 @@
 package presenter
 
+import "encoding/json"
+
 type CustomerJsonResponse struct {
 	ID        uint64 `json:"id" example:"1"`
 	Name      string `json:"name" example:"John Doe"`
@@ -9,7 +11,23 @@ type CustomerJsonResponse struct {
 	UpdatedAt string `json:"updated_at" example:"2024-02-09T10:00:00Z"`
 }
 
+func (r CustomerJsonResponse) String() string {
+	o, err := json.Marshal(r)
+	if err != nil {
+		return ""
+	}
+	return string(o)
+}
+
 type CustomerJsonPaginatedResponse struct {
 	JsonPagination
 	Customers []CustomerJsonResponse `json:"customers"`
+}
+
+func (r CustomerJsonPaginatedResponse) String() string {
+	o, err := json.Marshal(r)
+	if err != nil {
+		return ""
+	}
+	return string(o)
 }

@@ -43,11 +43,12 @@ func (m *MockOrderProductController) EXPECT() *MockOrderProductControllerMockRec
 }
 
 // Create mocks base method.
-func (m *MockOrderProductController) Create(ctx context.Context, presenter port.Presenter, input dto.CreateOrderProductInput) error {
+func (m *MockOrderProductController) Create(ctx context.Context, presenter port.Presenter, input dto.CreateOrderProductInput) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, presenter, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Create indicates an expected call of Create.
@@ -57,11 +58,12 @@ func (mr *MockOrderProductControllerMockRecorder) Create(ctx, presenter, input a
 }
 
 // Delete mocks base method.
-func (m *MockOrderProductController) Delete(ctx context.Context, presenter port.Presenter, input dto.DeleteOrderProductInput) error {
+func (m *MockOrderProductController) Delete(ctx context.Context, presenter port.Presenter, input dto.DeleteOrderProductInput) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Delete", ctx, presenter, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Delete indicates an expected call of Delete.
@@ -71,11 +73,12 @@ func (mr *MockOrderProductControllerMockRecorder) Delete(ctx, presenter, input a
 }
 
 // Get mocks base method.
-func (m *MockOrderProductController) Get(ctx context.Context, presenter port.Presenter, input dto.GetOrderProductInput) error {
+func (m *MockOrderProductController) Get(ctx context.Context, presenter port.Presenter, input dto.GetOrderProductInput) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", ctx, presenter, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Get indicates an expected call of Get.
@@ -85,11 +88,12 @@ func (mr *MockOrderProductControllerMockRecorder) Get(ctx, presenter, input any)
 }
 
 // List mocks base method.
-func (m *MockOrderProductController) List(ctx context.Context, presenter port.Presenter, input dto.ListOrderProductsInput) error {
+func (m *MockOrderProductController) List(ctx context.Context, presenter port.Presenter, input dto.ListOrderProductsInput) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "List", ctx, presenter, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // List indicates an expected call of List.
@@ -99,11 +103,12 @@ func (mr *MockOrderProductControllerMockRecorder) List(ctx, presenter, input any
 }
 
 // Update mocks base method.
-func (m *MockOrderProductController) Update(ctx context.Context, presenter port.Presenter, input dto.UpdateOrderProductInput) error {
+func (m *MockOrderProductController) Update(ctx context.Context, presenter port.Presenter, input dto.UpdateOrderProductInput) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", ctx, presenter, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Update indicates an expected call of Update.

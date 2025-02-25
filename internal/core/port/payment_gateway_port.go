@@ -9,7 +9,8 @@ import (
 
 type PaymentGateway interface {
 	Create(ctx context.Context, payment *entity.Payment) (*entity.Payment, error)
-	GetByOrderID(ctx context.Context, orderID uint64) (*entity.Payment, error)
-	GetByExternalPaymentID(ctx context.Context, resource string) (*entity.Payment, error)
+	CreateExternal(ctx context.Context, payment *entity.CreatePaymentExternalInput) (*entity.CreatePaymentExternalOutput, error)
+	FindByOrderID(ctx context.Context, orderID uint64) (*entity.Payment, error)            // TODO: Unify with FindByExternalPaymentID into FindOne
+	FindByExternalPaymentID(ctx context.Context, resource string) (*entity.Payment, error) // TODO: Unify with FindByExternalPaymentID into FindOne
 	Update(ctx context.Context, status valueobject.PaymentStatus, resource string) error
 }

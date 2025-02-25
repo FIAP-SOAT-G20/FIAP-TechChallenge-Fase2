@@ -53,9 +53,8 @@ func (r *Router) RegisterRoutes(handlers *Handlers) {
 		handlers.OrderProduct.Register(v1.Group("/orders/products"))
 		handlers.OrderHistory.Register(v1.Group("/orders/histories"))
 		handlers.Payment.Register(v1.Group("/payments"))
+		handlers.HealthCheck.Register(v1.Group("/health"))
 	}
-	// Health check
-	handlers.HealthCheck.Register(r.engine.Group("/health"))
 }
 
 // Engine returns the gin engine

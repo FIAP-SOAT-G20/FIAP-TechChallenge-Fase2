@@ -58,10 +58,12 @@ func TestStaffController_ListStaffs(t *testing.T) {
 			Total:  int64(2),
 			Page:   1,
 			Limit:  10,
-		})
+		}).
+		Return([]byte{}, nil)
 
-	err := controller.List(ctx, mockPresenter, input)
+	output, err := controller.List(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestStaffController_CreateStaff(t *testing.T) {
@@ -89,12 +91,12 @@ func TestStaffController_CreateStaff(t *testing.T) {
 		Return(mockStaff, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: mockStaff,
-		})
+		Present(dto.PresenterInput{Result: mockStaff}).
+		Return([]byte{}, nil)
 
-	err := controller.Create(ctx, mockPresenter, input)
+	output, err := controller.Create(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestStaffController_GetStaff(t *testing.T) {
@@ -121,16 +123,12 @@ func TestStaffController_GetStaff(t *testing.T) {
 		Return(mockStaff, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: &entity.Staff{
-				ID:   1,
-				Name: "Test Staff",
-				Role: "COOK",
-			},
-		})
+		Present(dto.PresenterInput{Result: mockStaff}).
+		Return([]byte{}, nil)
 
-	err := controller.Get(ctx, mockPresenter, input)
+	output, err := controller.Get(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestStaffController_UpdateStaff(t *testing.T) {
@@ -159,16 +157,12 @@ func TestStaffController_UpdateStaff(t *testing.T) {
 		Return(mockStaff, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: &entity.Staff{
-				ID:   1,
-				Name: "Updated Staff",
-				Role: "ATTENDANT",
-			},
-		})
+		Present(dto.PresenterInput{Result: mockStaff}).
+		Return([]byte{}, nil)
 
-	err := controller.Update(ctx, mockPresenter, input)
+	output, err := controller.Update(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestStaffController_DeleteStaff(t *testing.T) {
@@ -195,10 +189,10 @@ func TestStaffController_DeleteStaff(t *testing.T) {
 		Return(mockStaff, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: mockStaff,
-		})
+		Present(dto.PresenterInput{Result: mockStaff}).
+		Return([]byte{}, nil)
 
-	err := controller.Delete(ctx, mockPresenter, input)
+	output, err := controller.Delete(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }

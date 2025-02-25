@@ -1,8 +1,8 @@
 package presenter
 
 import (
+	"encoding/json"
 	"errors"
-	"net/http"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
@@ -10,13 +10,11 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
-type orderHistoryJsonPresenter struct {
-	writer ResponseWriter
-}
+type orderHistoryJsonPresenter struct{}
 
 // OrderHistoryJsonResponse represents the response of a orderHistory
-func NewOrderHistoryJsonPresenter(writer ResponseWriter) port.Presenter {
-	return &orderHistoryJsonPresenter{writer}
+func NewOrderHistoryJsonPresenter() port.Presenter {
+	return &orderHistoryJsonPresenter{}
 }
 
 // toOrderHistoryJsonResponse convert entity.OrderHistory to OrderHistoryJsonResponse
@@ -30,11 +28,11 @@ func toOrderHistoryJsonResponse(orderHistory *entity.OrderHistory) OrderHistoryJ
 }
 
 // Present write the response to the client
-func (p *orderHistoryJsonPresenter) Present(pp dto.PresenterInput) {
+func (p *orderHistoryJsonPresenter) Present(pp dto.PresenterInput) ([]byte, error) {
 	switch v := pp.Result.(type) {
 	case *entity.OrderHistory:
 		output := toOrderHistoryJsonResponse(v)
-		p.writer.JSON(http.StatusOK, output)
+		return json.Marshal(output)
 	case []*entity.OrderHistory:
 		orderHistoryOutputs := make([]OrderHistoryJsonResponse, len(v))
 		for i, orderHistory := range v {
@@ -49,11 +47,8 @@ func (p *orderHistoryJsonPresenter) Present(pp dto.PresenterInput) {
 			},
 			OrderHistories: orderHistoryOutputs,
 		}
-		p.writer.JSON(http.StatusOK, output)
+		return json.Marshal(output)
 	default:
-		p.writer.JSON(
-			http.StatusInternalServerError,
-			domain.NewInternalError(errors.New(domain.ErrInternalError)),
-		)
+		return nil, domain.NewInternalError(errors.New(domain.ErrInternalError))
 	}
 }

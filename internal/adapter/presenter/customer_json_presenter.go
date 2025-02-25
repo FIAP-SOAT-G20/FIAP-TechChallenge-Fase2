@@ -1,8 +1,8 @@
 package presenter
 
 import (
+	"encoding/json"
 	"errors"
-	"net/http"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
@@ -10,13 +10,11 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
-type customerJsonPresenter struct {
-	writer ResponseWriter
-}
+type customerJsonPresenter struct{}
 
 // CustomerJsonResponse represents the response of a customer
-func NewCustomerJsonPresenter(writer ResponseWriter) port.Presenter {
-	return &customerJsonPresenter{writer}
+func NewCustomerJsonPresenter() port.Presenter {
+	return &customerJsonPresenter{}
 }
 
 // ToCustomerJsonResponse convert entity.Customer to CustomerJsonResponse
@@ -32,11 +30,11 @@ func ToCustomerJsonResponse(customer *entity.Customer) CustomerJsonResponse {
 }
 
 // Present write the response to the client
-func (p *customerJsonPresenter) Present(pp dto.PresenterInput) {
+func (p *customerJsonPresenter) Present(pp dto.PresenterInput) ([]byte, error) {
 	switch v := pp.Result.(type) {
 	case *entity.Customer:
 		output := ToCustomerJsonResponse(v)
-		p.writer.JSON(http.StatusOK, output)
+		return json.Marshal(output)
 	case []*entity.Customer:
 		customerOutputs := make([]CustomerJsonResponse, len(v))
 		for i, customer := range v {
@@ -51,11 +49,9 @@ func (p *customerJsonPresenter) Present(pp dto.PresenterInput) {
 			},
 			Customers: customerOutputs,
 		}
-		p.writer.JSON(http.StatusOK, output)
+
+		return json.Marshal(output)
 	default:
-		p.writer.JSON(
-			http.StatusInternalServerError,
-			domain.NewInternalError(errors.New(domain.ErrInternalError)),
-		)
+		return nil, domain.NewInternalError(errors.New(domain.ErrInternalError))
 	}
 }

@@ -53,10 +53,12 @@ func TestCustomerController_ListCustomers(t *testing.T) {
 			Page:   1,
 			Limit:  10,
 			Result: mockCustomers,
-		})
+		}).
+		Return([]byte{}, nil)
 
-	err := controller.List(ctx, mockPresenter, input)
+	output, err := controller.List(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestCustomerController_CreateCustomer(t *testing.T) {
@@ -86,12 +88,12 @@ func TestCustomerController_CreateCustomer(t *testing.T) {
 		Return(mockCustomer, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: mockCustomer,
-		})
+		Present(dto.PresenterInput{Result: mockCustomer}).
+		Return([]byte{}, nil)
 
-	err := controller.Create(ctx, mockPresenter, input)
+	output, err := controller.Create(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestCustomerController_GetCustomer(t *testing.T) {
@@ -119,12 +121,12 @@ func TestCustomerController_GetCustomer(t *testing.T) {
 		Return(mockCustomer, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: mockCustomer,
-		})
+		Present(dto.PresenterInput{Result: mockCustomer}).
+		Return([]byte{}, nil)
 
-	err := controller.Get(ctx, mockPresenter, input)
+	output, err := controller.Get(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestCustomerController_UpdateCustomer(t *testing.T) {
@@ -153,12 +155,12 @@ func TestCustomerController_UpdateCustomer(t *testing.T) {
 		Return(mockCustomer, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: mockCustomer,
-		})
+		Present(dto.PresenterInput{Result: mockCustomer}).
+		Return([]byte{}, nil)
 
-	err := controller.Update(ctx, mockPresenter, input)
+	output, err := controller.Update(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestCustomerController_DeleteCustomer(t *testing.T) {
@@ -185,10 +187,10 @@ func TestCustomerController_DeleteCustomer(t *testing.T) {
 		Return(mockCustomer, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: mockCustomer,
-		})
+		Present(dto.PresenterInput{Result: mockCustomer}).
+		Return([]byte{}, nil)
 
-	err := controller.Delete(ctx, mockPresenter, input)
+	output, err := controller.Delete(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }

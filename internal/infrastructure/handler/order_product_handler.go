@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
@@ -39,7 +41,7 @@ func (h *OrderProductHandler) Register(router *gin.RouterGroup) {
 //	@Success		200			{object}	presenter.OrderProductJsonPaginatedResponse	"OK"
 //	@Failure		400			{object}	middleware.ErrorJsonResponse				"Bad Request"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse				"Internal Server Error"
-//	@Router			/api/v1/orders/products [get]
+//	@Router			/orders/products [get]
 func (h *OrderProductHandler) List(c *gin.Context) {
 	var query request.ListOrderProductsQueryRequest
 	if err := c.ShouldBindQuery(&query); err != nil {
@@ -54,18 +56,18 @@ func (h *OrderProductHandler) List(c *gin.Context) {
 		Limit:     query.Limit,
 	}
 
-	err := h.controller.List(
+	output, err := h.controller.List(
 		c.Request.Context(),
-		presenter.NewOrderProductJsonPresenter(c),
+		presenter.NewOrderProductJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
-}
 
-//	@Router	/orders [post]
+	c.Data(http.StatusOK, "application/json", output)
+}
 
 // Create godoc
 //
@@ -79,7 +81,7 @@ func (h *OrderProductHandler) List(c *gin.Context) {
 //	@Param			order		body		request.CreateOrderProductBodyRequest	true	"OrderProduct data"
 //	@Success		201			{object}	presenter.OrderProductJsonResponse		"Created"
 //	@Failure		400			{object}	middleware.ErrorJsonResponse			"Bad Request"
-//	@Router			/api/v1/orders/products/{order_id}/{product_id} [post]
+//	@Router			/orders/products/{order_id}/{product_id} [post]
 func (h *OrderProductHandler) Create(c *gin.Context) {
 	var uri request.CreateOrderProductUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
@@ -99,15 +101,17 @@ func (h *OrderProductHandler) Create(c *gin.Context) {
 		Quantity:  body.Quantity,
 	}
 
-	err := h.controller.Create(
+	output, err := h.controller.Create(
 		c.Request.Context(),
-		presenter.NewOrderProductJsonPresenter(c),
+		presenter.NewOrderProductJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusOK, "application/json", output)
 }
 
 // Get godoc
@@ -123,7 +127,7 @@ func (h *OrderProductHandler) Create(c *gin.Context) {
 //	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
 //	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
-//	@Router			/api/v1/orders/products/{order_id}/{product_id} [get]
+//	@Router			/orders/products/{order_id}/{product_id} [get]
 func (h *OrderProductHandler) Get(c *gin.Context) {
 	var uri request.GetOrderProductUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
@@ -136,15 +140,17 @@ func (h *OrderProductHandler) Get(c *gin.Context) {
 		ProductID: uri.ProductID,
 	}
 
-	err := h.controller.Get(
+	output, err := h.controller.Get(
 		c.Request.Context(),
-		presenter.NewOrderProductJsonPresenter(c),
+		presenter.NewOrderProductJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusCreated, "application/json", output)
 }
 
 // Update godoc
@@ -161,13 +167,14 @@ func (h *OrderProductHandler) Get(c *gin.Context) {
 //	@Failure		400			{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		404			{object}	middleware.ErrorJsonResponse			"Not Found"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse			"Internal Server Error"
-//	@Router			/api/v1/orders/products/{order_id}/{product_id} [put]
+//	@Router			/orders/products/{order_id}/{product_id} [put]
 func (h *OrderProductHandler) Update(c *gin.Context) {
 	var uri request.UpdateOrderProductUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
 	}
+
 	var body request.UpdateOrderProductBodyRequest
 	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
@@ -180,15 +187,17 @@ func (h *OrderProductHandler) Update(c *gin.Context) {
 		Quantity:  body.Quantity,
 	}
 
-	err := h.controller.Update(
+	output, err := h.controller.Update(
 		c.Request.Context(),
-		presenter.NewOrderProductJsonPresenter(c),
+		presenter.NewOrderProductJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusOK, "application/json", output)
 }
 
 // Delete godoc
@@ -203,7 +212,7 @@ func (h *OrderProductHandler) Update(c *gin.Context) {
 //	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
 //	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
-//	@Router			/api/v1/orders/products/{order_id}/{product_id} [delete]
+//	@Router			/orders/products/{order_id}/{product_id} [delete]
 func (h *OrderProductHandler) Delete(c *gin.Context) {
 	var uri request.DeleteOrderProductUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
@@ -216,14 +225,15 @@ func (h *OrderProductHandler) Delete(c *gin.Context) {
 		ProductID: uri.ProductID,
 	}
 
-	err := h.controller.Delete(
+	output, err := h.controller.Delete(
 		c.Request.Context(),
-		presenter.NewOrderProductJsonPresenter(c),
+		presenter.NewOrderProductJsonPresenter(),
 		input,
 	)
-
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusOK, "application/json", output)
 }

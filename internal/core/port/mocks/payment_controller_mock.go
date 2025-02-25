@@ -43,15 +43,31 @@ func (m *MockPaymentController) EXPECT() *MockPaymentControllerMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockPaymentController) Create(ctx context.Context, presenter port.Presenter, input dto.CreatePaymentInput) error {
+func (m *MockPaymentController) Create(ctx context.Context, presenter port.Presenter, input dto.CreatePaymentInput) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, presenter, input)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Create indicates an expected call of Create.
 func (mr *MockPaymentControllerMockRecorder) Create(ctx, presenter, input any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockPaymentController)(nil).Create), ctx, presenter, input)
+}
+
+// Update mocks base method.
+func (m *MockPaymentController) Update(ctx context.Context, p port.Presenter, i dto.UpdatePaymentInput) ([]byte, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Update", ctx, p, i)
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Update indicates an expected call of Update.
+func (mr *MockPaymentControllerMockRecorder) Update(ctx, p, i any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockPaymentController)(nil).Update), ctx, p, i)
 }

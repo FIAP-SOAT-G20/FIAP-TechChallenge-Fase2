@@ -1,8 +1,8 @@
 package presenter
 
 import (
+	"encoding/json"
 	"errors"
-	"net/http"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
@@ -10,21 +10,19 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
-type productJsonPresenter struct {
-	writer ResponseWriter
-}
+type productJsonPresenter struct{}
 
 // ProductJsonResponse represents the response of a product
-func NewProductJsonPresenter(writer ResponseWriter) port.Presenter {
-	return &productJsonPresenter{writer}
+func NewProductJsonPresenter() port.Presenter {
+	return &productJsonPresenter{}
 }
 
 // Present write the response to the client
-func (p *productJsonPresenter) Present(pp dto.PresenterInput) {
+func (p *productJsonPresenter) Present(pp dto.PresenterInput) ([]byte, error) {
 	switch v := pp.Result.(type) {
 	case *entity.Product:
 		output := ToProductJsonResponse(v)
-		p.writer.JSON(http.StatusOK, output)
+		return json.Marshal(output)
 	case []*entity.Product:
 		productOutputs := make([]ProductJsonResponse, len(v))
 		for i, product := range v {
@@ -39,12 +37,9 @@ func (p *productJsonPresenter) Present(pp dto.PresenterInput) {
 			},
 			Products: productOutputs,
 		}
-		p.writer.JSON(http.StatusOK, output)
+		return json.Marshal(output)
 	default:
-		p.writer.JSON(
-			http.StatusInternalServerError,
-			domain.NewInternalError(errors.New(domain.ErrInternalError)),
-		)
+		return nil, domain.NewInternalError(errors.New(domain.ErrInternalError))
 	}
 }
 
