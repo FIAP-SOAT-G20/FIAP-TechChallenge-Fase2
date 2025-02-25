@@ -21,11 +21,12 @@ func NewOrderJsonPresenter(writer ResponseWriter) port.Presenter {
 }
 
 // Present write the response to the client
-func (p *orderJsonPresenter) Present(pp dto.PresenterInput) {
+func (p *orderJsonPresenter) Present(pp dto.PresenterInput) ([]byte, error) {
 	switch v := pp.Result.(type) {
 	case *entity.Order:
 		output := ToOrderJsonResponse(v)
 		p.writer.JSON(http.StatusOK, output)
+		return nil, nil
 	case []*entity.Order:
 		orderOutputs := make([]OrderJsonResponse, len(v))
 		for i, order := range v {
@@ -41,11 +42,13 @@ func (p *orderJsonPresenter) Present(pp dto.PresenterInput) {
 			Orders: orderOutputs,
 		}
 		p.writer.JSON(http.StatusOK, output)
+		return nil, nil
 	default:
 		p.writer.JSON(
 			http.StatusInternalServerError,
 			domain.NewInternalError(errors.New(domain.ErrInternalError)),
 		)
+		return nil, nil
 	}
 }
 

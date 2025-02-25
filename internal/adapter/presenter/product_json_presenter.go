@@ -20,11 +20,12 @@ func NewProductJsonPresenter(writer ResponseWriter) port.Presenter {
 }
 
 // Present write the response to the client
-func (p *productJsonPresenter) Present(pp dto.PresenterInput) {
+func (p *productJsonPresenter) Present(pp dto.PresenterInput) ([]byte, error) {
 	switch v := pp.Result.(type) {
 	case *entity.Product:
 		output := ToProductJsonResponse(v)
 		p.writer.JSON(http.StatusOK, output)
+		return nil, nil
 	case []*entity.Product:
 		productOutputs := make([]ProductJsonResponse, len(v))
 		for i, product := range v {
@@ -40,11 +41,13 @@ func (p *productJsonPresenter) Present(pp dto.PresenterInput) {
 			Products: productOutputs,
 		}
 		p.writer.JSON(http.StatusOK, output)
+		return nil, nil
 	default:
 		p.writer.JSON(
 			http.StatusInternalServerError,
 			domain.NewInternalError(errors.New(domain.ErrInternalError)),
 		)
+		return nil, nil
 	}
 }
 

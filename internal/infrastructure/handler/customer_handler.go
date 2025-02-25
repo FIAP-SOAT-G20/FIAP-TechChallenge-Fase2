@@ -53,15 +53,17 @@ func (h *CustomerHandler) List(c *gin.Context) {
 		Limit: query.Limit,
 	}
 
-	err := h.controller.List(
+	output, err := h.controller.List(
 		c.Request.Context(),
-		presenter.NewCustomerJsonPresenter(c),
+		presenter.NewCustomerJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(200, "application/json", output)
 }
 
 // Create godoc
@@ -89,15 +91,17 @@ func (h *CustomerHandler) Create(c *gin.Context) {
 		CPF:   body.CPF,
 	}
 
-	err := h.controller.Create(
+	output, err := h.controller.Create(
 		c.Request.Context(),
-		presenter.NewCustomerJsonPresenter(c),
+		presenter.NewCustomerJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(200, "application/json", output)
 }
 
 // Get godoc
@@ -124,15 +128,17 @@ func (h *CustomerHandler) Get(c *gin.Context) {
 		ID: uri.ID,
 	}
 
-	err := h.controller.Get(
+	output, err := h.controller.Get(
 		c.Request.Context(),
-		presenter.NewCustomerJsonPresenter(c),
+		presenter.NewCustomerJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(200, "application/json", output)
 }
 
 // Update godoc
@@ -168,15 +174,17 @@ func (h *CustomerHandler) Update(c *gin.Context) {
 		Email: body.Email,
 	}
 
-	err := h.controller.Update(
+	output, err := h.controller.Update(
 		c.Request.Context(),
-		presenter.NewCustomerJsonPresenter(c),
+		presenter.NewCustomerJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(200, "application/json", output)
 }
 
 // Delete godoc
@@ -202,13 +210,15 @@ func (h *CustomerHandler) Delete(c *gin.Context) {
 		ID: uri.ID,
 	}
 
-	err := h.controller.Delete(
+	output, err := h.controller.Delete(
 		c.Request.Context(),
-		presenter.NewCustomerJsonPresenter(c),
+		presenter.NewCustomerJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(200, "application/json", output)
 }

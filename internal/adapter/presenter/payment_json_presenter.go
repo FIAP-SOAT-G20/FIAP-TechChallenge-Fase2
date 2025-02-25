@@ -20,16 +20,18 @@ func NewPaymentJsonPresenter(writer ResponseWriter) port.Presenter {
 }
 
 // Present write the response to the client
-func (p *paymentJsonPresenter) Present(pp dto.PresenterInput) {
+func (p *paymentJsonPresenter) Present(pp dto.PresenterInput) ([]byte, error) {
 	switch v := pp.Result.(type) {
 	case *entity.Payment:
 		output := ToPaymentJsonResponse(v)
 		p.writer.JSON(http.StatusOK, output)
+		return nil, nil
 	default:
 		p.writer.JSON(
 			http.StatusInternalServerError,
 			domain.NewInternalError(errors.New(domain.ErrInternalError)),
 		)
+		return nil, nil
 	}
 }
 

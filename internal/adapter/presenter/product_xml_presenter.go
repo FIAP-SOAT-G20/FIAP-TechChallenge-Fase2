@@ -1,6 +1,7 @@
 package presenter
 
 import (
+	"encoding/xml"
 	"errors"
 	"net/http"
 
@@ -20,11 +21,12 @@ func NewProductXmlPresenter(writer ResponseWriter) port.Presenter {
 }
 
 // Present writes the response to the client
-func (p *productXmlPresenter) Present(pp dto.PresenterInput) {
+func (p *productXmlPresenter) Present(pp dto.PresenterInput) ([]byte, error) {
 	switch v := pp.Result.(type) {
 	case *entity.Product:
 		output := toProductXmlResponse(v)
 		p.writer.XML(http.StatusOK, output)
+		return xml.Marshal(output)
 	case []*entity.Product:
 		productOutputs := make([]ProductXmlResponse, len(v))
 		for i, product := range v {
@@ -40,11 +42,13 @@ func (p *productXmlPresenter) Present(pp dto.PresenterInput) {
 			Products: productOutputs,
 		}
 		p.writer.XML(http.StatusOK, output)
+		return nil, nil
 	default:
 		p.writer.XML(
 			http.StatusInternalServerError,
 			domain.NewInternalError(errors.New(domain.ErrInternalError)),
 		)
+		return nil, nil
 	}
 }
 
