@@ -56,18 +56,15 @@ func (h *ProductHandler) List(c *gin.Context) {
 		Limit:      query.Limit,
 	}
 
-	var p port.Presenter
-	if c.GetHeader("Accept") == "text/xml" {
-		p = presenter.NewProductXmlPresenter(c)
-	} else {
-		p = presenter.NewProductJsonPresenter(c)
-	}
+	p, contentType := selectOutputConfigs(c.GetHeader("Accept"))
 
-	err := h.controller.List(c.Request.Context(), p, input)
+	output, err := h.controller.List(c.Request.Context(), p, input)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(200, contentType, output)
 }
 
 // Create godoc
@@ -97,18 +94,15 @@ func (h *ProductHandler) Create(c *gin.Context) {
 		CategoryID:  body.CategoryID,
 	}
 
-	var p port.Presenter
-	if c.GetHeader("Accept") == "text/xml" {
-		p = presenter.NewProductXmlPresenter(c)
-	} else {
-		p = presenter.NewProductJsonPresenter(c)
-	}
+	p, contentType := selectOutputConfigs(c.GetHeader("Accept"))
 
-	err := h.controller.Create(c.Request.Context(), p, input)
+	output, err := h.controller.Create(c.Request.Context(), p, input)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(201, contentType, output)
 }
 
 // Get godoc
@@ -136,18 +130,15 @@ func (h *ProductHandler) Get(c *gin.Context) {
 		ID: uri.ID,
 	}
 
-	var p port.Presenter
-	if c.GetHeader("Accept") == "text/xml" {
-		p = presenter.NewProductXmlPresenter(c)
-	} else {
-		p = presenter.NewProductJsonPresenter(c)
-	}
+	p, contentType := selectOutputConfigs(c.GetHeader("Accept"))
 
-	err := h.controller.Get(c.Request.Context(), p, input)
+	output, err := h.controller.Get(c.Request.Context(), p, input)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(200, contentType, output)
 }
 
 // Update godoc
@@ -186,18 +177,15 @@ func (h *ProductHandler) Update(c *gin.Context) {
 		CategoryID:  body.CategoryID,
 	}
 
-	var p port.Presenter
-	if c.GetHeader("Accept") == "text/xml" {
-		p = presenter.NewProductXmlPresenter(c)
-	} else {
-		p = presenter.NewProductJsonPresenter(c)
-	}
+	p, contentType := selectOutputConfigs(c.GetHeader("Accept"))
 
-	err := h.controller.Update(c.Request.Context(), p, input)
+	output, err := h.controller.Update(c.Request.Context(), p, input)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(200, contentType, output)
 }
 
 // Delete godoc
@@ -225,15 +213,20 @@ func (h *ProductHandler) Delete(c *gin.Context) {
 		ID: uri.ID,
 	}
 
-	var p port.Presenter
-	if c.GetHeader("Accept") == "text/xml" {
-		p = presenter.NewProductXmlPresenter(c)
-	} else {
-		p = presenter.NewProductJsonPresenter(c)
-	}
+	p, contentType := selectOutputConfigs(c.GetHeader("Accept"))
 
-	if err := h.controller.Delete(c.Request.Context(), p, input); err != nil {
+	output, err := h.controller.Delete(c.Request.Context(), p, input)
+	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(200, contentType, output)
+}
+
+func selectOutputConfigs(acceptHeader string) (port.Presenter, string) {
+	if acceptHeader == "text/xml" {
+		return presenter.NewProductXmlPresenter(), acceptHeader
+	}
+	return presenter.NewProductJsonPresenter(), "application/json"
 }
