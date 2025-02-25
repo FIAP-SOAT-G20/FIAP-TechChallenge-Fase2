@@ -527,234 +527,6 @@ info:
   title: FIAP Tech Challenge Fase 2 - 10SOAT - G18
   version: "1"
 paths:
-  /api/v1/orders/products:
-    get:
-      consumes:
-      - application/json
-      description: List all orders
-      parameters:
-      - description: Filter by order ID
-        in: query
-        name: order_id
-        type: string
-      - default: 1
-        description: Page number
-        in: query
-        name: page
-        type: integer
-      - default: 10
-        description: Items per page
-        in: query
-        name: limit
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/presenter.OrderProductJsonPaginatedResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: List orders
-      tags:
-      - orders
-  /api/v1/orders/products/{order_id}/{product_id}:
-    delete:
-      description: Deletes a orderProduct by Order ID and Product ID
-      parameters:
-      - description: Order ID
-        in: path
-        name: order_id
-        required: true
-        type: integer
-      - description: Product ID
-        in: path
-        name: product_id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/presenter.OrderProductJsonResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Delete orderProduct
-      tags:
-      - orders
-    get:
-      consumes:
-      - application/json
-      description: Get an order product
-      parameters:
-      - description: Order ID
-        in: path
-        name: order_id
-        required: true
-        type: integer
-      - description: Product ID
-        in: path
-        name: product_id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/presenter.OrderProductJsonResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Get an order product
-      tags:
-      - orders
-    post:
-      consumes:
-      - application/json
-      description: Create an order product
-      parameters:
-      - description: Order ID
-        in: path
-        name: order_id
-        required: true
-        type: integer
-      - description: Product ID
-        in: path
-        name: product_id
-        required: true
-        type: integer
-      - description: OrderProduct data
-        in: body
-        name: order
-        required: true
-        schema:
-          $ref: '#/definitions/request.CreateOrderProductBodyRequest'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/presenter.OrderProductJsonResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Create an order product
-      tags:
-      - orders
-    put:
-      consumes:
-      - application/json
-      description: Update an existing order
-      parameters:
-      - description: Order ID
-        in: path
-        name: order_id
-        required: true
-        type: integer
-      - description: Product ID
-        in: path
-        name: product_id
-        required: true
-        type: integer
-      - description: OrderProduct data
-        in: body
-        name: order
-        required: true
-        schema:
-          $ref: '#/definitions/request.UpdateOrderProductBodyRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/presenter.OrderProductJsonResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Update order
-      tags:
-      - orders
-  /api/v1/payments/{order_id}/checkout:
-    post:
-      consumes:
-      - application/json
-      description: |-
-        Update a new payment (Webhook)
-        - resource = external payment id, obtained from the checkout response
-        - topic = payment
-        The status of the payment will be set to CONFIRMED if the payment was successful
-        ## Possible status:
-        - PROCESSING
-        - CONFIRMED
-        - FAILED
-        - CANCELED
-      parameters:
-      - description: Payment data
-        in: body
-        name: payment
-        required: true
-        schema:
-          $ref: '#/definitions/request.UpdatePaymentRequest'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/presenter.PaymentJsonResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Update a payment (Webhook)
-      tags:
-      - payments
   /customers:
     get:
       consumes:
@@ -944,7 +716,7 @@ paths:
             $ref: '#/definitions/response.HealthCheckResponse'
       summary: Application HealthCheck
       tags:
-      - healthcheck
+      - health-check
   /orders:
     get:
       consumes:
@@ -984,7 +756,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: List orders
+      summary: List orders (Reference 1.a.iv)
       tags:
       - orders
     post:
@@ -1124,7 +896,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Partial update order
+      summary: Partial update order (Reference 1.a.v)
       tags:
       - orders
     put:
@@ -1217,7 +989,7 @@ paths:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: List orderHistories
       tags:
-      - orderHistories
+      - orders
   /orders/histories/{id}:
     delete:
       description: Deletes a orderHistory by ID
@@ -1248,7 +1020,7 @@ paths:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Delete orderHistory
       tags:
-      - orderHistories
+      - orders
     get:
       consumes:
       - application/json
@@ -1280,7 +1052,266 @@ paths:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
       summary: Get orderHistory
       tags:
-      - orderHistories
+      - orders
+  /orders/products:
+    get:
+      consumes:
+      - application/json
+      description: List all orders
+      parameters:
+      - description: Filter by order ID
+        in: query
+        name: order_id
+        type: string
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.OrderProductJsonPaginatedResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: List orders
+      tags:
+      - orders
+  /orders/products/{order_id}/{product_id}:
+    delete:
+      description: Deletes a orderProduct by Order ID and Product ID
+      parameters:
+      - description: Order ID
+        in: path
+        name: order_id
+        required: true
+        type: integer
+      - description: Product ID
+        in: path
+        name: product_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.OrderProductJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Delete orderProduct
+      tags:
+      - orders
+    get:
+      consumes:
+      - application/json
+      description: Get an order product
+      parameters:
+      - description: Order ID
+        in: path
+        name: order_id
+        required: true
+        type: integer
+      - description: Product ID
+        in: path
+        name: product_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.OrderProductJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Get an order product
+      tags:
+      - orders
+    post:
+      consumes:
+      - application/json
+      description: Create an order product
+      parameters:
+      - description: Order ID
+        in: path
+        name: order_id
+        required: true
+        type: integer
+      - description: Product ID
+        in: path
+        name: product_id
+        required: true
+        type: integer
+      - description: OrderProduct data
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateOrderProductBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/presenter.OrderProductJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Create an order product
+      tags:
+      - orders
+    put:
+      consumes:
+      - application/json
+      description: Update an existing order
+      parameters:
+      - description: Order ID
+        in: path
+        name: order_id
+        required: true
+        type: integer
+      - description: Product ID
+        in: path
+        name: product_id
+        required: true
+        type: integer
+      - description: OrderProduct data
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateOrderProductBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.OrderProductJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Update order
+      tags:
+      - orders
+  /payments/{order_id}/checkout:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Creates a new payment (Checkout)
+        The status of the payment will be set to PROCESSING
+      parameters:
+      - description: Order ID
+        in: path
+        name: order_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/presenter.PaymentJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Create a payment (Checkout) (Reference 1.a.i, 1.a.v)
+      tags:
+      - payments
+  /payments/callback:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Update a new payment (Webhook)
+        - resource = external payment id, obtained from the checkout response
+        - topic = payment
+        The status of the payment will be set to CONFIRMED if the payment was successful
+        ## Possible status:
+        - PROCESSING
+        - CONFIRMED
+        - FAILED
+        - CANCELED
+      parameters:
+      - description: Payment data
+        in: body
+        name: payment
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdatePaymentRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/presenter.PaymentJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Update a payment (Webhook) (Reference 1.a.iii)
+      tags:
+      - payments
   /products:
     get:
       consumes:
@@ -1650,7 +1681,7 @@ securityDefinitions:
     type: apiKey
 swagger: "2.0"
 tags:
-- description: Regiter a new customer or staff
+- description: Regiter a new customer
   name: sign-up
 - description: Sign in to the system
   name: sign-in
@@ -1662,3 +1693,7 @@ tags:
   name: orders
 - description: Process payments
   name: payments
+- description: List, create, update and delete staff
+  name: staffs
+- description: Health check
+  name: health-check
