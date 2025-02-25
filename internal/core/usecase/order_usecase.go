@@ -100,11 +100,11 @@ func (uc *orderUseCase) Update(ctx context.Context, i dto.UpdateOrderInput) (*en
 	order.OrderProducts = orderProducts
 
 	// if status has changed, create a new order history
-	if input.Status != "" && order.Status != input.Status {
+	if i.Status != "" && order.Status != i.Status {
 		if _, err := uc.orderHistoryUseCase.Create(ctx, dto.CreateOrderHistoryInput{
 			OrderID: order.ID,
-			Status:  input.Status.String(),
-			StaffID: &input.StaffID,
+			Status:  i.Status.String(),
+			StaffID: &i.StaffID,
 		}); err != nil {
 			return nil, domain.NewInternalError(err)
 		}
