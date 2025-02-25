@@ -307,23 +307,6 @@ definitions:
     required:
     - quantity
     type: object
-  request.CreatePaymentRequest:
-    properties:
-      description:
-        type: string
-      external_reference:
-        type: string
-      items:
-        items:
-          $ref: '#/definitions/request.ItemsRequest'
-        type: array
-      notification_url:
-        type: string
-      title:
-        type: string
-      total_amount:
-        type: number
-    type: object
   request.CreateProductBodyRequest:
     properties:
       category_id:
@@ -361,23 +344,6 @@ definitions:
     required:
     - name
     - role
-    type: object
-  request.ItemsRequest:
-    properties:
-      category:
-        type: string
-      description:
-        type: string
-      quantity:
-        type: integer
-      title:
-        type: string
-      total_amount:
-        type: number
-      unit_measure:
-        type: string
-      unit_price:
-        type: number
     type: object
   request.UpdateCustomerBodyRequest:
     properties:
@@ -428,6 +394,16 @@ definitions:
         type: integer
     required:
     - quantity
+    type: object
+  request.UpdatePaymentRequest:
+    properties:
+      resource:
+        type: string
+      topic:
+        type: string
+    required:
+    - resource
+    - topic
     type: object
   request.UpdateProductBodyRequest:
     properties:
@@ -744,14 +720,22 @@ paths:
     post:
       consumes:
       - application/json
-      description: Creates a new payment
+      description: |-
+        Update a new payment
+        - resource = external payment id, obtained from the checkout response
+        - topic = payment
+        ## Possible status:
+        - PROCESSING
+        - CONFIRMED
+        - FAILED
+        - CANCELED
       parameters:
       - description: Payment data
         in: body
-        name: product
+        name: payment
         required: true
         schema:
-          $ref: '#/definitions/request.CreatePaymentRequest'
+          $ref: '#/definitions/request.UpdatePaymentRequest'
       produces:
       - application/json
       responses:
@@ -767,7 +751,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Create a payment
+      summary: Update a payment
       tags:
       - payments
   /customers:

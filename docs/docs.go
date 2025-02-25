@@ -299,7 +299,7 @@ const docTemplate = `{
         },
         "/api/v1/payments/{order_id}/checkout": {
             "post": {
-                "description": "Creates a new payment",
+                "description": "Update a new payment\n- resource = external payment id, obtained from the checkout response\n- topic = payment\n## Possible status:\n- PROCESSING\n- CONFIRMED\n- FAILED\n- CANCELED",
                 "consumes": [
                     "application/json"
                 ],
@@ -309,15 +309,15 @@ const docTemplate = `{
                 "tags": [
                     "payments"
                 ],
-                "summary": "Create a payment",
+                "summary": "Update a payment",
                 "parameters": [
                     {
                         "description": "Payment data",
-                        "name": "product",
+                        "name": "payment",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.CreatePaymentRequest"
+                            "$ref": "#/definitions/request.UpdatePaymentRequest"
                         }
                     }
                 ],
@@ -2068,32 +2068,6 @@ const docTemplate = `{
                 }
             }
         },
-        "request.CreatePaymentRequest": {
-            "type": "object",
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "external_reference": {
-                    "type": "string"
-                },
-                "items": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/request.ItemsRequest"
-                    }
-                },
-                "notification_url": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "total_amount": {
-                    "type": "number"
-                }
-            }
-        },
         "request.CreateProductBodyRequest": {
             "type": "object",
             "required": [
@@ -2144,32 +2118,6 @@ const docTemplate = `{
                         }
                     ],
                     "example": "COOK"
-                }
-            }
-        },
-        "request.ItemsRequest": {
-            "type": "object",
-            "properties": {
-                "category": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "quantity": {
-                    "type": "integer"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "total_amount": {
-                    "type": "number"
-                },
-                "unit_measure": {
-                    "type": "string"
-                },
-                "unit_price": {
-                    "type": "number"
                 }
             }
         },
@@ -2245,6 +2193,21 @@ const docTemplate = `{
                 "quantity": {
                     "type": "integer",
                     "example": 1
+                }
+            }
+        },
+        "request.UpdatePaymentRequest": {
+            "type": "object",
+            "required": [
+                "resource",
+                "topic"
+            ],
+            "properties": {
+                "resource": {
+                    "type": "string"
+                },
+                "topic": {
+                    "type": "string"
                 }
             }
         },
