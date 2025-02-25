@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 
@@ -32,7 +33,7 @@ func (h *PaymentHandler) Register(router *gin.RouterGroup) {
 //	@Tags			payments
 //	@Accept			json
 //	@Produce		json
-//	@Param			product									body		request.CreatePaymentRequest	true	"Payment data"
+//	@Param			payment body									body		request.CreatePaymentRequest	true	"Payment data"
 //	@Success		201										{object}	presenter.PaymentJsonResponse	"Created"
 //	@Failure		400										{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		500										{object}	middleware.ErrorJsonResponse	"Internal Server Error"
@@ -48,15 +49,17 @@ func (h *PaymentHandler) Create(c *gin.Context) {
 		OrderID: uri.OrderID,
 	}
 
-	err := h.controller.Create(
+	output, err := h.controller.Create(
 		c.Request.Context(),
-		presenter.NewPaymentJsonPresenter(c),
+		presenter.NewPaymentJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusOK, "application/json", output)
 }
 
 // Create godoc
@@ -85,13 +88,15 @@ func (h *PaymentHandler) Update(c *gin.Context) {
 		Topic:    body.Topic,
 	}
 
-	err := h.controller.Update(
+	output, err := h.controller.Update(
 		c.Request.Context(),
-		presenter.NewPaymentJsonPresenter(c),
+		presenter.NewPaymentJsonPresenter(),
 		input,
 	)
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
+
+	c.Data(http.StatusOK, "application/json", output)
 }
