@@ -78,7 +78,8 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *ro
 	staffDS := datasource.NewStaffDataSource(db.DB)
 	orderHistoryDS := datasource.NewOrderHistoryDataSource(db.DB)
 	paymentDS := datasource.NewPaymentDataSource(db.DB)
-	paymentExternalDS := datasource.NewPaymentExternalDataSource(httpClient.Client)
+	// paymentExternalDS := datasource.NewPaymentExternalDataSource(httpClient.Client) // Mercado Pago
+	paymentExternalFakeDS := datasource.NewFakePaymentExternalDataSource() // Fake
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
@@ -87,9 +88,8 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *ro
 	orderGateway := gateway.NewOrderGateway(orderDS)
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
 	staffGateway := gateway.NewStaffGateway(staffDS)
-	paymentGateway := gateway.NewPaymentGateway(paymentDS)
-	// paymentExternalGateway := gateway.NewPaymentExternalGateway(paymentExternalDS)
-	paymentExternalFakeGateway := gateway.NewPaymentExternalFakeGateway(paymentExternalDS)
+	// paymentGateway := gateway.NewPaymentGateway(paymentDS, paymentExternalDS) // Mercado Pago
+	paymentGateway := gateway.NewPaymentGateway(paymentDS, paymentExternalFakeDS) // Fake
 
 	// Use cases
 	productUC := usecase.NewProductUseCase(productGateway)
@@ -98,7 +98,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *ro
 	orderUC := usecase.NewOrderUseCase(orderGateway, orderHistoryUC)
 	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
 	staffUC := usecase.NewStaffUseCase(staffGateway)
-	paymentUC := usecase.NewPaymentUseCase(orderGateway, paymentGateway, paymentExternalFakeGateway)
+	paymentUC := usecase.NewPaymentUseCase(orderGateway, paymentGateway)
 
 	// Controllers
 	productController := controller.NewProductController(productUC)

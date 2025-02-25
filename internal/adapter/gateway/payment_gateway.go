@@ -9,14 +9,18 @@ import (
 )
 
 type paymentGayeway struct {
-	dataSource port.PaymentDataSource
+	dataSource       port.PaymentDataSource
+	dataSourceRemote port.PaymentExternalDatasource
 }
 
-func NewPaymentGateway(dataSource port.PaymentDataSource) port.PaymentGateway {
-	return &paymentGayeway{dataSource}
+func NewPaymentGateway(
+	dataSource port.PaymentDataSource,
+	dataSourceRemote port.PaymentExternalDatasource,
+) port.PaymentGateway {
+	return &paymentGayeway{dataSource, dataSourceRemote}
 }
 
-func (g *paymentGayeway) GetByOrderID(ctx context.Context, orderID uint64) (*entity.Payment, error) {
+func (g *paymentGayeway) FindByOrderID(ctx context.Context, orderID uint64) (*entity.Payment, error) {
 	return g.dataSource.GetByOrderID(ctx, orderID)
 }
 
@@ -24,10 +28,14 @@ func (g *paymentGayeway) Create(ctx context.Context, p *entity.Payment) (*entity
 	return g.dataSource.Create(ctx, p)
 }
 
-func (g *paymentGayeway) GetByExternalPaymentID(ctx context.Context, externalPaymentId string) (*entity.Payment, error) {
+func (g *paymentGayeway) FindByExternalPaymentID(ctx context.Context, externalPaymentId string) (*entity.Payment, error) {
 	return g.dataSource.GetByExternalPaymentID(ctx, externalPaymentId)
 }
 
 func (g *paymentGayeway) Update(ctx context.Context, status valueobject.PaymentStatus, resource string) error {
 	return g.dataSource.UpdateStatus(ctx, status, resource)
+}
+
+func (g *paymentGayeway) CreateExternal(ctx context.Context, payment *entity.CreatePaymentExternalInput) (*entity.CreatePaymentExternalOutput, error) {
+	return g.dataSourceRemote.Create(ctx, payment)
 }
