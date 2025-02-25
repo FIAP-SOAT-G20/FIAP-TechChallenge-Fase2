@@ -28,17 +28,17 @@ func (h *PaymentHandler) Register(router *gin.RouterGroup) {
 
 // Create godoc
 //
-//	@Summary		Create a payment
-//	@Description	Creates a new payment
+//	@Summary		Create a payment (Checkout) (Reference 1.a.i, 1.a.v)
+//	@Description	Creates a new payment (Checkout)
 //	@Description	The status of the payment will be set to PROCESSING
 //	@Tags			payments
 //	@Accept			json
 //	@Produce		json
-//	@Param			order_id								path		int								true	"Order ID"
-//	@Success		201										{object}	presenter.PaymentJsonResponse	"Created"
-//	@Failure		400										{object}	middleware.ErrorJsonResponse	"Bad Request"
-//	@Failure		500										{object}	middleware.ErrorJsonResponse	"Internal Server Error"
-//	@Router			/api/v1/payments/{order_id}/checkout	[post]
+//	@Param			order_id						path		int								true	"Order ID"
+//	@Success		201								{object}	presenter.PaymentJsonResponse	"Created"
+//	@Failure		400								{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		500								{object}	middleware.ErrorJsonResponse	"Internal Server Error"
+//	@Router			/payments/{order_id}/checkout	[post]
 func (h *PaymentHandler) Create(c *gin.Context) {
 	var uri request.CreatePaymentUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
@@ -65,7 +65,7 @@ func (h *PaymentHandler) Create(c *gin.Context) {
 
 // Create godoc
 //
-//	@Summary		Update a payment (Webhook)
+//	@Summary		Update a payment (Webhook) (Reference 1.a.iii)
 //	@Description	Update a new payment (Webhook)
 //	@Description	- resource = external payment id, obtained from the checkout response
 //	@Description	- topic = payment
@@ -78,11 +78,11 @@ func (h *PaymentHandler) Create(c *gin.Context) {
 //	@Tags			payments
 //	@Accept			json
 //	@Produce		json
-//	@Param			payment									body		request.UpdatePaymentRequest	true	"Payment data"
-//	@Success		201										{object}	presenter.PaymentJsonResponse	"Created"
-//	@Failure		400										{object}	middleware.ErrorJsonResponse	"Bad Request"
-//	@Failure		500										{object}	middleware.ErrorJsonResponse	"Internal Server Error"
-//	@Router			/api/v1/payments/{order_id}/checkout	[post]
+//	@Param			payment				body		request.UpdatePaymentRequest	true	"Payment data"
+//	@Success		201					{object}	presenter.PaymentJsonResponse	"Created"
+//	@Failure		400					{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		500					{object}	middleware.ErrorJsonResponse	"Internal Server Error"
+//	@Router			/payments/callback	[post]
 func (h *PaymentHandler) Update(c *gin.Context) {
 
 	var body request.UpdatePaymentRequest
