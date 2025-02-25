@@ -11,7 +11,7 @@ type OrderProductController struct {
 	useCase port.OrderProductUseCase
 }
 
-func NewOrderProductController(useCase port.OrderProductUseCase) *OrderProductController {
+func NewOrderProductController(useCase port.OrderProductUseCase) port.OrderProductController {
 	return &OrderProductController{useCase}
 }
 

@@ -11,7 +11,7 @@ type PaymentController struct {
 	useCase port.PaymentUseCase
 }
 
-func NewPaymentController(useCase port.PaymentUseCase) *PaymentController {
+func NewPaymentController(useCase port.PaymentUseCase) port.PaymentController {
 	return &PaymentController{useCase}
 }
 
