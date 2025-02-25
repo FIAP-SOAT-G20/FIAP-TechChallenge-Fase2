@@ -110,7 +110,7 @@ func (uc *paymentUseCase) Update(ctx context.Context, p dto.UpdatePaymentInput) 
 	return paymentOUT, nil
 }
 
-func (ps *paymentUseCase) createPaymentPayload(o *entity.Order) *entity.CreatePaymentExternalInput {
+func (uc *paymentUseCase) createPaymentPayload(o *entity.Order) *entity.CreatePaymentExternalInput {
 	cfg := config.LoadConfig()
 
 	var items []entity.PaymentExternalItemsInput
@@ -137,4 +137,8 @@ func (ps *paymentUseCase) createPaymentPayload(o *entity.Order) *entity.CreatePa
 		Description:       "Purchases made at the FIAP Tech Challenge store",
 		NotificationUrl:   cfg.MercadoPagoNotificationURL,
 	}
+}
+
+func (uc *paymentUseCase) Get(ctx context.Context, payment dto.GetPaymentInput) (*entity.Payment, error) {
+	return uc.paymentGateway.FindByOrderID(ctx, payment.OrderID)
 }
