@@ -7,9 +7,9 @@ import (
 )
 
 type OrderProductController interface {
-	List(ctx context.Context, presenter Presenter, input dto.ListOrderProductsInput) error
-	Create(ctx context.Context, presenter Presenter, input dto.CreateOrderProductInput) error
-	Get(ctx context.Context, presenter Presenter, input dto.GetOrderProductInput) error
-	Update(ctx context.Context, presenter Presenter, input dto.UpdateOrderProductInput) error
-	Delete(ctx context.Context, presenter Presenter, input dto.DeleteOrderProductInput) error
+	List(ctx context.Context, presenter Presenter, input dto.ListOrderProductsInput) ([]byte, error)
+	Create(ctx context.Context, presenter Presenter, input dto.CreateOrderProductInput) ([]byte, error)
+	Get(ctx context.Context, presenter Presenter, input dto.GetOrderProductInput) ([]byte, error)
+	Update(ctx context.Context, presenter Presenter, input dto.UpdateOrderProductInput) ([]byte, error)
+	Delete(ctx context.Context, presenter Presenter, input dto.DeleteOrderProductInput) ([]byte, error)
 }

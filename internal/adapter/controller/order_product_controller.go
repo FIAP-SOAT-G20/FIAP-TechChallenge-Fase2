@@ -15,62 +15,52 @@ func NewOrderProductController(useCase port.OrderProductUseCase) port.OrderProdu
 	return &OrderProductController{useCase}
 }
 
-func (c *OrderProductController) List(ctx context.Context, p port.Presenter, i dto.ListOrderProductsInput) error {
+func (c *OrderProductController) List(ctx context.Context, p port.Presenter, i dto.ListOrderProductsInput) ([]byte, error) {
 	orderProducts, total, err := c.useCase.List(ctx, i)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	p.Present(dto.PresenterInput{
+	return p.Present(dto.PresenterInput{
 		Total:  total,
 		Page:   i.Page,
 		Limit:  i.Limit,
 		Result: orderProducts,
 	})
-
-	return nil
 }
 
-func (c *OrderProductController) Create(ctx context.Context, p port.Presenter, i dto.CreateOrderProductInput) error {
+func (c *OrderProductController) Create(ctx context.Context, p port.Presenter, i dto.CreateOrderProductInput) ([]byte, error) {
 	orderProduct, err := c.useCase.Create(ctx, i)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	p.Present(dto.PresenterInput{Result: orderProduct})
-
-	return nil
+	return p.Present(dto.PresenterInput{Result: orderProduct})
 }
 
-func (c *OrderProductController) Get(ctx context.Context, p port.Presenter, i dto.GetOrderProductInput) error {
+func (c *OrderProductController) Get(ctx context.Context, p port.Presenter, i dto.GetOrderProductInput) ([]byte, error) {
 	orderProduct, err := c.useCase.Get(ctx, i)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	p.Present(dto.PresenterInput{Result: orderProduct})
-
-	return nil
+	return p.Present(dto.PresenterInput{Result: orderProduct})
 }
 
-func (c *OrderProductController) Update(ctx context.Context, p port.Presenter, i dto.UpdateOrderProductInput) error {
+func (c *OrderProductController) Update(ctx context.Context, p port.Presenter, i dto.UpdateOrderProductInput) ([]byte, error) {
 	orderProduct, err := c.useCase.Update(ctx, i)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	p.Present(dto.PresenterInput{Result: orderProduct})
-
-	return nil
+	return p.Present(dto.PresenterInput{Result: orderProduct})
 }
 
-func (c *OrderProductController) Delete(ctx context.Context, p port.Presenter, i dto.DeleteOrderProductInput) error {
+func (c *OrderProductController) Delete(ctx context.Context, p port.Presenter, i dto.DeleteOrderProductInput) ([]byte, error) {
 	order, err := c.useCase.Delete(ctx, i)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	p.Present(dto.PresenterInput{Result: order})
-
-	return nil
+	return p.Present(dto.PresenterInput{Result: order})
 }
