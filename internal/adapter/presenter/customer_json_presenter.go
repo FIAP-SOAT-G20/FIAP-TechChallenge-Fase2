@@ -34,9 +34,7 @@ func (p *customerJsonPresenter) Present(pp dto.PresenterInput) ([]byte, error) {
 	switch v := pp.Result.(type) {
 	case *entity.Customer:
 		output := ToCustomerJsonResponse(v)
-		// return output.String(), nil
 		return json.Marshal(output)
-		// p.writer.JSON(http.StatusOK, output)
 	case []*entity.Customer:
 		customerOutputs := make([]CustomerJsonResponse, len(v))
 		for i, customer := range v {
@@ -53,15 +51,7 @@ func (p *customerJsonPresenter) Present(pp dto.PresenterInput) ([]byte, error) {
 		}
 
 		return json.Marshal(output)
-
-		// return output.String(), nil
-		// p.writer.JSON(http.StatusOK, output)
 	default:
 		return nil, domain.NewInternalError(errors.New(domain.ErrInternalError))
-		// return "", domain.NewInternalError(errors.New(domain.ErrInternalError))
-		// p.writer.JSON(
-		// 	http.StatusInternalServerError,
-		// 	domain.NewInternalError(errors.New(domain.ErrInternalError)),
-		// )
 	}
 }
