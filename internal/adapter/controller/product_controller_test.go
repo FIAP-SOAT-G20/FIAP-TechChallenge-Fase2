@@ -62,12 +62,12 @@ func TestProductController_ListProducts(t *testing.T) {
 			Total:  int64(2),
 			Page:   1,
 			Limit:  10,
-		})
+		}).
+		Return([]byte{}, nil)
 
-	//gomock.Any()//
-
-	err := controller.List(ctx, mockPresenter, input)
+	output, err := controller.List(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestProductController_CreateProduct(t *testing.T) {
@@ -99,12 +99,12 @@ func TestProductController_CreateProduct(t *testing.T) {
 		Return(mockProduct, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: mockProduct,
-		})
+		Present(dto.PresenterInput{Result: mockProduct}).
+		Return([]byte{}, nil)
 
-	err := controller.Create(ctx, mockPresenter, input)
+	output, err := controller.Create(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestProductController_GetProduct(t *testing.T) {
@@ -133,18 +133,12 @@ func TestProductController_GetProduct(t *testing.T) {
 		Return(mockProduct, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: &entity.Product{
-				ID:          1,
-				Name:        "Test Product",
-				Description: "Test Description",
-				Price:       99.99,
-				CategoryID:  1,
-			},
-		})
+		Present(dto.PresenterInput{Result: mockProduct}).
+		Return([]byte{}, nil)
 
-	err := controller.Get(ctx, mockPresenter, input)
+	output, err := controller.Get(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestProductController_UpdateProduct(t *testing.T) {
@@ -177,18 +171,12 @@ func TestProductController_UpdateProduct(t *testing.T) {
 		Return(mockProduct, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: &entity.Product{
-				ID:          1,
-				Name:        "Updated Product",
-				Description: "Updated Description",
-				Price:       199.99,
-				CategoryID:  2,
-			},
-		})
+		Present(dto.PresenterInput{Result: mockProduct}).
+		Return([]byte{}, nil)
 
-	err := controller.Update(ctx, mockPresenter, input)
+	output, err := controller.Update(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestProductController_DeleteProduct(t *testing.T) {
@@ -217,10 +205,10 @@ func TestProductController_DeleteProduct(t *testing.T) {
 		Return(mockProduct, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: mockProduct,
-		})
+		Present(dto.PresenterInput{Result: mockProduct}).
+		Return([]byte{}, nil)
 
-	err := controller.Delete(ctx, mockPresenter, input)
+	output, err := controller.Delete(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }

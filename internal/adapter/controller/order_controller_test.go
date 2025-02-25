@@ -54,10 +54,12 @@ func TestOrderController_ListOrders(t *testing.T) {
 			Total:  int64(2),
 			Page:   1,
 			Limit:  10,
-		})
+		}).
+		Return([]byte{}, nil)
 
-	err := controller.List(ctx, mockPresenter, input)
+	output, err := controller.List(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestOrderController_CreateOrder(t *testing.T) {
@@ -85,12 +87,12 @@ func TestOrderController_CreateOrder(t *testing.T) {
 		Return(mockOrder, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: mockOrder,
-		})
+		Present(dto.PresenterInput{Result: mockOrder}).
+		Return([]byte{}, nil)
 
-	err := controller.Create(ctx, mockPresenter, input)
+	output, err := controller.Create(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestOrderController_GetOrder(t *testing.T) {
@@ -118,12 +120,12 @@ func TestOrderController_GetOrder(t *testing.T) {
 		Return(mockOrder, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: mockOrder,
-		})
+		Present(dto.PresenterInput{Result: mockOrder}).
+		Return([]byte{}, nil)
 
-	err := controller.Get(ctx, mockPresenter, input)
+	output, err := controller.Get(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestOrderController_UpdateOrder(t *testing.T) {
@@ -153,12 +155,12 @@ func TestOrderController_UpdateOrder(t *testing.T) {
 		Return(mockOrder, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: mockOrder,
-		})
+		Present(dto.PresenterInput{Result: mockOrder}).
+		Return([]byte{}, nil)
 
-	err := controller.Update(ctx, mockPresenter, input)
+	output, err := controller.Update(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
 
 func TestOrderController_DeleteOrder(t *testing.T) {
@@ -186,10 +188,10 @@ func TestOrderController_DeleteOrder(t *testing.T) {
 		Return(mockOrder, nil)
 
 	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Result: mockOrder,
-		})
+		Present(dto.PresenterInput{Result: mockOrder}).
+		Return([]byte{}, nil)
 
-	err := controller.Delete(ctx, mockPresenter, input)
+	output, err := controller.Delete(ctx, mockPresenter, input)
 	assert.NoError(t, err)
+	assert.NotNil(t, output)
 }
