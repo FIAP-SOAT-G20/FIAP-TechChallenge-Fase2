@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
@@ -63,7 +65,7 @@ func (h *CustomerHandler) List(c *gin.Context) {
 		return
 	}
 
-	c.Data(200, "application/json", output)
+	c.Data(http.StatusOK, "application/json", output)
 }
 
 // Create godoc
@@ -101,7 +103,7 @@ func (h *CustomerHandler) Create(c *gin.Context) {
 		return
 	}
 
-	c.Data(200, "application/json", output)
+	c.Data(http.StatusCreated, "application/json", output)
 }
 
 // Get godoc
@@ -138,7 +140,7 @@ func (h *CustomerHandler) Get(c *gin.Context) {
 		return
 	}
 
-	c.Data(200, "application/json", output)
+	c.Data(http.StatusOK, "application/json", output)
 }
 
 // Update godoc
@@ -184,7 +186,7 @@ func (h *CustomerHandler) Update(c *gin.Context) {
 		return
 	}
 
-	c.Data(200, "application/json", output)
+	c.Data(http.StatusOK, "application/json", output)
 }
 
 // Delete godoc
@@ -220,5 +222,5 @@ func (h *CustomerHandler) Delete(c *gin.Context) {
 		return
 	}
 
-	c.Data(200, "application/json", output)
+	c.Data(http.StatusOK, "application/json", output)
 }

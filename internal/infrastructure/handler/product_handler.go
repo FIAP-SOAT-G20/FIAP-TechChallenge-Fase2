@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
@@ -64,7 +66,7 @@ func (h *ProductHandler) List(c *gin.Context) {
 		return
 	}
 
-	c.Data(200, contentType, output)
+	c.Data(http.StatusOK, contentType, output)
 }
 
 // Create godoc
@@ -102,7 +104,7 @@ func (h *ProductHandler) Create(c *gin.Context) {
 		return
 	}
 
-	c.Data(201, contentType, output)
+	c.Data(http.StatusCreated, contentType, output)
 }
 
 // Get godoc
@@ -138,7 +140,7 @@ func (h *ProductHandler) Get(c *gin.Context) {
 		return
 	}
 
-	c.Data(200, contentType, output)
+	c.Data(http.StatusOK, contentType, output)
 }
 
 // Update godoc
@@ -185,7 +187,7 @@ func (h *ProductHandler) Update(c *gin.Context) {
 		return
 	}
 
-	c.Data(200, contentType, output)
+	c.Data(http.StatusOK, contentType, output)
 }
 
 // Delete godoc
@@ -221,7 +223,7 @@ func (h *ProductHandler) Delete(c *gin.Context) {
 		return
 	}
 
-	c.Data(200, contentType, output)
+	c.Data(http.StatusOK, contentType, output)
 }
 
 func selectOutputConfigs(acceptHeader string) (port.Presenter, string) {
