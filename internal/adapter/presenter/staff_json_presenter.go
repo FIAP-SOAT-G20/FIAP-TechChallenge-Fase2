@@ -1,8 +1,8 @@
 package presenter
 
 import (
+	"encoding/json"
 	"errors"
-	"net/http"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
@@ -10,13 +10,11 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
-type staffJsonPresenter struct {
-	writer ResponseWriter
-}
+type staffJsonPresenter struct{}
 
 // StaffJsonResponse represents the response of a staff
-func NewStaffJsonPresenter(writer ResponseWriter) port.Presenter {
-	return &staffJsonPresenter{writer}
+func NewStaffJsonPresenter() port.Presenter {
+	return &staffJsonPresenter{}
 }
 
 // toStaffJsonResponse convert entity.Staff to StaffJsonResponse
@@ -35,8 +33,7 @@ func (p *staffJsonPresenter) Present(pp dto.PresenterInput) ([]byte, error) {
 	switch v := pp.Result.(type) {
 	case *entity.Staff:
 		output := toStaffJsonResponse(v)
-		p.writer.JSON(http.StatusOK, output)
-		return nil, nil
+		return json.Marshal(output)
 	case []*entity.Staff:
 		staffOutputs := make([]StaffJsonResponse, len(v))
 		for i, staff := range v {
@@ -51,13 +48,8 @@ func (p *staffJsonPresenter) Present(pp dto.PresenterInput) ([]byte, error) {
 			},
 			Staffs: staffOutputs,
 		}
-		p.writer.JSON(http.StatusOK, output)
-		return nil, nil
+		return json.Marshal(output)
 	default:
-		p.writer.JSON(
-			http.StatusInternalServerError,
-			domain.NewInternalError(errors.New(domain.ErrInternalError)),
-		)
-		return nil, nil
+		return nil, domain.NewInternalError(errors.New(domain.ErrInternalError))
 	}
 }
