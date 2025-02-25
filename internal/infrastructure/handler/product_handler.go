@@ -52,7 +52,7 @@ func (h *ProductHandler) List(c *gin.Context) {
 	}
 
 	input := dto.ListProductsInput{
-		Name:       c.Query("name"),
+		Name:       query.Name,
 		CategoryID: query.CategoryID,
 		Page:       query.Page,
 		Limit:      query.Limit,
