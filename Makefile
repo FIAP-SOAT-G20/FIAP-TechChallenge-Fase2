@@ -92,10 +92,12 @@ mock: ## Generate mocks
 	mockgen -source=internal/core/port/staff_gateway_port.go -destination=internal/core/port/mocks/staff_gateway_mock.go
 	mockgen -source=internal/core/port/staff_usecase_port.go -destination=internal/core/port/mocks/staff_usecase_mock.go
 	mockgen -source=internal/core/port/staff_controller_port.go -destination=internal/core/port/mocks/staff_controller_mock.go
+	mockgen -source=internal/core/port/order_history_gateway_port.go -destination=internal/core/port/mocks/order_history_gateway_mock.go
+	mockgen -source=internal/core/port/order_history_usecase_port.go -destination=internal/core/port/mocks/order_history_usecase_mock.go
+	mockgen -source=internal/core/port/order_history_controller_port.go -destination=internal/core/port/mocks/order_history_controller_mock.go
 	mockgen -source=internal/core/port/payment_gateway_port.go -destination=internal/core/port/mocks/payment_gateway_mock.go
 	mockgen -source=internal/core/port/payment_usecase_port.go -destination=internal/core/port/mocks/payment_usecase_mock.go
 	mockgen -source=internal/core/port/payment_controller_port.go -destination=internal/core/port/mocks/payment_controller_mock.go
-	
 	
 
 .PHONY: swagger

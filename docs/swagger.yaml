@@ -46,6 +46,37 @@ definitions:
         example: "2024-02-09T10:00:00Z"
         type: string
     type: object
+  presenter.OrderHistoryJsonPaginatedResponse:
+    properties:
+      limit:
+        example: 10
+        type: integer
+      order_histories:
+        items:
+          $ref: '#/definitions/presenter.OrderHistoryJsonResponse'
+        type: array
+      page:
+        example: 1
+        type: integer
+      total:
+        example: 100
+        type: integer
+    type: object
+  presenter.OrderHistoryJsonResponse:
+    properties:
+      created_at:
+        example: "2024-02-09T10:00:00Z"
+        type: string
+      id:
+        example: 1
+        type: integer
+      order_id:
+        example: 1
+        type: integer
+      status:
+        example: OPEN, CANCELLED, PENDING, RECEIVED, PREPARING, READY, COMPLETED
+        type: string
+    type: object
   presenter.OrderJsonPaginatedResponse:
     properties:
       limit:
@@ -1159,6 +1190,112 @@ paths:
       summary: Update order
       tags:
       - orders
+  /orders/histories:
+    get:
+      consumes:
+      - application/json
+      description: List all orderHistories
+      parameters:
+      - description: Filter by order_id
+        in: query
+        name: order_id
+        type: string
+      - description: 'Filter by status. Available options: OPEN, CANCELLED, PENDING,
+          RECEIVED, PREPARING, READY, COMPLETED'
+        in: query
+        name: status
+        type: string
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.OrderHistoryJsonPaginatedResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: List orderHistories
+      tags:
+      - orderHistories
+  /orders/histories/{id}:
+    delete:
+      description: Deletes a orderHistory by ID
+      parameters:
+      - description: OrderHistory ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.OrderHistoryJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Delete orderHistory
+      tags:
+      - orderHistories
+    get:
+      consumes:
+      - application/json
+      description: Search for a orderHistory by ID
+      parameters:
+      - description: OrderHistory ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.OrderHistoryJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Get orderHistory
+      tags:
+      - orderHistories
   /products:
     get:
       consumes:
