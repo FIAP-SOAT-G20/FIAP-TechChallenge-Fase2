@@ -30,10 +30,11 @@ func (h *PaymentHandler) Register(router *gin.RouterGroup) {
 //
 //	@Summary		Create a payment
 //	@Description	Creates a new payment
+//	@Description	The status of the payment will be set to PROCESSING
 //	@Tags			payments
 //	@Accept			json
 //	@Produce		json
-//	@Param			payment body									body		request.CreatePaymentRequest	true	"Payment data"
+//	@Param			order_id								path		int								true	"Order ID"
 //	@Success		201										{object}	presenter.PaymentJsonResponse	"Created"
 //	@Failure		400										{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		500										{object}	middleware.ErrorJsonResponse	"Internal Server Error"
@@ -66,10 +67,17 @@ func (h *PaymentHandler) Create(c *gin.Context) {
 //
 //	@Summary		Update a payment
 //	@Description	Update a new payment
+//	@Description	- resource = external payment id, obtained from the checkout response
+//	@Description	- topic = payment
+//	@Description	## Possible status:
+//	@Description	- PROCESSING
+//	@Description	- CONFIRMED
+//	@Description	- FAILED
+//	@Description	- CANCELED
 //	@Tags			payments
 //	@Accept			json
 //	@Produce		json
-//	@Param			payment	body					request.UpdatePaymentRequest	true	"Payment data"
+//	@Param			payment									body		request.UpdatePaymentRequest	true	"Payment data"
 //	@Success		201										{object}	presenter.PaymentJsonResponse	"Created"
 //	@Failure		400										{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		500										{object}	middleware.ErrorJsonResponse	"Internal Server Error"
