@@ -736,6 +736,164 @@ const docTemplate = `{
                 }
             }
         },
+        "/orders/histories": {
+            "get": {
+                "description": "List all orderHistories",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orderHistories"
+                ],
+                "summary": "List orderHistories",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Filter by order_id",
+                        "name": "order_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by status. Available options: OPEN, CANCELLED, PENDING, RECEIVED, PREPARING, READY, COMPLETED",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Items per page",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.OrderHistoryJsonPaginatedResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/histories/{id}": {
+            "get": {
+                "description": "Search for a orderHistory by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orderHistories"
+                ],
+                "summary": "Get orderHistory",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "OrderHistory ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.OrderHistoryJsonResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes a orderHistory by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orderHistories"
+                ],
+                "summary": "Delete orderHistory",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "OrderHistory ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.OrderHistoryJsonResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/orders/{id}": {
             "get": {
                 "description": "Search for a order by ID",
@@ -1535,6 +1693,50 @@ const docTemplate = `{
                 "updated_at": {
                     "type": "string",
                     "example": "2024-02-09T10:00:00Z"
+                }
+            }
+        },
+        "presenter.OrderHistoryJsonPaginatedResponse": {
+            "type": "object",
+            "properties": {
+                "limit": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "order_histories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/presenter.OrderHistoryJsonResponse"
+                    }
+                },
+                "page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "total": {
+                    "type": "integer",
+                    "example": 100
+                }
+            }
+        },
+        "presenter.OrderHistoryJsonResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string",
+                    "example": "2024-02-09T10:00:00Z"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "order_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "status": {
+                    "type": "string",
+                    "example": "OPEN, CANCELLED, PENDING, RECEIVED, PREPARING, READY, COMPLETED"
                 }
             }
         },

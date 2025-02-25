@@ -76,12 +76,14 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *ro
 	orderDS := datasource.NewOrderDataSource(db.DB)
 	orderProductDS := datasource.NewOrderProductDataSource(db.DB)
 	staffDS := datasource.NewStaffDataSource(db.DB)
+	orderHistoryDS := datasource.NewOrderHistoryDataSource(db.DB)
 	paymentDS := datasource.NewPaymentDataSource(db.DB)
 	paymentExternalDS := datasource.NewPaymentExternalDataSource(httpClient.Client)
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
 	customerGateway := gateway.NewCustomerGateway(customerDS)
+	orderHistoryGateway := gateway.NewOrderHistoryGateway(orderHistoryDS)
 	orderGateway := gateway.NewOrderGateway(orderDS)
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
 	staffGateway := gateway.NewStaffGateway(staffDS)
@@ -92,7 +94,8 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *ro
 	// Use cases
 	productUC := usecase.NewProductUseCase(productGateway)
 	customerUC := usecase.NewCustomerUseCase(customerGateway)
-	orderUC := usecase.NewOrderUseCase(orderGateway)
+	orderHistoryUC := usecase.NewOrderHistoryUseCase(orderHistoryGateway)
+	orderUC := usecase.NewOrderUseCase(orderGateway, orderHistoryUC)
 	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
 	staffUC := usecase.NewStaffUseCase(staffGateway)
 	paymentUC := usecase.NewPaymentUseCase(orderGateway, paymentGateway, paymentExternalFakeGateway)
@@ -103,6 +106,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *ro
 	orderController := controller.NewOrderController(orderUC)
 	orderProductController := controller.NewOrderProductController(orderProductUC)
 	staffController := controller.NewStaffController(staffUC)
+	orderHistoryController := controller.NewOrderHistoryController(orderHistoryUC)
 	paymentController := controller.NewPaymentController(paymentUC)
 
 	// Handlers
@@ -112,6 +116,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *ro
 	orderProductHandler := handler.NewOrderProductHandler(orderProductController)
 	staffHandler := handler.NewStaffHandler(staffController)
 	healthCheckHandler := handler.NewHealthCheckHandler()
+	orderHistoryHandler := handler.NewOrderHistoryHandler(orderHistoryController)
 	paymentHandler := handler.NewPaymentHandler(paymentController)
 
 	return &route.Handlers{
@@ -119,6 +124,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *ro
 		Customer:     customerHandler,
 		Order:        orderHandler,
 		OrderProduct: orderProductHandler,
+		OrderHistory: orderHistoryHandler,
 		Staff:        staffHandler,
 		HealthCheck:  healthCheckHandler,
 		Payment:      paymentHandler,

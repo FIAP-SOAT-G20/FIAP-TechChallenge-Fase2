@@ -21,7 +21,8 @@ func TestOrdersUseCase_List(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	useCase := usecase.NewOrderUseCase(mockGateway)
+	historyUseCaseMock := mockport.NewMockOrderHistoryUseCase(ctrl)
+	useCase := usecase.NewOrderUseCase(mockGateway, historyUseCaseMock)
 	ctx := context.Background()
 
 	currentTime := time.Now()
@@ -136,7 +137,8 @@ func TestOrderUseCase_Create(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	useCase := usecase.NewOrderUseCase(mockGateway)
+	historyUseCaseMock := mockport.NewMockOrderHistoryUseCase(ctrl)
+	useCase := usecase.NewOrderUseCase(mockGateway, historyUseCaseMock)
 	ctx := context.Background()
 
 	tests := []struct {
@@ -155,6 +157,9 @@ func TestOrderUseCase_Create(t *testing.T) {
 				mockGateway.EXPECT().
 					Create(ctx, gomock.Any()).
 					Return(nil)
+				historyUseCaseMock.EXPECT().
+					Create(ctx, gomock.Any()).
+					Return(&entity.OrderHistory{OrderID: 1, Status: valueobject.OPEN}, nil)
 			},
 			expectError: false,
 		},
@@ -199,7 +204,8 @@ func TestOrderUseCase_Get(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	useCase := usecase.NewOrderUseCase(mockGateway)
+	historyUseCaseMock := mockport.NewMockOrderHistoryUseCase(ctrl)
+	useCase := usecase.NewOrderUseCase(mockGateway, historyUseCaseMock)
 	ctx := context.Background()
 
 	currentTime := time.Now()
@@ -283,7 +289,8 @@ func TestOrderUseCase_Update(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	useCase := usecase.NewOrderUseCase(mockGateway)
+	historyUseCaseMock := mockport.NewMockOrderHistoryUseCase(ctrl)
+	useCase := usecase.NewOrderUseCase(mockGateway, historyUseCaseMock)
 	ctx := context.Background()
 
 	currentTime := time.Now()
@@ -386,7 +393,8 @@ func TestOrderUseCase_Delete(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	useCase := usecase.NewOrderUseCase(mockGateway)
+	historyUseCaseMock := mockport.NewMockOrderHistoryUseCase(ctrl)
+	useCase := usecase.NewOrderUseCase(mockGateway, historyUseCaseMock)
 	ctx := context.Background()
 
 	tests := []struct {
