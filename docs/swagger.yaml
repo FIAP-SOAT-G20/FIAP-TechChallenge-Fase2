@@ -721,9 +721,10 @@ paths:
       consumes:
       - application/json
       description: |-
-        Update a new payment
+        Update a new payment (Webhook)
         - resource = external payment id, obtained from the checkout response
         - topic = payment
+        The status of the payment will be set to CONFIRMED if the payment was successful
         ## Possible status:
         - PROCESSING
         - CONFIRMED
@@ -751,7 +752,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Update a payment
+      summary: Update a payment (Webhook)
       tags:
       - payments
   /customers:

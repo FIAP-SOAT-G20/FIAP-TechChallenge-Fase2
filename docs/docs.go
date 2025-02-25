@@ -299,7 +299,7 @@ const docTemplate = `{
         },
         "/api/v1/payments/{order_id}/checkout": {
             "post": {
-                "description": "Update a new payment\n- resource = external payment id, obtained from the checkout response\n- topic = payment\n## Possible status:\n- PROCESSING\n- CONFIRMED\n- FAILED\n- CANCELED",
+                "description": "Update a new payment (Webhook)\n- resource = external payment id, obtained from the checkout response\n- topic = payment\nThe status of the payment will be set to CONFIRMED if the payment was successful\n## Possible status:\n- PROCESSING\n- CONFIRMED\n- FAILED\n- CANCELED",
                 "consumes": [
                     "application/json"
                 ],
@@ -309,7 +309,7 @@ const docTemplate = `{
                 "tags": [
                     "payments"
                 ],
-                "summary": "Update a payment",
+                "summary": "Update a payment (Webhook)",
                 "parameters": [
                     {
                         "description": "Payment data",

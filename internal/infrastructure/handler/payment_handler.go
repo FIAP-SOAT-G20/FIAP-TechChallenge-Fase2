@@ -65,10 +65,11 @@ func (h *PaymentHandler) Create(c *gin.Context) {
 
 // Create godoc
 //
-//	@Summary		Update a payment
-//	@Description	Update a new payment
+//	@Summary		Update a payment (Webhook)
+//	@Description	Update a new payment (Webhook)
 //	@Description	- resource = external payment id, obtained from the checkout response
 //	@Description	- topic = payment
+//	@Description	The status of the payment will be set to CONFIRMED if the payment was successful
 //	@Description	## Possible status:
 //	@Description	- PROCESSING
 //	@Description	- CONFIRMED
