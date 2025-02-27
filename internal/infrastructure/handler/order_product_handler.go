@@ -30,8 +30,8 @@ func (h *OrderProductHandler) Register(router *gin.RouterGroup) {
 
 // List godoc
 //
-//	@Summary		List order product
-//	@Description	List all order product
+//	@Summary		List order products
+//	@Description	List all order products
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
