@@ -71,10 +71,10 @@ func (h *PaymentHandler) Create(c *gin.Context) {
 //	@Description	- topic = payment
 //	@Description	The status of the payment will be set to CONFIRMED if the payment was successful
 //	@Description	## Possible status:
-//	@Description	- PROCESSING
-//	@Description	- CONFIRMED
-//	@Description	- FAILED
-//	@Description	- CANCELED
+//	@Description	- `PROCESSING` (default)
+//	@Description	- `CONFIRMED`
+//	@Description	- `FAILED``
+//	@Description	- `CANCELED`
 //	@Tags			payments
 //	@Accept			json
 //	@Produce		json
