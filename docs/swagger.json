@@ -317,14 +317,14 @@
                     },
                     {
                         "type": "string",
-                        "description": "Filter by status",
+                        "description": "Filter by status (OPEN, PENDING, RECEIVED, PREPARING, READY)",
                         "name": "status",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "default": "\"status:d,created_at\"",
-                        "description": "Sort by field. Use \u003cfield_name\u003e:d for descending, and the default order is ascending",
+                        "default": "status:d,created_at",
+                        "description": "Sort by field. Use `\u003cfield_name\u003e:d` for descending, and the default order is ascending",
                         "name": "sort",
                         "in": "query"
                     },

@@ -732,12 +732,12 @@ paths:
         in: query
         name: customer_id
         type: integer
-      - description: Filter by status
+      - description: Filter by status (OPEN, PENDING, RECEIVED, PREPARING, READY)
         in: query
         name: status
         type: string
-      - default: '"status:d,created_at"'
-        description: Sort by field. Use <field_name>:d for descending, and the default
+      - default: status:d,created_at
+        description: Sort by field. Use `<field_name>:d` for descending, and the default
           order is ascending
         in: query
         name: sort
