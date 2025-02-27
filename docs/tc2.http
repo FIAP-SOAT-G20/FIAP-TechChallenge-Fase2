@@ -56,6 +56,6 @@ GET {{baseUrl}}/api/v1/orders?status_exclude=OPEN, RECEIVED,PENDING, READY ,PREP
 
 ### 
 
-# @name getOrdersByStatusesExclude
+# @name getOrdersByStatusesExcludeNone
 
 GET {{baseUrl}}/api/v1/orders?status_exclude=NONE HTTP/1.1
