@@ -74,7 +74,7 @@ func (h *OrderHandler) List(c *gin.Context) {
 	// Convert status_exclude
 	if strings.ToUpper(query.StatusExclude) != "NONE" {
 		for _, s := range strings.Split(query.StatusExclude, ",") {
-			statusExclude = append(statusExclude, valueobject.OrderStatus(s))
+			statusExclude = append(statusExclude, valueobject.OrderStatus(strings.TrimSpace(s)))
 		}
 	}
 
@@ -82,7 +82,7 @@ func (h *OrderHandler) List(c *gin.Context) {
 	var status []valueobject.OrderStatus
 	if query.Status != "" {
 		for _, s := range strings.Split(query.Status, ",") {
-			status = append(status, valueobject.OrderStatus(s))
+			status = append(status, valueobject.OrderStatus(strings.TrimSpace(s)))
 		}
 	}
 
