@@ -171,7 +171,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [Go](https://golang.org/)
 - [Docker](https://www.docker.com/)
 
-> [!NOTE]
+> [!WARNING]
 > You need to have Go (> 1.23) installed in your machine to build, run and test the application locally
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -245,7 +245,7 @@ kubectl apply -f k8s/
 16. The GitHub Actions will run the tests, lint, and build the Docker image
 <!-- 17. The Kubernetes deployment will be updated automatically -->
 
-> [!NOTE]
+> [!TIP]
 > `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
 > Alternatively, you can run `make run-air` to run the application using Air (live reload)
 
