@@ -57,6 +57,9 @@ func (ds *orderDataSource) FindAll(ctx context.Context, filters map[string]inter
 	// Apply order
 	query = query.Order("status desc, created_at asc")
 
+	// Remove status CANCELED and COMPLETED
+	query = query.Where("status != ?", valueobject.CANCELLED)
+	query = query.Where("status != ?", valueobject.COMPLETED)
 
 	// Count total before pagination
 	if err := query.Model(&entity.Order{}).Count(&total).Error; err != nil {
