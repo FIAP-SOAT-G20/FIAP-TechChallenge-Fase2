@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"errors"
 	"strconv"
 	"time"
 
@@ -28,7 +29,7 @@ func NewPaymentUseCase(
 
 // Create create a new payment
 func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) (*entity.Payment, error) {
-	existentPedingPayment, err := uc.paymentGateway.FindByOrderID(ctx, i.OrderID)
+	existentPedingPayment, err := uc.paymentGateway.FindByOrderIDAndStatusProcessing(ctx, i.OrderID)
 	if err != nil {
 		return nil, domain.NewInternalError(err)
 	}
@@ -139,6 +140,10 @@ func (uc *paymentUseCase) createPaymentPayload(o *entity.Order) *entity.CreatePa
 	}
 }
 
-func (uc *paymentUseCase) Get(ctx context.Context, payment dto.GetPaymentInput) (*entity.Payment, error) {
-	return uc.paymentGateway.FindByOrderID(ctx, payment.OrderID)
+func (uc *paymentUseCase) Get(ctx context.Context, input dto.GetPaymentInput) (*entity.Payment, error) {
+	payment, err := uc.paymentGateway.FindByOrderID(ctx, input.OrderID)
+	if err != nil {
+		return nil, errors.New(domain.ErrNotFound)
+	}
+	return payment, nil
 }
