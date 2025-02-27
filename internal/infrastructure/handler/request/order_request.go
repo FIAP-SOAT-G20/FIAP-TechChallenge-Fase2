@@ -3,10 +3,11 @@ package request
 import valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 
 type ListOrdersQueryRequest struct {
-	CustomerID uint64 `form:"customer_id" example:"1" default:"0"`
-	Status     string `form:"status" binding:"omitempty" example:"PENDING"`
-	Page       int    `form:"page,default=1" example:"1"`
-	Limit      int    `form:"limit,default=10" example:"10"`
+	CustomerID    uint64 `form:"customer_id" example:"1" default:"0"`
+	Status        string `form:"status" binding:"omitempty" example:"PENDING"`
+	StatusExclude string `form:"status_exclude" binding:"omitempty" example:"CANCELLED,COMPLETED"`
+	Page          int    `form:"page,default=1" example:"1"`
+	Limit         int    `form:"limit,default=10" example:"10"`
 	// Sort by default: status:d,created_at. Use <field_name>:d for descending, and the default order is ascending
 	Sort string `form:"sort" example:"status:d,created_at"`
 }

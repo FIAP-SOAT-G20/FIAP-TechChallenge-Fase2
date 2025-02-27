@@ -47,6 +47,10 @@ func (ds *orderDataSource) FindAll(ctx context.Context, filters map[string]any, 
 			if statuses, ok := value.([]valueobject.OrderStatus); ok && len(statuses) > 0 {
 				query = query.Where("status IN ?", statuses)
 			}
+		case "statuses_exclude":
+			if statuses, ok := value.([]valueobject.OrderStatus); ok && len(statuses) > 0 {
+				query = query.Where("status NOT IN ?", statuses)
+			}
 		case "customer_id":
 			if customerID, ok := value.(uint64); ok && customerID != 0 {
 				query = query.Where("customer_id = ?", customerID)
@@ -55,15 +59,9 @@ func (ds *orderDataSource) FindAll(ctx context.Context, filters map[string]any, 
 	}
 
 	// Apply order
-	// query = query.Order("status desc, created_at asc")
 	if sort != "" {
 		query = query.Order(sort)
 	}
-
-	// TODO: Add as filter
-	// Remove status CANCELLED and COMPLETED
-	query = query.Where("status != ?", valueobject.CANCELLED)
-	query = query.Where("status != ?", valueobject.COMPLETED)
 
 	// Count total before pagination
 	if err := query.Model(&entity.Order{}).Count(&total).Error; err != nil {

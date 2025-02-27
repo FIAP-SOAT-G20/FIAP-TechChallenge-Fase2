@@ -39,18 +39,19 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 //	@Description	## Order list is sorted by:
 //	@Description	- **Status** in **descending** order (`READY` > `PREPARING` > `RECEIVED` > `PENDING` > `OPEN`)
 //	@Description	- **Created date** (CreatedAt) in **ascending** order (oldest first)
-//	@Description	Obs: Status CANCELLED and COMPLETED are not included
+//	@Description	Obs: Status CANCELLED and COMPLETED are not included in the list by default
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
-//	@Param			customer_id	query		int										false	"Filter by customer ID"
-//	@Param			status		query		string									false	"Filter by status (Accept many), options: OPEN, PENDING, RECEIVED, PREPARING, READY), ex: PENDING or OPEN,PENDING"
-//	@Param			sort		query		string									false	"Sort by field (Accept many). Use `<field_name>:d` for descending, and the default order is ascending"	default(status:d,created_at)
-//	@Param			page		query		int										false	"Page number"																							default(1)
-//	@Param			limit		query		int										false	"Items per page"																						default(10)
-//	@Success		200			{object}	presenter.OrderJsonPaginatedResponse	"OK"
-//	@Failure		400			{object}	middleware.ErrorJsonResponse			"Bad Request"
-//	@Failure		500			{object}	middleware.ErrorJsonResponse			"Internal Server Error"
+//	@Param			customer_id		query		int										false	"Filter by customer ID"
+//	@Param			status			query		string									false	"Filter by status (Accept many), options: OPEN, PENDING, RECEIVED, PREPARING, READY, ex: PENDING or OPEN,PENDING"
+//	@Param			status_exclude	query		string									false	"Exclude by status (Accept many), options: OPEN, PENDING, RECEIVED, PREPARING, READY, CANCELLED, COMPLETED, ex: CANCELLED or CANCELLED,COMPLETED (default)"
+//	@Param			sort			query		string									false	"Sort by field (Accept many). Use `<field_name>:d` for descending, and the default order is ascending"	default(status:d,created_at)
+//	@Param			page			query		int										false	"Page number"																							default(1)
+//	@Param			limit			query		int										false	"Items per page"																						default(10)
+//	@Success		200				{object}	presenter.OrderJsonPaginatedResponse	"OK"
+//	@Failure		400				{object}	middleware.ErrorJsonResponse			"Bad Request"
+//	@Failure		500				{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/orders [get]
 func (h *OrderHandler) List(c *gin.Context) {
 	var query request.ListOrdersQueryRequest
@@ -64,7 +65,12 @@ func (h *OrderHandler) List(c *gin.Context) {
 		query.Sort = "status:d,created_at"
 	}
 
-	// Convert Status "OPEN,PENDING" -> []valueobject.OrderStatus{valueobject.OPEN, valueobject.PENDING}
+	// Default status_exclude
+	if query.StatusExclude == "" {
+		query.StatusExclude = "CANCELLED,COMPLETED"
+	}
+
+	// Convert Status
 	var status []valueobject.OrderStatus
 	if query.Status != "" {
 		for _, s := range strings.Split(query.Status, ",") {
@@ -72,12 +78,19 @@ func (h *OrderHandler) List(c *gin.Context) {
 		}
 	}
 
+	// Convert StatusExclude
+	var statusExclude []valueobject.OrderStatus
+	for _, s := range strings.Split(query.StatusExclude, ",") {
+		statusExclude = append(statusExclude, valueobject.OrderStatus(s))
+	}
+
 	input := dto.ListOrdersInput{
-		CustomerID: query.CustomerID,
-		Status:     status,
-		Page:       query.Page,
-		Limit:      query.Limit,
-		Sort:       query.Sort,
+		CustomerID:    query.CustomerID,
+		Status:        status,
+		StatusExclude: statusExclude,
+		Page:          query.Page,
+		Limit:         query.Limit,
+		Sort:          query.Sort,
 	}
 
 	output, err := h.controller.List(

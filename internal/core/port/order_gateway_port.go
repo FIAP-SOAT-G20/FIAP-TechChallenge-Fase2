@@ -9,7 +9,7 @@ import (
 
 type OrderGateway interface {
 	FindByID(ctx context.Context, id uint64) (*entity.Order, error)
-	FindAll(ctx context.Context, customerId uint64, status []valueobject.OrderStatus, page, limit int, sort string) ([]*entity.Order, int64, error)
+	FindAll(ctx context.Context, customerId uint64, status []valueobject.OrderStatus, statusExclude []valueobject.OrderStatus, page, limit int, sort string) ([]*entity.Order, int64, error)
 	Create(ctx context.Context, order *entity.Order) error
 	Update(ctx context.Context, order *entity.Order) error
 	Delete(ctx context.Context, id uint64) error
