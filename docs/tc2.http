@@ -47,3 +47,9 @@ GET {{baseUrl}}/api/v1/orders?status=OPEN,RECEIVED HTTP/1.1
 # @name getOrdersByStatusesExclude
 
 GET {{baseUrl}}/api/v1/orders?status_exclude=OPEN,RECEIVED,PENDING,READY,PREPARING HTTP/1.1
+
+### 
+
+# @name getOrdersByStatusesExclude
+
+GET {{baseUrl}}/api/v1/orders?status_exclude=NONE HTTP/1.1
