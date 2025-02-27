@@ -3,11 +3,13 @@ package handler
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
@@ -42,10 +44,10 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			customer_id	query		int										false	"Filter by customer ID"
-//	@Param			status		query		string									false	"Filter by status (OPEN, PENDING, RECEIVED, PREPARING, READY)"
-//	@Param			sort		query		string									false	"Sort by field. Use `<field_name>:d` for descending, and the default order is ascending"	default(status:d,created_at)
-//	@Param			page		query		int										false	"Page number"																				default(1)
-//	@Param			limit		query		int										false	"Items per page"																			default(10)
+//	@Param			status		query		string									false	"Filter by status (Accept many), options: OPEN, PENDING, RECEIVED, PREPARING, READY), ex: PENDING or OPEN,PENDING"
+//	@Param			sort		query		string									false	"Sort by field (Accept many). Use `<field_name>:d` for descending, and the default order is ascending"	default(status:d,created_at)
+//	@Param			page		query		int										false	"Page number"																							default(1)
+//	@Param			limit		query		int										false	"Items per page"																						default(10)
 //	@Success		200			{object}	presenter.OrderJsonPaginatedResponse	"OK"
 //	@Failure		400			{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse			"Internal Server Error"
@@ -57,13 +59,22 @@ func (h *OrderHandler) List(c *gin.Context) {
 		return
 	}
 
+	// Default sort
 	if query.Sort == "" {
 		query.Sort = "status:d,created_at"
 	}
 
+	// Convert Status "OPEN,PENDING" -> []valueobject.OrderStatus{valueobject.OPEN, valueobject.PENDING}
+	var status []valueobject.OrderStatus
+	if query.Status != "" {
+		for _, s := range strings.Split(query.Status, ",") {
+			status = append(status, valueobject.OrderStatus(s))
+		}
+	}
+
 	input := dto.ListOrdersInput{
 		CustomerID: query.CustomerID,
-		Status:     query.Status,
+		Status:     status,
 		Page:       query.Page,
 		Limit:      query.Limit,
 		Sort:       query.Sort,

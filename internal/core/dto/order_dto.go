@@ -25,7 +25,7 @@ type DeleteOrderInput struct {
 
 type ListOrdersInput struct {
 	CustomerID uint64
-	Status     valueobject.OrderStatus
+	Status     []valueobject.OrderStatus
 	Page       int
 	Limit      int
 	Sort       string

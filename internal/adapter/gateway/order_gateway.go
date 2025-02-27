@@ -21,15 +21,15 @@ func (g *orderGateway) FindByID(ctx context.Context, id uint64) (*entity.Order, 
 	return g.dataSource.FindByID(ctx, id)
 }
 
-func (g *orderGateway) FindAll(ctx context.Context, customerId uint64, status valueobject.OrderStatus, page, limit int, sort string) ([]*entity.Order, int64, error) {
+func (g *orderGateway) FindAll(ctx context.Context, customerId uint64, status []valueobject.OrderStatus, page, limit int, sort string) ([]*entity.Order, int64, error) {
 
 	// Create filters
 	filters := make(map[string]interface{})
 	if customerId != 0 {
 		filters["customer_id"] = customerId
 	}
-	if status != "" {
-		filters["status"] = status
+	if status != nil {
+		filters["statuses"] = status
 	}
 
 	// Create Sort "status:d,created_at" -> "status desc, created_at asc"

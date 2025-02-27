@@ -43,9 +43,9 @@ func (ds *orderDataSource) FindAll(ctx context.Context, filters map[string]any, 
 	// Apply filters
 	for key, value := range filters {
 		switch key {
-		case "status":
-			if status, ok := value.(valueobject.OrderStatus); ok && status != valueobject.UNDEFINDED {
-				query = query.Where("status = ?", status)
+		case "statuses":
+			if statuses, ok := value.([]valueobject.OrderStatus); ok && len(statuses) > 0 {
+				query = query.Where("status IN ?", statuses)
 			}
 		case "customer_id":
 			if customerID, ok := value.(uint64); ok && customerID != 0 {
