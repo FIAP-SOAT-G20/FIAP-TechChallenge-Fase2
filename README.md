@@ -297,6 +297,7 @@ make test
 - [Entendendo Presenters na Clean Architecture](https://www.youtube.com/watch?v=zrYAnqA-VQs&ab_channel=FullCycle)
 - [RFC 8977 Registration Data Access Protocol (RDAP) Query Parameters for Result Sorting and Paging](https://www.rfc-editor.org/rfc/rfc8977.html#name-sort-parameter)
 - [PostgreSQL - 7.5. Sorting Rows (ORDER BY) #](https://www.postgresql.org/docs/current/queries-order.html#QUERIES-ORDER)
+- [WordPress API Reference - Posts](https://developer.wordpress.org/rest-api/reference/posts/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
