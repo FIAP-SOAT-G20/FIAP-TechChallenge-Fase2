@@ -956,7 +956,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: List all orderHistories
+      description: List all order histories
       parameters:
       - description: Filter by order_id
         in: query
@@ -992,12 +992,12 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: List orderHistories
+      summary: List order histories
       tags:
       - orders
   /orders/histories/{id}:
     delete:
-      description: Deletes a orderHistory by ID
+      description: Deletes a order history by ID
       parameters:
       - description: OrderHistory ID
         in: path
@@ -1023,13 +1023,13 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Delete orderHistory
+      summary: Delete order history
       tags:
       - orders
     get:
       consumes:
       - application/json
-      description: Search for a orderHistory by ID
+      description: Search for a order history by ID
       parameters:
       - description: OrderHistory ID
         in: path
@@ -1055,14 +1055,14 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Get orderHistory
+      summary: Get order history
       tags:
       - orders
   /orders/products:
     get:
       consumes:
       - application/json
-      description: List all orders
+      description: List all order products
       parameters:
       - description: Filter by order ID
         in: query
@@ -1093,12 +1093,12 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: List orders
+      summary: List order products
       tags:
       - orders
   /orders/products/{order_id}/{product_id}:
     delete:
-      description: Deletes a orderProduct by Order ID and Product ID
+      description: Deletes a order product by Order ID and Product ID
       parameters:
       - description: Order ID
         in: path
@@ -1129,7 +1129,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Delete orderProduct
+      summary: Delete order product
       tags:
       - orders
     get:
@@ -1207,7 +1207,7 @@ paths:
     put:
       consumes:
       - application/json
-      description: Update an existing order
+      description: Update an existing order product
       parameters:
       - description: Order ID
         in: path
@@ -1244,7 +1244,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Update order
+      summary: Update order product
       tags:
       - orders
   /payments/{order_id}/checkout:
@@ -1286,12 +1286,13 @@ paths:
         Update a new payment (Webhook)
         - resource = external payment id, obtained from the checkout response
         - topic = payment
-        The status of the payment will be set to CONFIRMED if the payment was successful
+
+        > The status of the payment will be set to CONFIRMED if the payment was successful
         ## Possible status:
-        - PROCESSING
-        - CONFIRMED
-        - FAILED
-        - CANCELED
+        - `PROCESSING` (default)
+        - `CONFIRMED`
+        - `FAILED`
+        - `CANCELED`
       parameters:
       - description: Payment data
         in: body

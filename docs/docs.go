@@ -410,7 +410,7 @@ const docTemplate = `{
         },
         "/orders/histories": {
             "get": {
-                "description": "List all orderHistories",
+                "description": "List all order histories",
                 "consumes": [
                     "application/json"
                 ],
@@ -420,7 +420,7 @@ const docTemplate = `{
                 "tags": [
                     "orders"
                 ],
-                "summary": "List orderHistories",
+                "summary": "List order histories",
                 "parameters": [
                     {
                         "type": "string",
@@ -473,7 +473,7 @@ const docTemplate = `{
         },
         "/orders/histories/{id}": {
             "get": {
-                "description": "Search for a orderHistory by ID",
+                "description": "Search for a order history by ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -483,7 +483,7 @@ const docTemplate = `{
                 "tags": [
                     "orders"
                 ],
-                "summary": "Get orderHistory",
+                "summary": "Get order history",
                 "parameters": [
                     {
                         "type": "integer",
@@ -521,14 +521,14 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Deletes a orderHistory by ID",
+                "description": "Deletes a order history by ID",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "orders"
                 ],
-                "summary": "Delete orderHistory",
+                "summary": "Delete order history",
                 "parameters": [
                     {
                         "type": "integer",
@@ -568,7 +568,7 @@ const docTemplate = `{
         },
         "/orders/products": {
             "get": {
-                "description": "List all orders",
+                "description": "List all order products",
                 "consumes": [
                     "application/json"
                 ],
@@ -578,7 +578,7 @@ const docTemplate = `{
                 "tags": [
                     "orders"
                 ],
-                "summary": "List orders",
+                "summary": "List order products",
                 "parameters": [
                     {
                         "type": "string",
@@ -680,7 +680,7 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "Update an existing order",
+                "description": "Update an existing order product",
                 "consumes": [
                     "application/json"
                 ],
@@ -690,7 +690,7 @@ const docTemplate = `{
                 "tags": [
                     "orders"
                 ],
-                "summary": "Update order",
+                "summary": "Update order product",
                 "parameters": [
                     {
                         "type": "integer",
@@ -796,14 +796,14 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Deletes a orderProduct by Order ID and Product ID",
+                "description": "Deletes a order product by Order ID and Product ID",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "orders"
                 ],
-                "summary": "Delete orderProduct",
+                "summary": "Delete order product",
                 "parameters": [
                     {
                         "type": "integer",
@@ -1059,7 +1059,7 @@ const docTemplate = `{
         },
         "/payments/callback": {
             "post": {
-                "description": "Update a new payment (Webhook)\n- resource = external payment id, obtained from the checkout response\n- topic = payment\nThe status of the payment will be set to CONFIRMED if the payment was successful\n## Possible status:\n- PROCESSING\n- CONFIRMED\n- FAILED\n- CANCELED",
+                "description": "Update a new payment (Webhook)\n- resource = external payment id, obtained from the checkout response\n- topic = payment\n\n\u003e The status of the payment will be set to CONFIRMED if the payment was successful\n## Possible status:\n- ` + "`" + `PROCESSING` + "`" + ` (default)\n- ` + "`" + `CONFIRMED` + "`" + `\n- ` + "`" + `FAILED` + "`" + `\n- ` + "`" + `CANCELED` + "`" + `",
                 "consumes": [
                     "application/json"
                 ],
