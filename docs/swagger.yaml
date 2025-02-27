@@ -726,16 +726,22 @@ paths:
         ## Order list is sorted by:
         - **Status** in **descending** order (`READY` > `PREPARING` > `RECEIVED` > `PENDING` > `OPEN`)
         - **Created date** (CreatedAt) in **ascending** order (oldest first)
-        Obs: Status CANCELLED and COMPLETED are not included
+        Obs: Status CANCELLED and COMPLETED are not included in the list by default
       parameters:
       - description: Filter by customer ID
         in: query
         name: customer_id
         type: integer
       - description: 'Filter by status (Accept many), options: OPEN, PENDING, RECEIVED,
-          PREPARING, READY), ex: status=PENDING or status=OPEN,PENDING'
+          PREPARING, READY, ex: PENDING or OPEN,PENDING'
         in: query
         name: status
+        type: string
+      - description: 'Exclude by status (Accept many), options: OPEN, PENDING, RECEIVED,
+          PREPARING, READY, CANCELLED, COMPLETED, ex: CANCELLED or CANCELLED,COMPLETED
+          (default)'
+        in: query
+        name: status_exclude
         type: string
       - default: status:d,created_at
         description: Sort by field (Accept many). Use `<field_name>:d` for descending,

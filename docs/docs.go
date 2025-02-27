@@ -303,7 +303,7 @@ const docTemplate = `{
         },
         "/orders": {
             "get": {
-                "description": "List all orders\n## Order list is sorted by:\n- **Status** in **descending** order (` + "`" + `READY` + "`" + ` \u003e ` + "`" + `PREPARING` + "`" + ` \u003e ` + "`" + `RECEIVED` + "`" + ` \u003e ` + "`" + `PENDING` + "`" + ` \u003e ` + "`" + `OPEN` + "`" + `)\n- **Created date** (CreatedAt) in **ascending** order (oldest first)\nObs: Status CANCELLED and COMPLETED are not included",
+                "description": "List all orders\n## Order list is sorted by:\n- **Status** in **descending** order (` + "`" + `READY` + "`" + ` \u003e ` + "`" + `PREPARING` + "`" + ` \u003e ` + "`" + `RECEIVED` + "`" + ` \u003e ` + "`" + `PENDING` + "`" + ` \u003e ` + "`" + `OPEN` + "`" + `)\n- **Created date** (CreatedAt) in **ascending** order (oldest first)\nObs: Status CANCELLED and COMPLETED are not included in the list by default",
                 "consumes": [
                     "application/json"
                 ],
@@ -323,8 +323,14 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Filter by status (Accept many), options: OPEN, PENDING, RECEIVED, PREPARING, READY), ex: status=PENDING or status=OPEN,PENDING",
+                        "description": "Filter by status (Accept many), options: OPEN, PENDING, RECEIVED, PREPARING, READY, ex: PENDING or OPEN,PENDING",
                         "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Exclude by status (Accept many), options: OPEN, PENDING, RECEIVED, PREPARING, READY, CANCELLED, COMPLETED, ex: CANCELLED or CANCELLED,COMPLETED (default)",
+                        "name": "status_exclude",
                         "in": "query"
                     },
                     {
