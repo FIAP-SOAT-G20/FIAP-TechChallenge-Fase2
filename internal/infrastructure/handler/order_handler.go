@@ -44,11 +44,11 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			customer_id		query		int										false	"Filter by customer ID"
-//	@Param			status			query		string									false	"Filter by status (Accept many), options: OPEN, PENDING, RECEIVED, PREPARING, READY, ex: PENDING or OPEN,PENDING"
-//	@Param			status_exclude	query		string									false	"Exclude by status (Accept many), options: NONE, OPEN, PENDING, RECEIVED, PREPARING, READY, CANCELLED, COMPLETED, ex: CANCELLED or CANCELLED,COMPLETED (default)"
-//	@Param			sort			query		string									false	"Sort by field (Accept many). Use `<field_name>:d` for descending, and the default order is ascending"	default(status:d,created_at)
-//	@Param			page			query		int										false	"Page number"																							default(1)
-//	@Param			limit			query		int										false	"Items per page"																						default(10)
+//	@Param			status			query		string									false	"Filter by status (Accept many), options: <sub>OPEN, PENDING, RECEIVED, PREPARING, READY</sub>, ex: <sub>PENDING</sub> or <sub>OPEN,PENDING</sub>"
+//	@Param			status_exclude	query		string									false	"Exclude by status (Accept many), options: <sub>NONE, OPEN, PENDING, RECEIVED, PREPARING, READY, CANCELLED, COMPLETED</sub>, ex: <sub>CANCELLED</sub> or <sub>CANCELLED,COMPLETED</sub> (default)"	default(CANCELLED,COMPLETED)
+//	@Param			sort			query		string									false	"Sort by field (Accept many). Use `<field_name>:d` for descending, and the default order is ascending"																								default(status:d,created_at)
+//	@Param			page			query		int										false	"Page number"																																														default(1)
+//	@Param			limit			query		int										false	"Items per page"																																													default(10)
 //	@Success		200				{object}	presenter.OrderJsonPaginatedResponse	"OK"
 //	@Failure		400				{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500				{object}	middleware.ErrorJsonResponse			"Internal Server Error"
