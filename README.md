@@ -216,11 +216,12 @@ make compose-up
 > To remove the application, run `compose-clean`  
 
 > [!NOTE]
-> The application is available at http://localhost:8080
+> The application is available at <http://localhost:8080>
 
 > [!IMPORTANT]
-> Documentation is available at:
-> - Swagger: `http://localhost:8080/swagger/index.html`
+> API Documentation is available at:
+>
+> - Swagger: <http://localhost:8080/swagger/index.html>
 > - Postman collection: [here](docs/postman_collection.json)
 > - HTTP Client: [here](docs/tc2.http)
 
