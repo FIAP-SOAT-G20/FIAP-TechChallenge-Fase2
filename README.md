@@ -103,6 +103,8 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - **Database Migrations**: Database migrations were created to manage the database schema. This allows us to version control the database schema and apply changes to the database in a structured way.
 - **HTTP Server**: The HTTP server was created using the Gin framework, a lightweight web framework for Go. This framework provides a fast and easy way to create web applications in Go.
 
+[Back to top](#readme-top)
+
 ### ✨ Features
 
 - [x] Dockerfile: small image with multi-stage docker build, and independent of the host environment
