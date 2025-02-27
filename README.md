@@ -221,7 +221,7 @@ make compose-up
 > [!IMPORTANT]
 > API Documentation is available at:
 >
-> - Swagger: <http://localhost:8080/swagger/index.html>
+> - Swagger: <http://localhost:8080/docs/index.html>
 > - Postman collection: [here](docs/postman_collection.json)
 > - HTTP Client: [here](docs/tc2.http)
 
