@@ -60,7 +60,7 @@ func TestOrdersUseCase_List(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), nil, 1, 10, "").
+					FindAll(ctx, uint64(0), nil, nil, 1, 10, "").
 					Return(mockOrders, int64(2), nil)
 			},
 			expectError: false,
@@ -73,7 +73,7 @@ func TestOrdersUseCase_List(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), nil, 1, 10, "").
+					FindAll(ctx, uint64(0), nil, nil, 1, 10, "").
 					Return(nil, int64(0), assert.AnError)
 			},
 			expectError: true,
@@ -88,7 +88,7 @@ func TestOrdersUseCase_List(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), []valueobject.OrderStatus{"PENDING"}, 1, 10, "").
+					FindAll(ctx, uint64(0), []valueobject.OrderStatus{"PENDING"}, nil, 1, 10, "").
 					Return(mockOrders, int64(2), nil)
 			},
 			expectError: false,
@@ -102,7 +102,7 @@ func TestOrdersUseCase_List(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockGateway.EXPECT().
-					FindAll(ctx, uint64(1), nil, 1, 10, "").
+					FindAll(ctx, uint64(1), nil, nil, 1, 10, "").
 					Return(mockOrders, int64(2), nil)
 			},
 			expectError: false,
