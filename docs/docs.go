@@ -323,13 +323,14 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Filter by status (Accept many), options: OPEN, PENDING, RECEIVED, PREPARING, READY, ex: PENDING or OPEN,PENDING",
+                        "description": "Filter by status (Accept many), options: \u003csub\u003eOPEN, PENDING, RECEIVED, PREPARING, READY\u003c/sub\u003e, ex: \u003csub\u003ePENDING\u003c/sub\u003e or \u003csub\u003eOPEN,PENDING\u003c/sub\u003e",
                         "name": "status",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "Exclude by status (Accept many), options: NONE, OPEN, PENDING, RECEIVED, PREPARING, READY, CANCELLED, COMPLETED, ex: CANCELLED or CANCELLED,COMPLETED (default)",
+                        "default": "CANCELLED,COMPLETED",
+                        "description": "Exclude by status (Accept many), options: \u003csub\u003eNONE, OPEN, PENDING, RECEIVED, PREPARING, READY, CANCELLED, COMPLETED\u003c/sub\u003e, ex: \u003csub\u003eCANCELLED\u003c/sub\u003e or \u003csub\u003eCANCELLED,COMPLETED\u003c/sub\u003e (default)",
                         "name": "status_exclude",
                         "in": "query"
                     },

@@ -732,14 +732,15 @@ paths:
         in: query
         name: customer_id
         type: integer
-      - description: 'Filter by status (Accept many), options: OPEN, PENDING, RECEIVED,
-          PREPARING, READY, ex: PENDING or OPEN,PENDING'
+      - description: 'Filter by status (Accept many), options: <sub>OPEN, PENDING,
+          RECEIVED, PREPARING, READY</sub>, ex: <sub>PENDING</sub> or <sub>OPEN,PENDING</sub>'
         in: query
         name: status
         type: string
-      - description: 'Exclude by status (Accept many), options: NONE, OPEN, PENDING,
-          RECEIVED, PREPARING, READY, CANCELLED, COMPLETED, ex: CANCELLED or CANCELLED,COMPLETED
-          (default)'
+      - default: CANCELLED,COMPLETED
+        description: 'Exclude by status (Accept many), options: <sub>NONE, OPEN, PENDING,
+          RECEIVED, PREPARING, READY, CANCELLED, COMPLETED</sub>, ex: <sub>CANCELLED</sub>
+          or <sub>CANCELLED,COMPLETED</sub> (default)'
         in: query
         name: status_exclude
         type: string
