@@ -737,8 +737,8 @@ paths:
         in: query
         name: status
         type: string
-      - description: 'Exclude by status (Accept many), options: OPEN, PENDING, RECEIVED,
-          PREPARING, READY, CANCELLED, COMPLETED, ex: CANCELLED or CANCELLED,COMPLETED
+      - description: 'Exclude by status (Accept many), options: NONE, OPEN, PENDING,
+          RECEIVED, PREPARING, READY, CANCELLED, COMPLETED, ex: CANCELLED or CANCELLED,COMPLETED
           (default)'
         in: query
         name: status_exclude

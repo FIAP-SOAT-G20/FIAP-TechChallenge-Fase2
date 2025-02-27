@@ -329,7 +329,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Exclude by status (Accept many), options: OPEN, PENDING, RECEIVED, PREPARING, READY, CANCELLED, COMPLETED, ex: CANCELLED or CANCELLED,COMPLETED (default)",
+                        "description": "Exclude by status (Accept many), options: NONE, OPEN, PENDING, RECEIVED, PREPARING, READY, CANCELLED, COMPLETED, ex: CANCELLED or CANCELLED,COMPLETED (default)",
                         "name": "status_exclude",
                         "in": "query"
                     },
