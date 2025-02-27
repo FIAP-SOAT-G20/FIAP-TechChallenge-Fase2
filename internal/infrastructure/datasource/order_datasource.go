@@ -54,6 +54,10 @@ func (ds *orderDataSource) FindAll(ctx context.Context, filters map[string]inter
 		}
 	}
 
+	// Apply order
+	query = query.Order("status desc, created_at asc")
+
+
 	// Count total before pagination
 	if err := query.Model(&entity.Order{}).Count(&total).Error; err != nil {
 		return nil, 0, fmt.Errorf("error counting orders: %w", err)
