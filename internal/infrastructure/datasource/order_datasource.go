@@ -57,7 +57,7 @@ func (ds *orderDataSource) FindAll(ctx context.Context, filters map[string]inter
 	// Apply order
 	query = query.Order("status desc, created_at asc")
 
-	// Remove status CANCELED and COMPLETED
+	// Remove status CANCELLED and COMPLETED
 	query = query.Where("status != ?", valueobject.CANCELLED)
 	query = query.Where("status != ?", valueobject.COMPLETED)
 
