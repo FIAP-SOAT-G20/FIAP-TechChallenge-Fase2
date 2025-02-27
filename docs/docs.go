@@ -316,15 +316,22 @@ const docTemplate = `{
                 "summary": "List orders (Reference 1.a.iv)",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "Filter by name",
-                        "name": "name",
+                        "type": "integer",
+                        "description": "Filter by customer ID",
+                        "name": "customer_id",
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "Filter by category ID",
-                        "name": "category_id",
+                        "type": "string",
+                        "description": "Filter by status",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "\"status:d,created_at\"",
+                        "description": "Sort by field. Use \u003cfield_name\u003e:d for descending, and the default order is ascending",
+                        "name": "sort",
                         "in": "query"
                     },
                     {

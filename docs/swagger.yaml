@@ -728,14 +728,20 @@ paths:
         - **Created date** (CreatedAt) in **ascending** order (oldest first)
         Obs: Status CANCELLED and COMPLETED are not included
       parameters:
-      - description: Filter by name
+      - description: Filter by customer ID
         in: query
-        name: name
-        type: string
-      - description: Filter by category ID
-        in: query
-        name: category_id
+        name: customer_id
         type: integer
+      - description: Filter by status
+        in: query
+        name: status
+        type: string
+      - default: '"status:d,created_at"'
+        description: Sort by field. Use <field_name>:d for descending, and the default
+          order is ascending
+        in: query
+        name: sort
+        type: string
       - default: 1
         description: Page number
         in: query
