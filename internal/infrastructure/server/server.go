@@ -46,48 +46,40 @@ func (s *Server) Start() error {
 		IdleTimeout:  s.config.ServerIdleTimeout,
 	}
 
-	chanError := make(chan error)
+	var serverErr error
 
-	go gracefullyShutdown(server, chanError, s)
-
-	if err := <-chanError; err != nil {
-		s.logger.Error("server failed to start", "error", err)
-	}
-
-	return nil
-}
-
-func gracefullyShutdown(server *http.Server, chanError chan error, s *Server) {
-	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
-
-	go func() {
-		<-ctx.Done()
-		s.logger.Info("shutting down server...")
-
-		ctxTimeout, cancel := context.WithTimeout(context.Background(), s.config.ServerGracefulShutdownTimeout)
-
-		defer func() {
-			stop()
-			cancel()
-			close(chanError)
-		}()
-
-		err := server.Shutdown(ctxTimeout)
-		if err != nil {
-			return
-		}
-
-		s.logger.Info("server exited gracefully")
-		fmt.Println("Bye! 👋")
-	}()
+	sigChannel := make(chan os.Signal, 1)
+	signal.Notify(sigChannel, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 
 	go func() {
 		s.logger.Info("server is running", "port", server.Addr)
 		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			chanError <- fmt.Errorf("failed to start server: %w", err)
-			return
+			s.logger.Error("server failed to start", "error", err)
+			serverErr = err
+			sigChannel <- syscall.SIGINT
 		}
 	}()
+
+	<-sigChannel
+
+	gracefullyShutdown(server, s)
+
+	return serverErr
+}
+
+func gracefullyShutdown(server *http.Server, s *Server) {
+	s.logger.Info("shutting down server...")
+
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), s.config.ServerGracefulShutdownTimeout)
+	defer cancel()
+
+	if err := server.Shutdown(ctxTimeout); err != nil {
+		s.logger.Error("server failed to shutdown", "error", err)
+		panic(err)
+	}
+
+	s.logger.Info("server exited gracefully")
+	fmt.Println("Bye! 👋")
 }
 
 func registerCustomValidation() {
