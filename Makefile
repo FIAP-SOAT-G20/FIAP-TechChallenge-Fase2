@@ -23,10 +23,14 @@ help: ## Print this message
 	@echo "Usage: make <command>"
 	@awk -F '::? .*## ' -- "/^[^':]+::? .*## /"' { printf "  make '$$(tput bold)'%-$(ALIGN)s'$$(tput sgr0)' - %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
-.PHONY: build
-build: ## Build the application
-	@echo  "🟢 Building the application..."
+.PHONY: fmt
+fmt: ## Format the code
+	@echo  "🟢 Formatting the code..."
 	$(GOCMD) fmt ./...
+
+.PHONY: build
+build: fmt ## Build the application
+	@echo  "🟢 Building the application..."
 	$(GOBUILD) -o bin/$(APP_NAME) $(MAIN_FILE)
 
 .PHONY: run-db
