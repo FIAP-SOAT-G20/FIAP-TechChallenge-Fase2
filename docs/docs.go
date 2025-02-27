@@ -1059,7 +1059,7 @@ const docTemplate = `{
         },
         "/payments/callback": {
             "post": {
-                "description": "Update a new payment (Webhook)\n- resource = external payment id, obtained from the checkout response\n- topic = payment\n\n\u003e The status of the payment will be set to CONFIRMED if the payment was successful\n## Possible status:\n- ` + "`" + `PROCESSING` + "`" + ` (default)\n- ` + "`" + `CONFIRMED` + "`" + `\n- ` + "`" + `FAILED` + "`" + `\n- ` + "`" + `CANCELED` + "`" + `",
+                "description": "Update a new payment (Webhook)\n- resource = external payment id, obtained from the checkout response\n- topic = payment\n\n\u003e The status of the payment will be set to CONFIRMED if the payment was successful\n## Possible status:\n- ` + "`" + `PROCESSING` + "`" + ` (default)\n- ` + "`" + `CONFIRMED` + "`" + `\n- ` + "`" + `FAILED` + "`" + `\n- ` + "`" + `ABORTED` + "`" + `",
                 "consumes": [
                     "application/json"
                 ],
@@ -2378,14 +2378,14 @@ const docTemplate = `{
                 "PROCESSING",
                 "CONFIRMED",
                 "FAILED",
-                "CANCELED",
+                "ABORTED",
                 ""
             ],
             "x-enum-varnames": [
                 "PROCESSING",
                 "CONFIRMED",
                 "FAILED",
-                "CANCELED",
+                "ABORTED",
                 "UNDEFINDED_P"
             ]
         },

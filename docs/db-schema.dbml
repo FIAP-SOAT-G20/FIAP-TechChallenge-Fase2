@@ -51,7 +51,7 @@ Table order_products {
 
 Table payments {
   id int [pk, increment]
-  status enum ('PROCESSING', 'CONFIRMED', 'CANCELED', 'FAILED') [default: 'PROCESSING']
+  status enum ('PROCESSING', 'CONFIRMED', 'ABORTED', 'FAILED') [default: 'PROCESSING']
   external_payment_id string
   order_id int [not null, ref: > orders.id]
   qr_data  string
