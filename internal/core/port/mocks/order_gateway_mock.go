@@ -71,7 +71,7 @@ func (mr *MockOrderGatewayMockRecorder) Delete(ctx, id any) *gomock.Call {
 }
 
 // FindAll mocks base method.
-func (m *MockOrderGateway) FindAll(ctx context.Context, customerId uint64, status valueobject.OrderStatus, page, limit int, sort string) ([]*entity.Order, int64, error) {
+func (m *MockOrderGateway) FindAll(ctx context.Context, customerId uint64, status []valueobject.OrderStatus, page, limit int, sort string) ([]*entity.Order, int64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FindAll", ctx, customerId, status, page, limit, sort)
 	ret0, _ := ret[0].([]*entity.Order)
