@@ -721,7 +721,12 @@ paths:
     get:
       consumes:
       - application/json
-      description: List all orders
+      description: |-
+        List all orders
+        ## Order list is sorted by:
+        - **Status** in **descending** order (`READY` > `PREPARING` > `RECEIVED` > `PENDING` > `OPEN`)
+        - **Created date** (CreatedAt) in **ascending** order (oldest first)
+        Obs: Status CANCELLED and COMPLETED are not included
       parameters:
       - description: Filter by name
         in: query

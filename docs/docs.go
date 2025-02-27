@@ -303,7 +303,7 @@ const docTemplate = `{
         },
         "/orders": {
             "get": {
-                "description": "List all orders",
+                "description": "List all orders\n## Order list is sorted by:\n- **Status** in **descending** order (` + "`" + `READY` + "`" + ` \u003e ` + "`" + `PREPARING` + "`" + ` \u003e ` + "`" + `RECEIVED` + "`" + ` \u003e ` + "`" + `PENDING` + "`" + ` \u003e ` + "`" + `OPEN` + "`" + `)\n- **Created date** (CreatedAt) in **ascending** order (oldest first)\nObs: Status CANCELLED and COMPLETED are not included",
                 "consumes": [
                     "application/json"
                 ],

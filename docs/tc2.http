@@ -1,0 +1,14 @@
+# Test with HTTP Rest extension for VS Code 
+# https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+@baseUrl = http://localhost:8080
+@num = 6
+@name = John Doe {{num}}
+@email = john.doe.{{num}}@email.com
+@cpf = 123.456.789-0{{num}}
+@customerId = 1
+
+# @name getOrders
+
+GET {{baseUrl}}/api/v1/orders HTTP/1.1
+
