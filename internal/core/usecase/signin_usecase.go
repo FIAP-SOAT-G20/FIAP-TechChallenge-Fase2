@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/entity"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/port"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
 type SignInUsecase struct {
@@ -17,4 +17,4 @@ func NewSignInUsecase(customerDatasource port.CustomerDatasourcePort) port.SignI
 
 func (u *SignInUsecase) GetByCPF(cpf string) (*entity.Customer, error) {
 	return u.customerDatasource.GetByCPF(cpf)
-} 
+}

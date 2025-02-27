@@ -1,7 +1,7 @@
 package dto
 
 import (
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 )
 
 // Request DTOs
@@ -22,4 +22,4 @@ func NewSignInResponse(customer *entity.Customer) *SignInResponse {
 	return &SignInResponse{
 		CustomerResponse: *NewCustomerResponse(customer),
 	}
-} 
+}

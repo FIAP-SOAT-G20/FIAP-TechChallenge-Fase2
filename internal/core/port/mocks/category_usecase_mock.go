@@ -1,8 +1,8 @@
 package mocks
 
 import (
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/stretchr/testify/mock"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/entity"
 )
 
 type CategoryUsecaseMock struct {
@@ -35,4 +35,4 @@ func (m *CategoryUsecaseMock) Update(category *entity.Category) error {
 func (m *CategoryUsecaseMock) Delete(id uint64) error {
 	args := m.Called(id)
 	return args.Error(0)
-} 
+}

@@ -7,9 +7,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/dto"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/entity"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/port/mocks"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 )
@@ -19,10 +19,10 @@ func setupSignInTest() (*gin.Engine, *mocks.SignInUsecaseMock) {
 	r := gin.Default()
 	mockUsecase := new(mocks.SignInUsecaseMock)
 	controller := NewSignInController(mockUsecase)
-	
+
 	group := r.Group(controller.GroupRouterPattern())
 	controller.Register(group)
-	
+
 	return r, mockUsecase
 }
 
@@ -51,7 +51,7 @@ func TestSignInController_SignIn(t *testing.T) {
 
 	t.Run("invalid request", func(t *testing.T) {
 		req := dto.SignInRequest{} // CPF vazio
-		
+
 		body, _ := json.Marshal(req)
 		w := httptest.NewRecorder()
 		request, _ := http.NewRequest(http.MethodPost, "/api/v1/sign-in", bytes.NewBuffer(body))
@@ -74,4 +74,4 @@ func TestSignInController_SignIn(t *testing.T) {
 		assert.Equal(t, http.StatusNotFound, w.Code)
 		mockUsecase.AssertExpectations(t)
 	})
-} 
+}

@@ -3,7 +3,7 @@ package dto
 import (
 	"time"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 )
 
 type CreateCategoryRequest struct {
@@ -38,8 +38,7 @@ func (r UpdateCategoryRequest) ToEntity(id uint64) *entity.Category {
 
 type DeleteCategoryRequest struct {
 	ID uint64 `uri:"id" binding:"required,min=1" example:"1"`
-} 
-
+}
 
 type CategoryResponse struct {
 	ID        uint64    `json:"id"`
@@ -81,4 +80,4 @@ func NewCategoriesPaginatedResponse(categories []entity.Category, total int64, p
 		},
 		Categories: categoryResponses,
 	}
-} 
+}

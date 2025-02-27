@@ -1,7 +1,7 @@
 package port
 
 import (
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 )
 
 type CategoryUsecasePort interface {
@@ -10,4 +10,4 @@ type CategoryUsecasePort interface {
 	List(name string, page, limit int) ([]entity.Category, int64, error)
 	Update(category *entity.Category) error
 	Delete(id uint64) error
-} 
+}

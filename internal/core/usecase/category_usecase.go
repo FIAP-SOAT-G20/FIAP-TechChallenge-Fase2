@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/entity"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/port"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
 type CategoryUsecase struct {
@@ -43,4 +43,4 @@ func (cu *CategoryUsecase) Delete(id uint64) error {
 	}
 
 	return cu.categoryDatasource.Delete(id)
-} 
+}

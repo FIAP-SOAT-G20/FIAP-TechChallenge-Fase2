@@ -3,9 +3,9 @@ package controller
 import (
 	"net/http"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/dto"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/entity"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/port"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/gin-gonic/gin"
 )
 
@@ -63,4 +63,4 @@ func (sc *SignInController) SignIn(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, dto.NewSignInResponse(customer))
-} 
+}

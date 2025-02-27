@@ -1,7 +1,7 @@
 package mocks
 
 import (
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/stretchr/testify/mock"
 )
 
@@ -19,4 +19,4 @@ func (m *SignInUsecaseMock) GetByCPF(cpf string) (*entity.Customer, error) {
 		return nil, args.Error(1)
 	}
 	return args.Get(0).(*entity.Customer), args.Error(1)
-} 
+}

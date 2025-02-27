@@ -7,9 +7,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/dto"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/entity"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/port/mocks"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -20,10 +20,10 @@ func setupTest() (*gin.Engine, *mocks.CategoryUsecaseMock) {
 	r := gin.Default()
 	mockUsecase := new(mocks.CategoryUsecaseMock)
 	controller := NewCategoryController(mockUsecase)
-	
+
 	group := r.Group(controller.GroupRouterPattern())
 	controller.Register(group)
-	
+
 	return r, mockUsecase
 }
 
@@ -33,7 +33,7 @@ func TestCategoryController_CreateCategory(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		req := dto.CreateCategoryRequest{Name: "Test Category"}
 		category := &entity.Category{Name: req.Name}
-		
+
 		mockUsecase.On("Create", mock.AnythingOfType("*entity.Category")).Return(nil)
 
 		body, _ := json.Marshal(req)
@@ -48,7 +48,7 @@ func TestCategoryController_CreateCategory(t *testing.T) {
 
 	t.Run("invalid request", func(t *testing.T) {
 		req := dto.CreateCategoryRequest{} // Nome vazio
-		
+
 		body, _ := json.Marshal(req)
 		w := httptest.NewRecorder()
 		request, _ := http.NewRequest(http.MethodPost, "/api/v1/categories/", bytes.NewBuffer(body))
@@ -107,7 +107,7 @@ func TestCategoryController_UpdateCategory(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		req := dto.UpdateCategoryRequest{Name: "Updated Category"}
 		category := &entity.Category{ID: 1, Name: req.Name}
-		
+
 		mockUsecase.On("Update", mock.AnythingOfType("*entity.Category")).Return(nil)
 
 		body, _ := json.Marshal(req)
@@ -134,4 +134,4 @@ func TestCategoryController_DeleteCategory(t *testing.T) {
 		assert.Equal(t, http.StatusNoContent, w.Code)
 		mockUsecase.AssertExpectations(t)
 	})
-} 
+}

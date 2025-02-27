@@ -3,8 +3,8 @@ package usecase
 import (
 	"testing"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/entity"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/port/mocks"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -164,4 +164,4 @@ func TestCategoryUsecase_Delete(t *testing.T) {
 		assert.Equal(t, entity.ErrNotFound, err)
 		mockDatasource.AssertExpectations(t)
 	})
-} 
+}

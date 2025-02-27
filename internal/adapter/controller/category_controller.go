@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/dto"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/port"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/gin-gonic/gin"
 )
 
@@ -130,4 +130,4 @@ func (cc *CategoryController) DeleteCategory(ctx *gin.Context) {
 	}
 
 	ctx.Status(http.StatusNoContent)
-} 
+}

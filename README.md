@@ -22,7 +22,7 @@ Repository for the [FIAP](https://postech.fiap.com.br/) Tech Challenge 2, focuse
 
 Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
-> Tech Challenge 1 repository can be found [here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1)
+> Tech Challenge 1 repository can be found [here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2)
 
 ## 📚 Dictionary - Ubiquitous Language
 

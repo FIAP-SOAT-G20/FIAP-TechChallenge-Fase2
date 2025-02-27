@@ -3,7 +3,7 @@ package mocks
 import (
 	"github.com/stretchr/testify/mock"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1/internal/core/domain/entity"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 )
 
 type CategoryDatasourceMock struct {
@@ -33,4 +33,4 @@ func (m *CategoryDatasourceMock) Update(category *entity.Category) error {
 func (m *CategoryDatasourceMock) Delete(id uint64) error {
 	args := m.Called(id)
 	return args.Get(0).(error)
-} 
+}
