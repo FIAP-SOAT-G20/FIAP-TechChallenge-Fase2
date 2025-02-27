@@ -22,7 +22,8 @@ Repository for the [FIAP](https://postech.fiap.com.br/) Tech Challenge 2, focuse
 
 Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
-> Tech Challenge 1 repository can be found [here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1)
+> [!NOTE]
+> Tech Challenge 1 repository can be found [here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1)  
 
 ## 📚 Dictionary - Ubiquitous Language
 
@@ -103,7 +104,8 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - **Database Migrations**: Database migrations were created to manage the database schema. This allows us to version control the database schema and apply changes to the database in a structured way.
 - **HTTP Server**: The HTTP server was created using the Gin framework, a lightweight web framework for Go. This framework provides a fast and easy way to create web applications in Go.
 
-[Back to top](#readme-top)
+<!-- [Back to top](#readme-top) -->
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### ✨ Features
 
@@ -214,8 +216,13 @@ make compose-up
 > To remove the application, run `compose-clean`  
 
 > [!NOTE]
-> You can check the application swagger documentation at http://localhost:8080/docs/index.html  
-> Alternatively, a postman collection is available at [here](docs/10soat-g20-tech-challenge-1.postman_collection.json)  
+> The application is available at http://localhost:8080
+
+> [!IMPORTANT]
+> Documentation is available at:
+> - Swagger: `http://localhost:8080/swagger/index.html`
+> - Postman collection: [here](docs/postman_collection.json)
+> - HTTP Client: [here](docs/tc2.http)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
