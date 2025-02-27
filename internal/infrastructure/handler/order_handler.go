@@ -66,18 +66,19 @@ func (h *OrderHandler) List(c *gin.Context) {
 	}
 
 	// Default status_exclude
-
 	var statusExclude []valueobject.OrderStatus
-	if query.StatusExclude == "" || query.StatusExclude != "NONE" {
+	if query.StatusExclude == "" {
 		query.StatusExclude = "CANCELLED,COMPLETED"
+	}
 
-		// Convert StatusExclude
+	// Convert status_exclude
+	if strings.ToUpper(query.StatusExclude) != "NONE" {
 		for _, s := range strings.Split(query.StatusExclude, ",") {
 			statusExclude = append(statusExclude, valueobject.OrderStatus(s))
 		}
 	}
 
-	// Convert Status
+	// Convert status
 	var status []valueobject.OrderStatus
 	if query.Status != "" {
 		for _, s := range strings.Split(query.Status, ",") {
