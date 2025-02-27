@@ -81,3 +81,7 @@ func NewCategoriesPaginatedResponse(categories []entity.Category, total int64, p
 		Categories: categoryResponses,
 	}
 }
+
+type ErrorResponse struct {
+	Message string `json:"message"`
+}

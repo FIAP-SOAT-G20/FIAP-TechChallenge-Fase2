@@ -15,3 +15,7 @@ type CustomerDataSource interface {
 	Delete(ctx context.Context, id uint64) error
 	Transaction(ctx context.Context, fn func(ctx context.Context) error) error
 }
+
+type CustomerDatasourcePort interface {
+	GetByCPF(cpf string) (*entity.Customer, error)
+}
