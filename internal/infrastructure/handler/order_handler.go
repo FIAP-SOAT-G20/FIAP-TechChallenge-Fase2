@@ -34,6 +34,10 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 //
 //	@Summary		List orders (Reference 1.a.iv)
 //	@Description	List all orders
+//	@Description	## Order list is sorted by:
+//	@Description	- **Status** in **descending** order (`READY` > `PREPARING` > `RECEIVED` > `PENDING` > `OPEN`)
+//	@Description	- **Created date** (CreatedAt) in **ascending** order (oldest first)
+//	@Description	Obs: Status CANCELLED and COMPLETED are not included
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
