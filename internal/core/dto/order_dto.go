@@ -28,4 +28,5 @@ type ListOrdersInput struct {
 	Status     valueobject.OrderStatus
 	Page       int
 	Limit      int
+	Sort       string
 }

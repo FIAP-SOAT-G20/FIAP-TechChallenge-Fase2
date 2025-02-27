@@ -41,10 +41,11 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
-//	@Param			name		query		string									false	"Filter by name"
-//	@Param			category_id	query		int										false	"Filter by category ID"
-//	@Param			page		query		int										false	"Page number"		default(1)
-//	@Param			limit		query		int										false	"Items per page"	default(10)
+//	@Param			customer_id	query		int										false	"Filter by customer ID"
+//	@Param			status		query		string									false	"Filter by status"
+//	@Param			sort		query		string									false	"Sort by field. Use <field_name>:d for descending, and the default order is ascending"	default("status:d,created_at")
+//	@Param			page		query		int										false	"Page number"																			default(1)
+//	@Param			limit		query		int										false	"Items per page"																		default(10)
 //	@Success		200			{object}	presenter.OrderJsonPaginatedResponse	"OK"
 //	@Failure		400			{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse			"Internal Server Error"
@@ -56,11 +57,16 @@ func (h *OrderHandler) List(c *gin.Context) {
 		return
 	}
 
+	if query.Sort == "" {
+		query.Sort = "status:d,created_at"
+	}
+
 	input := dto.ListOrdersInput{
 		CustomerID: query.CustomerID,
 		Status:     query.Status,
 		Page:       query.Page,
 		Limit:      query.Limit,
+		Sort:       query.Sort,
 	}
 
 	output, err := h.controller.List(

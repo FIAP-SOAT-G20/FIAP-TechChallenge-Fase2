@@ -22,7 +22,7 @@ func NewOrderUseCase(gateway port.OrderGateway, orderHistoryUseCase port.OrderHi
 
 // List returns a list of Orders
 func (uc *orderUseCase) List(ctx context.Context, i dto.ListOrdersInput) ([]*entity.Order, int64, error) {
-	orders, total, err := uc.gateway.FindAll(ctx, i.CustomerID, i.Status, i.Page, i.Limit)
+	orders, total, err := uc.gateway.FindAll(ctx, i.CustomerID, i.Status, i.Page, i.Limit, i.Sort)
 	if err != nil {
 		return nil, 0, domain.NewInternalError(err)
 	}

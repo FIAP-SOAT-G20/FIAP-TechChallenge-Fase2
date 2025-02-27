@@ -7,6 +7,8 @@ type ListOrdersQueryRequest struct {
 	Status     valueobject.OrderStatus `form:"status" binding:"omitempty,order_status_exists" example:"PENDING"`
 	Page       int                     `form:"page,default=1" example:"1"`
 	Limit      int                     `form:"limit,default=10" example:"10"`
+	// Sort by default: status:d,created_at. Use <field_name>:d for descending, and the default order is ascending
+	Sort string `form:"sort" example:"status:d,created_at"`
 }
 
 type CreateOrderBodyRequest struct {

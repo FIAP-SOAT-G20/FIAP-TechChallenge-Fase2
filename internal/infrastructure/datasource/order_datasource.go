@@ -34,7 +34,7 @@ func (ds *orderDataSource) FindByID(ctx context.Context, id uint64) (*entity.Ord
 	return &order, nil
 }
 
-func (ds *orderDataSource) FindAll(ctx context.Context, filters map[string]interface{}, page, limit int) ([]*entity.Order, int64, error) {
+func (ds *orderDataSource) FindAll(ctx context.Context, filters map[string]any, sort string, page, limit int) ([]*entity.Order, int64, error) {
 	var orders []*entity.Order
 	var total int64
 
@@ -55,8 +55,12 @@ func (ds *orderDataSource) FindAll(ctx context.Context, filters map[string]inter
 	}
 
 	// Apply order
-	query = query.Order("status desc, created_at asc")
+	// query = query.Order("status desc, created_at asc")
+	if sort != "" {
+		query = query.Order(sort)
+	}
 
+	// TODO: Add as filter
 	// Remove status CANCELLED and COMPLETED
 	query = query.Where("status != ?", valueobject.CANCELLED)
 	query = query.Where("status != ?", valueobject.COMPLETED)
