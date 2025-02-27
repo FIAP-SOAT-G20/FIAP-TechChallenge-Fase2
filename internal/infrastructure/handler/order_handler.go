@@ -45,7 +45,7 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 //	@Produce		json
 //	@Param			customer_id		query		int										false	"Filter by customer ID"
 //	@Param			status			query		string									false	"Filter by status (Accept many), options: OPEN, PENDING, RECEIVED, PREPARING, READY, ex: PENDING or OPEN,PENDING"
-//	@Param			status_exclude	query		string									false	"Exclude by status (Accept many), options: OPEN, PENDING, RECEIVED, PREPARING, READY, CANCELLED, COMPLETED, ex: CANCELLED or CANCELLED,COMPLETED (default)"
+//	@Param			status_exclude	query		string									false	"Exclude by status (Accept many), options: NONE, OPEN, PENDING, RECEIVED, PREPARING, READY, CANCELLED, COMPLETED, ex: CANCELLED or CANCELLED,COMPLETED (default)"
 //	@Param			sort			query		string									false	"Sort by field (Accept many). Use `<field_name>:d` for descending, and the default order is ascending"	default(status:d,created_at)
 //	@Param			page			query		int										false	"Page number"																							default(1)
 //	@Param			limit			query		int										false	"Items per page"																						default(10)
@@ -66,8 +66,15 @@ func (h *OrderHandler) List(c *gin.Context) {
 	}
 
 	// Default status_exclude
-	if query.StatusExclude == "" {
+
+	var statusExclude []valueobject.OrderStatus
+	if query.StatusExclude == "" || query.StatusExclude != "NONE" {
 		query.StatusExclude = "CANCELLED,COMPLETED"
+
+		// Convert StatusExclude
+		for _, s := range strings.Split(query.StatusExclude, ",") {
+			statusExclude = append(statusExclude, valueobject.OrderStatus(s))
+		}
 	}
 
 	// Convert Status
@@ -76,12 +83,6 @@ func (h *OrderHandler) List(c *gin.Context) {
 		for _, s := range strings.Split(query.Status, ",") {
 			status = append(status, valueobject.OrderStatus(s))
 		}
-	}
-
-	// Convert StatusExclude
-	var statusExclude []valueobject.OrderStatus
-	for _, s := range strings.Split(query.StatusExclude, ",") {
-		statusExclude = append(statusExclude, valueobject.OrderStatus(s))
 	}
 
 	input := dto.ListOrdersInput{
