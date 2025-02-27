@@ -29,3 +29,15 @@ GET {{baseUrl}}/api/v1/orders?sort=customer_id:d HTTP/1.1
 # @name getOrdersSortedTwoFields
 
 GET {{baseUrl}}/api/v1/orders?sort=customer_id:d,created_at HTTP/1.1
+
+###
+
+# @name getOrdersByStatus
+
+GET {{baseUrl}}/api/v1/orders?status=OPEN HTTP/1.1
+
+###
+
+# @name getOrdersByStatuses
+
+GET {{baseUrl}}/api/v1/orders?status=OPEN,RECEIVED HTTP/1.1

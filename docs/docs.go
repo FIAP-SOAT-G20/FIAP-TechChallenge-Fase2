@@ -323,14 +323,14 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Filter by status (OPEN, PENDING, RECEIVED, PREPARING, READY)",
+                        "description": "Filter by status (Accept many), options: OPEN, PENDING, RECEIVED, PREPARING, READY), ex: status=PENDING or status=OPEN,PENDING",
                         "name": "status",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "default": "status:d,created_at",
-                        "description": "Sort by field. Use ` + "`" + `\u003cfield_name\u003e:d` + "`" + ` for descending, and the default order is ascending",
+                        "description": "Sort by field (Accept many). Use ` + "`" + `\u003cfield_name\u003e:d` + "`" + ` for descending, and the default order is ascending",
                         "name": "sort",
                         "in": "query"
                     },
