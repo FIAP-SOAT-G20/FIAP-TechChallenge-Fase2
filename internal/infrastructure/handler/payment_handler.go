@@ -75,7 +75,7 @@ func (h *PaymentHandler) Create(c *gin.Context) {
 //	@Description	- `PROCESSING` (default)
 //	@Description	- `CONFIRMED`
 //	@Description	- `FAILED`
-//	@Description	- `CANCELED`
+//	@Description	- `ABORTED`
 //	@Tags			payments
 //	@Accept			json
 //	@Produce		json

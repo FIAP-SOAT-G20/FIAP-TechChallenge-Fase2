@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS order_histories
 CREATE TABLE IF NOT EXISTS payments
 (
     id                  SERIAL PRIMARY KEY,
-    status              VARCHAR CHECK (status IN ('PROCESSING', 'CONFIRMED', 'CANCELED', 'FAILED')) DEFAULT 'PROCESSING',
+    status              VARCHAR CHECK (status IN ('PROCESSING', 'CONFIRMED', 'ABORTED', 'FAILED')) DEFAULT 'PROCESSING',
     external_payment_id VARCHAR,
     order_id            INT REFERENCES orders (id),
     qr_data             VARCHAR,
