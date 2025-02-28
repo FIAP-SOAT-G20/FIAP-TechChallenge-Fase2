@@ -1,9 +1,8 @@
 name: cd/push-to-registry
 
-on: push
-# on:
-#   release:
-#     types: [created]
+on:
+  release:
+    types: [created]
 
 env:
   REGISTRY: ghcr.io
