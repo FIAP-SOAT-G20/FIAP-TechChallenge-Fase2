@@ -1,8 +1,10 @@
 .DEFAULT_GOAL := help
 
+# Variables
 APP_NAME=app
 MAIN_FILE=cmd/server/main.go
-DOCKER_REGISTRY=your-registry
+DOCKER_REGISTRY=ghcr.io
+DOCKER_REGISTRY_APP=fiap-soat-g20/fiap-techchallenge-fase2
 VERSION=$(shell git describe --tags --always --dirty)
 NAMESPACE=tech-challenge-system
 TEST_PATH=./internal/...
@@ -10,6 +12,7 @@ TEST_COVERAGE_FILE_NAME=coverage.out
 MIGRATION_PATH = internal/infrastructure/database/migrations
 DB_URL = postgres://postgres:postgres@localhost:5432/fastfood_10soat_g18_tc2?sslmode=disable
 
+# Go commands
 GOCMD=go
 GOBUILD=$(GOCMD) build
 GORUN=$(GOCMD) run
@@ -127,14 +130,14 @@ install: ## Install dependencies
 .PHONY: docker-build
 docker-build: ## Build Docker image
 	@echo  "🟢 Building Docker image..."
-	docker build --platform linux/amd64 -t $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) .
-	docker tag $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) $(DOCKER_REGISTRY)/$(APP_NAME):latest
+	docker build --platform linux/amd64 -t $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_APP):$(VERSION) .
+	docker tag $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_APP):$(VERSION) $(DOCKER_REGISTRY)/$(APP_NAME):latest
 
 .PHONY: docker-push
 docker-push: ## Push Docker image
 	@echo  "🟢 Pushing Docker image..."
-	docker push $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION)
-	docker push $(DOCKER_REGISTRY)/$(APP_NAME):latest
+	docker push $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_APP):$(VERSION)
+	docker push $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_APP):latest
 
 .PHONY: k8s-apply
 k8s-apply: ## Apply Kubernetes manifests
@@ -177,6 +180,7 @@ compose-build: ## Build the application with Docker Compose
 .PHONY: compose-up
 compose-up: ## Start development environment with Docker Compose
 	@echo  "🟢 Starting development environment..."
+	docker compose pull
 	docker-compose up -d --wait --build
 
 .PHONY: compose-down
