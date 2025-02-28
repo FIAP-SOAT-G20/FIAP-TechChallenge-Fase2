@@ -102,6 +102,21 @@ func (mr *MockPaymentGatewayMockRecorder) FindByOrderID(ctx, orderID any) *gomoc
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByOrderID", reflect.TypeOf((*MockPaymentGateway)(nil).FindByOrderID), ctx, orderID)
 }
 
+// FindByOrderIDAndStatusProcessing mocks base method.
+func (m *MockPaymentGateway) FindByOrderIDAndStatusProcessing(ctx context.Context, orderID uint64) (*entity.Payment, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindByOrderIDAndStatusProcessing", ctx, orderID)
+	ret0, _ := ret[0].(*entity.Payment)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FindByOrderIDAndStatusProcessing indicates an expected call of FindByOrderIDAndStatusProcessing.
+func (mr *MockPaymentGatewayMockRecorder) FindByOrderIDAndStatusProcessing(ctx, orderID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByOrderIDAndStatusProcessing", reflect.TypeOf((*MockPaymentGateway)(nil).FindByOrderIDAndStatusProcessing), ctx, orderID)
+}
+
 // Update mocks base method.
 func (m *MockPaymentGateway) Update(ctx context.Context, status valueobject.PaymentStatus, resource string) error {
 	m.ctrl.T.Helper()

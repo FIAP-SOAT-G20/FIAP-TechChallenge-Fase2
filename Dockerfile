@@ -1,4 +1,5 @@
 FROM golang:1.23-alpine AS builder
+LABEL org.opencontainers.image.source="https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2"
 WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download

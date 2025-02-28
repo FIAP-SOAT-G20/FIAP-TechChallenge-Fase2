@@ -57,6 +57,21 @@ func (mr *MockPaymentControllerMockRecorder) Create(ctx, presenter, input any) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockPaymentController)(nil).Create), ctx, presenter, input)
 }
 
+// Get mocks base method.
+func (m *MockPaymentController) Get(ctx context.Context, p port.Presenter, i dto.GetPaymentInput) ([]byte, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Get", ctx, p, i)
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Get indicates an expected call of Get.
+func (mr *MockPaymentControllerMockRecorder) Get(ctx, p, i any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockPaymentController)(nil).Get), ctx, p, i)
+}
+
 // Update mocks base method.
 func (m *MockPaymentController) Update(ctx context.Context, p port.Presenter, i dto.UpdatePaymentInput) ([]byte, error) {
 	m.ctrl.T.Helper()
