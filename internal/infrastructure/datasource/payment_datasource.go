@@ -31,6 +31,18 @@ func (ds *paymentDataSource) Create(ctx context.Context, p *entity.Payment) (*en
 
 func (ds *paymentDataSource) GetByOrderID(ctx context.Context, orderID uint64) (*entity.Payment, error) {
 	var p entity.Payment
+	if err := ds.db.WithContext(ctx).Where("order_id = ?", orderID).First(&p).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return &p, nil
+		}
+		return nil, err
+	}
+
+	return &p, nil
+}
+
+func (ds *paymentDataSource) GetByOrderIDAndStatusProcessing(ctx context.Context, orderID uint64) (*entity.Payment, error) {
+	var p entity.Payment
 	if err := ds.db.WithContext(ctx).Where("order_id = ? AND status = ?", orderID, valueobject.PROCESSING).First(&p).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return &p, nil
