@@ -34,7 +34,15 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
 
-      - name: Docker metadata
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Docker metadata 
         id: meta
         uses: docker/metadata-action@v5
         with:
