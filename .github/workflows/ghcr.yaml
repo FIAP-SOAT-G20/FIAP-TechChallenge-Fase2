@@ -10,7 +10,7 @@ env:
 
 jobs:
   build-and-push-image:
-    name: Build and push Docker image
+    name: build & push docker image to ghcr
     runs-on: ubuntu-latest
     permissions:
       contents: read
