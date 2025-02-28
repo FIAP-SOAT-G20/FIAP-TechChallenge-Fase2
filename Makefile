@@ -56,7 +56,7 @@ stop-db: ## Stop the database
 .PHONY: run-air
 run-air: build ## Run the application with Air
 	@echo  "🟢 Running the application with Air..."
-	air -c air.toml
+	@go run github.com/air-verse/air@v1.61.7 -c air.toml
 
 .PHONY: test
 test: ## Run tests
@@ -76,44 +76,28 @@ clean: ## Clean up binaries and coverage files
 	@echo "🔴 Cleaning up..."
 	$(GOCLEAN)
 	rm -f $(APP_NAME)
-	rm -f coverage.out
+	rm -f $(TEST_COVERAGE_FILE_NAME)
 
 .PHONY: mock
 mock: ## Generate mocks
 	@echo  "🟢 Generating mocks..."
-	mockgen -source=internal/core/port/presenter_port.go -destination=internal/core/port/mocks/presenter_mock.go
-	mockgen -source=internal/core/port/product_gateway_port.go -destination=internal/core/port/mocks/product_gateway_mock.go
-	mockgen -source=internal/core/port/product_usecase_port.go -destination=internal/core/port/mocks/product_usecase_mock.go
-	mockgen -source=internal/core/port/product_controller_port.go -destination=internal/core/port/mocks/product_controller_mock.go
-	mockgen -source=internal/core/port/customer_gateway_port.go -destination=internal/core/port/mocks/customer_gateway_mock.go
-	mockgen -source=internal/core/port/customer_usecase_port.go -destination=internal/core/port/mocks/customer_usecase_mock.go
-	mockgen -source=internal/core/port/customer_controller_port.go -destination=internal/core/port/mocks/customer_controller_mock.go
-	mockgen -source=internal/core/port/order_gateway_port.go -destination=internal/core/port/mocks/order_gateway_mock.go
-	mockgen -source=internal/core/port/order_usecase_port.go -destination=internal/core/port/mocks/order_usecase_mock.go
-	mockgen -source=internal/core/port/order_controller_port.go -destination=internal/core/port/mocks/order_controller_mock.go
-	mockgen -source=internal/core/port/order_product_gateway_port.go -destination=internal/core/port/mocks/order_product_gateway_mock.go
-	mockgen -source=internal/core/port/order_product_controller_port.go -destination=internal/core/port/mocks/order_product_controller_mock.go
-	mockgen -source=internal/core/port/staff_gateway_port.go -destination=internal/core/port/mocks/staff_gateway_mock.go
-	mockgen -source=internal/core/port/staff_usecase_port.go -destination=internal/core/port/mocks/staff_usecase_mock.go
-	mockgen -source=internal/core/port/staff_controller_port.go -destination=internal/core/port/mocks/staff_controller_mock.go
-	mockgen -source=internal/core/port/order_history_gateway_port.go -destination=internal/core/port/mocks/order_history_gateway_mock.go
-	mockgen -source=internal/core/port/order_history_usecase_port.go -destination=internal/core/port/mocks/order_history_usecase_mock.go
-	mockgen -source=internal/core/port/order_history_controller_port.go -destination=internal/core/port/mocks/order_history_controller_mock.go
-	mockgen -source=internal/core/port/payment_gateway_port.go -destination=internal/core/port/mocks/payment_gateway_mock.go
-	mockgen -source=internal/core/port/payment_usecase_port.go -destination=internal/core/port/mocks/payment_usecase_mock.go
-	mockgen -source=internal/core/port/payment_controller_port.go -destination=internal/core/port/mocks/payment_controller_mock.go
-	
+# romove mocks files
+	@rm -rf internal/core/port/mocks/*
+# loop through all files in the port directory and generate mocks
+	@for file in internal/core/port/*.go; do \
+		go run go.uber.org/mock/mockgen@v0.5.0 -source=$$file -destination=internal/core/port/mocks/`basename $$file _port.go`_mock.go; \
+	done
 
 .PHONY: swagger
 swagger: ## Generate Swagger documentation
 	@echo  "🟢 Generating Swagger documentation..."
-	swag fmt ./...
-	swag init -g ${MAIN_FILE} --parseInternal true
+	@go run github.com/swaggo/swag/cmd/swag@v1.16.4 fmt ./...
+	@go run github.com/swaggo/swag/cmd/swag@v1.16.4 init -g ${MAIN_FILE} --parseInternal true
 
 .PHONY: lint
 lint: ## Run linter
 	@echo  "🟢 Running linter..."
-	golangci-lint run
+	@go run github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.5 run --out-format colored-line-number
 
 .PHONY: migrate-create
 migrate-create: ## Create new migration, usage example: make migrate-create name=create_table_products
@@ -138,12 +122,7 @@ migrate-down: ## Roll back migrations
 install: ## Install dependencies
 	@echo  "🟢 Installing dependencies..."
 	go mod download
-	@go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
-	@go install golang.org/x/vuln/cmd/govulncheck@latest
-	@go install github.com/swaggo/swag/cmd/swag@latest
-	@go install go.uber.org/mock/mockgen@latest
-	@go install github.com/air-verse/air@latest
-	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	@go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@v4.18.2
 
 .PHONY: docker-build
 docker-build: ## Build Docker image
@@ -213,7 +192,7 @@ compose-clean: ## Clean the application with Docker Compose, removing volumes an
 .PHONY: scan
 scan: ## Run security scan
 	@echo  "🟢 Running security scan..."
-	govulncheck -show verbose ./...
+	@go run golang.org/x/vuln/cmd/govulncheck@v1.1.4 -show verbose ./...
 #	trivy image $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) # TODO: Enable when the image is available
 
 .PHONY: new-branch
