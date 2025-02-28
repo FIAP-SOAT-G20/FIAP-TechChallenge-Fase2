@@ -1,8 +1,6 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/fiap-soat-g20/fiap-techchallenge-fase2:sha-5da0023
     container_name: app.10soat-g18.dev
     ports:
       - "8080:8080"
