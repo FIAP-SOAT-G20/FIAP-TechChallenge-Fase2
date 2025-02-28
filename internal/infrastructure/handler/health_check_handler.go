@@ -12,8 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type HealthCheckHandler struct {
-}
+type HealthCheckHandler struct{}
 
 func NewHealthCheckHandler() *HealthCheckHandler {
 	return &HealthCheckHandler{}
@@ -39,8 +38,8 @@ func (h *HealthCheckHandler) HealthCheck(c *gin.Context) {
 	hc := &response.HealthCheckResponse{
 		Status: response.HealthCheckStatusPass,
 		Checks: map[string]response.HealthCheckVerifications{
-			"db:postgresS": {
-				ComponentId: "db:postgresS",
+			"postgres:status": {
+				ComponentId: "db:postgres",
 				Status:      response.HealthCheckStatusPass,
 				Time:        time.Now(),
 			},
@@ -56,8 +55,8 @@ func (h *HealthCheckHandler) HealthCheck(c *gin.Context) {
 
 	if db.Ping() != nil {
 		hc.Status = response.HealthCheckStatusFail
-		hc.Checks["db:postgresS"] = response.HealthCheckVerifications{
-			ComponentId: "db:postgresS",
+		hc.Checks["postgres:status"] = response.HealthCheckVerifications{
+			ComponentId: "db:postgres",
 			Status:      response.HealthCheckStatusFail,
 			Time:        time.Now(),
 		}
