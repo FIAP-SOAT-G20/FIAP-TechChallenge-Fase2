@@ -1,10 +1,8 @@
 name: cd/push-to-registry
 
-on: push # Only for testing
-# TODO: change to new release tag
-# on:
-#   release:
-#     types: [created]
+on:
+  release:
+    types: [created]
 
 env:
   REGISTRY: ghcr.io
