@@ -37,22 +37,22 @@ if [[ $branch == *"feature"* ]]; then
     type="Feature"
 elif [[ $branch == *"change"* ]]; then
     type="Change"
-elif [[ $branch == *"fix"* ]]; then
-    type="Fix"
+elif [[ $branch == *"hotfix"* ]]; then
+    type="Hotfix"
 elif [[ $branch == *"removed"* ]]; then
     type="Removed"
 elif [[ $branch == *"refactor"* ]]; then
     type="Refactor"
 elif [[ $branch == *"doc"* ]]; then
     type="Doc"
-elif [[ $branch == *"hotfix"* ]]; then
-    type="Hotfix"
+elif [[ $branch == *"fix"* ]]; then
+    type="Fix"
 fi
 
 # If no type is given, ask for it
 if [[ -z $type ]]; then
     echo "✨ Type: 📱"
-    options=("Feature" "Bugfix" "Hotfix" "Refactor" "Documentation" "Chore")
+    options=("Feature" "Change" "Fix" "Removed" "Refactor" "Doc" "Hotfix")
     select_option "${options[@]}"
     type="${options[$?]}" 
 fi
