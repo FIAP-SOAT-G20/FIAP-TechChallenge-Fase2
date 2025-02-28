@@ -113,7 +113,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
 ### ✨ Features
 
-- [x] Dockerfile: small image with multi-stage docker build, and independent of the host environment
+- [x] Dockerfile: small image with multi-stage docker build, and multi-platform build (Cross-Compilation)
 - [x] Makefile: to simplify the build and run commands
 - [x] Clean architecture
 - [x] PostgreSQL database
@@ -273,7 +273,7 @@ kubectl apply -f k8s/
 13. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard
 14. Push to the branch and Open a new PR by running `make pull-request`
 15. After the PR is approved, merge it to the main branch
-16. The GitHub Actions will run the tests, lint, and build the Docker image
+16. The GitHub Actions will run the tests, lint, and build the Docker image (GHCR, multi-platform)
 <!-- 17. The Kubernetes deployment will be updated automatically -->
 
 > [!TIP]
@@ -331,6 +331,9 @@ make test
 - [WordPress API Reference - Posts](https://developer.wordpress.org/rest-api/reference/posts/)
 - [Pushing container images to GitHub Container Registry with GitHub Actions](https://dev.to/willvelida/pushing-container-images-to-github-container-registry-with-github-actions-1m6b)
 - [GitHub Packages.. Containers in a GitHub repo?](https://www.youtube.com/watch?v=gqseP_wTZsk&ab_channel=DevOpsJourney)
+- [Docker- Multi-platform builds - Multiple native nodes](https://docs.docker.com/build/building/multi-platform/#multiple-native-nodes)
+- [Faster Multi-Platform Builds: Dockerfile Cross-Compilation Guide](https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/)
+- [Stack Overflow - What does the w flag mean when passed in via the ldflags option to the go command?](https://stackoverflow.com/a/22276273/1403288)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
