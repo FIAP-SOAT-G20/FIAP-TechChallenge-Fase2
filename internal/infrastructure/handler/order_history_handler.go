@@ -28,8 +28,8 @@ func (h *OrderHistoryHandler) Register(router *gin.RouterGroup) {
 
 // List godoc
 
-// @Summary		List orderHistories
-// @Description	List all orderHistories
+// @Summary		List order histories
+// @Description	List all order histories
 // @Tags			orders
 // @Accept			json
 // @Produce		json
@@ -70,8 +70,8 @@ func (h *OrderHistoryHandler) List(c *gin.Context) {
 
 // Get godoc
 //
-//	@Summary		Get orderHistory
-//	@Description	Search for a orderHistory by ID
+//	@Summary		Get order history
+//	@Description	Search for a order history by ID
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
@@ -107,8 +107,8 @@ func (h *OrderHistoryHandler) Get(c *gin.Context) {
 
 // Delete godoc
 //
-//	@Summary		Delete orderHistory
-//	@Description	Deletes a orderHistory by ID
+//	@Summary		Delete order history
+//	@Description	Deletes a order history by ID
 //	@Tags			orders
 //	@Produce		json
 //	@Param			id	path		int									true	"OrderHistory ID"

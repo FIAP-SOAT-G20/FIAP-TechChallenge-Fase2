@@ -24,8 +24,10 @@ type DeleteOrderInput struct {
 }
 
 type ListOrdersInput struct {
-	CustomerID uint64
-	Status     valueobject.OrderStatus
-	Page       int
-	Limit      int
+	CustomerID    uint64
+	Status        []valueobject.OrderStatus
+	StatusExclude []valueobject.OrderStatus
+	Page          int
+	Limit         int
+	Sort          string
 }

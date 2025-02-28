@@ -8,6 +8,7 @@ import (
 	"go.uber.org/mock/gomock"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 )
@@ -24,7 +25,7 @@ func TestOrderController_ListOrders(t *testing.T) {
 	ctx := context.Background()
 	input := dto.ListOrdersInput{
 		CustomerID: 1,
-		Status:     "PENDING",
+		Status:     []valueobject.OrderStatus{"PENDING"},
 		Page:       1,
 		Limit:      10,
 	}

@@ -34,7 +34,7 @@ func (ds *orderDataSource) FindByID(ctx context.Context, id uint64) (*entity.Ord
 	return &order, nil
 }
 
-func (ds *orderDataSource) FindAll(ctx context.Context, filters map[string]interface{}, page, limit int) ([]*entity.Order, int64, error) {
+func (ds *orderDataSource) FindAll(ctx context.Context, filters map[string]any, sort string, page, limit int) ([]*entity.Order, int64, error) {
 	var orders []*entity.Order
 	var total int64
 
@@ -43,15 +43,24 @@ func (ds *orderDataSource) FindAll(ctx context.Context, filters map[string]inter
 	// Apply filters
 	for key, value := range filters {
 		switch key {
-		case "status":
-			if status, ok := value.(valueobject.OrderStatus); ok && status != valueobject.UNDEFINDED {
-				query = query.Where("status = ?", status)
+		case "statuses":
+			if statuses, ok := value.([]valueobject.OrderStatus); ok && len(statuses) > 0 {
+				query = query.Where("status IN ?", statuses)
+			}
+		case "statuses_exclude":
+			if statuses, ok := value.([]valueobject.OrderStatus); ok && len(statuses) > 0 {
+				query = query.Where("status NOT IN ?", statuses)
 			}
 		case "customer_id":
 			if customerID, ok := value.(uint64); ok && customerID != 0 {
 				query = query.Where("customer_id = ?", customerID)
 			}
 		}
+	}
+
+	// Apply order
+	if sort != "" {
+		query = query.Order(sort)
 	}
 
 	// Count total before pagination

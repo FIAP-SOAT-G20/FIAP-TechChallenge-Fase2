@@ -1,14 +1,17 @@
 <a name="readme-top"></a>
 
-# <p align="center">FIAP Tech Challenge 2 - G18 Fast Food</p>
+# <p align="center"><b>Fast Food</b> <small>FIAP Tech Challenge 2 - G18</small></p>
 
 <p align="center">
     <img src="https://img.shields.io/badge/Code-Go-informational?style=flat-square&logo=go&color=00ADD8" alt="Go" />
     <img src="https://img.shields.io/badge/Tools-Gin-informational?style=flat-square&logo=go&color=00ADD8" alt="Gin" />
     <img src="https://img.shields.io/badge/Tools-PostgreSQL-informational?style=flat-square&logo=postgresql&color=4169E1" alt="PostgreSQL" />
-    <img src="https://img.shields.io/badge/Tools-Swagger-informational?style=flat-square&logo=swagger&color=85EA2D" alt="Swagger" />
     <img src="https://img.shields.io/badge/Tools-Docker-informational?style=flat-square&logo=docker&color=2496ED" alt="Docker" />
-    <img src="https://img.shields.io/badge/Tools-Kubernetes-informational?style=flat-square&logo=kubernetes&color=326CE5" alt="Kubernetes" />
+    <img src="https://img.shields.io/badge/Tools-Kubernetes-informational?style=flat-square&logo=kubernetes&color=326CE5" alt="Kubernetes" /></br>
+    <img src="https://img.shields.io/badge/Tools-Make-informational?style=flat-square&logo=make&color=6D00CC" alt="Make" />
+    <img src="https://img.shields.io/badge/Tools-GitHub_Actions-informational?style=flat-square&logo=githubactions&color=222222" alt="GitHub Actions" />
+    <img src="https://img.shields.io/badge/Tools-Swagger-informational?style=flat-square&logo=swagger&color=85EA2D" alt="Swagger" />
+    <img src="https://img.shields.io/badge/Tools-Postman-informational?style=flat-square&logo=postman&color=FF6C37" alt="Postman" />
 </p>
 
 
@@ -22,7 +25,8 @@ Repository for the [FIAP](https://postech.fiap.com.br/) Tech Challenge 2, focuse
 
 Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
-> Tech Challenge 1 repository can be found [here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1)
+> [!NOTE]
+> Tech Challenge 1 repository can be found [here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase1)  
 
 ## 📚 Dictionary - Ubiquitous Language
 
@@ -103,6 +107,9 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - **Database Migrations**: Database migrations were created to manage the database schema. This allows us to version control the database schema and apply changes to the database in a structured way.
 - **HTTP Server**: The HTTP server was created using the Gin framework, a lightweight web framework for Go. This framework provides a fast and easy way to create web applications in Go.
 
+<!-- [Back to top](#readme-top) -->
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### ✨ Features
 
 - [x] Dockerfile: small image with multi-stage docker build, and independent of the host environment
@@ -171,7 +178,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [Go](https://golang.org/)
 - [Docker](https://www.docker.com/)
 
-> [!NOTE]
+> [!WARNING]
 > You need to have Go (> 1.23) installed in your machine to build, run and test the application locally
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -212,8 +219,14 @@ make compose-up
 > To remove the application, run `compose-clean`  
 
 > [!NOTE]
-> You can check the application swagger documentation at http://localhost:8080/docs/index.html  
-> Alternatively, a postman collection is available at [here](docs/10soat-g20-tech-challenge-1.postman_collection.json)  
+> The application is available at <http://localhost:8080>
+
+> [!IMPORTANT]
+> API Documentation is available at:
+>
+> - Swagger: <http://localhost:8080/docs/index.html>
+> - Postman collection: [here](docs/postman_collection.json)
+> - HTTP Client: [here](docs/tc2.http)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -245,7 +258,7 @@ kubectl apply -f k8s/
 16. The GitHub Actions will run the tests, lint, and build the Docker image
 <!-- 17. The Kubernetes deployment will be updated automatically -->
 
-> [!NOTE]
+> [!TIP]
 > `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
 > Alternatively, you can run `make run-air` to run the application using Air (live reload)
 
@@ -295,6 +308,9 @@ make test
 - [GRACEFULL SHUTDOWN EM GOLANG - Finalizando requisições antes de desligar o projeto!](https://www.youtube.com/watch?v=V52Th2h_8FM&ab_channel=HunCoding)
 - [Implement value objects with Domain-Driven Design (DDD)](https://medium.com/@nirajranasinghe/implement-value-objects-with-domain-driven-design-ddd-3aeb4e88cee5)
 - [Entendendo Presenters na Clean Architecture](https://www.youtube.com/watch?v=zrYAnqA-VQs&ab_channel=FullCycle)
+- [RFC 8977 Registration Data Access Protocol (RDAP) Query Parameters for Result Sorting and Paging](https://www.rfc-editor.org/rfc/rfc8977.html#name-sort-parameter)
+- [PostgreSQL - 7.5. Sorting Rows (ORDER BY) #](https://www.postgresql.org/docs/current/queries-order.html#QUERIES-ORDER)
+- [WordPress API Reference - Posts](https://developer.wordpress.org/rest-api/reference/posts/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

@@ -303,7 +303,7 @@ const docTemplate = `{
         },
         "/orders": {
             "get": {
-                "description": "List all orders",
+                "description": "List all orders\n## Order list is sorted by:\n- **Status** in **descending** order (` + "`" + `READY` + "`" + ` \u003e ` + "`" + `PREPARING` + "`" + ` \u003e ` + "`" + `RECEIVED` + "`" + ` \u003e ` + "`" + `PENDING` + "`" + ` \u003e ` + "`" + `OPEN` + "`" + `)\n- **Created date** (CreatedAt) in **ascending** order (oldest first)\nObs: Status CANCELLED and COMPLETED are not included in the list by default",
                 "consumes": [
                     "application/json"
                 ],
@@ -316,15 +316,29 @@ const docTemplate = `{
                 "summary": "List orders (Reference 1.a.iv)",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "Filter by name",
-                        "name": "name",
+                        "type": "integer",
+                        "description": "Filter by customer ID",
+                        "name": "customer_id",
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "Filter by category ID",
-                        "name": "category_id",
+                        "type": "string",
+                        "description": "Filter by status (Accept many), options: \u003csub\u003eOPEN, PENDING, RECEIVED, PREPARING, READY\u003c/sub\u003e, ex: \u003csub\u003ePENDING\u003c/sub\u003e or \u003csub\u003eOPEN,PENDING\u003c/sub\u003e",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "CANCELLED,COMPLETED",
+                        "description": "Exclude by status (Accept many), options: \u003csub\u003eNONE, OPEN, PENDING, RECEIVED, PREPARING, READY, CANCELLED, COMPLETED\u003c/sub\u003e, ex: \u003csub\u003eCANCELLED\u003c/sub\u003e or \u003csub\u003eCANCELLED,COMPLETED\u003c/sub\u003e (default)",
+                        "name": "status_exclude",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "status:d,created_at",
+                        "description": "Sort by field (Accept many). Use ` + "`" + `\u003cfield_name\u003e:d` + "`" + ` for descending, and the default order is ascending",
+                        "name": "sort",
                         "in": "query"
                     },
                     {
@@ -410,7 +424,7 @@ const docTemplate = `{
         },
         "/orders/histories": {
             "get": {
-                "description": "List all orderHistories",
+                "description": "List all order histories",
                 "consumes": [
                     "application/json"
                 ],
@@ -420,7 +434,7 @@ const docTemplate = `{
                 "tags": [
                     "orders"
                 ],
-                "summary": "List orderHistories",
+                "summary": "List order histories",
                 "parameters": [
                     {
                         "type": "string",
@@ -473,7 +487,7 @@ const docTemplate = `{
         },
         "/orders/histories/{id}": {
             "get": {
-                "description": "Search for a orderHistory by ID",
+                "description": "Search for a order history by ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -483,7 +497,7 @@ const docTemplate = `{
                 "tags": [
                     "orders"
                 ],
-                "summary": "Get orderHistory",
+                "summary": "Get order history",
                 "parameters": [
                     {
                         "type": "integer",
@@ -521,14 +535,14 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Deletes a orderHistory by ID",
+                "description": "Deletes a order history by ID",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "orders"
                 ],
-                "summary": "Delete orderHistory",
+                "summary": "Delete order history",
                 "parameters": [
                     {
                         "type": "integer",
@@ -568,7 +582,7 @@ const docTemplate = `{
         },
         "/orders/products": {
             "get": {
-                "description": "List all orders",
+                "description": "List all order products",
                 "consumes": [
                     "application/json"
                 ],
@@ -578,7 +592,7 @@ const docTemplate = `{
                 "tags": [
                     "orders"
                 ],
-                "summary": "List orders",
+                "summary": "List order products",
                 "parameters": [
                     {
                         "type": "string",
@@ -680,7 +694,7 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "Update an existing order",
+                "description": "Update an existing order product",
                 "consumes": [
                     "application/json"
                 ],
@@ -690,7 +704,7 @@ const docTemplate = `{
                 "tags": [
                     "orders"
                 ],
-                "summary": "Update order",
+                "summary": "Update order product",
                 "parameters": [
                     {
                         "type": "integer",
@@ -796,14 +810,14 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Deletes a orderProduct by Order ID and Product ID",
+                "description": "Deletes a order product by Order ID and Product ID",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "orders"
                 ],
-                "summary": "Delete orderProduct",
+                "summary": "Delete order product",
                 "parameters": [
                     {
                         "type": "integer",
@@ -1059,7 +1073,7 @@ const docTemplate = `{
         },
         "/payments/callback": {
             "post": {
-                "description": "Update a new payment (Webhook)\n- resource = external payment id, obtained from the checkout response\n- topic = payment\nThe status of the payment will be set to CONFIRMED if the payment was successful\n## Possible status:\n- PROCESSING\n- CONFIRMED\n- FAILED\n- CANCELED",
+                "description": "Update a new payment (Webhook)\n- resource = external payment id, obtained from the checkout response\n- topic = payment\n\n\u003e The status of the payment will be set to CONFIRMED if the payment was successful\n## Possible status:\n- ` + "`" + `PROCESSING` + "`" + ` (default)\n- ` + "`" + `CONFIRMED` + "`" + `\n- ` + "`" + `FAILED` + "`" + `\n- ` + "`" + `ABORTED` + "`" + `",
                 "consumes": [
                     "application/json"
                 ],
@@ -2378,14 +2392,14 @@ const docTemplate = `{
                 "PROCESSING",
                 "CONFIRMED",
                 "FAILED",
-                "CANCELED",
+                "ABORTED",
                 ""
             ],
             "x-enum-varnames": [
                 "PROCESSING",
                 "CONFIRMED",
                 "FAILED",
-                "CANCELED",
+                "ABORTED",
                 "UNDEFINDED_P"
             ]
         },

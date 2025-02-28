@@ -2,6 +2,7 @@ package gateway
 
 import (
 	"context"
+	"strings"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
@@ -20,18 +21,32 @@ func (g *orderGateway) FindByID(ctx context.Context, id uint64) (*entity.Order, 
 	return g.dataSource.FindByID(ctx, id)
 }
 
-func (g *orderGateway) FindAll(ctx context.Context, customerId uint64, status valueobject.OrderStatus, page, limit int) ([]*entity.Order, int64, error) {
-	filters := make(map[string]interface{})
+func (g *orderGateway) FindAll(
+	ctx context.Context,
+	customerId uint64,
+	status []valueobject.OrderStatus,
+	statusExclude []valueobject.OrderStatus,
+	page,
+	limit int,
+	sort string,
+) ([]*entity.Order, int64, error) {
 
+	// Create filters
+	filters := make(map[string]interface{})
 	if customerId != 0 {
 		filters["customer_id"] = customerId
 	}
-
-	if status != "" {
-		filters["status"] = status
+	if status != nil {
+		filters["statuses"] = status
+	}
+	if statusExclude != nil {
+		filters["statuses_exclude"] = statusExclude
 	}
 
-	return g.dataSource.FindAll(ctx, filters, page, limit)
+	// Create Sort "status:d,created_at" -> "status desc, created_at asc"
+	sortFormatted := strings.ReplaceAll(sort, ":d", " desc")
+
+	return g.dataSource.FindAll(ctx, filters, sortFormatted, page, limit)
 }
 
 func (g *orderGateway) Create(ctx context.Context, order *entity.Order) error {

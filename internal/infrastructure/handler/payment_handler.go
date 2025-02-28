@@ -69,12 +69,13 @@ func (h *PaymentHandler) Create(c *gin.Context) {
 //	@Description	Update a new payment (Webhook)
 //	@Description	- resource = external payment id, obtained from the checkout response
 //	@Description	- topic = payment
-//	@Description	The status of the payment will be set to CONFIRMED if the payment was successful
+//	@Description
+//	@Description	> The status of the payment will be set to CONFIRMED if the payment was successful
 //	@Description	## Possible status:
-//	@Description	- PROCESSING
-//	@Description	- CONFIRMED
-//	@Description	- FAILED
-//	@Description	- CANCELED
+//	@Description	- `PROCESSING` (default)
+//	@Description	- `CONFIRMED`
+//	@Description	- `FAILED`
+//	@Description	- `ABORTED`
 //	@Tags			payments
 //	@Accept			json
 //	@Produce		json

@@ -1,7 +1,8 @@
 {
 	"info": {
 		"_postman_id": "ee435699-dabf-40aa-b952-60630fe25f28",
-		"name": "10SOAT - G20 - Tech Challenge 1",
+		"name": "10SOAT - G18 - Tech Challenge 2",
+		"description": "Repositório: [https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "2247744",
 		"_collection_link": "https://www.postman.com/filipe1309/workspace/10soat-g20/collection/2247744-ee435699-dabf-40aa-b952-60630fe25f28?action=share&source=collection_link&creator=2247744"
@@ -12,11 +13,23 @@
 			"item": [
 				{
 					"name": "Get products",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"url": {
-							"raw": "{{host}}/api/v1/products/",
+							"raw": "{{host}}/api/v1/products/?page=1",
 							"host": [
 								"{{host}}"
 							],
@@ -25,6 +38,12 @@
 								"v1",
 								"products",
 								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -35,10 +54,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/api/v1/products/",
+									"raw": "http://localhost:8080/api/v1/products/",
+									"protocol": "http",
 									"host": [
-										"{{host}}"
+										"localhost"
 									],
+									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -75,9 +96,21 @@
 				},
 				{
 					"name": "Get products by category",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"url": {
 							"raw": "{{host}}/api/v1/products/?category_id=1",
 							"host": [
@@ -104,10 +137,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/api/v1/products/",
+									"raw": "http://localhost:8080/api/v1/products/",
+									"protocol": "http",
 									"host": [
-										"{{host}}"
+										"localhost"
 									],
+									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -144,11 +179,23 @@
 				},
 				{
 					"name": "Get a product by ID",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"url": {
-							"raw": "{{host}}/api/v1/products/6",
+							"raw": "{{host}}/api/v1/products/1",
 							"host": [
 								"{{host}}"
 							],
@@ -156,7 +203,7 @@
 								"api",
 								"v1",
 								"products",
-								"6"
+								"1"
 							]
 						}
 					},
@@ -167,10 +214,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/api/v1/products/6",
+									"raw": "http://localhost:8080/api/v1/products/6",
+									"protocol": "http",
 									"host": [
-										"{{host}}"
+										"localhost"
 									],
+									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -248,10 +297,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/api/v1/products/",
+									"raw": "http://localhost:8080/api/v1/products/",
+									"protocol": "http",
 									"host": [
-										"{{host}}"
+										"localhost"
 									],
+									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -293,7 +344,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Product X UPDATED\",\n    \"description\": \"Product X description UPDATED\",\n    \"price\": 12,\n    \"category_id\": 1,\n\t\t\"active\": true\n}",
+							"raw": "{\n    \"name\": \"Product X UPDATED\",\n    \"description\": \"Product X description UPDATED\",\n    \"price\": 12.11,\n    \"category_id\": 1,\n    \"active\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -301,7 +352,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/products/6",
+							"raw": "{{host}}/api/v1/products/1",
 							"host": [
 								"{{host}}"
 							],
@@ -309,7 +360,7 @@
 								"api",
 								"v1",
 								"products",
-								"6"
+								"1"
 							]
 						}
 					},
@@ -329,10 +380,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/api/v1/products/1",
+									"raw": "http://localhost:8080/api/v1/products/1",
+									"protocol": "http",
 									"host": [
-										"{{host}}"
+										"localhost"
 									],
+									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -416,10 +469,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/api/v1/categories",
+									"raw": "http://localhost:8080/api/v1/categories",
+									"protocol": "http",
 									"host": [
-										"{{host}}"
+										"localhost"
 									],
+									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -495,10 +550,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/api/v1/categories",
+									"raw": "http://localhost:8080/api/v1/categories",
+									"protocol": "http",
 									"host": [
-										"{{host}}"
+										"localhost"
 									],
+									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -579,10 +636,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/api/v1/customers",
+									"raw": "http://localhost:8080/api/v1/customers",
+									"protocol": "http",
 									"host": [
-										"{{host}}"
+										"localhost"
 									],
+									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -659,10 +718,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/api/v1/customers/14",
+									"raw": "http://localhost:8080/api/v1/customers/14",
+									"protocol": "http",
 									"host": [
-										"{{host}}"
+										"localhost"
 									],
+									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -789,6 +850,60 @@
 							"body": "{\n    \"total\": 5,\n    \"page\": 1,\n    \"limit\": 10,\n    \"customers\": [\n        {\n            \"id\": 1,\n            \"name\": \"Lucas Mendes\",\n            \"email\": \"lucas@email.com\",\n            \"cpf\": \"123.456.789-00\",\n            \"created_at\": \"2025-02-14T17:49:24Z\",\n            \"updated_at\": \"2025-02-14T17:49:24Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Julia Santos\",\n            \"email\": \"julia@email.com\",\n            \"cpf\": \"987.654.321-00\",\n            \"created_at\": \"2025-02-14T17:49:24Z\",\n            \"updated_at\": \"2025-02-14T17:49:24Z\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Rafael Costa\",\n            \"email\": \"rafael@email.com\",\n            \"cpf\": \"456.789.123-00\",\n            \"created_at\": \"2025-02-14T17:49:24Z\",\n            \"updated_at\": \"2025-02-14T17:49:24Z\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Mariana Lima\",\n            \"email\": \"mariana@email.com\",\n            \"cpf\": \"789.123.456-00\",\n            \"created_at\": \"2025-02-14T17:49:24Z\",\n            \"updated_at\": \"2025-02-14T17:49:24Z\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Bruno Oliveira\",\n            \"email\": \"bruno@email.com\",\n            \"cpf\": \"321.654.987-00\",\n            \"created_at\": \"2025-02-14T17:49:24Z\",\n            \"updated_at\": \"2025-02-14T17:49:24Z\"\n        }\n    ]\n}"
 						}
 					]
+				},
+				{
+					"name": "Get customers by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/customers?name=Julia Santos",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Julia Santos"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get customers with pagination",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/customers?page=2&limit=5",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
 				},
 				{
 					"name": "Get a customer",
@@ -960,7 +1075,7 @@
 					]
 				},
 				{
-					"name": "Payments Callback",
+					"name": "Payments Callback (Webhook)",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1075,22 +1190,26 @@
 					},
 					"response": [
 						{
-							"name": "New Request",
+							"name": "Get orders",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
 									{
 										"key": "accept",
 										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/orders",
-									"protocol": "http",
+									"raw": "{{host}}/api/v1/orders",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -1103,24 +1222,729 @@
 							"_postman_previewlanguage": "json",
 							"header": [
 								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
 									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
+									"value": "application/json"
 								},
 								{
 									"key": "X-Request-Id",
-									"value": "164d94dc-91ad-4660-97e5-990442c2d1c7"
+									"value": "f758c16c-d2dd-4781-a8d2-71a2350af88b"
 								},
 								{
 									"key": "Date",
-									"value": "Sun, 19 Jan 2025 01:02:31 GMT"
+									"value": "Thu, 27 Feb 2025 18:20:52 GMT"
 								},
 								{
-									"key": "Content-Length",
-									"value": "841"
+									"key": "Transfer-Encoding",
+									"value": "chunked"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"total\": 5,\n    \"page\": 1,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 3,\n            \"customer_id\": 1,\n            \"total_bill\": 32,\n            \"status\": \"RECEIVED\",\n            \"created_at\": \"2025-01-11T22:36:37.817676Z\",\n            \"updated_at\": \"2025-01-11T22:36:37.817676Z\",\n            \"products\": []\n        },\n        {\n            \"id\": 4,\n            \"customer_id\": 1,\n            \"total_bill\": 149.5,\n            \"status\": \"PENDING\",\n            \"created_at\": \"2025-01-17T23:33:41.771393Z\",\n            \"updated_at\": \"2025-01-18T01:09:07.592055Z\",\n            \"products\": []\n        },\n        {\n            \"id\": 5,\n            \"customer_id\": 3,\n            \"total_bill\": 88.2,\n            \"status\": \"RECEIVED\",\n            \"created_at\": \"2025-01-18T21:41:30.070565Z\",\n            \"updated_at\": \"2025-01-18T21:54:31.505307Z\",\n            \"products\": []\n        },\n        {\n            \"id\": 6,\n            \"customer_id\": 1,\n            \"total_bill\": 0,\n            \"status\": \"OPEN\",\n            \"created_at\": \"2025-01-18T22:02:03.156515Z\",\n            \"updated_at\": \"2025-01-18T22:02:03.156515Z\",\n            \"products\": []\n        },\n        {\n            \"id\": 7,\n            \"customer_id\": 1,\n            \"total_bill\": 0,\n            \"status\": \"OPEN\",\n            \"created_at\": \"2025-01-18T22:02:26.488995Z\",\n            \"updated_at\": \"2025-01-18T22:02:26.488995Z\",\n            \"products\": []\n        }\n    ]\n}"
+							"body": "{\n    \"total\": 11,\n    \"page\": 1,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 13,\n            \"customer_id\": 1,\n            \"total_bill\": \"6.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T09:59:59Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 6,\n            \"customer_id\": 1,\n            \"total_bill\": \"25.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 12,\n            \"customer_id\": 1,\n            \"total_bill\": \"25.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:01Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 10,\n            \"customer_id\": 5,\n            \"total_bill\": \"25.90\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T08:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 11,\n            \"customer_id\": 5,\n            \"total_bill\": \"6.90\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T09:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 5,\n            \"customer_id\": 5,\n            \"total_bill\": \"26.70\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 2\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Sundae\",\n                    \"description\": \"Sorvete com calda de chocolate\",\n                    \"price\": 12.9,\n                    \"category_id\": 3,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 4,\n            \"customer_id\": 4,\n            \"total_bill\": \"61.60\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Sundae\",\n                    \"description\": \"Sorvete com calda de chocolate\",\n                    \"price\": 12.9,\n                    \"category_id\": 3,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"Batata Frita\",\n                    \"description\": \"Porção de batata frita crocante\",\n                    \"price\": 15.9,\n                    \"category_id\": 4,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 8,\n            \"customer_id\": 4,\n            \"total_bill\": \"25.90\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T11:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 9,\n            \"customer_id\": 4,\n            \"total_bill\": \"6.90\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T12:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 2,\n            \"customer_id\": 2,\n            \"total_bill\": \"42.90\",\n            \"status\": \"PENDING\",\n            \"customer\": {\n                \"id\": 2,\n                \"name\": \"Julia Santos\",\n                \"email\": \"julia@email.com\",\n                \"cpf\": \"987.654.321-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 5,\n                    \"name\": \"Combo Big\",\n                    \"description\": \"X-Burger + Batata + Refrigerante\",\n                    \"price\": 42.9,\n                    \"category_id\": 5,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get an order",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/orders/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get an order",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "1bdf61eb-a953-4ad7-8ff4-6eb2594ac47a"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 18:22:02 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "697"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"customer_id\": 1,\n    \"total_bill\": \"32.80\",\n    \"status\": \"OPEN\",\n    \"customer\": {\n        \"id\": 1,\n        \"name\": \"Lucas Mendes\",\n        \"email\": \"lucas@email.com\",\n        \"cpf\": \"123.456.789-00\",\n        \"created_at\": \"2025-02-27T12:41:16Z\",\n        \"updated_at\": \"2025-02-27T12:41:16Z\"\n    },\n    \"products\": [\n        {\n            \"id\": 1,\n            \"name\": \"X-Burger\",\n            \"description\": \"Hambúrguer com queijo, alface e tomate\",\n            \"price\": 25.9,\n            \"category_id\": 1,\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\",\n            \"quantity\": 1\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Coca-Cola 350ml\",\n            \"description\": \"Refrigerante Coca-Cola lata\",\n            \"price\": 6.9,\n            \"category_id\": 2,\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\",\n            \"quantity\": 1\n        }\n    ],\n    \"created_at\": \"2025-02-27T12:41:16Z\",\n    \"updated_at\": \"2025-02-27T12:41:16Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get orders with sort",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/orders?sort=status:d,created_at",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "status:d,created_at"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get orders with sort (created_at desc - most recent)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?sort=created_at:d",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "created_at:d"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "f44a775a-376b-469c-89dc-90f041ff2a4f"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 18:24:05 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 11,\n    \"page\": 1,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 1,\n            \"customer_id\": 1,\n            \"total_bill\": \"32.80\",\n            \"status\": \"OPEN\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 2,\n            \"customer_id\": 2,\n            \"total_bill\": \"42.90\",\n            \"status\": \"PENDING\",\n            \"customer\": {\n                \"id\": 2,\n                \"name\": \"Julia Santos\",\n                \"email\": \"julia@email.com\",\n                \"cpf\": \"987.654.321-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 5,\n                    \"name\": \"Combo Big\",\n                    \"description\": \"X-Burger + Batata + Refrigerante\",\n                    \"price\": 42.9,\n                    \"category_id\": 5,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 9,\n            \"customer_id\": 4,\n            \"total_bill\": \"6.90\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T12:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 8,\n            \"customer_id\": 4,\n            \"total_bill\": \"25.90\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T11:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 12,\n            \"customer_id\": 1,\n            \"total_bill\": \"25.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:01Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 5,\n            \"customer_id\": 5,\n            \"total_bill\": \"26.70\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 2\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Sundae\",\n                    \"description\": \"Sorvete com calda de chocolate\",\n                    \"price\": 12.9,\n                    \"category_id\": 3,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 4,\n            \"customer_id\": 4,\n            \"total_bill\": \"61.60\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Sundae\",\n                    \"description\": \"Sorvete com calda de chocolate\",\n                    \"price\": 12.9,\n                    \"category_id\": 3,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"Batata Frita\",\n                    \"description\": \"Porção de batata frita crocante\",\n                    \"price\": 15.9,\n                    \"category_id\": 4,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 6,\n            \"customer_id\": 1,\n            \"total_bill\": \"25.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 13,\n            \"customer_id\": 1,\n            \"total_bill\": \"6.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T09:59:59Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 11,\n            \"customer_id\": 5,\n            \"total_bill\": \"6.90\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T09:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get orders with sort (status asc)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?sort=status",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "status"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "80026b5d-40bc-454b-b9ca-99acc9df3c45"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 18:25:24 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 11,\n    \"page\": 1,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 1,\n            \"customer_id\": 1,\n            \"total_bill\": \"32.80\",\n            \"status\": \"OPEN\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 2,\n            \"customer_id\": 2,\n            \"total_bill\": \"42.90\",\n            \"status\": \"PENDING\",\n            \"customer\": {\n                \"id\": 2,\n                \"name\": \"Julia Santos\",\n                \"email\": \"julia@email.com\",\n                \"cpf\": \"987.654.321-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 5,\n                    \"name\": \"Combo Big\",\n                    \"description\": \"X-Burger + Batata + Refrigerante\",\n                    \"price\": 42.9,\n                    \"category_id\": 5,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 8,\n            \"customer_id\": 4,\n            \"total_bill\": \"25.90\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T11:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 4,\n            \"customer_id\": 4,\n            \"total_bill\": \"61.60\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Sundae\",\n                    \"description\": \"Sorvete com calda de chocolate\",\n                    \"price\": 12.9,\n                    \"category_id\": 3,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"Batata Frita\",\n                    \"description\": \"Porção de batata frita crocante\",\n                    \"price\": 15.9,\n                    \"category_id\": 4,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 9,\n            \"customer_id\": 4,\n            \"total_bill\": \"6.90\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T12:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 5,\n            \"customer_id\": 5,\n            \"total_bill\": \"26.70\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 2\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Sundae\",\n                    \"description\": \"Sorvete com calda de chocolate\",\n                    \"price\": 12.9,\n                    \"category_id\": 3,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 10,\n            \"customer_id\": 5,\n            \"total_bill\": \"25.90\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T08:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 11,\n            \"customer_id\": 5,\n            \"total_bill\": \"6.90\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T09:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 13,\n            \"customer_id\": 1,\n            \"total_bill\": \"6.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T09:59:59Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 12,\n            \"customer_id\": 1,\n            \"total_bill\": \"25.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:01Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get orders with sort (status asc, created_at desc)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?sort=status,created_at:d",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "status,created_at:d"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "d97817e6-d477-465d-a27e-1547dd743c63"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 18:26:11 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 11,\n    \"page\": 1,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 1,\n            \"customer_id\": 1,\n            \"total_bill\": \"32.80\",\n            \"status\": \"OPEN\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 2,\n            \"customer_id\": 2,\n            \"total_bill\": \"42.90\",\n            \"status\": \"PENDING\",\n            \"customer\": {\n                \"id\": 2,\n                \"name\": \"Julia Santos\",\n                \"email\": \"julia@email.com\",\n                \"cpf\": \"987.654.321-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 5,\n                    \"name\": \"Combo Big\",\n                    \"description\": \"X-Burger + Batata + Refrigerante\",\n                    \"price\": 42.9,\n                    \"category_id\": 5,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 9,\n            \"customer_id\": 4,\n            \"total_bill\": \"6.90\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T12:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 8,\n            \"customer_id\": 4,\n            \"total_bill\": \"25.90\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T11:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 4,\n            \"customer_id\": 4,\n            \"total_bill\": \"61.60\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Sundae\",\n                    \"description\": \"Sorvete com calda de chocolate\",\n                    \"price\": 12.9,\n                    \"category_id\": 3,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"Batata Frita\",\n                    \"description\": \"Porção de batata frita crocante\",\n                    \"price\": 15.9,\n                    \"category_id\": 4,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 5,\n            \"customer_id\": 5,\n            \"total_bill\": \"26.70\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 2\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Sundae\",\n                    \"description\": \"Sorvete com calda de chocolate\",\n                    \"price\": 12.9,\n                    \"category_id\": 3,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 11,\n            \"customer_id\": 5,\n            \"total_bill\": \"6.90\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T09:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 10,\n            \"customer_id\": 5,\n            \"total_bill\": \"25.90\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T08:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 12,\n            \"customer_id\": 1,\n            \"total_bill\": \"25.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:01Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 6,\n            \"customer_id\": 1,\n            \"total_bill\": \"25.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get orders with sort (status desc, created_at asc, default)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?sort=status:d,created_at",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "status:d,created_at"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "2a5e7b84-7f76-492f-9f8b-58454aad7c83"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 18:26:54 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 11,\n    \"page\": 1,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 13,\n            \"customer_id\": 1,\n            \"total_bill\": \"6.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T09:59:59Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 6,\n            \"customer_id\": 1,\n            \"total_bill\": \"25.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 12,\n            \"customer_id\": 1,\n            \"total_bill\": \"25.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:01Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 10,\n            \"customer_id\": 5,\n            \"total_bill\": \"25.90\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T08:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 11,\n            \"customer_id\": 5,\n            \"total_bill\": \"6.90\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T09:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 5,\n            \"customer_id\": 5,\n            \"total_bill\": \"26.70\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 2\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Sundae\",\n                    \"description\": \"Sorvete com calda de chocolate\",\n                    \"price\": 12.9,\n                    \"category_id\": 3,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 4,\n            \"customer_id\": 4,\n            \"total_bill\": \"61.60\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Sundae\",\n                    \"description\": \"Sorvete com calda de chocolate\",\n                    \"price\": 12.9,\n                    \"category_id\": 3,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"Batata Frita\",\n                    \"description\": \"Porção de batata frita crocante\",\n                    \"price\": 15.9,\n                    \"category_id\": 4,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 8,\n            \"customer_id\": 4,\n            \"total_bill\": \"25.90\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T11:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 9,\n            \"customer_id\": 4,\n            \"total_bill\": \"6.90\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T12:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 2,\n            \"customer_id\": 2,\n            \"total_bill\": \"42.90\",\n            \"status\": \"PENDING\",\n            \"customer\": {\n                \"id\": 2,\n                \"name\": \"Julia Santos\",\n                \"email\": \"julia@email.com\",\n                \"cpf\": \"987.654.321-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 5,\n                    \"name\": \"Combo Big\",\n                    \"description\": \"X-Burger + Batata + Refrigerante\",\n                    \"price\": 42.9,\n                    \"category_id\": 5,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get orders with pagination",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/orders?page=2&limit=5",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get orders with pagination (page 2, limit 10 default)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?page=2",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "0ba3b819-84c4-4940-81ed-2a87cd63ac1c"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 18:27:39 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "741"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 11,\n    \"page\": 2,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 1,\n            \"customer_id\": 1,\n            \"total_bill\": \"32.80\",\n            \"status\": \"OPEN\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get orders with pagination (page 1 default, limit 5)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?limit=5",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "6320b120-d90b-4d41-bca8-09f14fee2e2f"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 18:28:34 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 11,\n    \"page\": 1,\n    \"limit\": 5,\n    \"orders\": [\n        {\n            \"id\": 13,\n            \"customer_id\": 1,\n            \"total_bill\": \"6.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T09:59:59Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 6,\n            \"customer_id\": 1,\n            \"total_bill\": \"25.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 12,\n            \"customer_id\": 1,\n            \"total_bill\": \"25.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:01Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 10,\n            \"customer_id\": 5,\n            \"total_bill\": \"25.90\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T08:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 11,\n            \"customer_id\": 5,\n            \"total_bill\": \"6.90\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T09:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get orders with pagination (page 2, limit 5)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?page=2&limit=5",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "limit",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "bc3d8813-a088-40c4-b3d9-f9cfb1358946"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 18:29:29 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 11,\n    \"page\": 2,\n    \"limit\": 5,\n    \"orders\": [\n        {\n            \"id\": 5,\n            \"customer_id\": 5,\n            \"total_bill\": \"26.70\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 2\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Sundae\",\n                    \"description\": \"Sorvete com calda de chocolate\",\n                    \"price\": 12.9,\n                    \"category_id\": 3,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 4,\n            \"customer_id\": 4,\n            \"total_bill\": \"61.60\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Sundae\",\n                    \"description\": \"Sorvete com calda de chocolate\",\n                    \"price\": 12.9,\n                    \"category_id\": 3,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"Batata Frita\",\n                    \"description\": \"Porção de batata frita crocante\",\n                    \"price\": 15.9,\n                    \"category_id\": 4,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 8,\n            \"customer_id\": 4,\n            \"total_bill\": \"25.90\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T11:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 9,\n            \"customer_id\": 4,\n            \"total_bill\": \"6.90\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T12:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 2,\n            \"customer_id\": 2,\n            \"total_bill\": \"42.90\",\n            \"status\": \"PENDING\",\n            \"customer\": {\n                \"id\": 2,\n                \"name\": \"Julia Santos\",\n                \"email\": \"julia@email.com\",\n                \"cpf\": \"987.654.321-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 5,\n                    \"name\": \"Combo Big\",\n                    \"description\": \"X-Burger + Batata + Refrigerante\",\n                    \"price\": 42.9,\n                    \"category_id\": 5,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        }\n    ]\n}"
 						}
 					]
 				},
@@ -1141,7 +1965,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/api/v1/orders?customer_id=6",
+							"raw": "{{host}}/api/v1/orders?customer_id=5",
 							"host": [
 								"{{host}}"
 							],
@@ -1153,7 +1977,7 @@
 							"query": [
 								{
 									"key": "customer_id",
-									"value": "6"
+									"value": "5"
 								}
 							]
 						}
@@ -1220,6 +2044,487 @@
 					]
 				},
 				{
+					"name": "Get orders by status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/orders?status=received",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "received"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get orders by status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?status=OPEN",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "OPEN"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "3d8f059a-90ec-49ee-a2e4-9a2c2490b6cf"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 15 Feb 2025 21:25:58 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "333"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 2,\n    \"page\": 1,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 1,\n            \"customer_id\": 1,\n            \"total_bill\": 32.8,\n            \"status\": \"OPEN\",\n            \"products\": null,\n            \"created_at\": \"2025-02-14T17:49:24Z\",\n            \"updated_at\": \"2025-02-14T17:49:24Z\"\n        },\n        {\n            \"id\": 9,\n            \"customer_id\": 5,\n            \"total_bill\": 0,\n            \"status\": \"OPEN\",\n            \"products\": null,\n            \"created_at\": \"2025-02-15T17:09:18Z\",\n            \"updated_at\": \"2025-02-15T17:09:18Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get orders by status error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?status=xpto",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "xpto"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "0569a0ee-65c4-418e-9649-e3c09a63bd54"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 15 Feb 2025 21:26:15 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "42"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid parameter\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get orders by statuses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/orders?status=open,pending",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "open,pending"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get orders by statuses",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?status=open,pending",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "open,pending"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "7920f812-0fe9-4c79-9298-26ed09926266"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 18:12:33 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1244"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 2,\n    \"page\": 1,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 2,\n            \"customer_id\": 2,\n            \"total_bill\": \"42.90\",\n            \"status\": \"PENDING\",\n            \"customer\": {\n                \"id\": 2,\n                \"name\": \"Julia Santos\",\n                \"email\": \"julia@email.com\",\n                \"cpf\": \"987.654.321-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 5,\n                    \"name\": \"Combo Big\",\n                    \"description\": \"X-Burger + Batata + Refrigerante\",\n                    \"price\": 42.9,\n                    \"category_id\": 5,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 1,\n            \"customer_id\": 1,\n            \"total_bill\": \"32.80\",\n            \"status\": \"OPEN\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get orders by status exclude",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/orders?status_exclude=ready,preparing,received",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "status_exclude",
+									"value": "ready,preparing,received"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get orders by status exclude (none)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?status_exclude=NONE",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "status_exclude",
+											"value": "NONE"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "e61e8c22-6c29-458b-a6c7-dff06f3211e3"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 18:37:28 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 14,\n    \"page\": 1,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 7,\n            \"customer_id\": 2,\n            \"total_bill\": \"6.90\",\n            \"status\": \"COMPLETED\",\n            \"customer\": {\n                \"id\": 2,\n                \"name\": \"Julia Santos\",\n                \"email\": \"julia@email.com\",\n                \"cpf\": \"987.654.321-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-01-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 13,\n            \"customer_id\": 1,\n            \"total_bill\": \"6.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T09:59:59Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 6,\n            \"customer_id\": 1,\n            \"total_bill\": \"25.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 12,\n            \"customer_id\": 1,\n            \"total_bill\": \"25.90\",\n            \"status\": \"READY\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:01Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 10,\n            \"customer_id\": 5,\n            \"total_bill\": \"25.90\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T08:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 11,\n            \"customer_id\": 5,\n            \"total_bill\": \"6.90\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T09:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 5,\n            \"customer_id\": 5,\n            \"total_bill\": \"26.70\",\n            \"status\": \"PREPARING\",\n            \"customer\": {\n                \"id\": 5,\n                \"name\": \"Bruno Oliveira\",\n                \"email\": \"bruno@email.com\",\n                \"cpf\": \"321.654.987-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 2\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Sundae\",\n                    \"description\": \"Sorvete com calda de chocolate\",\n                    \"price\": 12.9,\n                    \"category_id\": 3,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 4,\n            \"customer_id\": 4,\n            \"total_bill\": \"61.60\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Sundae\",\n                    \"description\": \"Sorvete com calda de chocolate\",\n                    \"price\": 12.9,\n                    \"category_id\": 3,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"Batata Frita\",\n                    \"description\": \"Porção de batata frita crocante\",\n                    \"price\": 15.9,\n                    \"category_id\": 4,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 8,\n            \"customer_id\": 4,\n            \"total_bill\": \"25.90\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T11:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 9,\n            \"customer_id\": 4,\n            \"total_bill\": \"6.90\",\n            \"status\": \"RECEIVED\",\n            \"customer\": {\n                \"id\": 4,\n                \"name\": \"Mariana Lima\",\n                \"email\": \"mariana@email.com\",\n                \"cpf\": \"789.123.456-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T12:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get orders by status exclude (ready,preparing,received)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?status_exclude=ready,preparing,received",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "status_exclude",
+											"value": "ready,preparing,received"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "2a752fe6-0c58-405c-9af5-525e20288d3b"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 Feb 2025 18:38:02 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 5,\n    \"page\": 1,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 7,\n            \"customer_id\": 2,\n            \"total_bill\": \"6.90\",\n            \"status\": \"COMPLETED\",\n            \"customer\": {\n                \"id\": 2,\n                \"name\": \"Julia Santos\",\n                \"email\": \"julia@email.com\",\n                \"cpf\": \"987.654.321-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-01-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 2,\n            \"customer_id\": 2,\n            \"total_bill\": \"42.90\",\n            \"status\": \"PENDING\",\n            \"customer\": {\n                \"id\": 2,\n                \"name\": \"Julia Santos\",\n                \"email\": \"julia@email.com\",\n                \"cpf\": \"987.654.321-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 5,\n                    \"name\": \"Combo Big\",\n                    \"description\": \"X-Burger + Batata + Refrigerante\",\n                    \"price\": 42.9,\n                    \"category_id\": 5,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 14,\n            \"customer_id\": 1,\n            \"total_bill\": \"0.00\",\n            \"status\": \"CANCELLED\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"created_at\": \"2021-10-01T09:59:59Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 3,\n            \"customer_id\": 3,\n            \"total_bill\": \"25.90\",\n            \"status\": \"CANCELLED\",\n            \"customer\": {\n                \"id\": 3,\n                \"name\": \"Rafael Costa\",\n                \"email\": \"rafael@email.com\",\n                \"cpf\": \"456.789.123-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2021-10-01T10:00:00Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        },\n        {\n            \"id\": 1,\n            \"customer_id\": 1,\n            \"total_bill\": \"32.80\",\n            \"status\": \"OPEN\",\n            \"customer\": {\n                \"id\": 1,\n                \"name\": \"Lucas Mendes\",\n                \"email\": \"lucas@email.com\",\n                \"cpf\": \"123.456.789-00\",\n                \"created_at\": \"2025-02-27T12:41:16Z\",\n                \"updated_at\": \"2025-02-27T12:41:16Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"X-Burger\",\n                    \"description\": \"Hambúrguer com queijo, alface e tomate\",\n                    \"price\": 25.9,\n                    \"category_id\": 1,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"Coca-Cola 350ml\",\n                    \"description\": \"Refrigerante Coca-Cola lata\",\n                    \"price\": 6.9,\n                    \"category_id\": 2,\n                    \"created_at\": \"2025-02-27T12:41:16Z\",\n                    \"updated_at\": \"2025-02-27T12:41:16Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
 					"name": "Create an order",
 					"request": {
 						"method": "POST",
@@ -1235,7 +2540,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customer_id\": 6\n}",
+							"raw": "{\n  \"customer_id\": 5\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1315,6 +2620,81 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": 7,\n    \"customer_id\": 1,\n    \"total_bill\": 0,\n    \"status\": \"OPEN\",\n    \"created_at\": \"2025-01-18T22:02:26.488995-03:00\",\n    \"updated_at\": \"2025-01-18T22:02:26.488995-03:00\",\n    \"products\": []\n}"
+						},
+						{
+							"name": "Create an order",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customer_id\": 6\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "8a6619ab-a2a2-489a-a8b5-7e263f1e2c1e"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 15 Feb 2025 20:09:18 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "153"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 9,\n    \"customer_id\": 5,\n    \"total_bill\": 0,\n    \"status\": \"OPEN\",\n    \"products\": null,\n    \"created_at\": \"2025-02-15T17:09:18-03:00\",\n    \"updated_at\": \"2025-02-15T17:09:18-03:00\"\n}"
 						}
 					]
 				},
@@ -1322,6 +2702,110 @@
 					"name": "Creante an order product",
 					"request": {
 						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantity\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/orders/products/17/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"products",
+								"17",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Creante an order product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"quantity\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/products/11/3",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"products",
+										"11",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "c2670afa-8fb0-4f9e-a9d5-1db4507ae276"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 16 Feb 2025 22:30:38 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "435"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"order_id\": 11,\n    \"product_id\": 3,\n    \"quantity\": 4,\n    \"order\": {\n        \"id\": 11,\n        \"customer_id\": 5,\n        \"total_bill\": 0,\n        \"status\": \"OPEN\",\n        \"created_at\": \"2025-02-16T19:24:18Z\",\n        \"updated_at\": \"2025-02-16T19:24:18Z\"\n    },\n    \"product\": {\n        \"id\": 3,\n        \"name\": \"Sundae\",\n        \"description\": \"Sorvete com calda de chocolate\",\n        \"price\": 12.9,\n        \"category_id\": 3,\n        \"created_at\": \"2025-02-16T20:36:05Z\",\n        \"updated_at\": \"2025-02-16T20:36:05Z\"\n    },\n    \"created_at\": \"2025-02-16T19:30:38Z\",\n    \"updated_at\": \"2025-02-16T19:30:38Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get orders products",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -1333,7 +2817,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/orders/products/8/1",
+							"raw": "{{host}}/api/v1/orders/products/?limit=3",
 							"host": [
 								"{{host}}"
 							],
@@ -1342,23 +2826,104 @@
 								"v1",
 								"orders",
 								"products",
-								"8",
-								"1"
+								""
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "3"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get an order",
+					"name": "Get orders products by order id",
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "accept",
 								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
+						"url": {
+							"raw": "{{host}}/api/v1/orders/products/?order_id=17",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "order_id",
+									"value": "17"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get an order product",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantity\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/orders/products/17/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"products",
+								"17",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update an order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_id\": 6,\n    \"status\": \"OPEN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{host}}/api/v1/orders/8",
 							"host": [
@@ -1372,29 +2937,71 @@
 							]
 						}
 					},
+					"response": []
+				},
+				{
+					"name": "Update an order status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"PENDING\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/orders/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/orders/17",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"17"
+							]
+						}
+					},
 					"response": [
 						{
-							"name": "New Request",
+							"name": "Delete an order",
 							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "accept",
-										"value": "application/json"
-									}
-								],
+								"method": "DELETE",
+								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/orders/5",
-									"protocol": "http",
+									"raw": "{{host}}/api/v1/orders/9",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8080",
 									"path": [
 										"api",
 										"v1",
 										"orders",
-										"5"
+										"9"
 									]
 								}
 							},
@@ -1403,24 +3010,40 @@
 							"_postman_previewlanguage": "json",
 							"header": [
 								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
 									"key": "Content-Type",
 									"value": "application/json; charset=utf-8"
 								},
 								{
 									"key": "X-Request-Id",
-									"value": "8d1889d2-1bb6-459e-9893-adcd0890147d"
+									"value": "c386a849-14f7-42a3-9b7f-a1224d2f8c32"
 								},
 								{
 									"key": "Date",
-									"value": "Sun, 19 Jan 2025 01:04:10 GMT"
+									"value": "Sun, 16 Feb 2025 00:29:48 GMT"
 								},
 								{
 									"key": "Content-Length",
-									"value": "442"
+									"value": "143"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"id\": 5,\n    \"customer_id\": 3,\n    \"total_bill\": 88.2,\n    \"status\": \"RECEIVED\",\n    \"created_at\": \"2025-01-18T21:41:30.070565Z\",\n    \"updated_at\": \"2025-01-18T21:54:31.505307Z\",\n    \"products\": [\n        {\n            \"order_id\": 5,\n            \"product_id\": 3,\n            \"price\": 19.5,\n            \"quantity\": 3,\n            \"created_at\": \"2025-01-18T21:46:05.114615Z\",\n            \"updated_at\": \"2025-01-18T21:46:05.114615Z\"\n        },\n        {\n            \"order_id\": 5,\n            \"product_id\": 4,\n            \"price\": 9.9,\n            \"quantity\": 3,\n            \"created_at\": \"2025-01-18T21:46:13.34927Z\",\n            \"updated_at\": \"2025-01-18T21:46:13.34927Z\"\n        }\n    ]\n}"
+							"body": "{\n    \"id\": 9,\n    \"customer_id\": 5,\n    \"total_bill\": 0,\n    \"status\": \"OPEN\",\n    \"products\": null,\n    \"created_at\": \"2025-02-15T17:09:18Z\",\n    \"updated_at\": \"2025-02-15T17:09:18Z\"\n}"
 						}
 					]
 				}
@@ -1634,11 +3257,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/health",
+							"raw": "{{host}}/api/v1/health",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v1",
 								"health"
 							]
 						}
