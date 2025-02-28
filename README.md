@@ -87,7 +87,8 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 ### **3️⃣ Infrastructure (External layer)**
 
 - `config/`: Application configuration management.
-- `database/`: Configuration and connection to the database. - `server/`: Initialization of the HTTP server.
+- `database/`: Configuration and connection to the database. 
+- `server/`: Initialization of the HTTP server.
 - `route/`: Definition of API routes.
 - `middleware/`: HTTP middlewares for handling requests.
 - `logger/`: Structured logger for detailed logs.
@@ -230,11 +231,28 @@ make compose-up
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- Kubernetes: -->
 ### :gear: Kubernetes
 
 ```bash
 kubectl apply -f k8s/
 ```
+
+### :mag: Kubernetes Organization
+
+- `app`
+  - `deployment.yaml`: Deployment configuration
+  - `hpa.yaml`: Horizontal Pod Autoscaler configuration
+  - `ingress.yaml`: Ingress configuration
+  - `service.yaml`: Service configuration
+- `postgres`
+  - `service.yaml`: Service configuration
+  - `statefulset.yaml`: StatefulSet configuration
+- `config`
+  - `configmap.yaml`: ConfigMap configuration
+  - `secrets.yaml`: Secrets configuration
+- `namespace.yaml`: Namespace configuration
+   
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
