@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: tech-challenge-api
-          image: your-registry/tech-challenge-api:latest
+          image: ghcr.io/fiap-soat-g20/fiap-techchallenge-fase2:latest
           ports:
             - containerPort: 8080
           env:

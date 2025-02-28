@@ -25,7 +25,7 @@ echo "✨  ✨  Pull Request ✨  ✨ "
 echo "\n"
 
 echo "✨ Context: 📱"
-options=("ANY" "API" "KUBERNETES", "FRONTEND")
+options=("ANY" "API" "INFRA" "FRONTEND")
 select_option "${options[@]}"
 app="${options[$?]}" 
 

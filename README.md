@@ -87,7 +87,8 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 ### **3️⃣ Infrastructure (External layer)**
 
 - `config/`: Application configuration management.
-- `database/`: Configuration and connection to the database. - `server/`: Initialization of the HTTP server.
+- `database/`: Configuration and connection to the database. 
+- `server/`: Initialization of the HTTP server.
 - `route/`: Definition of API routes.
 - `middleware/`: HTTP middlewares for handling requests.
 - `logger/`: Structured logger for detailed logs.
@@ -112,7 +113,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
 ### ✨ Features
 
-- [x] Dockerfile: small image with multi-stage docker build, and independent of the host environment
+- [x] Dockerfile: small image with multi-stage docker build, and multi-platform build (Cross-Compilation)
 - [x] Makefile: to simplify the build and run commands
 - [x] Clean architecture
 - [x] PostgreSQL database
@@ -143,7 +144,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
 ## :computer: Technologies
 
-- [Go 1.23+](https://golang.org/)
+- [Go](https://golang.org/)
 - [Gin Web Framework](https://gin-gonic.com/)
 - [golangci-lint](https://golangci-lint.run/)
 - [golang-migrate](https://github.com/golang-migrate/migrate)
@@ -179,7 +180,8 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [Docker](https://www.docker.com/)
 
 > [!WARNING]
-> You need to have Go (> 1.23) installed in your machine to build, run and test the application locally
+> You need to have Go version **1.23 or higher** installed on your machine to run the application locally
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -230,10 +232,35 @@ make compose-up
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- Kubernetes: -->
 ### :gear: Kubernetes
 
 ```bash
 kubectl apply -f k8s/
+```
+
+### :mag: Kubernetes Organization
+
+The Kubernetes organization is divided into three main directories: `app`, `config`, and `postgres`.
+
+- **app**: Contains the Kubernetes resources for the application, such as deployment, service, ingress, and HPA.
+- **config**: Contains the Kubernetes resources for the configuration, such as ConfigMap and Secret.
+- **postgres**: Contains the Kubernetes resources for the PostgreSQL database, such as StatefulSet and Service.
+
+```sh
+.
+├── app
+│   ├── deployment.yaml
+│   ├── hpa.yaml
+│   ├── ingress.yaml
+│   └── service.yaml
+├── config
+│   ├── configmap.yaml
+│   └── secret.yaml
+├── namespace.yaml
+└── postgres
+    ├── service.yaml
+    └── statefulset.yaml
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -255,7 +282,7 @@ kubectl apply -f k8s/
 13. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard
 14. Push to the branch and Open a new PR by running `make pull-request`
 15. After the PR is approved, merge it to the main branch
-16. The GitHub Actions will run the tests, lint, and build the Docker image
+16. The GitHub Actions will run the tests, lint, and build the Docker image (GHCR, multi-platform) automatically
 <!-- 17. The Kubernetes deployment will be updated automatically -->
 
 > [!TIP]
@@ -311,6 +338,11 @@ make test
 - [RFC 8977 Registration Data Access Protocol (RDAP) Query Parameters for Result Sorting and Paging](https://www.rfc-editor.org/rfc/rfc8977.html#name-sort-parameter)
 - [PostgreSQL - 7.5. Sorting Rows (ORDER BY) #](https://www.postgresql.org/docs/current/queries-order.html#QUERIES-ORDER)
 - [WordPress API Reference - Posts](https://developer.wordpress.org/rest-api/reference/posts/)
+- [Pushing container images to GitHub Container Registry with GitHub Actions](https://dev.to/willvelida/pushing-container-images-to-github-container-registry-with-github-actions-1m6b)
+- [GitHub Packages.. Containers in a GitHub repo?](https://www.youtube.com/watch?v=gqseP_wTZsk&ab_channel=DevOpsJourney)
+- [Docker- Multi-platform builds - Multiple native nodes](https://docs.docker.com/build/building/multi-platform/#multiple-native-nodes)
+- [Faster Multi-Platform Builds: Dockerfile Cross-Compilation Guide](https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/)
+- [Stack Overflow - What does the w flag mean when passed in via the ldflags option to the go command?](https://stackoverflow.com/a/22276273/1403288)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
