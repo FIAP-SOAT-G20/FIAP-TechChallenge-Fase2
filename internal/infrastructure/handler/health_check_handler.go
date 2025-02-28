@@ -39,8 +39,8 @@ func (h *HealthCheckHandler) HealthCheck(c *gin.Context) {
 	hc := &response.HealthCheckResponse{
 		Status: response.HealthCheckStatusPass,
 		Checks: map[string]response.HealthCheckVerifications{
-			"db:postgres": {
-				ComponentId: "db:postgres",
+			"db:postgresS": {
+				ComponentId: "db:postgresS",
 				Status:      response.HealthCheckStatusPass,
 				Time:        time.Now(),
 			},
@@ -56,8 +56,8 @@ func (h *HealthCheckHandler) HealthCheck(c *gin.Context) {
 
 	if db.Ping() != nil {
 		hc.Status = response.HealthCheckStatusFail
-		hc.Checks["db:postgres"] = response.HealthCheckVerifications{
-			ComponentId: "db:postgres",
+		hc.Checks["db:postgresS"] = response.HealthCheckVerifications{
+			ComponentId: "db:postgresS",
 			Status:      response.HealthCheckStatusFail,
 			Time:        time.Now(),
 		}
