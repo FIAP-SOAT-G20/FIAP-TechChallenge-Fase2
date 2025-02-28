@@ -144,7 +144,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
 ## :computer: Technologies
 
-- [Go 1.23+](https://golang.org/)
+- [Go](https://golang.org/)
 - [Gin Web Framework](https://gin-gonic.com/)
 - [golangci-lint](https://golangci-lint.run/)
 - [golang-migrate](https://github.com/golang-migrate/migrate)
@@ -180,7 +180,8 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [Docker](https://www.docker.com/)
 
 > [!WARNING]
-> You need to have Go (> 1.23) installed in your machine to build, run and test the application locally
+> You need to have Go version **1.23 or higher** installed on your machine to run the application locally
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -240,19 +241,27 @@ kubectl apply -f k8s/
 
 ### :mag: Kubernetes Organization
 
-- `app`
-  - `deployment.yaml`: Deployment configuration
-  - `hpa.yaml`: Horizontal Pod Autoscaler configuration
-  - `ingress.yaml`: Ingress configuration
-  - `service.yaml`: Service configuration
-- `postgres`
-  - `service.yaml`: Service configuration
-  - `statefulset.yaml`: StatefulSet configuration
-- `config`
-  - `configmap.yaml`: ConfigMap configuration
-  - `secrets.yaml`: Secrets configuration
-- `namespace.yaml`: Namespace configuration
-   
+The Kubernetes organization is divided into three main directories: `app`, `config`, and `postgres`.
+
+- **app**: Contains the Kubernetes resources for the application, such as deployment, service, ingress, and HPA.
+- **config**: Contains the Kubernetes resources for the configuration, such as ConfigMap and Secret.
+- **postgres**: Contains the Kubernetes resources for the PostgreSQL database, such as StatefulSet and Service.
+
+```sh
+.
+├── app
+│   ├── deployment.yaml
+│   ├── hpa.yaml
+│   ├── ingress.yaml
+│   └── service.yaml
+├── config
+│   ├── configmap.yaml
+│   └── secret.yaml
+├── namespace.yaml
+└── postgres
+    ├── service.yaml
+    └── statefulset.yaml
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -273,7 +282,7 @@ kubectl apply -f k8s/
 13. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard
 14. Push to the branch and Open a new PR by running `make pull-request`
 15. After the PR is approved, merge it to the main branch
-16. The GitHub Actions will run the tests, lint, and build the Docker image (GHCR, multi-platform)
+16. The GitHub Actions will run the tests, lint, and build the Docker image (GHCR, multi-platform) automatically
 <!-- 17. The Kubernetes deployment will be updated automatically -->
 
 > [!TIP]
