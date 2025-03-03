@@ -1,5 +1,7 @@
 <a name="readme-top"></a>
 
+![GitHub CI - Tests](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/actions/workflows/test.yml/badge.svg)
+
 # <p align="center"><b>Fast Food</b> <small>FIAP Tech Challenge 2 - G18</small></p>
 
 <p align="center">
@@ -232,12 +234,19 @@ make compose-up
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- Kubernetes: -->
 ### :gear: Kubernetes
 
 ```bash
-kubectl apply -f k8s/
+make k8s-apply
 ```
+
+> [!TIP]
+> To view the application, run `make k8s-status` or `kubectl get all -n tech-challenge-system`  
+> To remove the application, run `make k8s-delete`
+
+> [!NOTE]
+> The application is available at <http://localhost:30001/>  
+> Ex: <http://localhost:30001/api/v1/health>
 
 ### :mag: Kubernetes Organization
 
@@ -282,12 +291,18 @@ The Kubernetes organization is divided into three main directories: `app`, `conf
 13. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard
 14. Push to the branch and Open a new PR by running `make pull-request`
 15. After the PR is approved, merge it to the main branch
-16. The GitHub Actions will run the tests, lint, and build the Docker image (GHCR, multi-platform) automatically
-<!-- 17. The Kubernetes deployment will be updated automatically -->
+16. The GitHub Actions will run the tests, lint and vulnerability check automatically
+17. Generate a new `release` with the tag `vX.Y.Z` ([semver](https://semver.org/))
+<!-- 18. The Kubernetes deployment will be updated automatically -->
 
 > [!TIP]
 > `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
 > Alternatively, you can run `make run-air` to run the application using Air (live reload)
+
+> [!TIP]
+> When a new `release` tag is created, the GitHub Actions will build and push the image to the  
+> GitHub Container Registry (GHCR) from GitHub Packages,  
+> the image will be available at `ghcr.io/fiap-soat-g20/fiap-techchallenge-fase2:latest`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -343,6 +358,7 @@ make test
 - [Docker- Multi-platform builds - Multiple native nodes](https://docs.docker.com/build/building/multi-platform/#multiple-native-nodes)
 - [Faster Multi-Platform Builds: Dockerfile Cross-Compilation Guide](https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/)
 - [Stack Overflow - What does the w flag mean when passed in via the ldflags option to the go command?](https://stackoverflow.com/a/22276273/1403288)
+- [POSTECH_SOAT_KUBERNETES_2 FIAP Repository](https://github.com/FIAP/POSTECH_SOAT_KUBERNETES_2)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
