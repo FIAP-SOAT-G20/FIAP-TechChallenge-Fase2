@@ -520,7 +520,7 @@ definitions:
 externalDocs:
   description: GitHub Repository
   url: https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2
-host: localhost:8080
+host: localhost:8080, localhost:32217
 info:
   contact: {}
   description: '### API de um Fast Food para o Tech Challenge da FIAP - Fase 2'
