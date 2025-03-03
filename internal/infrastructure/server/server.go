@@ -25,7 +25,7 @@ type Server struct {
 }
 
 func NewServer(cfg *config.Config, logger *slog.Logger, handlers *route.Handlers) *Server {
-	router := route.NewRouter(logger, cfg.Environment)
+	router := route.NewRouter(logger, cfg)
 
 	registerCustomValidation()
 	router.RegisterRoutes(handlers)
