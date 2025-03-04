@@ -7,6 +7,7 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
@@ -46,6 +47,18 @@ func (h *OrderHistoryHandler) List(c *gin.Context) {
 	if err := c.ShouldBindQuery(&query); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
+	}
+
+	if query.OrderID == 0 {
+		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
+		return
+	}
+
+	if query.Status != "" {
+		if !valueobject.IsValidOrderStatus(query.Status.String()) {
+			_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
+			return
+		}
 	}
 
 	input := dto.ListOrderHistoriesInput{

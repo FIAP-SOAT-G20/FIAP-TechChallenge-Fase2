@@ -9,7 +9,7 @@ type CreateFirstOrderHistoryInput struct {
 type CreateOrderHistoryInput struct {
 	OrderID uint64
 	StaffID *uint64
-	Status  string
+	Status  valueobject.OrderStatus
 }
 
 type GetOrderHistoryInput struct {
