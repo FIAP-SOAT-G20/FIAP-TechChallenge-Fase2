@@ -2514,7 +2514,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1",
-	Host:             "localhost:8080, localhost:32217",
+	Host:             "",
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
 	Title:            "FIAP Tech Challenge Fase 2 - 10SOAT - G18",
