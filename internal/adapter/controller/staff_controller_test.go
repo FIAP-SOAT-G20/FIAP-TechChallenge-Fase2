@@ -1,4 +1,4 @@
-package controller
+package controller_test
 
 import (
 	"context"
@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
@@ -20,7 +21,7 @@ func TestStaffController_ListStaffs(t *testing.T) {
 
 	mockStaffsUseCase := mockport.NewMockStaffUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewStaffController(mockStaffsUseCase)
+	controller := controller.NewStaffController(mockStaffsUseCase)
 
 	ctx := context.Background()
 	input := dto.ListStaffsInput{
@@ -72,7 +73,7 @@ func TestStaffController_CreateStaff(t *testing.T) {
 
 	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewStaffController(mockStaffUseCase)
+	controller := controller.NewStaffController(mockStaffUseCase)
 
 	ctx := context.Background()
 	input := dto.CreateStaffInput{
@@ -105,7 +106,7 @@ func TestStaffController_GetStaff(t *testing.T) {
 
 	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewStaffController(mockStaffUseCase)
+	controller := controller.NewStaffController(mockStaffUseCase)
 
 	ctx := context.Background()
 	input := dto.GetStaffInput{
@@ -137,7 +138,7 @@ func TestStaffController_UpdateStaff(t *testing.T) {
 
 	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewStaffController(mockStaffUseCase)
+	controller := controller.NewStaffController(mockStaffUseCase)
 
 	ctx := context.Background()
 	input := dto.UpdateStaffInput{
@@ -171,7 +172,7 @@ func TestStaffController_DeleteStaff(t *testing.T) {
 
 	mockStaffUseCase := mockport.NewMockStaffUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewStaffController(mockStaffUseCase)
+	controller := controller.NewStaffController(mockStaffUseCase)
 
 	ctx := context.Background()
 	input := dto.DeleteStaffInput{

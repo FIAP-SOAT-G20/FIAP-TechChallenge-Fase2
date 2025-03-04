@@ -1,4 +1,4 @@
-package controller
+package controller_test
 
 import (
 	"context"
@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
@@ -19,7 +20,7 @@ func TestCustomerController_ListCustomers(t *testing.T) {
 
 	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewCustomerController(mockCustomerUseCase)
+	controller := controller.NewCustomerController(mockCustomerUseCase)
 
 	ctx := context.Background()
 	input := dto.ListCustomersInput{
@@ -67,7 +68,7 @@ func TestCustomerController_CreateCustomer(t *testing.T) {
 
 	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewCustomerController(mockCustomerUseCase)
+	controller := controller.NewCustomerController(mockCustomerUseCase)
 
 	ctx := context.Background()
 	input := dto.CreateCustomerInput{
@@ -102,7 +103,7 @@ func TestCustomerController_GetCustomer(t *testing.T) {
 
 	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewCustomerController(mockCustomerUseCase)
+	controller := controller.NewCustomerController(mockCustomerUseCase)
 
 	ctx := context.Background()
 	input := dto.GetCustomerInput{
@@ -135,7 +136,7 @@ func TestCustomerController_UpdateCustomer(t *testing.T) {
 
 	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewCustomerController(mockCustomerUseCase)
+	controller := controller.NewCustomerController(mockCustomerUseCase)
 
 	ctx := context.Background()
 	input := dto.UpdateCustomerInput{
@@ -169,7 +170,7 @@ func TestCustomerController_DeleteCustomer(t *testing.T) {
 
 	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewCustomerController(mockCustomerUseCase)
+	controller := controller.NewCustomerController(mockCustomerUseCase)
 
 	ctx := context.Background()
 	input := dto.DeleteCustomerInput{
