@@ -11,18 +11,9 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
-	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
 
-func TestCustomersUseCase_List(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockCustomerGateway(ctrl)
-	useCase := usecase.NewCustomerUseCase(mockGateway)
-	ctx := context.Background()
-
+func (s *CustomerUsecaseSuiteTest) TestCustomersUseCase_List() {
 	currentTime := time.Now()
 	mockCustomers := []*entity.Customer{
 		{
@@ -57,8 +48,8 @@ func TestCustomersUseCase_List(t *testing.T) {
 				Limit: 10,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindAll(ctx, "", 1, 10).
+				s.mockGateway.EXPECT().
+					FindAll(s.ctx, "", 1, 10).
 					Return(mockCustomers, int64(2), nil)
 			},
 			expectError: false,
@@ -70,8 +61,8 @@ func TestCustomersUseCase_List(t *testing.T) {
 				Limit: 10,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindAll(ctx, "", 1, 10).
+				s.mockGateway.EXPECT().
+					FindAll(s.ctx, "", 1, 10).
 					Return(nil, int64(0), assert.AnError)
 			},
 			expectError: true,
@@ -85,8 +76,8 @@ func TestCustomersUseCase_List(t *testing.T) {
 				Limit: 10,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindAll(ctx, "Test", 1, 10).
+				s.mockGateway.EXPECT().
+					FindAll(s.ctx, "Test", 1, 10).
 					Return(mockCustomers, int64(2), nil)
 			},
 			expectError: false,
@@ -94,10 +85,10 @@ func TestCustomersUseCase_List(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			customers, total, err := useCase.List(ctx, tt.input)
+			customers, total, err := s.useCase.List(s.ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
@@ -116,14 +107,7 @@ func TestCustomersUseCase_List(t *testing.T) {
 	}
 }
 
-func TestCustomerUseCase_Create(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockCustomerGateway(ctrl)
-	useCase := usecase.NewCustomerUseCase(mockGateway)
-	ctx := context.Background()
-
+func (s *CustomerUsecaseSuiteTest) TestCustomerUseCase_Create() {
 	tests := []struct {
 		name        string
 		input       dto.CreateCustomerInput
@@ -139,8 +123,8 @@ func TestCustomerUseCase_Create(t *testing.T) {
 				CPF:   "123.456.789-00",
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					Create(ctx, gomock.Any()).
+				s.mockGateway.EXPECT().
+					Create(s.ctx, gomock.Any()).
 					Return(nil)
 			},
 			expectError: false,
@@ -153,8 +137,8 @@ func TestCustomerUseCase_Create(t *testing.T) {
 				CPF:   "123.456.789-01",
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					Create(ctx, gomock.Any()).
+				s.mockGateway.EXPECT().
+					Create(s.ctx, gomock.Any()).
 					Return(assert.AnError)
 			},
 			expectError: true,
@@ -163,10 +147,10 @@ func TestCustomerUseCase_Create(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			customer, err := useCase.Create(ctx, tt.input)
+			customer, err := s.useCase.Create(s.ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
@@ -185,14 +169,7 @@ func TestCustomerUseCase_Create(t *testing.T) {
 	}
 }
 
-func TestCustomerUseCase_Get(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockCustomerGateway(ctrl)
-	useCase := usecase.NewCustomerUseCase(mockGateway)
-	ctx := context.Background()
-
+func (s *CustomerUsecaseSuiteTest) TestCustomerUseCase_Get() {
 	currentTime := time.Now()
 	mockCustomer := &entity.Customer{
 		ID:        1,
@@ -213,8 +190,8 @@ func TestCustomerUseCase_Get(t *testing.T) {
 			name: "should get customer successfully",
 			id:   1,
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(mockCustomer, nil)
 			},
 			expectError: false,
@@ -223,8 +200,8 @@ func TestCustomerUseCase_Get(t *testing.T) {
 			name: "should return not found error when customer doesn't exist",
 			id:   1,
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, nil)
 			},
 			expectError: true,
@@ -234,8 +211,8 @@ func TestCustomerUseCase_Get(t *testing.T) {
 			name: "should return internal error when gateway fails",
 			id:   1,
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, assert.AnError)
 			},
 			expectError: true,
@@ -244,10 +221,10 @@ func TestCustomerUseCase_Get(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			customer, err := useCase.Get(ctx, dto.GetCustomerInput{
+			customer, err := s.useCase.Get(s.ctx, dto.GetCustomerInput{
 				ID: tt.id,
 			})
 
@@ -270,14 +247,7 @@ func TestCustomerUseCase_Get(t *testing.T) {
 	}
 }
 
-func TestCustomerUseCase_Update(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockCustomerGateway(ctrl)
-	useCase := usecase.NewCustomerUseCase(mockGateway)
-	ctx := context.Background()
-
+func (s *CustomerUsecaseSuiteTest) TestCustomerUseCase_Update() {
 	currentTime := time.Now()
 	existingCustomer := &entity.Customer{
 		ID:        1,
@@ -302,15 +272,15 @@ func TestCustomerUseCase_Update(t *testing.T) {
 				Email: "new.name@email.com",
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(existingCustomer, nil)
 
-				mockGateway.EXPECT().
-					Update(ctx, gomock.Any()).
+				s.mockGateway.EXPECT().
+					Update(s.ctx, gomock.Any()).
 					DoAndReturn(func(_ context.Context, p *entity.Customer) error {
-						assert.Equal(t, "New Name", p.Name)
-						assert.Equal(t, "new.name@email.com", p.Email)
+						assert.Equal(s.T(), "New Name", p.Name)
+						assert.Equal(s.T(), "new.name@email.com", p.Email)
 						return nil
 					})
 			},
@@ -324,8 +294,8 @@ func TestCustomerUseCase_Update(t *testing.T) {
 				Email: "new.name@email.com",
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, nil)
 			},
 			expectError: true,
@@ -339,12 +309,12 @@ func TestCustomerUseCase_Update(t *testing.T) {
 				Email: "new.name@email.com",
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(existingCustomer, nil)
 
-				mockGateway.EXPECT().
-					Update(ctx, gomock.Any()).
+				s.mockGateway.EXPECT().
+					Update(s.ctx, gomock.Any()).
 					Return(assert.AnError)
 			},
 			expectError: true,
@@ -353,10 +323,10 @@ func TestCustomerUseCase_Update(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			customer, err := useCase.Update(ctx, tt.input)
+			customer, err := s.useCase.Update(s.ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
@@ -375,14 +345,7 @@ func TestCustomerUseCase_Update(t *testing.T) {
 	}
 }
 
-func TestCustomerUseCase_Delete(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockCustomerGateway(ctrl)
-	useCase := usecase.NewCustomerUseCase(mockGateway)
-	ctx := context.Background()
-
+func (s *CustomerUsecaseSuiteTest) TestCustomerUseCase_Delete() {
 	tests := []struct {
 		name        string
 		id          uint64
@@ -394,12 +357,12 @@ func TestCustomerUseCase_Delete(t *testing.T) {
 			name: "should delete customer successfully",
 			id:   1,
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(&entity.Customer{ID: 1}, nil)
 
-				mockGateway.EXPECT().
-					Delete(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					Delete(s.ctx, uint64(1)).
 					Return(nil)
 			},
 			expectError: false,
@@ -408,8 +371,8 @@ func TestCustomerUseCase_Delete(t *testing.T) {
 			name: "should return not found error when customer doesn't exist",
 			id:   1,
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, nil)
 			},
 			expectError: true,
@@ -419,8 +382,8 @@ func TestCustomerUseCase_Delete(t *testing.T) {
 			name: "should return error when gateway fails on find",
 			id:   1,
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, assert.AnError)
 			},
 			expectError: true,
@@ -430,12 +393,12 @@ func TestCustomerUseCase_Delete(t *testing.T) {
 			name: "should return error when gateway fails on delete",
 			id:   1,
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(&entity.Customer{}, nil)
 
-				mockGateway.EXPECT().
-					Delete(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					Delete(s.ctx, uint64(1)).
 					Return(assert.AnError)
 			},
 			expectError: true,
@@ -444,10 +407,10 @@ func TestCustomerUseCase_Delete(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			customer, err := useCase.Delete(ctx, dto.DeleteCustomerInput{ID: tt.id})
+			customer, err := s.useCase.Delete(s.ctx, dto.DeleteCustomerInput{ID: tt.id})
 
 			if tt.expectError {
 				assert.Error(t, err)

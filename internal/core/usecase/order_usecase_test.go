@@ -12,19 +12,9 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
-	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
 
-func TestOrdersUseCase_List(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	historyUseCaseMock := mockport.NewMockOrderHistoryUseCase(ctrl)
-	useCase := usecase.NewOrderUseCase(mockGateway, historyUseCaseMock)
-	ctx := context.Background()
-
+func (s *OrderUsecaseSuiteTest) TestOrdersUseCase_List() {
 	currentTime := time.Now()
 	mockOrders := []*entity.Order{
 		{
@@ -59,8 +49,8 @@ func TestOrdersUseCase_List(t *testing.T) {
 				Limit: 10,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), nil, nil, 1, 10, "").
+				s.mockGateway.EXPECT().
+					FindAll(s.ctx, uint64(0), nil, nil, 1, 10, "").
 					Return(mockOrders, int64(2), nil)
 			},
 			expectError: false,
@@ -72,8 +62,8 @@ func TestOrdersUseCase_List(t *testing.T) {
 				Limit: 10,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), nil, nil, 1, 10, "").
+				s.mockGateway.EXPECT().
+					FindAll(s.ctx, uint64(0), nil, nil, 1, 10, "").
 					Return(nil, int64(0), assert.AnError)
 			},
 			expectError: true,
@@ -87,8 +77,8 @@ func TestOrdersUseCase_List(t *testing.T) {
 				Limit:  10,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindAll(ctx, uint64(0), []valueobject.OrderStatus{"PENDING"}, nil, 1, 10, "").
+				s.mockGateway.EXPECT().
+					FindAll(s.ctx, uint64(0), []valueobject.OrderStatus{"PENDING"}, nil, 1, 10, "").
 					Return(mockOrders, int64(2), nil)
 			},
 			expectError: false,
@@ -101,8 +91,8 @@ func TestOrdersUseCase_List(t *testing.T) {
 				Limit:      10,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindAll(ctx, uint64(1), nil, nil, 1, 10, "").
+				s.mockGateway.EXPECT().
+					FindAll(s.ctx, uint64(1), nil, nil, 1, 10, "").
 					Return(mockOrders, int64(2), nil)
 			},
 			expectError: false,
@@ -110,10 +100,10 @@ func TestOrdersUseCase_List(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			orders, total, err := useCase.List(ctx, tt.input)
+			orders, total, err := s.useCase.List(s.ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
@@ -132,15 +122,7 @@ func TestOrdersUseCase_List(t *testing.T) {
 	}
 }
 
-func TestOrderUseCase_Create(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	historyUseCaseMock := mockport.NewMockOrderHistoryUseCase(ctrl)
-	useCase := usecase.NewOrderUseCase(mockGateway, historyUseCaseMock)
-	ctx := context.Background()
-
+func (s *OrderUsecaseSuiteTest) TestOrderUseCase_Create() {
 	tests := []struct {
 		name        string
 		input       dto.CreateOrderInput
@@ -154,11 +136,11 @@ func TestOrderUseCase_Create(t *testing.T) {
 				CustomerID: 1,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					Create(ctx, gomock.Any()).
+				s.mockGateway.EXPECT().
+					Create(s.ctx, gomock.Any()).
 					Return(nil)
-				historyUseCaseMock.EXPECT().
-					Create(ctx, gomock.Any()).
+				s.historyUseCaseMock.EXPECT().
+					Create(s.ctx, gomock.Any()).
 					Return(&entity.OrderHistory{OrderID: 1, Status: valueobject.OPEN}, nil)
 			},
 			expectError: false,
@@ -169,8 +151,8 @@ func TestOrderUseCase_Create(t *testing.T) {
 				CustomerID: 1,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					Create(ctx, gomock.Any()).
+				s.mockGateway.EXPECT().
+					Create(s.ctx, gomock.Any()).
 					Return(assert.AnError)
 			},
 			expectError: true,
@@ -179,10 +161,10 @@ func TestOrderUseCase_Create(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			order, err := useCase.Create(ctx, tt.input)
+			order, err := s.useCase.Create(s.ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
@@ -199,15 +181,7 @@ func TestOrderUseCase_Create(t *testing.T) {
 	}
 }
 
-func TestOrderUseCase_Get(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	historyUseCaseMock := mockport.NewMockOrderHistoryUseCase(ctrl)
-	useCase := usecase.NewOrderUseCase(mockGateway, historyUseCaseMock)
-	ctx := context.Background()
-
+func (s *OrderUsecaseSuiteTest) TestOrderUseCase_Get() {
 	currentTime := time.Now()
 	mockOrder := &entity.Order{
 		ID:         1,
@@ -229,8 +203,8 @@ func TestOrderUseCase_Get(t *testing.T) {
 			name: "should get order successfully",
 			id:   1,
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(mockOrder, nil)
 			},
 			expectError: false,
@@ -239,8 +213,8 @@ func TestOrderUseCase_Get(t *testing.T) {
 			name: "should return not found error when order doesn't exist",
 			id:   1,
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, nil)
 			},
 			expectError: true,
@@ -250,8 +224,8 @@ func TestOrderUseCase_Get(t *testing.T) {
 			name: "should return internal error when gateway fails",
 			id:   1,
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, assert.AnError)
 			},
 			expectError: true,
@@ -260,10 +234,10 @@ func TestOrderUseCase_Get(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			order, err := useCase.Get(ctx, dto.GetOrderInput{
+			order, err := s.useCase.Get(s.ctx, dto.GetOrderInput{
 				ID: tt.id,
 			})
 
@@ -284,15 +258,7 @@ func TestOrderUseCase_Get(t *testing.T) {
 	}
 }
 
-func TestOrderUseCase_Update(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	historyUseCaseMock := mockport.NewMockOrderHistoryUseCase(ctrl)
-	useCase := usecase.NewOrderUseCase(mockGateway, historyUseCaseMock)
-	ctx := context.Background()
-
+func (s *OrderUsecaseSuiteTest) TestOrderUseCase_Update() {
 	currentTime := time.Now()
 	existingOrder := &entity.Order{
 		ID:         1,
@@ -318,14 +284,14 @@ func TestOrderUseCase_Update(t *testing.T) {
 				Status:     "RECEIVED",
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(existingOrder, nil)
 
-				mockGateway.EXPECT().
-					Update(ctx, gomock.Any()).
+				s.mockGateway.EXPECT().
+					Update(s.ctx, gomock.Any()).
 					DoAndReturn(func(_ context.Context, p *entity.Order) error {
-						assert.Equal(t, uint64(1), p.ID)
+						assert.Equal(s.T(), uint64(1), p.ID)
 						return nil
 					})
 			},
@@ -339,8 +305,8 @@ func TestOrderUseCase_Update(t *testing.T) {
 				Status:     "RECEIVED",
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, nil)
 			},
 			expectError: true,
@@ -354,12 +320,12 @@ func TestOrderUseCase_Update(t *testing.T) {
 				Status:     "RECEIVED",
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(existingOrder, nil)
 
-				mockGateway.EXPECT().
-					Update(ctx, gomock.Any()).
+				s.mockGateway.EXPECT().
+					Update(s.ctx, gomock.Any()).
 					Return(assert.AnError)
 			},
 			expectError: true,
@@ -368,10 +334,10 @@ func TestOrderUseCase_Update(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			order, err := useCase.Update(ctx, tt.input)
+			order, err := s.useCase.Update(s.ctx, tt.input)
 
 			if tt.expectError {
 				assert.Error(t, err)
@@ -388,15 +354,7 @@ func TestOrderUseCase_Update(t *testing.T) {
 	}
 }
 
-func TestOrderUseCase_Delete(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockOrderGateway(ctrl)
-	historyUseCaseMock := mockport.NewMockOrderHistoryUseCase(ctrl)
-	useCase := usecase.NewOrderUseCase(mockGateway, historyUseCaseMock)
-	ctx := context.Background()
-
+func (s *OrderUsecaseSuiteTest) TestOrderUseCase_Delete() {
 	tests := []struct {
 		name        string
 		id          uint64
@@ -408,12 +366,12 @@ func TestOrderUseCase_Delete(t *testing.T) {
 			name: "should delete order successfully",
 			id:   1,
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(&entity.Order{ID: 1}, nil)
 
-				mockGateway.EXPECT().
-					Delete(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					Delete(s.ctx, uint64(1)).
 					Return(nil)
 			},
 			expectError: false,
@@ -422,8 +380,8 @@ func TestOrderUseCase_Delete(t *testing.T) {
 			name: "should return not found error when order doesn't exist",
 			id:   1,
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, nil)
 			},
 			expectError: true,
@@ -433,8 +391,8 @@ func TestOrderUseCase_Delete(t *testing.T) {
 			name: "should return error when gateway fails on find",
 			id:   1,
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, assert.AnError)
 			},
 			expectError: true,
@@ -444,12 +402,12 @@ func TestOrderUseCase_Delete(t *testing.T) {
 			name: "should return error when gateway fails on delete",
 			id:   1,
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(&entity.Order{}, nil)
 
-				mockGateway.EXPECT().
-					Delete(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					Delete(s.ctx, uint64(1)).
 					Return(assert.AnError)
 			},
 			expectError: true,
@@ -458,10 +416,10 @@ func TestOrderUseCase_Delete(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			order, err := useCase.Delete(ctx, dto.DeleteOrderInput{ID: tt.id})
+			order, err := s.useCase.Delete(s.ctx, dto.DeleteOrderInput{ID: tt.id})
 
 			if tt.expectError {
 				assert.Error(t, err)
