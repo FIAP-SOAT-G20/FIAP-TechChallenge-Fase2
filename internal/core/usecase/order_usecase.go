@@ -40,7 +40,7 @@ func (uc *orderUseCase) Create(ctx context.Context, i dto.CreateOrderInput) (*en
 
 	_, err := uc.orderHistoryUseCase.Create(ctx, dto.CreateOrderHistoryInput{
 		OrderID: order.ID,
-		Status:  valueobject.OPEN.String(),
+		Status:  valueobject.OPEN,
 		StaffID: nil,
 	})
 	if err != nil {
@@ -103,7 +103,7 @@ func (uc *orderUseCase) Update(ctx context.Context, i dto.UpdateOrderInput) (*en
 	if i.Status != "" && order.Status != i.Status {
 		if _, err := uc.orderHistoryUseCase.Create(ctx, dto.CreateOrderHistoryInput{
 			OrderID: order.ID,
-			Status:  i.Status.String(),
+			Status:  i.Status,
 			StaffID: &i.StaffID,
 		}); err != nil {
 			return nil, domain.NewInternalError(err)

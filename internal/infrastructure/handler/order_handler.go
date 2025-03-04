@@ -82,7 +82,12 @@ func (h *OrderHandler) List(c *gin.Context) {
 	var status []valueobject.OrderStatus
 	if query.Status != "" {
 		for _, s := range strings.Split(query.Status, ",") {
-			status = append(status, valueobject.OrderStatus(strings.TrimSpace(s)))
+			orderStatus, ok := valueobject.ToOrderStatus(strings.TrimSpace(s))
+			if !ok {
+				_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
+				return
+			}
+			status = append(status, orderStatus)
 		}
 	}
 
