@@ -70,7 +70,7 @@ test: lint ## Run tests
 	@$(GOFMT) ./...
 	@$(GOVET) ./...
 	@$(GOTIDY)
-	$(GOTEST) $(TEST_PATH) -v
+	$(GOTEST) $(TEST_PATH) -race -v
 
 .PHONY: coverage
 coverage: ## Run tests with coverage
