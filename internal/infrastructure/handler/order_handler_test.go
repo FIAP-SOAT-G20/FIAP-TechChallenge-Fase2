@@ -8,11 +8,21 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/util"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 )
 
 func (s *OrderHandlerSuiteTest) TestOrderHandler_List() {
+	listSuccess, err := util.ReadGoldenFile("order/list_success")
+	assert.NoError(s.T(), err)
+	listSuccessWithQuery, err := util.ReadGoldenFile("order/list_success_with_query")
+	assert.NoError(s.T(), err)
+	listInvalidParam, err := util.ReadGoldenFile("order/list_invalid_parameter")
+	assert.NoError(s.T(), err)
+	listInternalError, err := util.ReadGoldenFile("order/list_internal_error")
+	assert.NoError(s.T(), err)
+
 	tests := []struct {
 		name        string
 		query       string
@@ -28,11 +38,11 @@ func (s *OrderHandlerSuiteTest) TestOrderHandler_List() {
 					Page:          1,
 					Limit:         10,
 					Sort:          "status:d,created_at",
-				}).Return([]byte(`{"data":["a":1]}`), nil)
+				}).Return([]byte(listSuccess), nil)
 			},
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
 				assert.Equal(t, http.StatusOK, res.Code)
-				assert.Contains(t, res.Body.String(), `{"data":["a":1]}`)
+				assert.Contains(t, res.Body.String(), listSuccess)
 			},
 		},
 		{
@@ -46,11 +56,11 @@ func (s *OrderHandlerSuiteTest) TestOrderHandler_List() {
 					Page:          1,
 					Limit:         10,
 					Sort:          "status:d,created_at",
-				}).Return([]byte(`{"data":[]}`), nil)
+				}).Return([]byte(listSuccessWithQuery), nil)
 			},
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
 				assert.Equal(t, http.StatusOK, res.Code)
-				assert.Contains(t, res.Body.String(), `{"data":[]}`)
+				assert.Contains(t, res.Body.String(), listSuccessWithQuery)
 			},
 		},
 		{
@@ -58,8 +68,9 @@ func (s *OrderHandlerSuiteTest) TestOrderHandler_List() {
 			query:      "/orders?customer_id=invalid",
 			setupMocks: func() {},
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.NoError(t, err)
 				assert.Equal(t, http.StatusBadRequest, res.Code)
-				assert.Contains(t, res.Body.String(), `{"code":400,"message":"invalid parameter"}`)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), listInvalidParam)
 			},
 		},
 		{
@@ -68,7 +79,7 @@ func (s *OrderHandlerSuiteTest) TestOrderHandler_List() {
 			setupMocks: func() {},
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
 				assert.Equal(t, http.StatusBadRequest, res.Code)
-				assert.Contains(t, res.Body.String(), `{"code":400,"message":"invalid parameter"}`)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), listInvalidParam)
 			},
 		},
 		{
@@ -84,7 +95,7 @@ func (s *OrderHandlerSuiteTest) TestOrderHandler_List() {
 			},
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
 				assert.Equal(t, http.StatusInternalServerError, res.Code)
-				assert.Contains(t, res.Body.String(), `{"code":500,"message":"internal server error"}`)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), listInternalError)
 			},
 		},
 	}
