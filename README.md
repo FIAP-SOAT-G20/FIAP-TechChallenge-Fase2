@@ -125,6 +125,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 <summary>more (click to expand or collapse ↕️)</summary>
 
 - [x] Unit tests (testify)
+- [x] Tests Suite (testify)
 - [x] Code coverage report (go tool cover)
 - [x] Swagger documentation
 - [x] Postman collection
@@ -138,9 +139,11 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [x] Environment variables
 - [x] Graceful shutdown
 - [x] Kubernetes deployment
-- [x] GitHub Actions
+- [x] GitHub Actions (CI/CD)
+- [x] GitHub Container Registry (GHCR)
 - [x] Structured logs (slog)
 - [x] Database migrations (golang-migrate)
+- [x] Kubernetes best practices (liveness, readiness, HPA, etc.)
 
 </details>
 
