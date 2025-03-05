@@ -11,64 +11,97 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/util"
 )
 
-// TODO: Add more test cenarios
-func TestCustomerController_ListCustomers(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
-	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := controller.NewCustomerController(mockCustomerUseCase)
-
-	ctx := context.Background()
-	input := dto.ListCustomersInput{
-		Name:  "Test",
-		Page:  1,
-		Limit: 10,
-	}
-
-	mockCustomers := []*entity.Customer{
+func (s *CustomerControllerSuiteTest) TestCustomerController_ListCustomers() {
+	tests := []struct {
+		name        string
+		input       dto.ListCustomersInput
+		setupMocks  func()
+		checkResult func(*testing.T, []byte, error)
+	}{
 		{
-			ID:    1,
-			Name:  "Test Customer 1",
-			Email: "test.customer.1@email.com",
-			CPF:   "12345678901",
+			name: "List customers success",
+			input: dto.ListCustomersInput{
+				Name:  "Test",
+				Page:  1,
+				Limit: 10,
+			},
+			setupMocks: func() {
+				mockCustomers := []*entity.Customer{
+					{
+						ID:    1,
+						Name:  "Test Customer 1",
+						Email: "test.customer.1@email.com",
+						CPF:   "12345678901",
+					},
+					{
+						ID:    2,
+						Name:  "Test Customer 2",
+						Email: "test.customer.2@email.com",
+						CPF:   "12345678902",
+					},
+				}
+				s.mockUseCase.EXPECT().
+					List(s.ctx, dto.ListCustomersInput{
+						Name:  "Test",
+						Page:  1,
+						Limit: 10,
+					}).
+					Return(mockCustomers, int64(2), nil)
+			},
+			checkResult: func(t *testing.T, output []byte, err error) {
+				want, _ := util.ReadGoldenFile("customer/list_success")
+				assert.NoError(t, err)
+				assert.NotNil(t, output)
+				assert.Equal(t, want, util.RemoveAllSpaces(string(output)))
+			},
 		},
 		{
-			ID:    2,
-			Name:  "Test Customer 2",
-			Email: "test.customer.2@email.com",
-			CPF:   "12345678902",
+			name: "List customers use case error",
+			input: dto.ListCustomersInput{
+				Name:  "Test",
+				Page:  1,
+				Limit: 10,
+			},
+			setupMocks: func() {
+				s.mockUseCase.EXPECT().
+					List(s.ctx, dto.ListCustomersInput{
+						Name:  "Test",
+						Page:  1,
+						Limit: 10,
+					}).
+					Return(nil, int64(0), assert.AnError)
+			},
+			checkResult: func(t *testing.T, output []byte, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, output)
+			},
 		},
 	}
 
-	mockCustomerUseCase.EXPECT().
-		List(ctx, input).
-		Return(mockCustomers, int64(2), nil)
+	for _, tt := range tests {
+		s.T().Run(tt.name, func(t *testing.T) {
+			// Arrange
+			tt.setupMocks()
 
-	mockPresenter.EXPECT().
-		Present(dto.PresenterInput{
-			Total:  int64(2),
-			Page:   1,
-			Limit:  10,
-			Result: mockCustomers,
-		}).
-		Return([]byte{}, nil)
+			// Act
+			output, err := s.controller.List(s.ctx, s.mockPresenter, tt.input)
 
-	output, err := controller.List(ctx, mockPresenter, input)
-	assert.NoError(t, err)
-	assert.NotNil(t, output)
+			// Assert
+			tt.checkResult(t, output, err)
+		})
+	}
 }
 
 func TestCustomerController_CreateCustomer(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
+	mockUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := controller.NewCustomerController(mockCustomerUseCase)
+	controller := controller.NewCustomerController(mockUseCase)
 
 	ctx := context.Background()
 	input := dto.CreateCustomerInput{
@@ -84,7 +117,7 @@ func TestCustomerController_CreateCustomer(t *testing.T) {
 		CPF:   "123.456.789-00",
 	}
 
-	mockCustomerUseCase.EXPECT().
+	mockUseCase.EXPECT().
 		Create(ctx, input).
 		Return(mockCustomer, nil)
 
@@ -101,9 +134,9 @@ func TestCustomerController_GetCustomer(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
+	mockUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := controller.NewCustomerController(mockCustomerUseCase)
+	controller := controller.NewCustomerController(mockUseCase)
 
 	ctx := context.Background()
 	input := dto.GetCustomerInput{
@@ -117,7 +150,7 @@ func TestCustomerController_GetCustomer(t *testing.T) {
 		CPF:   "12345678901",
 	}
 
-	mockCustomerUseCase.EXPECT().
+	mockUseCase.EXPECT().
 		Get(ctx, input).
 		Return(mockCustomer, nil)
 
@@ -134,9 +167,9 @@ func TestCustomerController_UpdateCustomer(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
+	mockUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := controller.NewCustomerController(mockCustomerUseCase)
+	controller := controller.NewCustomerController(mockUseCase)
 
 	ctx := context.Background()
 	input := dto.UpdateCustomerInput{
@@ -151,7 +184,7 @@ func TestCustomerController_UpdateCustomer(t *testing.T) {
 		Email: "updated.customer@email.com",
 	}
 
-	mockCustomerUseCase.EXPECT().
+	mockUseCase.EXPECT().
 		Update(ctx, input).
 		Return(mockCustomer, nil)
 
@@ -168,9 +201,9 @@ func TestCustomerController_DeleteCustomer(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockCustomerUseCase := mockport.NewMockCustomerUseCase(ctrl)
+	mockUseCase := mockport.NewMockCustomerUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := controller.NewCustomerController(mockCustomerUseCase)
+	controller := controller.NewCustomerController(mockUseCase)
 
 	ctx := context.Background()
 	input := dto.DeleteCustomerInput{
@@ -183,7 +216,7 @@ func TestCustomerController_DeleteCustomer(t *testing.T) {
 		Email: "test.customer@email.com",
 	}
 
-	mockCustomerUseCase.EXPECT().
+	mockUseCase.EXPECT().
 		Delete(ctx, input).
 		Return(mockCustomer, nil)
 
