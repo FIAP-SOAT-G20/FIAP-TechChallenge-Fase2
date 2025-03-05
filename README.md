@@ -359,7 +359,8 @@ make test
 - [Faster Multi-Platform Builds: Dockerfile Cross-Compilation Guide](https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/)
 - [Stack Overflow - What does the w flag mean when passed in via the ldflags option to the go command?](https://stackoverflow.com/a/22276273/1403288)
 - [POSTECH_SOAT_KUBERNETES_2 FIAP Repository](https://github.com/FIAP/POSTECH_SOAT_KUBERNETES_2)
--[Go Testing with testify/suite](https://hsleep.medium.com/about-testify-suite-package-ec818a02b8f)
+- [Go Testing with testify/suite](https://hsleep.medium.com/about-testify-suite-package-ec818a02b8f)
+- [Melhores práticas na utilização de ENUMs](https://aprendagolang.com.br/melhores-praticas-na-utilizacao-de-enums/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
