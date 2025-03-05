@@ -271,14 +271,66 @@ const docTemplate = `{
         },
         "/health": {
             "get": {
-                "description": "Checks application health",
+                "description": "Checks application readiness",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "health-check"
                 ],
-                "summary": "Application HealthCheck",
+                "summary": "Application Readiness",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.HealthCheckResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/response.HealthCheckResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/health/livez": {
+            "get": {
+                "description": "Checks application liveness",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "health-check"
+                ],
+                "summary": "Application Liveness",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.HealthCheckLivenessResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/health/readyz": {
+            "get": {
+                "description": "Checks application readiness",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "health-check"
+                ],
+                "summary": "Application Readiness",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2363,6 +2415,14 @@ const docTemplate = `{
                         }
                     ],
                     "example": "COOK"
+                }
+            }
+        },
+        "response.HealthCheckLivenessResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
                 }
             }
         },
