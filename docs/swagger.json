@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "### API de um Fast Food para o Tech Challenge da FIAP - Fase 2",
-        "title": "FIAP Tech Challenge Fase 2 - 10SOAT - G18",
+        "description": "### FIAP Tech Challenge Phase 2 - 10SOAT - G18",
+        "title": "Fast Food API v2",
         "contact": {},
         "version": "1"
     },
