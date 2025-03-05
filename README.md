@@ -248,8 +248,8 @@ make k8s-apply
 > To remove the application, run `make k8s-delete`
 
 > [!NOTE]
-> The application is available at <http://localhost:30001/>  
-> Ex: <http://localhost:30001/api/v1/health>
+> The application is available at <http://localhost/>  
+> Ex: <http://localhost/api/v1/health>
 
 ### :mag: Kubernetes Organization
 
@@ -287,16 +287,17 @@ The Kubernetes organization is divided into three main directories: `app`, `conf
 6. Install dependencies by running `make install`
 7. Run the application by running `make run-air` or `make run`
 8. Access the application at `http://localhost:8080`
-9. Dont forget to run the tests by running `make test`
-10. Check the coverage report by running `make coverage`
-11. Check the lint by running `make lint`
-12. Update the swagger documentation by running `make swagger`
-13. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard
-14. Push to the branch and Open a new PR by running `make pull-request`
-15. After the PR is approved, merge it to the main branch
+9. Make your changes 🧑‍💻
+10. Dont forget to run the tests by running `make test`
+11. Check the coverage report by running `make coverage`
+12. Check the lint by running `make lint`
+13. Update the swagger documentation by running `make swagger`
+14. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard
+15. Push to the branch and Open a new PR by running `make pull-request`
 16. The GitHub Actions will run the tests, lint and vulnerability check automatically
-17. Generate a new `release` with the tag `vX.Y.Z` ([semver](https://semver.org/))
-<!-- 18. The Kubernetes deployment will be updated automatically -->
+17. After the PR is approved, merge it to the main branch
+18. Generate a new `release` with the tag `vX.Y.Z` ([semver](https://semver.org/))
+<!-- 19. The Kubernetes deployment will be updated automatically -->
 
 > [!TIP]
 > `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
@@ -364,6 +365,9 @@ make test
 - [POSTECH_SOAT_KUBERNETES_2 FIAP Repository](https://github.com/FIAP/POSTECH_SOAT_KUBERNETES_2)
 - [Go Testing with testify/suite](https://hsleep.medium.com/about-testify-suite-package-ec818a02b8f)
 - [Melhores práticas na utilização de ENUMs](https://aprendagolang.com.br/melhores-praticas-na-utilizacao-de-enums/)
+- [Testing in Go: Golden Files](https://ieftimov.com/posts/testing-in-go-golden-files/)
+- [Testing in Go: Fixtures](https://ieftimov.com/posts/testing-in-go-fixtures/)
+- [Testing in Go: Intermediate Tips and Techniques](https://betterstack.com/community/guides/testing/intemediate-go-testing/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
