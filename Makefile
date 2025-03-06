@@ -76,7 +76,7 @@ test: lint ## Run tests
 coverage: ## Run tests with coverage
 	@echo  "🟢 Running tests with coverage..."
 	$(GOTEST) $(TEST_PATH) -coverprofile=$(TEST_COVERAGE_FILE_NAME).tmp
-	@cat $(TEST_COVERAGE_FILE_NAME).tmp | grep -v "_mock.go" > $(TEST_COVERAGE_FILE_NAME)
+	@cat $(TEST_COVERAGE_FILE_NAME).tmp | grep -v "_mock.go" > $(TEST_COVERAGE_FILE_NAME) # remove mocks from coverage
 	@rm $(TEST_COVERAGE_FILE_NAME).tmp
 	$(GOCMD) tool cover -html=$(TEST_COVERAGE_FILE_NAME)
 
