@@ -111,7 +111,7 @@ func (h *OrderProductHandler) Create(c *gin.Context) {
 		return
 	}
 
-	c.Data(http.StatusOK, "application/json", output)
+	c.Data(http.StatusCreated, "application/json", output)
 }
 
 // Get godoc
