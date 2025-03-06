@@ -2,14 +2,10 @@ package handler_test
 
 import (
 	"context"
-	"io"
-	"log/slog"
 	"testing"
 
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/middleware"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/util"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
@@ -29,10 +25,7 @@ type OrderHandlerSuiteTest struct {
 
 func (s *OrderHandlerSuiteTest) SetupTest() {
 	// Create a new router
-	s.router = gin.New()
-	gin.SetMode(gin.TestMode)
-	s.router.Use(middleware.ErrorHandler(&logger.Logger{Logger: slog.New(slog.NewJSONHandler(io.Discard, nil))})) // Remove log output
-	// s.router.Use(middleware.ErrorHandler(&Logger{Logger: slog.New(slog.DiscardHandler)})) // TODO: Replace above line with this line, when updating go to 1.24 or higher
+	s.router = newRouter()
 
 	// Create a new handler
 	ctrl := gomock.NewController(s.T())
@@ -58,7 +51,6 @@ func (s *OrderHandlerSuiteTest) SetupTest() {
 
 	// Mock responses
 	s.responses, err = util.ReadGoldenFiles("order",
-		"error_invalid_parameter", "error_internal_error", "error_not_found",
 		"list_success", "list_success_with_query",
 		"create_success",
 		"update_success",
@@ -66,6 +58,8 @@ func (s *OrderHandlerSuiteTest) SetupTest() {
 		"delete_success",
 	)
 	assert.NoError(s.T(), err)
+
+	addCommonResponses(&s.responses)
 }
 
 // func (s *OrderHandlerSuiteTest) BeforeTest(_, _ string) {}
