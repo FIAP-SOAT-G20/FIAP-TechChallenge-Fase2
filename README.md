@@ -368,6 +368,7 @@ make test
 - [Testing in Go: Golden Files](https://ieftimov.com/posts/testing-in-go-golden-files/)
 - [Testing in Go: Fixtures](https://ieftimov.com/posts/testing-in-go-fixtures/)
 - [Testing in Go: Intermediate Tips and Techniques](https://betterstack.com/community/guides/testing/intemediate-go-testing/)
+- [TESTES UNITÁRIOS COM GIN GONIC - Como criar testes para os endpoints do seu projeto?](https://www.youtube.com/watch?v=rwReyPLmMs8&ab_channel=HunCoding)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
