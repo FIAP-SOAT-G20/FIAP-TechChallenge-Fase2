@@ -1,0 +1,8 @@
+{
+    "id": 1,
+    "name": "John Doe",
+    "email": "joh.doe@email.com",
+    "cpf": "123.456.789-00",
+    "created_at": "2025-02-14T17:49:24Z",
+    "updated_at": "2025-02-14T17:49:24Z"
+}
