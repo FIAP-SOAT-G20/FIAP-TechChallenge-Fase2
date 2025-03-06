@@ -4,6 +4,7 @@ on:
   release:
     types: [created]
 
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}-mock-server
