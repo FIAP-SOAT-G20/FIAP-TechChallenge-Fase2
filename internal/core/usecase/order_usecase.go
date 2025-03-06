@@ -97,7 +97,7 @@ func (uc *orderUseCase) Update(ctx context.Context, i dto.UpdateOrderInput) (*en
 	}
 
 	// Restore order products, to calculate total bill in the presenter
-	order.OrderProducts = orderProducts
+	order.OrderProducts = orderProducts // TODO: Remove relations from entities
 
 	// if status has changed, create a new order history
 	if i.Status != "" && order.Status != i.Status {

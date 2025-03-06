@@ -17,4 +17,6 @@ type OrderProduct struct {
 func (p *OrderProduct) Update(quantity uint32) {
 	p.Quantity = quantity
 	p.UpdatedAt = time.Now()
+	p.Order = Order{}
+	p.Product = Product{}
 }
