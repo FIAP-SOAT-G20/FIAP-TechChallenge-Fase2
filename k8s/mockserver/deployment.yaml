@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tech-challenge-api-mock-server
+  namespace: tech-challenge-system
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tech-challenge-api-mock-server
+  template:
+    metadata:
+      labels:
+        app: tech-challenge-api-mock-server
+    spec:
+      containers:
+        - name: tech-challenge-api-mock-server
+          image: ghcr.io/fiap-soat-g20/fiap-techchallenge-fase2-mock-server:latest
+          command:
+            - "--port 3000"
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          readinessProbe:
+            httpGet:
+              path: /mercadopago/healthCheck
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /mercadopago/healthCheck
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
