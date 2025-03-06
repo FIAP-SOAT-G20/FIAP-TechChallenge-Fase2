@@ -1,14 +1,14 @@
 package middleware
 
 import (
-	"log/slog"
 	"time"
 
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
 
-func Logger(log *slog.Logger) gin.HandlerFunc {
+func Logger(log *logger.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 		path := c.Request.URL.Path
@@ -59,7 +59,7 @@ func CORS() gin.HandlerFunc {
 	}
 }
 
-func Recovery(log *slog.Logger) gin.HandlerFunc {
+func Recovery(log *logger.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
