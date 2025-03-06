@@ -1,12 +1,11 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "### API de um Fast Food para o Tech Challenge da FIAP - Fase 2",
-        "title": "FIAP Tech Challenge Fase 2 - 10SOAT - G18",
+        "description": "### FIAP Tech Challenge Phase 2 - 10SOAT - G18",
+        "title": "Fast Food API v2",
         "contact": {},
         "version": "1"
     },
-    "host": "localhost:8080",
     "basePath": "/api/v1",
     "paths": {
         "/customers": {
@@ -265,14 +264,66 @@
         },
         "/health": {
             "get": {
-                "description": "Checks application health",
+                "description": "Checks application readiness",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "health-check"
                 ],
-                "summary": "Application HealthCheck",
+                "summary": "Application Readiness",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.HealthCheckResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/response.HealthCheckResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/health/livez": {
+            "get": {
+                "description": "Checks application liveness",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "health-check"
+                ],
+                "summary": "Application Liveness",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.HealthCheckLivenessResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/health/readyz": {
+            "get": {
+                "description": "Checks application readiness",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "health-check"
+                ],
+                "summary": "Application Readiness",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2357,6 +2408,14 @@
                         }
                     ],
                     "example": "COOK"
+                }
+            }
+        },
+        "response.HealthCheckLivenessResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
                 }
             }
         },

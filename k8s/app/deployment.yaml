@@ -46,20 +46,20 @@ spec:
                   key: db_password
           resources:
             requests:
-              memory: "128Mi"
-              cpu: "100m"
+              memory: "128Mi" # 128 mebibytes = 134,217,728 bytes = 128 * 1024 * 1024 bytes
+              cpu: "100m" # 100 millicores = 0.1 cores, it means 10% of a core
             limits:
               memory: "256Mi"
               cpu: "200m"
-          readinessProbe:
+          readinessProbe: # verify that the container is ready to accept traffic
             httpGet:
-              path: /api/v1/health
+              path: /api/v1/health/readyz
               port: 8080
             initialDelaySeconds: 5
             periodSeconds: 10
-          livenessProbe:
+          livenessProbe: # verify that the container is running, and restart it if it's not
             httpGet:
-              path: /api/v1/health
+              path: /api/v1/health/livez
               port: 8080
             initialDelaySeconds: 15
             periodSeconds: 20

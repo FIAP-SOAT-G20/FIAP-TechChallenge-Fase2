@@ -17,11 +17,10 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/server"
 )
 
-// @title						FIAP Tech Challenge Fase 2 - 10SOAT - G18
+// @title						Fast Food API v2
 // @version					1
-// @description				### API de um Fast Food para o Tech Challenge da FIAP - Fase 2
-// @servers					[ { "url": "http://localhost:8080" } ]
-// @host						localhost:8080
+// @description				### FIAP Tech Challenge Phase 2 - 10SOAT - G18
+// @servers					[ { "url": "http://localhost:8080" }, { "url": "http://localhost:30001" } ]
 // @BasePath					/api/v1
 // @tag.name					sign-up
 // @tag.description			Regiter a new customer

@@ -10,4 +10,6 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8080
-  type: ClusterIP
+      nodePort: 30001
+  # type: NodePort # To run locally
+  type: LoadBalancer # To run on cloud, or locally (http://localhost/api/v1/health)

@@ -54,12 +54,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/products/",
-									"protocol": "http",
+									"raw": "{{host}}/api/v1/products/",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -137,12 +135,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/products/",
-									"protocol": "http",
+									"raw": "{{host}}/api/v1/products/",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -214,12 +210,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/products/6",
-									"protocol": "http",
+									"raw": "{{host}}/api/v1/products/6",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -297,12 +291,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/products/",
-									"protocol": "http",
+									"raw": "{{host}}/api/v1/products/",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -380,12 +372,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/products/1",
-									"protocol": "http",
+									"raw": "{{host}}/api/v1/products/1",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -469,12 +459,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/categories",
-									"protocol": "http",
+									"raw": "{{host}}/api/v1/categories",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -550,12 +538,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/categories",
-									"protocol": "http",
+									"raw": "{{host}}/api/v1/categories",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -636,12 +622,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/customers",
-									"protocol": "http",
+									"raw": "{{host}}/api/v1/customers",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -718,12 +702,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/customers/14",
-									"protocol": "http",
+									"raw": "{{host}}/api/v1/customers/14",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -1965,7 +1947,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/api/v1/orders?customer_id=5",
+							"raw": "{{host}}/api/v1/orders?customer_id=2",
 							"host": [
 								"{{host}}"
 							],
@@ -1977,14 +1959,14 @@
 							"query": [
 								{
 									"key": "customer_id",
-									"value": "5"
+									"value": "2"
 								}
 							]
 						}
 					},
 					"response": [
 						{
-							"name": "Get orders Copy",
+							"name": "Get orders by customer id",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
@@ -2040,6 +2022,80 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 8,\n            \"customer_id\": 6,\n            \"total_bill\": 51.8,\n            \"status\": \"RECEIVED\",\n            \"created_at\": \"2025-01-21T16:03:51.48294Z\",\n            \"updated_at\": \"2025-01-21T16:08:15.388034Z\",\n            \"products\": []\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get orders by customer id (invalid)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?customer_id=invalid",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "customer_id",
+											"value": "invalid"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "9d33b93f-be4f-4b83-abea-ad47b334262b"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 04 Mar 2025 17:39:50 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "42"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid parameter\"\n}"
 						}
 					]
 				},
@@ -2060,7 +2116,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/api/v1/orders?status=received",
+							"raw": "{{host}}/api/v1/orders?status=pending",
 							"host": [
 								"{{host}}"
 							],
@@ -2072,14 +2128,14 @@
 							"query": [
 								{
 									"key": "status",
-									"value": "received"
+									"value": "pending"
 								}
 							]
 						}
 					},
 					"response": [
 						{
-							"name": "Get orders by status",
+							"name": "Get orders by status (uppercase OPEN)",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
@@ -2225,6 +2281,80 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid parameter\"\n}"
+						},
+						{
+							"name": "Get orders by status (lowercase pending)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders?status=pending",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "pending"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "412f25a1-db8e-4295-b11e-be4d7aac4ea2"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 04 Mar 2025 23:19:33 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "546"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"orders\": [\n        {\n            \"id\": 2,\n            \"customer_id\": 2,\n            \"total_bill\": \"42.90\",\n            \"status\": \"PENDING\",\n            \"customer\": {\n                \"id\": 2,\n                \"name\": \"Julia Santos\",\n                \"email\": \"julia@email.com\",\n                \"cpf\": \"987.654.321-00\",\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"products\": [\n                {\n                    \"id\": 5,\n                    \"name\": \"Combo Big\",\n                    \"description\": \"X-Burger + Batata + Refrigerante\",\n                    \"price\": 42.9,\n                    \"category_id\": 5,\n                    \"created_at\": \"2025-02-28T16:28:18Z\",\n                    \"updated_at\": \"2025-02-28T16:28:18Z\",\n                    \"quantity\": 1\n                }\n            ],\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        }\n    ]\n}"
 						}
 					]
 				},
@@ -3307,6 +3437,228 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"status\": \"pass\",\n    \"checks\": {\n        \"db:postgres\": {\n            \"componentId\": \"db:postgres\",\n            \"status\": \"pass\",\n            \"time\": \"2025-01-13T19:51:19.249928-03:00\"\n        }\n    }\n}"
+						},
+						{
+							"name": "Health (db fail)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/html; charset=utf8",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/health",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"health"
+									]
+								}
+							},
+							"status": "Service Unavailable",
+							"code": 503,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "66298a9c-ae72-4683-869d-02e624258c76"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 05 Mar 2025 02:02:06 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "134"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"fail\",\n    \"checks\": {\n        \"postgres:status\": {\n            \"componentId\": \"db:postgres\",\n            \"status\": \"fail\",\n            \"time\": \"2025-03-04T23:02:06.330676-03:00\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Liveness",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/health/livez",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"health",
+								"livez"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Liveness",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/health/livez",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"health",
+										"livez"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "0af5e065-91d4-4013-aafa-9b2c9e2f3889"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 05 Mar 2025 02:14:51 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "15"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"ok\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Readness",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/health/readyz",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"health",
+								"readyz"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Readness",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/health/readyz",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"health",
+										"readyz"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "aae94c13-3830-4a75-86f6-984316c240f7"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 05 Mar 2025 02:15:46 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "134"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"pass\",\n    \"checks\": {\n        \"postgres:status\": {\n            \"componentId\": \"db:postgres\",\n            \"status\": \"pass\",\n            \"time\": \"2025-03-04T23:15:46.522442-03:00\"\n        }\n    }\n}"
 						}
 					]
 				}

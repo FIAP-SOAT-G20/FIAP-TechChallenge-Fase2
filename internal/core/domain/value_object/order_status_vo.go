@@ -1,6 +1,7 @@
 package valueobject
 
 import (
+	"slices"
 	"strings"
 )
 
@@ -18,33 +19,51 @@ const (
 )
 
 func IsValidOrderStatus(status string) bool {
-	return ToOrderStatus(status) != UNDEFINDED
+	_, ok := ToOrderStatus(status)
+	return ok
 }
 
 // String returns the string representation of the OrderStatus
 func (o OrderStatus) String() string {
-	return strings.ToUpper(string(o))
+	switch o {
+	case OPEN:
+		return "OPEN"
+	case CANCELLED:
+		return "CANCELLED"
+	case PENDING:
+		return "PENDING"
+	case RECEIVED:
+		return "RECEIVED"
+	case PREPARING:
+		return "PREPARING"
+	case READY:
+		return "READY"
+	case COMPLETED:
+		return "COMPLETED"
+	default:
+		return "UNDEFINDED"
+	}
 }
 
 // ToOrderStatus converts a string to an OrderStatus
-func ToOrderStatus(status string) OrderStatus {
+func ToOrderStatus(status string) (OrderStatus, bool) {
 	switch strings.ToUpper(status) {
 	case "OPEN":
-		return OPEN
+		return OPEN, true
 	case "CANCELLED":
-		return CANCELLED
+		return CANCELLED, true
 	case "PENDING":
-		return PENDING
+		return PENDING, true
 	case "RECEIVED":
-		return RECEIVED
+		return RECEIVED, true
 	case "PREPARING":
-		return PREPARING
+		return PREPARING, true
 	case "READY":
-		return READY
+		return READY, true
 	case "COMPLETED":
-		return COMPLETED
+		return COMPLETED, true
 	default:
-		return UNDEFINDED
+		return UNDEFINDED, false
 	}
 }
 
@@ -62,30 +81,15 @@ var OrderStatusTransitions = map[OrderStatus][]OrderStatus{
 // StatusCanTransitionTo returns true if the transition from oldStatus to newStatus is allowed
 func StatusCanTransitionTo(oldStatus, newStatus OrderStatus) bool {
 	allowedStatuses := OrderStatusTransitions[oldStatus]
-	for _, allowedStatus := range allowedStatuses {
-		if newStatus == allowedStatus {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(allowedStatuses, newStatus)
 }
 
 // StatusTransitionNeedsStaffID returns true if the new status requires a staff ID
 func StatusTransitionNeedsStaffID(newStatus OrderStatus) bool {
 	switch newStatus {
-	case OPEN:
+	case OPEN, CANCELLED, PENDING, RECEIVED:
 		return false
-	case CANCELLED:
-		return false
-	case PENDING:
-		return false
-	case RECEIVED:
-		return false
-	case PREPARING:
-		return true
-	case READY:
-		return true
-	case COMPLETED:
+	case PREPARING, READY, COMPLETED:
 		return true
 	default:
 		return false

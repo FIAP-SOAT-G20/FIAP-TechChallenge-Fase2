@@ -18,6 +18,9 @@ GOBUILD=$(GOCMD) build
 GORUN=$(GOCMD) run
 GOTEST=$(GOCMD) test
 GOCLEAN=$(GOCMD) clean
+GOVET=$(GOCMD) vet
+GOFMT=$(GOCMD) fmt
+GOTIDY=$(GOCMD) mod tidy
 
 # Looks at comments using ## on targets and uses them to produce a help output.
 .PHONY: help
@@ -62,9 +65,12 @@ run-air: build ## Run the application with Air
 	@go run github.com/air-verse/air@v1.61.7 -c air.toml
 
 .PHONY: test
-test: ## Run tests
+test: lint ## Run tests
 	@echo  "🟢 Running tests..."
-	$(GOTEST) $(TEST_PATH) -v
+	@$(GOFMT) ./...
+	@$(GOVET) ./...
+	@$(GOTIDY)
+	$(GOTEST) $(TEST_PATH) -race -v
 
 .PHONY: coverage
 coverage: ## Run tests with coverage
@@ -147,6 +153,7 @@ k8s-apply: ## Apply Kubernetes manifests
 	kubectl apply -f k8s/postgres/
 	kubectl apply -f k8s/app/
 
+
 .PHONY: k8s-delete
 k8s-delete: ## Delete Kubernetes resources
 	@echo  "🔴 Deleting Kubernetes resources..."
@@ -171,6 +178,12 @@ k8s-status: ## Show Kubernetes resources status
 	kubectl get deploy -n $(NAMESPACE)
 	@echo "\n=== HPA ==="
 	kubectl get hpa -n $(NAMESPACE)
+	@echo "\n=== Ingress ==="
+	kubectl get ingress -n $(NAMESPACE)
+	@echo "\n=== ConfigMaps ==="
+	kubectl get configmaps -n $(NAMESPACE)
+	@echo "\n=== Secrets ==="
+	kubectl get secrets -n $(NAMESPACE)
 
 .PHONY: compose-build
 compose-build: ## Build the application with Docker Compose
@@ -197,7 +210,7 @@ compose-clean: ## Clean the application with Docker Compose, removing volumes an
 scan: ## Run security scan
 	@echo  "🟢 Running security scan..."
 	@go run golang.org/x/vuln/cmd/govulncheck@v1.1.4 -show verbose ./...
-#	trivy image $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) # TODO: Enable when the image is available
+	@go run github.com/aquasecurity/trivy/cmd/trivy@latest image --severity HIGH,CRITICAL $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_APP):latest
 
 .PHONY: new-branch
 new-branch: ## Create new branch

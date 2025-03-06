@@ -1,0 +1,23 @@
+{
+  "total": 2,
+  "page": 1,
+  "limit": 10,
+  "customers": [
+    {
+      "id": 1,
+      "name": "Test Customer 1",
+      "email": "test.customer.1@email.com",
+      "cpf": "12345678901",
+      "created_at": "0001-01-01T00:00:00Z",
+      "updated_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Test Customer 2",
+      "email": "test.customer.2@email.com",
+      "cpf": "12345678902",
+      "created_at": "0001-01-01T00:00:00Z",
+      "updated_at": "0001-01-01T00:00:00Z"
+    }
+  ]
+}

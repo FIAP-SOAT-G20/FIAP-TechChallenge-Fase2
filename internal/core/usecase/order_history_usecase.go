@@ -2,11 +2,9 @@ package usecase
 
 import (
 	"context"
-	"errors"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
-	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
@@ -32,16 +30,7 @@ func (uc *orderHistoryUseCase) List(ctx context.Context, input dto.ListOrderHist
 
 // Create creates a new orderHistory
 func (uc *orderHistoryUseCase) Create(ctx context.Context, input dto.CreateOrderHistoryInput) (*entity.OrderHistory, error) {
-	if input.OrderID == 0 {
-		return nil, domain.NewValidationError(errors.New("Invalid order id "))
-	}
-
-	orderStatus := valueobject.ToOrderStatus(input.Status)
-	if orderStatus == valueobject.UNDEFINDED {
-		return nil, domain.NewValidationError(errors.New("Invalid order status"))
-	}
-
-	orderHistory := entity.NewOrderHistory(input.OrderID, orderStatus, input.StaffID)
+	orderHistory := entity.NewOrderHistory(input.OrderID, input.Status, input.StaffID)
 
 	if err := uc.gateway.Create(ctx, orderHistory); err != nil {
 		return nil, domain.NewInternalError(err)

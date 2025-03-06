@@ -21,18 +21,21 @@ func NewHealthCheckHandler() *HealthCheckHandler {
 func (h *HealthCheckHandler) Register(router *gin.RouterGroup) {
 	router.GET("", h.HealthCheck)
 	router.GET("/", h.HealthCheck)
+	router.GET("/readyz", h.HealthCheck)
+	router.GET("/livez", h.HealthCheckLiveness)
 }
 
 // HealthCheck godoc
 //
-//	@Summary		Application HealthCheck
-//	@Description	Checks application health
+//	@Summary		Application Readiness
+//	@Description	Checks application readiness
 //	@Tags			health-check
 //	@Produce		json
 //	@Success		200	{object}	response.HealthCheckResponse
 //	@Failure		500	{object}	string							"Internal server error"
 //	@Failure		503	{object}	response.HealthCheckResponse	"Service Unavailable"
 //	@Router			/health [GET]
+//	@Router			/health/readyz [GET]
 func (h *HealthCheckHandler) HealthCheck(c *gin.Context) {
 	cfg := config.LoadConfig()
 	hc := &response.HealthCheckResponse{
@@ -64,10 +67,21 @@ func (h *HealthCheckHandler) HealthCheck(c *gin.Context) {
 		return
 	}
 
-	switch hc.Status {
-	case response.HealthCheckStatusFail:
-		c.JSON(http.StatusServiceUnavailable, hc)
-	default:
-		c.JSON(http.StatusOK, hc)
+	c.JSON(http.StatusOK, hc)
+}
+
+// HealthCheckLiveness godoc
+//
+//	@Summary		Application Liveness
+//	@Description	Checks application liveness
+//	@Tags			health-check
+//	@Produce		json
+//	@Success		200	{object}	response.HealthCheckLivenessResponse
+//	@Router			/health/livez [GET]
+func (h *HealthCheckHandler) HealthCheckLiveness(c *gin.Context) {
+	hc := &response.HealthCheckLivenessResponse{
+		Status: "ok",
 	}
+
+	c.JSON(http.StatusOK, hc)
 }

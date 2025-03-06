@@ -30,7 +30,7 @@ select_option "${options[@]}"
 app="${options[$?]}" 
 
 # # Pull request type
-# Types: "Feature", "Change, "Fix", "Removed", "Refactor", "Doc", "Hotfix"
+# Types: "Feature", "Change, "Fix", "Removed", "Refactor", "Docs", "Hotfix"
 # get from brach name, ex: feature/update_tracking_view_infos then type is Feature,
 branch=$(git rev-parse --abbrev-ref HEAD)
 if [[ $branch == *"feature"* ]]; then
@@ -44,7 +44,7 @@ elif [[ $branch == *"removed"* ]]; then
 elif [[ $branch == *"refactor"* ]]; then
     type="Refactor"
 elif [[ $branch == *"doc"* ]]; then
-    type="Doc"
+    type="Docs"
 elif [[ $branch == *"fix"* ]]; then
     type="Fix"
 fi
@@ -52,7 +52,7 @@ fi
 # If no type is given, ask for it
 if [[ -z $type ]]; then
     echo "✨ Type: 📱"
-    options=("Feature" "Change" "Fix" "Removed" "Refactor" "Doc" "Hotfix")
+    options=("Feature" "Change" "Fix" "Removed" "Refactor" "Docs" "Hotfix")
     select_option "${options[@]}"
     type="${options[$?]}" 
 fi
