@@ -3,7 +3,9 @@ package usecase_test
 import (
 	"context"
 	"testing"
+	"time"
 
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
@@ -13,9 +15,10 @@ import (
 
 type OrderHistoryUsecaseSuiteTest struct {
 	suite.Suite
-	mockGateway *mockport.MockOrderHistoryGateway
-	useCase     port.OrderHistoryUseCase
-	ctx         context.Context
+	mockOrderHistories []*entity.OrderHistory
+	mockGateway        *mockport.MockOrderHistoryGateway
+	useCase            port.OrderHistoryUseCase
+	ctx                context.Context
 }
 
 func (s *OrderHistoryUsecaseSuiteTest) SetupTest() {
@@ -24,6 +27,21 @@ func (s *OrderHistoryUsecaseSuiteTest) SetupTest() {
 	s.mockGateway = mockport.NewMockOrderHistoryGateway(ctrl)
 	s.useCase = usecase.NewOrderHistoryUseCase(s.mockGateway)
 	s.ctx = context.Background()
+	currentTime := time.Now()
+	s.mockOrderHistories = []*entity.OrderHistory{
+		{
+			ID:        1,
+			OrderID:   1,
+			Status:    "OPEN",
+			CreatedAt: currentTime,
+		},
+		{
+			ID:        2,
+			OrderID:   1,
+			Status:    "PENDING",
+			CreatedAt: currentTime,
+		},
+	}
 }
 
 func TestOrderHistoryUsecaseSuiteTest(t *testing.T) {

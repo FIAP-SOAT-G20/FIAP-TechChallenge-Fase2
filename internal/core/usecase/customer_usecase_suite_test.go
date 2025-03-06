@@ -3,7 +3,9 @@ package usecase_test
 import (
 	"context"
 	"testing"
+	"time"
 
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
@@ -16,9 +18,10 @@ type CustomerUsecaseSuiteTest struct {
 	// conn    *sql.DB
 	// mock    sqlmock.Sqlmock
 	// handler handler
-	mockGateway *mockport.MockCustomerGateway
-	useCase     port.CustomerUseCase
-	ctx         context.Context
+	mockCustomers []*entity.Customer
+	mockGateway   *mockport.MockCustomerGateway
+	useCase       port.CustomerUseCase
+	ctx           context.Context
 }
 
 func (s *CustomerUsecaseSuiteTest) SetupTest() {
@@ -27,6 +30,25 @@ func (s *CustomerUsecaseSuiteTest) SetupTest() {
 	s.mockGateway = mockport.NewMockCustomerGateway(ctrl)
 	s.useCase = usecase.NewCustomerUseCase(s.mockGateway)
 	s.ctx = context.Background()
+	currentTime := time.Now()
+	s.mockCustomers = []*entity.Customer{
+		{
+			ID:        1,
+			Name:      "Test Customer 1",
+			Email:     "test.customer.1@email.com",
+			CPF:       "12345678901",
+			CreatedAt: currentTime,
+			UpdatedAt: currentTime,
+		},
+		{
+			ID:        2,
+			Name:      "Test Customer 2",
+			Email:     "test.customer.2@email.com",
+			CPF:       "12345678902",
+			CreatedAt: currentTime,
+			UpdatedAt: currentTime,
+		},
+	}
 }
 
 // func (ts *CustomerUsecaseSuiteTest) AfterTest(_, _ string) {
