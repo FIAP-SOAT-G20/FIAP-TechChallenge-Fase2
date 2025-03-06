@@ -19,8 +19,8 @@ type OrderHandlerSuiteTest struct {
 	router         *gin.Engine
 	mockController *mockport.MockOrderController
 	ctx            context.Context
-	requests       map[string]string
-	responses      map[string]string
+	requests       map[string]string // Fixture files
+	responses      map[string]string // Golden files
 }
 
 func (s *OrderHandlerSuiteTest) SetupTest() {

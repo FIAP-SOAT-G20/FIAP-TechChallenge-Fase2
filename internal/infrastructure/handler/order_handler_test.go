@@ -226,21 +226,25 @@ func (s *OrderHandlerSuiteTest) TestOrderHandler_Update() {
 	}{
 		{
 			name: "success - update order status",
-			url:  "/orders",
+			url:  "/orders/15",
 			body: strings.NewReader(s.requests["update_success"]),
 			setupMocks: func() {
 				s.mockController.EXPECT().
-					Create(gomock.Any(), gomock.Any(), dto.CreateOrderInput{CustomerID: 5}).
+					Update(gomock.Any(), gomock.Any(), dto.UpdateOrderInput{
+						ID:         15,
+						CustomerID: 5,
+						Status:     valueobject.PENDING,
+					}).
 					Return([]byte(s.responses["update_success"]), nil)
 			},
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
-				assert.Equal(t, http.StatusCreated, res.Code)
+				assert.Equal(t, http.StatusOK, res.Code)
 				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["update_success"])
 			},
 		},
 		{
 			name:       "invalid request - body is not a valid json",
-			url:        "/orders",
+			url:        "/orders/5",
 			body:       strings.NewReader("invalid"),
 			setupMocks: func() {},
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
@@ -250,7 +254,7 @@ func (s *OrderHandlerSuiteTest) TestOrderHandler_Update() {
 		},
 		{
 			name:       "invalid request - customer_id is not a number",
-			url:        "/orders",
+			url:        "/orders/5",
 			body:       strings.NewReader(s.requests["update_invalid_parameter"]),
 			setupMocks: func() {},
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
@@ -265,7 +269,7 @@ func (s *OrderHandlerSuiteTest) TestOrderHandler_Update() {
 			// Arrange
 			tt.setupMocks()
 			w := httptest.NewRecorder()
-			req, _ := http.NewRequest(http.MethodPost, tt.url, tt.body)
+			req, _ := http.NewRequest(http.MethodPut, tt.url, tt.body)
 
 			// Act
 			s.router.ServeHTTP(w, req)

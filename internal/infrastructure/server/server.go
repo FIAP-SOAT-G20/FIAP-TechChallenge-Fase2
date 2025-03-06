@@ -27,7 +27,7 @@ type Server struct {
 func NewServer(cfg *config.Config, logger *logger.Logger, handlers *route.Handlers) *Server {
 	router := route.NewRouter(logger, cfg)
 
-	registerCustomValidation()
+	RegisterCustomValidation()
 	router.RegisterRoutes(handlers)
 
 	return &Server{
@@ -82,7 +82,7 @@ func gracefullyShutdown(server *http.Server, s *Server) {
 	fmt.Println("Bye! 👋")
 }
 
-func registerCustomValidation() {
+func RegisterCustomValidation() {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		err := v.RegisterValidation("order_status_exists", handler.OrderStatusValidator)
 		if err != nil {
