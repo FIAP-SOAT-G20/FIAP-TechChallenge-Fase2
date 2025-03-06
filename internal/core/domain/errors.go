@@ -27,6 +27,8 @@ var (
 	ErrUnknownError    = "unknown error"
 	ErrValidationError = "validation error"
 	ErrInvalidInput    = "invalid input"
+
+	ErrFailedToCreatePaymentExternal = "failed to create payment external"
 )
 
 type ValidationError struct {

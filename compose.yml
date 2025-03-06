@@ -1,6 +1,9 @@
 services:
   app:
-    image: ghcr.io/fiap-soat-g20/fiap-techchallenge-fase2:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # image: ghcr.io/fiap-soat-g20/fiap-techchallenge-fase2:latest
     container_name: app.10soat-g18.dev
     ports:
       - "8080:8080"
@@ -48,6 +51,27 @@ services:
     networks:
       - fastfood_10soat_g18_tc2_network
     restart: unless-stopped
+
+  mockserver:
+    # image: mockoon/cli:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.mockserver
+    container_name: mockserver.10soat-g18.dev
+    # command: ["--port", "3000"]
+    # command: ["--data", "https://raw.githubusercontent.com/mockoon/mock-samples/main/samples/generate-mock-data.json", "--port", "3000"]
+    # healthcheck:
+    #   test: ["CMD-SHELL", "curl -f http://localhost:3001/healthCheck || exit 1"]
+    #   interval: 5s
+    #   timeout: 5s
+    #   retries: 2
+    ports:
+      # - "3000:3000"
+      - "3001:3001"
+    networks:
+      - fastfood_10soat_g18_tc2_network
+    restart: unless-stopped
+
 
 volumes:
   db_data:

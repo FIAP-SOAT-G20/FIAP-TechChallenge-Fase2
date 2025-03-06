@@ -65,7 +65,7 @@ func main() {
 
 	httpClient := httpclient.NewRestyClient(cfg, loggerInstance.Logger)
 
-	handlers := setupHandlers(db, httpClient)
+	handlers := setupHandlers(db, httpClient, cfg)
 
 	srv := server.NewServer(cfg, loggerInstance.Logger, handlers)
 	if err := srv.Start(); err != nil {
@@ -74,7 +74,7 @@ func main() {
 	}
 }
 
-func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *route.Handlers {
+func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg *config.Config) *route.Handlers {
 	// Datasources
 	productDS := datasource.NewProductDataSource(db.DB)
 	customerDS := datasource.NewCustomerDataSource(db.DB)
@@ -84,7 +84,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient) *ro
 	orderHistoryDS := datasource.NewOrderHistoryDataSource(db.DB)
 	paymentDS := datasource.NewPaymentDataSource(db.DB)
 	// paymentExternalDS := datasource.NewPaymentExternalDataSource(httpClient.Client) // Mercado Pago
-	paymentExternalFakeDS := datasource.NewFakePaymentExternalDataSource() // Fake
+	paymentExternalFakeDS := datasource.NewFakePaymentExternalDataSource(httpClient, cfg) // Fake
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)

@@ -5,6 +5,7 @@ APP_NAME=app
 MAIN_FILE=cmd/server/main.go
 DOCKER_REGISTRY=ghcr.io
 DOCKER_REGISTRY_APP=fiap-soat-g20/fiap-techchallenge-fase2
+DOCKER_REGISTRY_MOCK_SERVER_APP=fiap-soat-g20/mock-server
 VERSION=$(shell git describe --tags --always --dirty)
 NAMESPACE=tech-challenge-system
 TEST_PATH=./internal/...
@@ -138,6 +139,19 @@ docker-push: ## Push Docker image
 	@echo  "🟢 Pushing Docker image..."
 	docker push $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_APP):$(VERSION)
 	docker push $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_APP):latest
+
+
+.PHONY: docker-build-mockserver
+docker-build-mockserver: ## Build Docker image
+	@echo  "🟢 Building Docker mock server image..."
+	docker build --platform linux/amd64 -t $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_MOCK_SERVER_APP):$(VERSION) -f Dockerfile.mockserver .
+	docker tag $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_MOCK_SERVER_APP):$(VERSION) $(DOCKER_REGISTRY_MOCK_SERVER_APP)/$(APP_NAME):latest
+
+.PHONY: docker-push-mockserver
+docker-push-mockserver: ## Push Docker image
+	@echo  "🟢 Pushing Docker mock server image..."
+	docker push $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_MOCK_SERVER_APP):$(VERSION)
+	docker push $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_MOCK_SERVER_APP):latest
 
 .PHONY: k8s-apply
 k8s-apply: ## Apply Kubernetes manifests
