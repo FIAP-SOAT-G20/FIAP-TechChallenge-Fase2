@@ -296,17 +296,21 @@ The Kubernetes organization is divided into three main directories: `app`, `conf
 15. Push to the branch and Open a new PR by running `make pull-request`
 16. The GitHub Actions will run the tests, lint and vulnerability check automatically
 17. After the PR is approved, merge it to the main branch
-18. Generate a new `release` with the tag `vX.Y.Z` ([semver](https://semver.org/))
+18. Generate a new `release` tag ([here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/releases/new)) with [semantic versioning](https://semver.org/)
 <!-- 19. The Kubernetes deployment will be updated automatically -->
 
 > [!TIP]
-> `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
+> 7: `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
 > Alternatively, you can run `make run-air` to run the application using Air (live reload)
 
 > [!TIP]
-> When a new `release` tag is created, the GitHub Actions will build and push the image to the  
+> 18: When a new `release` tag is created, the GitHub Actions will build and push the image to the  
 > GitHub Container Registry (GHCR) from GitHub Packages,  
-> the image will be available at `ghcr.io/fiap-soat-g20/fiap-techchallenge-fase2:latest`
+> the image will be available at `ghcr.io/fiap-soat-g20/fiap-techchallenge-fase2:latest`  
+> About semantic versioning:  
+> if you are fixing bugs, increment the patch version (0.0.1)  
+> if you are adding new features, increment the minor version (0.1.0)  
+> if you are changing the API, increment the major version (1.0.0)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
