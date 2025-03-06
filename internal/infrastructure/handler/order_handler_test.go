@@ -141,7 +141,7 @@ func (s *OrderHandlerSuiteTest) TestOrderHandler_Create() {
 		{
 			name:       "invalid request - customer_id is not a number",
 			url:        "/orders",
-			body:       strings.NewReader(s.requests["create_invalid_parameter"]),
+			body:       strings.NewReader(s.requests["create_invalid_body"]),
 			setupMocks: func() {},
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
 				assert.Equal(t, http.StatusBadRequest, res.Code)
@@ -255,7 +255,7 @@ func (s *OrderHandlerSuiteTest) TestOrderHandler_Update() {
 		{
 			name:       "invalid request - customer_id is not a number",
 			url:        "/orders/5",
-			body:       strings.NewReader(s.requests["update_invalid_parameter"]),
+			body:       strings.NewReader(s.requests["update_invalid_body"]),
 			setupMocks: func() {},
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
 				assert.Equal(t, http.StatusBadRequest, res.Code)

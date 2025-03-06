@@ -44,8 +44,8 @@ func (s *OrderHandlerSuiteTest) SetupTest() {
 	// Mock requests
 	var err error
 	s.requests, err = util.ReadFixtureFiles("order",
-		"create_success", "create_invalid_parameter",
-		"update_success",
+		"create_success", "create_invalid_body",
+		"update_success", "update_invalid_body",
 	)
 	assert.NoError(s.T(), err)
 
