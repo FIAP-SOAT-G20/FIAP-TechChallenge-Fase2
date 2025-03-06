@@ -1,0 +1,49 @@
+{
+    "total": 6,
+    "page": 1,
+    "limit": 10,
+    "staffs": [
+        {
+            "id": 1,
+            "name": "João Silva",
+            "role": "COOK",
+            "created_at": "2025-02-28T16:28:18Z",
+            "updated_at": "2025-02-28T16:28:18Z"
+        },
+        {
+            "id": 2,
+            "name": "Maria Oliveira",
+            "role": "ATTENDANT",
+            "created_at": "2025-02-28T16:28:18Z",
+            "updated_at": "2025-02-28T16:28:18Z"
+        },
+        {
+            "id": 3,
+            "name": "Pedro Santos",
+            "role": "MANAGER",
+            "created_at": "2025-02-28T16:28:18Z",
+            "updated_at": "2025-02-28T16:28:18Z"
+        },
+        {
+            "id": 4,
+            "name": "Ana Costa",
+            "role": "COOK",
+            "created_at": "2025-02-28T16:28:18Z",
+            "updated_at": "2025-02-28T16:28:18Z"
+        },
+        {
+            "id": 5,
+            "name": "Carlos Pereira",
+            "role": "ATTENDANT",
+            "created_at": "2025-02-28T16:28:18Z",
+            "updated_at": "2025-02-28T16:28:18Z"
+        },
+        {
+            "id": 6,
+            "name": "John Doe 1",
+            "role": "COOK",
+            "created_at": "2025-03-06T19:29:45Z",
+            "updated_at": "2025-03-06T19:29:45Z"
+        }
+    ]
+}
