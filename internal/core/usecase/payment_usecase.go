@@ -75,7 +75,7 @@ func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) 
 	}
 
 	if err := uc.orderGateway.Update(ctx, orderUpdated); err != nil {
-		return nil, err
+		return nil, domain.NewInternalError(err)
 	}
 
 	return payment, nil
