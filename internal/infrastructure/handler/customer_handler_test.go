@@ -50,6 +50,15 @@ func (s *CustomerHandlerSuiteTest) TestCustomerHandler_List() {
 			},
 		},
 		{
+			name:       "invalid query - page",
+			url:        "/customers?page=invalid",
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_query"])
+			},
+		},
+		{
 			name: "controller error",
 			url:  "/customers",
 			setupMocks: func() {
@@ -125,6 +134,24 @@ func (s *CustomerHandlerSuiteTest) TestCustomerHandler_Create() {
 				assert.Equal(t, http.StatusBadRequest, res.Code)
 			},
 		},
+		{
+			name: "controller error",
+			url:  "/customers",
+			body: strings.NewReader(s.requests["create_success"]),
+			setupMocks: func() {
+				s.mockController.EXPECT().
+					Create(gomock.Any(), gomock.Any(), dto.CreateCustomerInput{
+						Name:  "John Doe 1",
+						Email: "john.doe.1@email.com",
+						CPF:   "000.000.000-01",
+					}).
+					Return(nil, domain.NewInternalError(nil))
+			},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusInternalServerError, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_internal_error"])
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -176,6 +203,28 @@ func (s *CustomerHandlerSuiteTest) TestCustomerHandler_Get() {
 				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_not_found"])
 			},
 		},
+		{
+			name:       "invalid request - id is not a number",
+			url:        "/customers/invalid",
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_parameter"])
+			},
+		},
+		{
+			name: "controller error",
+			url:  "/customers/1",
+			setupMocks: func() {
+				s.mockController.EXPECT().
+					Get(gomock.Any(), gomock.Any(), dto.GetCustomerInput{ID: 1}).
+					Return(nil, domain.NewInternalError(nil))
+			},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusInternalServerError, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_internal_error"])
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -221,6 +270,16 @@ func (s *CustomerHandlerSuiteTest) TestCustomerHandler_Update() {
 			},
 		},
 		{
+			name:       "invalid request - id is not a number",
+			url:        "/customers/invalid",
+			body:       strings.NewReader(s.requests["update_success"]),
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_parameter"])
+			},
+		},
+		{
 			name:       "invalid request - body is not a valid json",
 			url:        "/customers/5",
 			body:       strings.NewReader("invalid"),
@@ -238,6 +297,24 @@ func (s *CustomerHandlerSuiteTest) TestCustomerHandler_Update() {
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
 				assert.Equal(t, http.StatusBadRequest, res.Code)
 				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_body"])
+			},
+		},
+		{
+			name: "controller error",
+			url:  "/customers/5",
+			body: strings.NewReader(s.requests["update_success"]),
+			setupMocks: func() {
+				s.mockController.EXPECT().
+					Update(gomock.Any(), gomock.Any(), dto.UpdateCustomerInput{
+						ID:    5,
+						Name:  "John Doe 1 UPDATED",
+						Email: "john.doe.1.updated@email.com",
+					}).
+					Return(nil, domain.NewInternalError(nil))
+			},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusInternalServerError, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_internal_error"])
 			},
 		},
 	}
@@ -289,6 +366,15 @@ func (s *CustomerHandlerSuiteTest) TestCustomerHandler_Delete() {
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
 				assert.Equal(t, http.StatusNotFound, res.Code)
 				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_not_found"])
+			},
+		},
+		{
+			name:       "invalid request - id is not a number",
+			url:        "/customers/invalid",
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_parameter"])
 			},
 		},
 	}
