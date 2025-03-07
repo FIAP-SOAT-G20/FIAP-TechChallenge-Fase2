@@ -10,7 +10,7 @@ func RemoveAllSpaces(s string) string {
 }
 
 func ReadGoldenFile(name string) (string, error) {
-	content, err := os.ReadFile("testdata/" + name + ".golden")
+	content, err := os.ReadFile("../../util/testdata/" + name + ".golden")
 	if err != nil {
 		return "", err
 	}
@@ -33,7 +33,7 @@ func ReadGoldenFiles(bussinessContext string, fileNames ...string) (map[string]s
 func ReadFixtureFiles(bussinessContext string, fileNames ...string) (map[string]string, error) {
 	requests := make(map[string]string)
 	for _, fileName := range fileNames {
-		file, err := os.ReadFile("testdata/" + bussinessContext + "/" + fileName + ".fixture")
+		file, err := os.ReadFile("../../util/testdata/" + bussinessContext + "/" + fileName + ".fixture")
 		if err != nil {
 			return requests, err
 		}

@@ -106,7 +106,7 @@ func (s *StaffHandlerSuiteTest) TestStaffHandler_Create() {
 			setupMocks: func() {
 				s.mockController.EXPECT().
 					Create(gomock.Any(), gomock.Any(), dto.CreateStaffInput{
-						Name: "John Doe 1",
+						Name: "John Doe 6",
 						Role: valueobject.COOK,
 					}).
 					Return([]byte(s.responses["create_success"]), nil)
@@ -141,7 +141,7 @@ func (s *StaffHandlerSuiteTest) TestStaffHandler_Create() {
 			setupMocks: func() {
 				s.mockController.EXPECT().
 					Create(gomock.Any(), gomock.Any(), dto.CreateStaffInput{
-						Name: "John Doe 1",
+						Name: "John Doe 6",
 						Role: valueobject.COOK,
 					}).
 					Return(nil, domain.NewInternalError(nil))
@@ -245,7 +245,7 @@ func (s *StaffHandlerSuiteTest) TestStaffHandler_Update() {
 				s.mockController.EXPECT().
 					Update(gomock.Any(), gomock.Any(), dto.UpdateStaffInput{
 						ID:   6,
-						Name: "John Doe 1 UPDATED",
+						Name: "John Doe 6 UPDATED",
 						Role: valueobject.ATTENDANT,
 					}).
 					Return([]byte(s.responses["update_success"]), nil)
@@ -293,7 +293,7 @@ func (s *StaffHandlerSuiteTest) TestStaffHandler_Update() {
 				s.mockController.EXPECT().
 					Update(gomock.Any(), gomock.Any(), dto.UpdateStaffInput{
 						ID:   6,
-						Name: "John Doe 1 UPDATED",
+						Name: "John Doe 6 UPDATED",
 						Role: valueobject.ATTENDANT,
 					}).
 					Return(nil, domain.NewInternalError(nil))

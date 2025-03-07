@@ -105,9 +105,9 @@ func (s *CustomerHandlerSuiteTest) TestCustomerHandler_Create() {
 			setupMocks: func() {
 				s.mockController.EXPECT().
 					Create(gomock.Any(), gomock.Any(), dto.CreateCustomerInput{
-						Name:  "John Doe 1",
-						Email: "john.doe.1@email.com",
-						CPF:   "000.000.000-01",
+						Name:  "John Doe 6",
+						Email: "john.doe.6@email.com",
+						CPF:   "000.000.000-06",
 					}).
 					Return([]byte(s.responses["create_success"]), nil)
 			},
@@ -141,9 +141,9 @@ func (s *CustomerHandlerSuiteTest) TestCustomerHandler_Create() {
 			setupMocks: func() {
 				s.mockController.EXPECT().
 					Create(gomock.Any(), gomock.Any(), dto.CreateCustomerInput{
-						Name:  "John Doe 1",
-						Email: "john.doe.1@email.com",
-						CPF:   "000.000.000-01",
+						Name:  "John Doe 6",
+						Email: "john.doe.6@email.com",
+						CPF:   "000.000.000-06",
 					}).
 					Return(nil, domain.NewInternalError(nil))
 			},
