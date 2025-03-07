@@ -44,7 +44,7 @@ func (uc *orderUseCase) Create(ctx context.Context, i dto.CreateOrderInput) (*en
 		StaffID: nil,
 	})
 	if err != nil {
-		return nil, err
+		return nil, domain.NewInternalError(err)
 	}
 
 	return order, nil
@@ -79,7 +79,8 @@ func (uc *orderUseCase) Update(ctx context.Context, i dto.UpdateOrderInput) (*en
 		return nil, domain.NewInvalidInputError(domain.ErrInvalidBody)
 	}
 
-	if i.Status != "" && order.Status != i.Status {
+	statusHasChanged := order.Status != i.Status
+	if i.Status != "" && statusHasChanged {
 		if !valueobject.StatusCanTransitionTo(order.Status, i.Status) {
 			return nil, domain.NewInvalidInputError(domain.ErrInvalidBody)
 		}
@@ -97,10 +98,10 @@ func (uc *orderUseCase) Update(ctx context.Context, i dto.UpdateOrderInput) (*en
 	}
 
 	// Restore order products, to calculate total bill in the presenter
-	order.OrderProducts = orderProducts
+	order.OrderProducts = orderProducts // TODO: Remove relations from entities
 
 	// if status has changed, create a new order history
-	if i.Status != "" && order.Status != i.Status {
+	if i.Status != "" && statusHasChanged {
 		if _, err := uc.orderHistoryUseCase.Create(ctx, dto.CreateOrderHistoryInput{
 			OrderID: order.ID,
 			Status:  i.Status,

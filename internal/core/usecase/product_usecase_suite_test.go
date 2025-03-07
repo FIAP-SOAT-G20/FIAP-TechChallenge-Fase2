@@ -3,7 +3,9 @@ package usecase_test
 import (
 	"context"
 	"testing"
+	"time"
 
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
@@ -13,9 +15,10 @@ import (
 
 type ProductUsecaseSuiteTest struct {
 	suite.Suite
-	mockGateway *mockport.MockProductGateway
-	useCase     port.ProductUseCase
-	ctx         context.Context
+	mockProducts []*entity.Product
+	mockGateway  *mockport.MockProductGateway
+	useCase      port.ProductUseCase
+	ctx          context.Context
 }
 
 func (s *ProductUsecaseSuiteTest) SetupTest() {
@@ -24,6 +27,27 @@ func (s *ProductUsecaseSuiteTest) SetupTest() {
 	s.mockGateway = mockport.NewMockProductGateway(ctrl)
 	s.useCase = usecase.NewProductUseCase(s.mockGateway)
 	s.ctx = context.Background()
+	currentTime := time.Now()
+	s.mockProducts = []*entity.Product{
+		{
+			ID:          1,
+			Name:        "Test Product 1",
+			Description: "Description 1",
+			Price:       99.99,
+			CategoryID:  1,
+			CreatedAt:   currentTime,
+			UpdatedAt:   currentTime,
+		},
+		{
+			ID:          2,
+			Name:        "Test Product 2",
+			Description: "Description 2",
+			Price:       199.99,
+			CategoryID:  1,
+			CreatedAt:   currentTime,
+			UpdatedAt:   currentTime,
+		},
+	}
 }
 
 func TestProductUsecaseSuiteTest(t *testing.T) {

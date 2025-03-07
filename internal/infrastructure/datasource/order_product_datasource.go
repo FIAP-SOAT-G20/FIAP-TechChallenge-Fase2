@@ -77,7 +77,7 @@ func (ds *orderProductDataSource) Create(ctx context.Context, orderProduct *enti
 }
 
 func (ds *orderProductDataSource) Update(ctx context.Context, orderProduct *entity.OrderProduct) error {
-	result := ds.db.WithContext(ctx).Model(orderProduct).Updates(orderProduct)
+	result := ds.db.WithContext(ctx).Model(orderProduct).Where("order_id = ? AND product_id = ?", orderProduct.OrderID, orderProduct.ProductID).Updates(orderProduct)
 	if result.Error != nil {
 		return fmt.Errorf("error updating orderProduct: %w", result.Error)
 	}

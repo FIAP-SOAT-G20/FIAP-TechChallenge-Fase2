@@ -296,17 +296,21 @@ The Kubernetes organization is divided into three main directories: `app`, `conf
 15. Push to the branch and Open a new PR by running `make pull-request`
 16. The GitHub Actions will run the tests, lint and vulnerability check automatically
 17. After the PR is approved, merge it to the main branch
-18. Generate a new `release` with the tag `vX.Y.Z` ([semver](https://semver.org/))
+18. Generate a new `release` tag ([here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/releases/new)) with [semantic versioning](https://semver.org/)
 <!-- 19. The Kubernetes deployment will be updated automatically -->
 
 > [!TIP]
-> `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
+> 7: `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
 > Alternatively, you can run `make run-air` to run the application using Air (live reload)
 
 > [!TIP]
-> When a new `release` tag is created, the GitHub Actions will build and push the image to the  
+> 18: When a new `release` tag is created, the GitHub Actions will build and push the image to the  
 > GitHub Container Registry (GHCR) from GitHub Packages,  
-> the image will be available at `ghcr.io/fiap-soat-g20/fiap-techchallenge-fase2:latest`
+> the image will be available at `ghcr.io/fiap-soat-g20/fiap-techchallenge-fase2:latest`  
+> About semantic versioning:  
+> if you are fixing bugs, increment the patch version (0.0.1)  
+> if you are adding new features, increment the minor version (0.1.0)  
+> if you are changing the API, increment the major version (1.0.0)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -331,6 +335,7 @@ make test
 - [Health Check Response Format for HTTP APIs](https://datatracker.ietf.org/doc/html/draft-inadarei-api-health-check-06)
 - [Event Storming](https://www.eventstorming.com/)
 - [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+- [Semantic Versioning](https://semver.org/)
 - [Alistair in the "Hexagone" 1/3](https://www.youtube.com/watch?v=th4AgBcrEHA&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&ab_channel=DDDFR)
 - [Alistair in the "Hexagone" 2/3](https://www.youtube.com/watch?v=iALcE8BPs94&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&index=2&ab_channel=DDDFR)
 - [Alistair in the "Hexagone" 3/3](https://www.youtube.com/watch?v=DAe0Bmcyt-4&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&index=3&ab_channel=DDDFR)

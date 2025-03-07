@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log/slog"
 	"net/http"
 	"os"
 	"os/signal"
@@ -12,6 +11,7 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/route"
 	"github.com/gin-gonic/gin/binding"
 
@@ -21,13 +21,13 @@ import (
 type Server struct {
 	router *route.Router
 	config *config.Config
-	logger *slog.Logger
+	logger *logger.Logger
 }
 
-func NewServer(cfg *config.Config, logger *slog.Logger, handlers *route.Handlers) *Server {
+func NewServer(cfg *config.Config, logger *logger.Logger, handlers *route.Handlers) *Server {
 	router := route.NewRouter(logger, cfg)
 
-	registerCustomValidation()
+	RegisterCustomValidation()
 	router.RegisterRoutes(handlers)
 
 	return &Server{
@@ -82,7 +82,7 @@ func gracefullyShutdown(server *http.Server, s *Server) {
 	fmt.Println("Bye! 👋")
 }
 
-func registerCustomValidation() {
+func RegisterCustomValidation() {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		err := v.RegisterValidation("order_status_exists", handler.OrderStatusValidator)
 		if err != nil {

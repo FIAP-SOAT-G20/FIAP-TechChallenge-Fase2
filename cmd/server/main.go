@@ -66,7 +66,7 @@ func main() {
 
 	handlers := setupHandlers(db, httpClient)
 
-	srv := server.NewServer(cfg, loggerInstance.Logger, handlers)
+	srv := server.NewServer(cfg, loggerInstance, handlers)
 	if err := srv.Start(); err != nil {
 		loggerInstance.Error("server failed to start", "error", err)
 		os.Exit(1)

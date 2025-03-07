@@ -1,8 +1,6 @@
 package route
 
 import (
-	"log/slog"
-
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -10,15 +8,16 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/docs"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/middleware"
 )
 
 type Router struct {
 	engine *gin.Engine
-	logger *slog.Logger
+	logger *logger.Logger
 }
 
-func NewRouter(logger *slog.Logger, cfg *config.Config) *Router {
+func NewRouter(logger *logger.Logger, cfg *config.Config) *Router {
 	// Set Gin mode
 	if cfg.Environment == "production" {
 		gin.SetMode(gin.ReleaseMode)

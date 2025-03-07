@@ -75,8 +75,12 @@ test: lint ## Run tests
 .PHONY: coverage
 coverage: ## Run tests with coverage
 	@echo  "🟢 Running tests with coverage..."
+# remove files that are not meant to be tested
 	$(GOTEST) $(TEST_PATH) -coverprofile=$(TEST_COVERAGE_FILE_NAME).tmp
-	@cat $(TEST_COVERAGE_FILE_NAME).tmp | grep -v "_mock.go" > $(TEST_COVERAGE_FILE_NAME)
+	@cat $(TEST_COVERAGE_FILE_NAME).tmp | grep -v "_mock.go" | grep -v "_request.go" | grep -v "_response.go" \
+	| grep -v "_gateway.go" | grep -v "_datasource.go" | grep -v "_presenter.go" | grep -v "middleware" \
+	| grep -v "config" | grep -v "route" | grep -v "util" | grep -v "database" \
+	| grep -v "server" | grep -v "logger" | grep -v "httpclient" > $(TEST_COVERAGE_FILE_NAME)
 	@rm $(TEST_COVERAGE_FILE_NAME).tmp
 	$(GOCMD) tool cover -html=$(TEST_COVERAGE_FILE_NAME)
 

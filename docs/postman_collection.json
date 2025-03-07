@@ -89,6 +89,77 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"products\": [\n        {\n            \"id\": 1,\n            \"name\": \"Product 1\",\n            \"description\": \"Product 1 description\",\n            \"price\": 10,\n            \"active\": true,\n            \"category_id\": 1,\n            \"category\": {\n                \"id\": 0,\n                \"name\": \"\",\n                \"created_at\": \"0001-01-01T00:00:00Z\"\n            },\n            \"created_at\": \"2025-01-11T18:04:23.921471Z\",\n            \"updated_at\": \"2025-01-11T18:04:23.921471Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/xml",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/products/?page=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "73616ece-6916-4218-9edb-6f953f68692b"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:14:35 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "939"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 5,\n    \"page\": 1,\n    \"limit\": 10,\n    \"products\": [\n        {\n            \"id\": 2,\n            \"name\": \"Coca-Cola 350ml\",\n            \"description\": \"Refrigerante Coca-Cola lata\",\n            \"price\": 6.9,\n            \"category_id\": 2,\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Sundae\",\n            \"description\": \"Sorvete com calda de chocolate\",\n            \"price\": 12.9,\n            \"category_id\": 3,\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Batata Frita\",\n            \"description\": \"Porção de batata frita crocante\",\n            \"price\": 15.9,\n            \"category_id\": 4,\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Combo Big\",\n            \"description\": \"X-Burger + Batata + Refrigerante\",\n            \"price\": 42.9,\n            \"category_id\": 5,\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 1,\n            \"name\": \"Product X UPDATED\",\n            \"description\": \"Product X description UPDATED\",\n            \"price\": 12.11,\n            \"category_id\": 1,\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-03-06T18:10:28Z\"\n        }\n    ]\n}"
 						}
 					]
 				},
@@ -170,6 +241,77 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"products\": [\n        {\n            \"id\": 1,\n            \"name\": \"Product 1\",\n            \"description\": \"Product 1 description\",\n            \"price\": 10,\n            \"active\": true,\n            \"category_id\": 1,\n            \"category\": {\n                \"id\": 0,\n                \"name\": \"\",\n                \"created_at\": \"0001-01-01T00:00:00Z\"\n            },\n            \"created_at\": \"2025-01-11T18:04:23.921471Z\",\n            \"updated_at\": \"2025-01-11T18:04:23.921471Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get products by category",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/products/?category_id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "category_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "8fa16c36-a0df-404a-bd34-00032fe36b91"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:15:13 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "228"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"products\": [\n        {\n            \"id\": 1,\n            \"name\": \"Product X UPDATED\",\n            \"description\": \"Product X description UPDATED\",\n            \"price\": 12.11,\n            \"category_id\": 1,\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-03-06T18:10:28Z\"\n        }\n    ]\n}"
 						}
 					]
 				},
@@ -255,7 +397,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Product X\",\n    \"description\": \"Product X description\",\n    \"price\": 13,\n    \"category_id\": 1,\n\t\t\"active\": true\n}",
+							"raw": "{\n    \"name\": \"Product X\",\n    \"description\": \"Product X description\",\n    \"price\": 13,\n    \"category_id\": 1,\n    \"active\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -326,6 +468,140 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": 1,\n    \"name\": \"Product 1\",\n    \"description\": \"Product 1 description\",\n    \"price\": 10,\n    \"active\": true,\n    \"category_id\": 1,\n    \"category\": {\n        \"id\": 1,\n        \"name\": \"Category test 1\",\n        \"created_at\": \"2025-01-11T17:57:26.404102Z\"\n    },\n    \"created_at\": \"2025-01-11T18:04:23.921471-03:00\",\n    \"updated_at\": \"2025-01-11T18:04:23.921471-03:00\"\n}"
+						},
+						{
+							"name": "Create a product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Product X\",\n    \"description\": \"Product X description\",\n    \"price\": 13,\n    \"category_id\": 1,\n    \"active\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/products/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "95e19b97-acb5-4c84-aee3-485c873214a2"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:09:51 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "174"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"Product X\",\n    \"description\": \"Product X description\",\n    \"price\": 13,\n    \"category_id\": 1,\n    \"created_at\": \"2025-03-06T18:09:51-03:00\",\n    \"updated_at\": \"2025-03-06T18:09:51-03:00\"\n}"
+						},
+						{
+							"name": "Create a product (wrong name)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": 1,\n    \"description\": \"Product X description\",\n    \"price\": 13,\n    \"category_id\": 1,\n    \"active\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/products/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "53319db1-96f0-4470-bf64-3209b069e0fd"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:13:48 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid body\"\n}"
 						}
 					]
 				},
@@ -407,6 +683,207 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": 1,\n    \"name\": \"Product 1 updated\",\n    \"description\": \"Product 1 description updated\",\n    \"price\": 12,\n    \"active\": false,\n    \"category_id\": 1,\n    \"category\": {\n        \"id\": 0,\n        \"name\": \"\",\n        \"created_at\": \"0001-01-01T00:00:00Z\"\n    },\n    \"created_at\": \"0001-01-01T00:00:00Z\",\n    \"updated_at\": \"2025-01-11T18:05:11.095635-03:00\"\n}"
+						},
+						{
+							"name": "Update a product",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Product X UPDATED\",\n    \"description\": \"Product X description UPDATED\",\n    \"price\": 12.11,\n    \"category_id\": 1,\n    \"active\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/products/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "663127d4-ce00-496d-b585-31f20aff026f"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:10:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "188"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Product X UPDATED\",\n    \"description\": \"Product X description UPDATED\",\n    \"price\": 12.11,\n    \"category_id\": 1,\n    \"created_at\": \"2025-02-28T16:28:18Z\",\n    \"updated_at\": \"2025-03-06T18:10:28-03:00\"\n}"
+						},
+						{
+							"name": "Update a product",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Product X UPDATED\",\n    \"description\": \"Product X description UPDATED\",\n    \"price\": 12.11,\n    \"category_id\": 1,\n    \"active\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/products/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "aa481974-9081-47f5-8524-f0de0f10a993"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:11:04 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "188"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"Product X UPDATED\",\n    \"description\": \"Product X description UPDATED\",\n    \"price\": 12.11,\n    \"category_id\": 1,\n    \"created_at\": \"2025-03-06T18:09:51Z\",\n    \"updated_at\": \"2025-03-06T18:11:04-03:00\"\n}"
+						},
+						{
+							"name": "Update a product (wrong name)",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": 1,\n    \"description\": \"Product X description UPDATED\",\n    \"price\": 12.11,\n    \"category_id\": 1,\n    \"active\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/products/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"6"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "69c5c923-6ec4-44f9-926e-f7c3ed1c341b"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:16:02 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid body\"\n}"
 						}
 					]
 				},
@@ -428,7 +905,66 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Delete a product",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/products/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "a6a5468b-305f-41fe-8b4e-e8d40c5ea54c"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:11:46 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "183"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"Product X UPDATED\",\n    \"description\": \"Product X description UPDATED\",\n    \"price\": 12.11,\n    \"category_id\": 1,\n    \"created_at\": \"2025-03-06T18:09:51Z\",\n    \"updated_at\": \"2025-03-06T18:11:04Z\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -656,6 +1192,72 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": 6,\n    \"name\": \"John Doe 3\",\n    \"email\": \"john.doe.3@email.com\",\n    \"cpf\": \"000.000.000-03\"\n}"
+						},
+						{
+							"name": "Create a customer (wrong name)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": 1,\n    \"email\": \"john.doe.1@email.com\",\n    \"cpf\": \"000.000.000-01\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/customers",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"customers"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "43af8ce6-82df-4f84-b796-b2f54fd798ac"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 20:01:00 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid body\"\n}"
 						}
 					]
 				},
@@ -753,6 +1355,73 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": 14,\n    \"name\": \"John Doe 1 UPDATED\",\n    \"email\": \"john.doe.1.updated@email.com\",\n    \"cpf\": \"000.000.000-01\",\n    \"created_at\": \"2025-02-13T23:16:18Z\",\n    \"updated_at\": \"2025-02-13T23:17:55-03:00\"\n}"
+						},
+						{
+							"name": "Update a customer (wrong name)",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": 1,\n    \"email\": \"john.doe.1.updated@email.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/customers/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"customers",
+										"6"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "7494578b-cadf-41eb-ae93-e6627e9ed358"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 20:53:55 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid body\"\n}"
 						}
 					]
 				},
@@ -856,7 +1525,134 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get customers by name",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/customers?name=Julia Santos",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"customers"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Julia Santos"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "326210a8-7a7d-4480-92aa-0a695069ec12"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 20:07:17 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "197"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"customers\": [\n        {\n            \"id\": 2,\n            \"name\": \"Julia Santos\",\n            \"email\": \"julia@email.com\",\n            \"cpf\": \"987.654.321-00\",\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get customers by name (not found)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/customers?name=nonecxiste",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"customers"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "nonecxiste"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "fab00d34-c80f-4d1c-9e89-53e7dfd58948"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 20:10:30 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 0,\n    \"page\": 1,\n    \"limit\": 10,\n    \"customers\": []\n}"
+						}
+					]
 				},
 				{
 					"name": "Get customers with pagination",
@@ -885,7 +1681,142 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get customers with pagination",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/customers?page=2&limit=5",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"customers"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "limit",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "1b04425d-779a-41f2-a3c8-a7b64874ca02"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 20:08:50 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "199"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 6,\n    \"page\": 2,\n    \"limit\": 5,\n    \"customers\": [\n        {\n            \"id\": 7,\n            \"name\": \"John Doe 1\",\n            \"email\": \"john.doe.1@email.com\",\n            \"cpf\": \"000.000.000-01\",\n            \"created_at\": \"2025-03-06T17:08:46Z\",\n            \"updated_at\": \"2025-03-06T17:08:46Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get customers with pagination (end)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/customers?page=20&limit=5",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"customers"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "20"
+										},
+										{
+											"key": "limit",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "73dbd575-e7c3-42e9-992c-2581c7f27865"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 20:09:30 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 6,\n    \"page\": 20,\n    \"limit\": 5,\n    \"customers\": []\n}"
+						}
+					]
 				},
 				{
 					"name": "Get a customer",
@@ -984,7 +1915,66 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Delete custome",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/customers/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"customers",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "2221c644-91dd-4409-a3ca-343bb1f50f01"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 20:04:26 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "170"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"John Doe 1 UPDATED\",\n    \"email\": \"john.doe.1.updated@email.com\",\n    \"cpf\": \"000.000.000-01\",\n    \"created_at\": \"2025-03-06T17:03:28Z\",\n    \"updated_at\": \"2025-03-06T17:03:58Z\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -1142,6 +2132,440 @@
 		{
 			"name": "Orders",
 			"item": [
+				{
+					"name": "Create an order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customer_id\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/orders",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customer_id\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/orders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "e56f7a81-2621-4b92-a8dc-17468d45a904"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 19 Jan 2025 01:02:26 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "165"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 7,\n    \"customer_id\": 1,\n    \"total_bill\": 0,\n    \"status\": \"OPEN\",\n    \"created_at\": \"2025-01-18T22:02:26.488995-03:00\",\n    \"updated_at\": \"2025-01-18T22:02:26.488995-03:00\",\n    \"products\": []\n}"
+						},
+						{
+							"name": "Create an order",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customer_id\": 6\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "8a6619ab-a2a2-489a-a8b5-7e263f1e2c1e"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 15 Feb 2025 20:09:18 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "153"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 9,\n    \"customer_id\": 5,\n    \"total_bill\": 0,\n    \"status\": \"OPEN\",\n    \"products\": null,\n    \"created_at\": \"2025-02-15T17:09:18-03:00\",\n    \"updated_at\": \"2025-02-15T17:09:18-03:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update an order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_id\": 6,\n    \"status\": \"OPEN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/orders/8",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"8"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update an order (wrong customer_id)",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"customer_id\": 6,\n    \"status\": \"PENDING\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/15",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"15"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "122b0f60-17e9-417b-81b7-034a461c1c8e"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 18:19:42 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid body\"\n}"
+						},
+						{
+							"name": "Update an order",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"customer_id\": 5,\n    \"status\": \"PENDING\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/15",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"15"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "3f58a870-8151-4249-a181-2683684c450f"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 18:21:03 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "306"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 15,\n    \"customer_id\": 5,\n    \"total_bill\": \"0.00\",\n    \"status\": \"PENDING\",\n    \"customer\": {\n        \"id\": 5,\n        \"name\": \"Bruno Oliveira\",\n        \"email\": \"bruno@email.com\",\n        \"cpf\": \"321.654.987-00\",\n        \"created_at\": \"2025-02-28T16:28:18Z\",\n        \"updated_at\": \"2025-02-28T16:28:18Z\"\n    },\n    \"created_at\": \"2025-03-06T15:19:09Z\",\n    \"updated_at\": \"2025-03-06T15:21:03-03:00\"\n}"
+						},
+						{
+							"name": "Update an order (wrong json)",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"customer_id\": 5,\n    \"status\": \"PENDING\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/15",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"15"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "d277a01d-bfad-4377-aec0-298fb6c59c80"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 18:26:14 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid body\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update an order status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"PENDING\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/orders/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Get orders",
 					"request": {
@@ -1327,6 +2751,69 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": 1,\n    \"customer_id\": 1,\n    \"total_bill\": \"32.80\",\n    \"status\": \"OPEN\",\n    \"customer\": {\n        \"id\": 1,\n        \"name\": \"Lucas Mendes\",\n        \"email\": \"lucas@email.com\",\n        \"cpf\": \"123.456.789-00\",\n        \"created_at\": \"2025-02-27T12:41:16Z\",\n        \"updated_at\": \"2025-02-27T12:41:16Z\"\n    },\n    \"products\": [\n        {\n            \"id\": 1,\n            \"name\": \"X-Burger\",\n            \"description\": \"Hambúrguer com queijo, alface e tomate\",\n            \"price\": 25.9,\n            \"category_id\": 1,\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\",\n            \"quantity\": 1\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Coca-Cola 350ml\",\n            \"description\": \"Refrigerante Coca-Cola lata\",\n            \"price\": 6.9,\n            \"category_id\": 2,\n            \"created_at\": \"2025-02-27T12:41:16Z\",\n            \"updated_at\": \"2025-02-27T12:41:16Z\",\n            \"quantity\": 1\n        }\n    ],\n    \"created_at\": \"2025-02-27T12:41:16Z\",\n    \"updated_at\": \"2025-02-27T12:41:16Z\"\n}"
+						},
+						{
+							"name": "Get an order (not found)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders/112",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"112"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "994e05f3-a81b-437c-9896-2c342338d0a9"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 18:40:19 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "39"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 404,\n    \"message\": \"data not found\"\n}"
 						}
 					]
 				},
@@ -2655,450 +4142,6 @@
 					]
 				},
 				{
-					"name": "Create an order",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"customer_id\": 5\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/v1/orders",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"orders"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "New Request",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"customer_id\": 1\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/api/v1/orders",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"v1",
-										"orders"
-									]
-								}
-							},
-							"status": "Created",
-							"code": 201,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "X-Request-Id",
-									"value": "e56f7a81-2621-4b92-a8dc-17468d45a904"
-								},
-								{
-									"key": "Date",
-									"value": "Sun, 19 Jan 2025 01:02:26 GMT"
-								},
-								{
-									"key": "Content-Length",
-									"value": "165"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"id\": 7,\n    \"customer_id\": 1,\n    \"total_bill\": 0,\n    \"status\": \"OPEN\",\n    \"created_at\": \"2025-01-18T22:02:26.488995-03:00\",\n    \"updated_at\": \"2025-01-18T22:02:26.488995-03:00\",\n    \"products\": []\n}"
-						},
-						{
-							"name": "Create an order",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"customer_id\": 6\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/api/v1/orders",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"orders"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Access-Control-Allow-Credentials",
-									"value": "true"
-								},
-								{
-									"key": "Access-Control-Allow-Headers",
-									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
-								},
-								{
-									"key": "Access-Control-Allow-Methods",
-									"value": "POST, OPTIONS, GET, PUT, DELETE"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "X-Request-Id",
-									"value": "8a6619ab-a2a2-489a-a8b5-7e263f1e2c1e"
-								},
-								{
-									"key": "Date",
-									"value": "Sat, 15 Feb 2025 20:09:18 GMT"
-								},
-								{
-									"key": "Content-Length",
-									"value": "153"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"id\": 9,\n    \"customer_id\": 5,\n    \"total_bill\": 0,\n    \"status\": \"OPEN\",\n    \"products\": null,\n    \"created_at\": \"2025-02-15T17:09:18-03:00\",\n    \"updated_at\": \"2025-02-15T17:09:18-03:00\"\n}"
-						}
-					]
-				},
-				{
-					"name": "Creante an order product",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"quantity\": 4\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/v1/orders/products/17/2",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"orders",
-								"products",
-								"17",
-								"2"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Creante an order product",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"quantity\": 4\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/api/v1/orders/products/11/3",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"orders",
-										"products",
-										"11",
-										"3"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Access-Control-Allow-Credentials",
-									"value": "true"
-								},
-								{
-									"key": "Access-Control-Allow-Headers",
-									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
-								},
-								{
-									"key": "Access-Control-Allow-Methods",
-									"value": "POST, OPTIONS, GET, PUT, DELETE"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "X-Request-Id",
-									"value": "c2670afa-8fb0-4f9e-a9d5-1db4507ae276"
-								},
-								{
-									"key": "Date",
-									"value": "Sun, 16 Feb 2025 22:30:38 GMT"
-								},
-								{
-									"key": "Content-Length",
-									"value": "435"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"order_id\": 11,\n    \"product_id\": 3,\n    \"quantity\": 4,\n    \"order\": {\n        \"id\": 11,\n        \"customer_id\": 5,\n        \"total_bill\": 0,\n        \"status\": \"OPEN\",\n        \"created_at\": \"2025-02-16T19:24:18Z\",\n        \"updated_at\": \"2025-02-16T19:24:18Z\"\n    },\n    \"product\": {\n        \"id\": 3,\n        \"name\": \"Sundae\",\n        \"description\": \"Sorvete com calda de chocolate\",\n        \"price\": 12.9,\n        \"category_id\": 3,\n        \"created_at\": \"2025-02-16T20:36:05Z\",\n        \"updated_at\": \"2025-02-16T20:36:05Z\"\n    },\n    \"created_at\": \"2025-02-16T19:30:38Z\",\n    \"updated_at\": \"2025-02-16T19:30:38Z\"\n}"
-						}
-					]
-				},
-				{
-					"name": "Get orders products",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"quantity\": 2\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/v1/orders/products/?limit=3",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"orders",
-								"products",
-								""
-							],
-							"query": [
-								{
-									"key": "limit",
-									"value": "3"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get orders products by order id",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							},
-							{
-								"key": "",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"url": {
-							"raw": "{{host}}/api/v1/orders/products/?order_id=17",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"orders",
-								"products",
-								""
-							],
-							"query": [
-								{
-									"key": "order_id",
-									"value": "17"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get an order product",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"quantity\": 2\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/v1/orders/products/17/2",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"orders",
-								"products",
-								"17",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update an order",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"customer_id\": 6,\n    \"status\": \"OPEN\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/v1/orders/8",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"orders",
-								"8"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update an order status",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"status\": \"PENDING\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/v1/orders/1",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"orders",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Delete an order",
 					"request": {
 						"method": "DELETE",
@@ -3176,6 +4219,798 @@
 							"body": "{\n    \"id\": 9,\n    \"customer_id\": 5,\n    \"total_bill\": 0,\n    \"status\": \"OPEN\",\n    \"products\": null,\n    \"created_at\": \"2025-02-15T17:09:18Z\",\n    \"updated_at\": \"2025-02-15T17:09:18Z\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Create an order product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantity\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/orders/products/15/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"products",
+								"15",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Creante an order product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"quantity\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/products/11/3",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"products",
+										"11",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "c2670afa-8fb0-4f9e-a9d5-1db4507ae276"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 16 Feb 2025 22:30:38 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "435"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"order_id\": 11,\n    \"product_id\": 3,\n    \"quantity\": 4,\n    \"order\": {\n        \"id\": 11,\n        \"customer_id\": 5,\n        \"total_bill\": 0,\n        \"status\": \"OPEN\",\n        \"created_at\": \"2025-02-16T19:24:18Z\",\n        \"updated_at\": \"2025-02-16T19:24:18Z\"\n    },\n    \"product\": {\n        \"id\": 3,\n        \"name\": \"Sundae\",\n        \"description\": \"Sorvete com calda de chocolate\",\n        \"price\": 12.9,\n        \"category_id\": 3,\n        \"created_at\": \"2025-02-16T20:36:05Z\",\n        \"updated_at\": \"2025-02-16T20:36:05Z\"\n    },\n    \"created_at\": \"2025-02-16T19:30:38Z\",\n    \"updated_at\": \"2025-02-16T19:30:38Z\"\n}"
+						},
+						{
+							"name": "Creante an order product (wrong quantity)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"quantity\": \"sas\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/products/17/2",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"products",
+										"17",
+										"2"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "87fdab9c-40e9-4aee-9901-90fed9d59b8a"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:30:52 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid body\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update an order product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantity\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/orders/products/1/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"products",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update an order product (error)",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"quantity\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/products/1/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"products",
+										"1",
+										"1"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "6ec6a4dd-6e45-497e-a9ea-0f0bff529f82"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:39:39 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 500,\n    \"message\": \"internal server error\"\n}"
+						},
+						{
+							"name": "Update and order product",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"quantity\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/products/1/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"products",
+										"1",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "e96909b2-5685-43cf-be22-11e16e0af56a"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:55:24 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "434"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"order_id\": 1,\n    \"product_id\": 1,\n    \"quantity\": 2,\n    \"order\": {\n        \"id\": 1,\n        \"customer_id\": 1,\n        \"status\": \"OPEN\",\n        \"created_at\": \"2025-02-28T16:28:18Z\",\n        \"updated_at\": \"2025-02-28T16:28:18Z\"\n    },\n    \"product\": {\n        \"id\": 1,\n        \"name\": \"Product X UPDATED\",\n        \"description\": \"Product X description UPDATED\",\n        \"price\": 12.11,\n        \"category_id\": 1,\n        \"created_at\": \"2025-02-28T16:28:18Z\",\n        \"updated_at\": \"2025-03-06T18:10:28Z\"\n    },\n    \"created_at\": \"2025-02-28T16:28:18Z\",\n    \"updated_at\": \"2025-03-06T18:55:24-03:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get orders products",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantity\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/orders/products/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"products",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get orders products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"quantity\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/products/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"products",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "3ed3ac7c-b566-4a31-b549-0a9a636f5ed1"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:29:43 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 18,\n    \"page\": 1,\n    \"limit\": 10,\n    \"order_products\": [\n        {\n            \"order_id\": 1,\n            \"product_id\": 1,\n            \"quantity\": 1,\n            \"order\": {\n                \"id\": 1,\n                \"customer_id\": 1,\n                \"status\": \"OPEN\",\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"product\": {\n                \"id\": 1,\n                \"name\": \"Product X UPDATED\",\n                \"description\": \"Product X description UPDATED\",\n                \"price\": 12.11,\n                \"category_id\": 1,\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-03-06T18:10:28Z\"\n            },\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"order_id\": 1,\n            \"product_id\": 2,\n            \"quantity\": 1,\n            \"order\": {\n                \"id\": 1,\n                \"customer_id\": 1,\n                \"status\": \"OPEN\",\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"product\": {\n                \"id\": 2,\n                \"name\": \"Coca-Cola 350ml\",\n                \"description\": \"Refrigerante Coca-Cola lata\",\n                \"price\": 6.9,\n                \"category_id\": 2,\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"order_id\": 2,\n            \"product_id\": 5,\n            \"quantity\": 1,\n            \"order\": {\n                \"id\": 2,\n                \"customer_id\": 2,\n                \"status\": \"PENDING\",\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"product\": {\n                \"id\": 5,\n                \"name\": \"Combo Big\",\n                \"description\": \"X-Burger + Batata + Refrigerante\",\n                \"price\": 42.9,\n                \"category_id\": 5,\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"order_id\": 3,\n            \"product_id\": 1,\n            \"quantity\": 1,\n            \"order\": {\n                \"id\": 3,\n                \"customer_id\": 3,\n                \"status\": \"CANCELLED\",\n                \"created_at\": \"2021-10-01T10:00:00Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"product\": {\n                \"id\": 1,\n                \"name\": \"Product X UPDATED\",\n                \"description\": \"Product X description UPDATED\",\n                \"price\": 12.11,\n                \"category_id\": 1,\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-03-06T18:10:28Z\"\n            },\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"order_id\": 4,\n            \"product_id\": 1,\n            \"quantity\": 1,\n            \"order\": {\n                \"id\": 4,\n                \"customer_id\": 4,\n                \"status\": \"RECEIVED\",\n                \"created_at\": \"2021-10-01T10:00:00Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"product\": {\n                \"id\": 1,\n                \"name\": \"Product X UPDATED\",\n                \"description\": \"Product X description UPDATED\",\n                \"price\": 12.11,\n                \"category_id\": 1,\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-03-06T18:10:28Z\"\n            },\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"order_id\": 4,\n            \"product_id\": 2,\n            \"quantity\": 1,\n            \"order\": {\n                \"id\": 4,\n                \"customer_id\": 4,\n                \"status\": \"RECEIVED\",\n                \"created_at\": \"2021-10-01T10:00:00Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"product\": {\n                \"id\": 2,\n                \"name\": \"Coca-Cola 350ml\",\n                \"description\": \"Refrigerante Coca-Cola lata\",\n                \"price\": 6.9,\n                \"category_id\": 2,\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"order_id\": 4,\n            \"product_id\": 3,\n            \"quantity\": 1,\n            \"order\": {\n                \"id\": 4,\n                \"customer_id\": 4,\n                \"status\": \"RECEIVED\",\n                \"created_at\": \"2021-10-01T10:00:00Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"product\": {\n                \"id\": 3,\n                \"name\": \"Sundae\",\n                \"description\": \"Sorvete com calda de chocolate\",\n                \"price\": 12.9,\n                \"category_id\": 3,\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"order_id\": 4,\n            \"product_id\": 4,\n            \"quantity\": 1,\n            \"order\": {\n                \"id\": 4,\n                \"customer_id\": 4,\n                \"status\": \"RECEIVED\",\n                \"created_at\": \"2021-10-01T10:00:00Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"product\": {\n                \"id\": 4,\n                \"name\": \"Batata Frita\",\n                \"description\": \"Porção de batata frita crocante\",\n                \"price\": 15.9,\n                \"category_id\": 4,\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"order_id\": 5,\n            \"product_id\": 2,\n            \"quantity\": 2,\n            \"order\": {\n                \"id\": 5,\n                \"customer_id\": 5,\n                \"status\": \"PREPARING\",\n                \"created_at\": \"2021-10-01T10:00:00Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"product\": {\n                \"id\": 2,\n                \"name\": \"Coca-Cola 350ml\",\n                \"description\": \"Refrigerante Coca-Cola lata\",\n                \"price\": 6.9,\n                \"category_id\": 2,\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"order_id\": 5,\n            \"product_id\": 3,\n            \"quantity\": 1,\n            \"order\": {\n                \"id\": 5,\n                \"customer_id\": 5,\n                \"status\": \"PREPARING\",\n                \"created_at\": \"2021-10-01T10:00:00Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"product\": {\n                \"id\": 3,\n                \"name\": \"Sundae\",\n                \"description\": \"Sorvete com calda de chocolate\",\n                \"price\": 12.9,\n                \"category_id\": 3,\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get orders products by order id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/orders/products/?order_id=17",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"products",
+								""
+							],
+							"query": [
+								{
+									"key": "order_id",
+									"value": "17"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get orders products by order id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders/products/?order_id=1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "order_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "8708605d-f04d-45d9-aea5-7772d096d058"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:30:14 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "904"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 2,\n    \"page\": 1,\n    \"limit\": 10,\n    \"order_products\": [\n        {\n            \"order_id\": 1,\n            \"product_id\": 1,\n            \"quantity\": 1,\n            \"order\": {\n                \"id\": 1,\n                \"customer_id\": 1,\n                \"status\": \"OPEN\",\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"product\": {\n                \"id\": 1,\n                \"name\": \"Product X UPDATED\",\n                \"description\": \"Product X description UPDATED\",\n                \"price\": 12.11,\n                \"category_id\": 1,\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-03-06T18:10:28Z\"\n            },\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"order_id\": 1,\n            \"product_id\": 2,\n            \"quantity\": 1,\n            \"order\": {\n                \"id\": 1,\n                \"customer_id\": 1,\n                \"status\": \"OPEN\",\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"product\": {\n                \"id\": 2,\n                \"name\": \"Coca-Cola 350ml\",\n                \"description\": \"Refrigerante Coca-Cola lata\",\n                \"price\": 6.9,\n                \"category_id\": 2,\n                \"created_at\": \"2025-02-28T16:28:18Z\",\n                \"updated_at\": \"2025-02-28T16:28:18Z\"\n            },\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get an order product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/orders/products/1/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"products",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get an order product (not found)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"quantity\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/products/17/2",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"products",
+										"17",
+										"2"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "b3ad8b85-76b9-41c2-a207-e7231740d09e"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:32:42 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "39"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 404,\n    \"message\": \"data not found\"\n}"
+						},
+						{
+							"name": "Get an order product",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/orders/products/1/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"products",
+										"1",
+										"1"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "75571b5d-5001-4ead-9c53-102dd211d908"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:33:06 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "429"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"order_id\": 1,\n    \"product_id\": 1,\n    \"quantity\": 1,\n    \"order\": {\n        \"id\": 1,\n        \"customer_id\": 1,\n        \"status\": \"OPEN\",\n        \"created_at\": \"2025-02-28T16:28:18Z\",\n        \"updated_at\": \"2025-02-28T16:28:18Z\"\n    },\n    \"product\": {\n        \"id\": 1,\n        \"name\": \"Product X UPDATED\",\n        \"description\": \"Product X description UPDATED\",\n        \"price\": 12.11,\n        \"category_id\": 1,\n        \"created_at\": \"2025-02-28T16:28:18Z\",\n        \"updated_at\": \"2025-03-06T18:10:28Z\"\n    },\n    \"created_at\": \"2025-02-28T16:28:18Z\",\n    \"updated_at\": \"2025-02-28T16:28:18Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete an order product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/orders/products/15/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"products",
+								"15",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete an order product",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/orders/products/15/2",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"products",
+										"15",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "38c9207d-22ba-4215-9cda-b9c3f63ddd60"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 21:59:27 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "428"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"order_id\": 15,\n    \"product_id\": 2,\n    \"quantity\": 4,\n    \"order\": {\n        \"id\": 15,\n        \"customer_id\": 5,\n        \"status\": \"PENDING\",\n        \"created_at\": \"2025-03-06T15:19:09Z\",\n        \"updated_at\": \"2025-03-06T15:21:03Z\"\n    },\n    \"product\": {\n        \"id\": 2,\n        \"name\": \"Coca-Cola 350ml\",\n        \"description\": \"Refrigerante Coca-Cola lata\",\n        \"price\": 6.9,\n        \"category_id\": 2,\n        \"created_at\": \"2025-02-28T16:28:18Z\",\n        \"updated_at\": \"2025-02-28T16:28:18Z\"\n    },\n    \"created_at\": \"2025-03-06T18:58:18Z\",\n    \"updated_at\": \"2025-03-06T18:58:18Z\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -3198,7 +5033,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"John Doe 2\",\n  \"role\": \"COOK\"\n}",
+							"raw": "{\n  \"name\": \"John Doe 1\",\n  \"role\": \"COOK\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3217,7 +5052,158 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create a staff",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"John Doe 1\",\n  \"role\": \"COOK\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/staffs",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"staffs"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "5b5497cb-4a0a-4969-bb5e-470cfccf2d46"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 22:29:45 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "124"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"John Doe 1\",\n    \"role\": \"COOK\",\n    \"created_at\": \"2025-03-06T19:29:45-03:00\",\n    \"updated_at\": \"2025-03-06T19:29:45-03:00\"\n}"
+						},
+						{
+							"name": "Create a staff (wrong name)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": 1,\n  \"role\": \"COOK\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/staffs",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"staffs"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "7966dc98-4637-46d9-bbe0-e590d03a4415"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 22:30:05 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid body\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Get staffs",
@@ -3243,7 +5229,7 @@
 					},
 					"response": [
 						{
-							"name": "New Request",
+							"name": "Get staffs",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
@@ -3253,12 +5239,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/staffs",
-									"protocol": "http",
+									"raw": "{{host}}/api/v1/staffs",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -3271,24 +5255,564 @@
 							"_postman_previewlanguage": "json",
 							"header": [
 								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "036f567c-7bd6-4ee8-bdcf-ea04d8c0c245"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 22:34:08 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "755"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 6,\n    \"page\": 1,\n    \"limit\": 10,\n    \"staffs\": [\n        {\n            \"id\": 1,\n            \"name\": \"João Silva\",\n            \"role\": \"COOK\",\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Maria Oliveira\",\n            \"role\": \"ATTENDANT\",\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Pedro Santos\",\n            \"role\": \"MANAGER\",\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Ana Costa\",\n            \"role\": \"COOK\",\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Carlos Pereira\",\n            \"role\": \"ATTENDANT\",\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 6,\n            \"name\": \"John Doe 1\",\n            \"role\": \"COOK\",\n            \"created_at\": \"2025-03-06T19:29:45Z\",\n            \"updated_at\": \"2025-03-06T19:29:45Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get staffs by role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/staffs?role=COOK",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"staffs"
+							],
+							"query": [
+								{
+									"key": "role",
+									"value": "COOK"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get staffs by role",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/staffs?role=COOK",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"staffs"
+									],
+									"query": [
+										{
+											"key": "role",
+											"value": "COOK"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "8d4ae5fa-9dd0-49cf-9a76-34101ee12643"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 22:36:01 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "387"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 3,\n    \"page\": 1,\n    \"limit\": 10,\n    \"staffs\": [\n        {\n            \"id\": 1,\n            \"name\": \"João Silva\",\n            \"role\": \"COOK\",\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Ana Costa\",\n            \"role\": \"COOK\",\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 6,\n            \"name\": \"John Doe 1\",\n            \"role\": \"COOK\",\n            \"created_at\": \"2025-03-06T19:29:45Z\",\n            \"updated_at\": \"2025-03-06T19:29:45Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get staff",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "Get staff",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/staffs/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"staffs",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "7d52a82d-8188-463f-913f-e5b496017a69"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 22:37:48 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "114"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"John Doe 1\",\n    \"role\": \"COOK\",\n    \"created_at\": \"2025-03-06T19:29:45Z\",\n    \"updated_at\": \"2025-03-06T19:29:45Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update staff",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe 1 UPDATED\",\n    \"role\": \"ATTENDANT\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/staffs/6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"staffs",
+								"6"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update staff",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe 1 UPDATED\",\n    \"role\": \"ATTENDANT\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/staffs/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"staffs",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "c6b00b2b-93fc-46d6-af87-f494969761cd"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 22:40:18 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "132"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"John Doe 1 UPDATED\",\n    \"role\": \"ATTENDANT\",\n    \"created_at\": \"2025-03-06T19:29:45Z\",\n    \"updated_at\": \"2025-03-06T19:40:18-03:00\"\n}"
+						},
+						{
+							"name": "Update staff (wrong name)",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": 1,\n    \"role\": \"ATTENDANT\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/staffs/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"staffs",
+										"6"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
 									"key": "Content-Type",
 									"value": "application/json; charset=utf-8"
 								},
 								{
 									"key": "X-Request-Id",
-									"value": "49e0c1ae-45ae-4fb8-b90a-ce140b0bf343"
+									"value": "10dc8132-7188-44cc-8540-209e84cde5bd"
 								},
 								{
 									"key": "Date",
-									"value": "Sun, 19 Jan 2025 01:05:26 GMT"
+									"value": "Thu, 06 Mar 2025 22:41:11 GMT"
 								},
 								{
 									"key": "Content-Length",
-									"value": "126"
+									"value": "37"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"total\": 2,\n    \"page\": 1,\n    \"limit\": 10,\n    \"staffs\": [\n        {\n            \"id\": 1,\n            \"name\": \"John Doe\",\n            \"role\": \"COOK\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"John Doe 2\",\n            \"role\": \"COOK\"\n        }\n    ]\n}"
+							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid body\"\n}"
+						},
+						{
+							"name": "Update staff (wrong role)",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe 1 UPDATED\",\n    \"role\": \"NONECXISTE\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/staffs/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"staffs",
+										"6"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "45348b84-97ab-4368-bfc2-ac0970848dfa"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 22:41:43 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid body\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete staff",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/staffs/6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"staffs",
+								"6"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete staff",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/staffs/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"staffs",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "f3b54184-5539-49aa-bc17-956a6e378839"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 22:42:55 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "127"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"John Doe 1 UPDATED\",\n    \"role\": \"ATTENDANT\",\n    \"created_at\": \"2025-03-06T19:29:45Z\",\n    \"updated_at\": \"2025-03-06T19:40:18Z\"\n}"
+						},
+						{
+							"name": "Delete staff (wrong id)",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/staffs/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"staffs",
+										"6"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "52de27a7-760d-466c-b1f6-5d391e83fa70"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 22:43:07 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "39"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 404,\n    \"message\": \"data not found\"\n}"
 						}
 					]
 				}
