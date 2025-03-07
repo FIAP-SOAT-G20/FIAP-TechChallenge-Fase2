@@ -273,9 +273,19 @@ func (s *CustomerControllerSuiteTest) TestCustomerController_DeleteCustomer() {
 				assert.Equal(t, want, util.RemoveAllSpaces(string(output)))
 			},
 		},
-		// {
-		// 	name: "Delete use case error",
-		// },
+		{
+			name:  "Delete use case error",
+			input: dto.DeleteCustomerInput{ID: uint64(1)},
+			setupMocks: func() {
+				s.mockUseCase.EXPECT().
+					Delete(s.ctx, dto.DeleteCustomerInput{ID: uint64(1)}).
+					Return(nil, assert.AnError)
+			},
+			checkResult: func(t *testing.T, output []byte, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, output)
+			},
+		},
 	}
 	for _, tt := range tests {
 		s.T().Run(tt.name, func(t *testing.T) {
@@ -289,22 +299,4 @@ func (s *CustomerControllerSuiteTest) TestCustomerController_DeleteCustomer() {
 			tt.checkResult(t, output, err)
 		})
 	}
-
-	input := dto.DeleteCustomerInput{
-		ID: uint64(1),
-	}
-
-	mockCustomer := &entity.Customer{
-		ID:    1,
-		Name:  "Test Customer",
-		Email: "test.customer@email.com",
-	}
-
-	s.mockUseCase.EXPECT().
-		Delete(s.ctx, input).
-		Return(mockCustomer, nil)
-
-	output, err := s.controller.Delete(s.ctx, s.mockPresenter, input)
-	assert.NoError(s.T(), err)
-	assert.NotNil(s.T(), output)
 }
