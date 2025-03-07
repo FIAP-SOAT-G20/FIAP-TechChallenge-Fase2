@@ -189,6 +189,10 @@ k8s-status: ## Show Kubernetes resources status
 	@echo "\n=== Secrets ==="
 	kubectl get secrets -n $(NAMESPACE)
 
+k8s-set-namespace: ## Set Kubernetes namespace
+	@echo  "🟢 Setting Kubernetes namespace..."
+	kubectl config set-context --current --namespace=$(NAMESPACE)
+
 .PHONY: compose-build
 compose-build: ## Build the application with Docker Compose
 	@echo "🟢 Building the application..."
