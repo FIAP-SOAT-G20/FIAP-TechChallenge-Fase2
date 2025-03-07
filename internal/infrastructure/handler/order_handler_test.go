@@ -331,6 +331,98 @@ func (s *OrderHandlerSuiteTest) TestOrderHandler_Update() {
 	}
 }
 
+func (s *OrderHandlerSuiteTest) TestOrderHandler_UpdatePartial() {
+	tests := []struct {
+		name        string
+		url         string
+		body        *strings.Reader
+		setupMocks  func()
+		checkResult func(*testing.T, *httptest.ResponseRecorder)
+	}{
+		{
+			name: "success - update order status",
+			url:  "/orders/15",
+			body: strings.NewReader(s.requests["update_success"]),
+			setupMocks: func() {
+				s.mockController.EXPECT().
+					Update(gomock.Any(), gomock.Any(), dto.UpdateOrderInput{
+						ID:         15,
+						CustomerID: 5,
+						Status:     valueobject.PENDING,
+					}).
+					Return([]byte(s.responses["update_success"]), nil)
+			},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusOK, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["update_success"])
+			},
+		},
+		{
+			name:       "invalid request - body is not a valid json",
+			url:        "/orders/5",
+			body:       strings.NewReader("invalid"),
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_body"])
+			},
+		},
+		{
+			name:       "invalid request - customer_id is not a number",
+			url:        "/orders/5",
+			body:       strings.NewReader(s.requests["update_invalid_body"]),
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_body"])
+			},
+		},
+		{
+			name:       "invalid request - id is not a number",
+			url:        "/orders/invalid",
+			body:       strings.NewReader(s.requests["update_success"]),
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_parameter"])
+			},
+		},
+		{
+			name: "controller error",
+			url:  "/orders/15",
+			body: strings.NewReader(s.requests["update_success"]),
+			setupMocks: func() {
+				s.mockController.EXPECT().
+					Update(gomock.Any(), gomock.Any(), dto.UpdateOrderInput{
+						ID:         15,
+						CustomerID: 5,
+						Status:     valueobject.PENDING,
+					}).
+					Return(nil, domain.NewInternalError(nil))
+			},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusInternalServerError, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_internal_error"])
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		s.T().Run(tt.name, func(t *testing.T) {
+			// Arrange
+			tt.setupMocks()
+			w := httptest.NewRecorder()
+			req, _ := http.NewRequest(http.MethodPatch, tt.url, tt.body)
+
+			// Act
+			s.router.ServeHTTP(w, req)
+
+			// Assert
+			tt.checkResult(t, w)
+		})
+	}
+}
+
 func (s *OrderHandlerSuiteTest) TestOrderHandler_Delete() {
 	tests := []struct {
 		name        string

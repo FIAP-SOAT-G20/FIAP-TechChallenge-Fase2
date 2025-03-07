@@ -38,6 +38,7 @@ func (s *OrderHandlerSuiteTest) SetupTest() {
 	s.router.GET("/orders", s.handler.List)
 	s.router.POST("/orders", s.handler.Create)
 	s.router.PUT("/orders/:id", s.handler.Update)
+	s.router.PATCH("/orders/:id", s.handler.UpdatePartial)
 	s.router.GET("/orders/:id", s.handler.Get)
 	s.router.DELETE("/orders/:id", s.handler.Delete)
 
