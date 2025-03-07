@@ -289,6 +289,26 @@ func (s *ProductUsecaseSuiteTest) TestProductUseCase_Update() {
 			},
 		},
 		{
+			name: "should return error when gateway find fails",
+			input: dto.UpdateProductInput{
+				ID:          1,
+				Name:        "New Name",
+				Description: "New Description",
+				Price:       20.0,
+				CategoryID:  2,
+			},
+			setupMocks: func() {
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
+					Return(nil, assert.AnError)
+			},
+			checkResult: func(t *testing.T, product *entity.Product, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, product)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
+		},
+		{
 			name: "should return error when gateway update fails",
 			input: dto.UpdateProductInput{
 				ID:          1,

@@ -280,6 +280,24 @@ func (s *StaffUsecaseSuiteTest) TestStaffUseCase_Update() {
 			},
 		},
 		{
+			name: "should return error when gateway find fails",
+			input: dto.UpdateStaffInput{
+				ID:   1,
+				Name: "New Name",
+				Role: "ATTENDANT",
+			},
+			setupMocks: func() {
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
+					Return(nil, assert.AnError)
+			},
+			checkResult: func(t *testing.T, staff *entity.Staff, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, staff)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
+		},
+		{
 			name: "should return error when gateway update fails",
 			input: dto.UpdateStaffInput{
 				ID:   1,

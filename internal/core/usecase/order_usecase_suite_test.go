@@ -16,19 +16,19 @@ import (
 
 type OrderUsecaseSuiteTest struct {
 	suite.Suite
-	mockOrders         []*entity.Order
-	historyUseCaseMock *mockport.MockOrderHistoryUseCase
-	mockGateway        *mockport.MockOrderGateway
-	useCase            port.OrderUseCase
-	ctx                context.Context
+	mockOrders              []*entity.Order
+	mockOrderHistoryUseCase *mockport.MockOrderHistoryUseCase
+	mockGateway             *mockport.MockOrderGateway
+	useCase                 port.OrderUseCase
+	ctx                     context.Context
 }
 
 func (s *OrderUsecaseSuiteTest) SetupTest() {
 	ctrl := gomock.NewController(s.T())
 	defer ctrl.Finish()
-	s.historyUseCaseMock = mockport.NewMockOrderHistoryUseCase(ctrl)
+	s.mockOrderHistoryUseCase = mockport.NewMockOrderHistoryUseCase(ctrl)
 	s.mockGateway = mockport.NewMockOrderGateway(ctrl)
-	s.useCase = usecase.NewOrderUseCase(s.mockGateway, s.historyUseCaseMock)
+	s.useCase = usecase.NewOrderUseCase(s.mockGateway, s.mockOrderHistoryUseCase)
 	s.ctx = context.Background()
 	currentTime := time.Now()
 	s.mockOrders = []*entity.Order{
@@ -44,7 +44,7 @@ func (s *OrderUsecaseSuiteTest) SetupTest() {
 			ID:         2,
 			CustomerID: uint64(2),
 			TotalBill:  199.99,
-			Status:     valueobject.PENDING,
+			Status:     valueobject.RECEIVED,
 			CreatedAt:  currentTime,
 			UpdatedAt:  currentTime,
 		},

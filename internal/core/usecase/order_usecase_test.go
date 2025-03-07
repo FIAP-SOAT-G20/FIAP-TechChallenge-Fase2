@@ -122,7 +122,7 @@ func (s *OrderUsecaseSuiteTest) TestOrderUseCase_Create() {
 				s.mockGateway.EXPECT().
 					Create(s.ctx, gomock.Any()).
 					Return(nil)
-				s.historyUseCaseMock.EXPECT().
+				s.mockOrderHistoryUseCase.EXPECT().
 					Create(s.ctx, gomock.Any()).
 					Return(&entity.OrderHistory{OrderID: 1, Status: valueobject.OPEN}, nil)
 			},
@@ -133,7 +133,7 @@ func (s *OrderUsecaseSuiteTest) TestOrderUseCase_Create() {
 			},
 		},
 		{
-			name: "should return error when gateway fails",
+			name: "should return error when gateway create fails",
 			input: dto.CreateOrderInput{
 				CustomerID: 1,
 			},
@@ -141,6 +141,26 @@ func (s *OrderUsecaseSuiteTest) TestOrderUseCase_Create() {
 				s.mockGateway.EXPECT().
 					Create(s.ctx, gomock.Any()).
 					Return(assert.AnError)
+			},
+			checkResult: func(t *testing.T, order *entity.Order, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, order)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
+		},
+		{
+			name: "should return error when order history use case create fails",
+			input: dto.CreateOrderInput{
+				CustomerID: 1,
+			},
+			setupMocks: func() {
+				s.mockGateway.EXPECT().
+					Create(s.ctx, gomock.Any()).
+					Return(nil)
+
+				s.mockOrderHistoryUseCase.EXPECT().
+					Create(s.ctx, gomock.Any()).
+					Return(nil, assert.AnError)
 			},
 			checkResult: func(t *testing.T, order *entity.Order, err error) {
 				assert.Error(t, err)
@@ -254,11 +274,33 @@ func (s *OrderUsecaseSuiteTest) TestOrderUseCase_Update() {
 						assert.Equal(s.T(), uint64(1), p.ID)
 						return nil
 					})
+
+				s.mockOrderHistoryUseCase.EXPECT().
+					Create(s.ctx, gomock.Any()).
+					Return(&entity.OrderHistory{OrderID: 1, Status: valueobject.RECEIVED}, nil)
 			},
 			checkResult: func(t *testing.T, order *entity.Order, err error) {
 				assert.NoError(t, err)
 				assert.NotNil(t, order)
 				assert.Equal(t, valueobject.RECEIVED, order.Status)
+			},
+		},
+		{
+			name: "should return error when gateway find fails",
+			input: dto.UpdateOrderInput{
+				ID:         1,
+				CustomerID: 1,
+				Status:     valueobject.RECEIVED,
+			},
+			setupMocks: func() {
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
+					Return(nil, assert.AnError)
+			},
+			checkResult: func(t *testing.T, order *entity.Order, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, order)
+				assert.IsType(t, &domain.InternalError{}, err)
 			},
 		},
 		{
@@ -280,6 +322,60 @@ func (s *OrderUsecaseSuiteTest) TestOrderUseCase_Update() {
 			},
 		},
 		{
+			name: "should return error when customer id is different",
+			input: dto.UpdateOrderInput{
+				ID:         1,
+				CustomerID: 2,
+				Status:     valueobject.RECEIVED,
+			},
+			setupMocks: func() {
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
+					Return(s.mockOrders[0], nil)
+			},
+			checkResult: func(t *testing.T, order *entity.Order, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, order)
+				assert.IsType(t, &domain.InvalidInputError{}, err)
+			},
+		},
+		{
+			name: "should return error when status is different and can't transition",
+			input: dto.UpdateOrderInput{
+				ID:         1,
+				CustomerID: 1,
+				Status:     valueobject.READY,
+			},
+			setupMocks: func() {
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
+					Return(s.mockOrders[0], nil)
+			},
+			checkResult: func(t *testing.T, order *entity.Order, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, order)
+				assert.IsType(t, &domain.InvalidInputError{}, err)
+			},
+		},
+		{
+			name: "should return error when status is different and need staff id",
+			input: dto.UpdateOrderInput{
+				ID:         1,
+				CustomerID: 1,
+				Status:     valueobject.PREPARING,
+			},
+			setupMocks: func() {
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
+					Return(s.mockOrders[0], nil)
+			},
+			checkResult: func(t *testing.T, order *entity.Order, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, order)
+				assert.IsType(t, &domain.InvalidInputError{}, err)
+			},
+		},
+		{
 			name: "should return error when gateway update fails",
 			input: dto.UpdateOrderInput{
 				ID:         1,
@@ -294,6 +390,32 @@ func (s *OrderUsecaseSuiteTest) TestOrderUseCase_Update() {
 				s.mockGateway.EXPECT().
 					Update(s.ctx, gomock.Any()).
 					Return(assert.AnError)
+			},
+			checkResult: func(t *testing.T, order *entity.Order, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, order)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
+		},
+		{
+			name: "should return error when status is different and order history use case create fails",
+			input: dto.UpdateOrderInput{
+				ID:         1,
+				CustomerID: 1,
+				Status:     valueobject.CANCELLED,
+			},
+			setupMocks: func() {
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
+					Return(s.mockOrders[0], nil)
+
+				s.mockGateway.EXPECT().
+					Update(s.ctx, gomock.Any()).
+					Return(nil)
+
+				s.mockOrderHistoryUseCase.EXPECT().
+					Create(s.ctx, gomock.Any()).
+					Return(nil, assert.AnError)
 			},
 			checkResult: func(t *testing.T, order *entity.Order, err error) {
 				assert.Error(t, err)
