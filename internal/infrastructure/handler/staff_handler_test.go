@@ -36,6 +36,15 @@ func (s *StaffHandlerSuiteTest) TestStaffHandler_List() {
 			},
 		},
 		{
+			name:       "invalid query - page",
+			url:        "/staffs?page=invalid",
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_query"])
+			},
+		},
+		{
 			name: "success - with query - role",
 			url:  "/staffs?role=COOK",
 			setupMocks: func() {
@@ -125,6 +134,23 @@ func (s *StaffHandlerSuiteTest) TestStaffHandler_Create() {
 				assert.Equal(t, http.StatusBadRequest, res.Code)
 			},
 		},
+		{
+			name: "controller error",
+			url:  "/staffs",
+			body: strings.NewReader(s.requests["create_success"]),
+			setupMocks: func() {
+				s.mockController.EXPECT().
+					Create(gomock.Any(), gomock.Any(), dto.CreateStaffInput{
+						Name: "John Doe 1",
+						Role: valueobject.COOK,
+					}).
+					Return(nil, domain.NewInternalError(nil))
+			},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusInternalServerError, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_internal_error"])
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -174,6 +200,15 @@ func (s *StaffHandlerSuiteTest) TestStaffHandler_Get() {
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
 				assert.Equal(t, http.StatusNotFound, res.Code)
 				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_not_found"])
+			},
+		},
+		{
+			name:       "invalid request - id is not a number",
+			url:        "/staffs/invalid",
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_param"])
 			},
 		},
 	}
@@ -240,6 +275,34 @@ func (s *StaffHandlerSuiteTest) TestStaffHandler_Update() {
 				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_body"])
 			},
 		},
+		{
+			name:       "invalid request - id is not a number",
+			url:        "/staffs/invalid",
+			body:       strings.NewReader(s.requests["update_success"]),
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_param"])
+			},
+		},
+		{
+			name: "controller error",
+			url:  "/staffs/6",
+			body: strings.NewReader(s.requests["update_success"]),
+			setupMocks: func() {
+				s.mockController.EXPECT().
+					Update(gomock.Any(), gomock.Any(), dto.UpdateStaffInput{
+						ID:   6,
+						Name: "John Doe 1 UPDATED",
+						Role: valueobject.ATTENDANT,
+					}).
+					Return(nil, domain.NewInternalError(nil))
+			},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusInternalServerError, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_internal_error"])
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -289,6 +352,15 @@ func (s *StaffHandlerSuiteTest) TestStaffHandler_Delete() {
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
 				assert.Equal(t, http.StatusNotFound, res.Code)
 				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_not_found"])
+			},
+		},
+		{
+			name:       "invalid request - id is not a number",
+			url:        "/staffs/invalid",
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_param"])
 			},
 		},
 	}

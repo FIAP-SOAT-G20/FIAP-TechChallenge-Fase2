@@ -50,6 +50,15 @@ func (s *OrderProductHandlerSuiteTest) TestOrderProductHandler_List() {
 			},
 		},
 		{
+			name:       "invalid query - page",
+			url:        "/orders/products?page=invalid",
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_parameter"])
+			},
+		},
+		{
 			name: "controller error",
 			url:  "/orders/products",
 			setupMocks: func() {
@@ -125,6 +134,34 @@ func (s *OrderProductHandlerSuiteTest) TestOrderProductHandler_Create() {
 				assert.Equal(t, http.StatusBadRequest, res.Code)
 			},
 		},
+		{
+			name:       "invalid request - order_id is not a number",
+			url:        "/orders/products/invalid/1",
+			body:       strings.NewReader(s.requests["create_success"]),
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_parameter"])
+			},
+		},
+		{
+			name: "controller error",
+			url:  "/orders/products/1/1",
+			body: strings.NewReader(s.requests["create_success"]),
+			setupMocks: func() {
+				s.mockController.EXPECT().
+					Create(gomock.Any(), gomock.Any(), dto.CreateOrderProductInput{
+						OrderID:   1,
+						ProductID: 1,
+						Quantity:  4,
+					}).
+					Return(nil, domain.NewInternalError(nil))
+			},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusInternalServerError, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_internal_error"])
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -180,6 +217,15 @@ func (s *OrderProductHandlerSuiteTest) TestOrderProductHandler_Get() {
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
 				assert.Equal(t, http.StatusNotFound, res.Code)
 				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_not_found"])
+			},
+		},
+		{
+			name:       "invalid request - order_id is not a number",
+			url:        "/orders/products/invalid/1",
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_parameter"])
 			},
 		},
 	}
@@ -246,6 +292,34 @@ func (s *OrderProductHandlerSuiteTest) TestOrderProductHandler_Update() {
 				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_body"])
 			},
 		},
+		{
+			name:       "invalid request - order_id is not a number",
+			url:        "/orders/products/invalid/1",
+			body:       strings.NewReader(s.requests["update_success"]),
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_parameter"])
+			},
+		},
+		{
+			name: "controller error",
+			url:  "/orders/products/1/1",
+			body: strings.NewReader(s.requests["update_success"]),
+			setupMocks: func() {
+				s.mockController.EXPECT().
+					Update(gomock.Any(), gomock.Any(), dto.UpdateOrderProductInput{
+						OrderID:   1,
+						ProductID: 1,
+						Quantity:  2,
+					}).
+					Return(nil, domain.NewInternalError(nil))
+			},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusInternalServerError, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_internal_error"])
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -301,6 +375,15 @@ func (s *OrderProductHandlerSuiteTest) TestOrderProductHandler_Delete() {
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
 				assert.Equal(t, http.StatusNotFound, res.Code)
 				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_not_found"])
+			},
+		},
+		{
+			name:       "invalid request - order_id is not a number",
+			url:        "/orders/products/invalid/1",
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_parameter"])
 			},
 		},
 	}

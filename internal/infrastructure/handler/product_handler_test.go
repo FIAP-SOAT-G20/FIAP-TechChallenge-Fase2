@@ -50,6 +50,15 @@ func (s *ProductHandlerSuiteTest) TestProductHandler_List() {
 			},
 		},
 		{
+			name:       "invalid query - page",
+			url:        "/products?page=invalid",
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_query"])
+			},
+		},
+		{
 			name: "controller error",
 			url:  "/products",
 			setupMocks: func() {
@@ -126,6 +135,25 @@ func (s *ProductHandlerSuiteTest) TestProductHandler_Create() {
 				assert.Equal(t, http.StatusBadRequest, res.Code)
 			},
 		},
+		{
+			name: "controller error",
+			url:  "/products",
+			body: strings.NewReader(s.requests["create_success"]),
+			setupMocks: func() {
+				s.mockController.EXPECT().
+					Create(gomock.Any(), gomock.Any(), dto.CreateProductInput{
+						Name:        "Product X",
+						Description: "Product X description",
+						Price:       13,
+						CategoryID:  1,
+					}).
+					Return(nil, domain.NewInternalError(nil))
+			},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusInternalServerError, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_internal_error"])
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -175,6 +203,15 @@ func (s *ProductHandlerSuiteTest) TestProductHandler_Get() {
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
 				assert.Equal(t, http.StatusNotFound, res.Code)
 				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_not_found"])
+			},
+		},
+		{
+			name:       "invalid request - id is not a number",
+			url:        "/products/invalid",
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_param"])
 			},
 		},
 	}
@@ -243,6 +280,36 @@ func (s *ProductHandlerSuiteTest) TestProductHandler_Update() {
 				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_body"])
 			},
 		},
+		{
+			name:       "invalid request - id is not a number",
+			url:        "/products/invalid",
+			body:       strings.NewReader(s.requests["update_success"]),
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_param"])
+			},
+		},
+		{
+			name: "controller error",
+			url:  "/products/5",
+			body: strings.NewReader(s.requests["update_success"]),
+			setupMocks: func() {
+				s.mockController.EXPECT().
+					Update(gomock.Any(), gomock.Any(), dto.UpdateProductInput{
+						ID:          5,
+						Name:        "Product X UPDATED",
+						Description: "Product X description UPDATED",
+						Price:       12.11,
+						CategoryID:  1,
+					}).
+					Return(nil, domain.NewInternalError(nil))
+			},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusInternalServerError, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_internal_error"])
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -292,6 +359,15 @@ func (s *ProductHandlerSuiteTest) TestProductHandler_Delete() {
 			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
 				assert.Equal(t, http.StatusNotFound, res.Code)
 				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_not_found"])
+			},
+		},
+		{
+			name:       "invalid request - id is not a number",
+			url:        "/products/invalid",
+			setupMocks: func() {},
+			checkResult: func(t *testing.T, res *httptest.ResponseRecorder) {
+				assert.Equal(t, http.StatusBadRequest, res.Code)
+				assert.Contains(t, util.RemoveAllSpaces(res.Body.String()), s.responses["error_invalid_param"])
 			},
 		},
 	}
