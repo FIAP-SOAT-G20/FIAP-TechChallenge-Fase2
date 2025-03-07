@@ -1,4 +1,5 @@
 name: ci/security-checks
+
 on:
   push:
     branches:
