@@ -17,9 +17,9 @@ spec:
         - name: tech-challenge-api-mock-server
           image: ghcr.io/fiap-soat-g20/fiap-techchallenge-fase2-mock-server:latest
           command:
-            - "--port 3000"
+            - "--port 3001"
           ports:
-            - containerPort: 3000
+            - containerPort: 3001
           resources:
             requests:
               memory: "128Mi"
