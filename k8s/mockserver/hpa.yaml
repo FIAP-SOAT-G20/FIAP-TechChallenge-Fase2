@@ -1,13 +1,13 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: tech-challenge-api
+  name: tech-challenge-api-mock-server
   namespace: tech-challenge-system
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: tech-challenge-api
+    name: tech-challenge-api-mock-server
   minReplicas: 2
   maxReplicas: 5
   metrics:
