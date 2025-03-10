@@ -25,34 +25,34 @@ echo "✨  ✨  Pull Request ✨  ✨ "
 echo "\n"
 
 echo "✨ Context: 📱"
-options=("ANY" "API" "KUBERNETES", "FRONTEND")
+options=("ANY" "API" "INFRA" "FRONTEND")
 select_option "${options[@]}"
 app="${options[$?]}" 
 
 # # Pull request type
-# Types: "Feature", "Change, "Fix", "Removed", "Refactor", "Doc", "Hotfix"
+# Types: "Feature", "Change, "Fix", "Removed", "Refactor", "Docs", "Hotfix"
 # get from brach name, ex: feature/update_tracking_view_infos then type is Feature,
 branch=$(git rev-parse --abbrev-ref HEAD)
 if [[ $branch == *"feature"* ]]; then
     type="Feature"
 elif [[ $branch == *"change"* ]]; then
     type="Change"
-elif [[ $branch == *"fix"* ]]; then
-    type="Fix"
+elif [[ $branch == *"hotfix"* ]]; then
+    type="Hotfix"
 elif [[ $branch == *"removed"* ]]; then
     type="Removed"
 elif [[ $branch == *"refactor"* ]]; then
     type="Refactor"
 elif [[ $branch == *"doc"* ]]; then
-    type="Doc"
-elif [[ $branch == *"hotfix"* ]]; then
-    type="Hotfix"
+    type="Docs"
+elif [[ $branch == *"fix"* ]]; then
+    type="Fix"
 fi
 
 # If no type is given, ask for it
 if [[ -z $type ]]; then
     echo "✨ Type: 📱"
-    options=("Feature" "Bugfix" "Hotfix" "Refactor" "Documentation" "Chore")
+    options=("Feature" "Change" "Fix" "Removed" "Refactor" "Docs" "Hotfix")
     select_option "${options[@]}"
     type="${options[$?]}" 
 fi

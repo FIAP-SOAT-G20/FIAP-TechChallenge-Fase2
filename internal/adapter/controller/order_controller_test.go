@@ -1,4 +1,4 @@
-package controller
+package controller_test
 
 import (
 	"context"
@@ -7,7 +7,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
 )
@@ -19,12 +21,12 @@ func TestOrderController_ListOrders(t *testing.T) {
 
 	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewOrderController(mokOrdercUseCase)
+	controller := controller.NewOrderController(mokOrdercUseCase)
 
 	ctx := context.Background()
 	input := dto.ListOrdersInput{
 		CustomerID: 1,
-		Status:     "PENDING",
+		Status:     []valueobject.OrderStatus{"PENDING"},
 		Page:       1,
 		Limit:      10,
 	}
@@ -68,7 +70,7 @@ func TestOrderController_CreateOrder(t *testing.T) {
 
 	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewOrderController(mokOrdercUseCase)
+	controller := controller.NewOrderController(mokOrdercUseCase)
 
 	ctx := context.Background()
 	input := dto.CreateOrderInput{
@@ -101,7 +103,7 @@ func TestOrderController_GetOrder(t *testing.T) {
 
 	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewOrderController(mokOrdercUseCase)
+	controller := controller.NewOrderController(mokOrdercUseCase)
 
 	ctx := context.Background()
 	input := dto.GetOrderInput{
@@ -134,7 +136,7 @@ func TestOrderController_UpdateOrder(t *testing.T) {
 
 	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewOrderController(mokOrdercUseCase)
+	controller := controller.NewOrderController(mokOrdercUseCase)
 
 	ctx := context.Background()
 	input := dto.UpdateOrderInput{
@@ -169,7 +171,7 @@ func TestOrderController_DeleteOrder(t *testing.T) {
 
 	mokOrdercUseCase := mockport.NewMockOrderUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewOrderController(mokOrdercUseCase)
+	controller := controller.NewOrderController(mokOrdercUseCase)
 
 	ctx := context.Background()
 	input := dto.DeleteOrderInput{

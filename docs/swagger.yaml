@@ -443,6 +443,11 @@ definitions:
     - name
     - role
     type: object
+  response.HealthCheckLivenessResponse:
+    properties:
+      status:
+        type: string
+    type: object
   response.HealthCheckResponse:
     properties:
       checks:
@@ -496,14 +501,14 @@ definitions:
     - PROCESSING
     - CONFIRMED
     - FAILED
-    - CANCELED
+    - ABORTED
     - ""
     type: string
     x-enum-varnames:
     - PROCESSING
     - CONFIRMED
     - FAILED
-    - CANCELED
+    - ABORTED
     - UNDEFINDED_P
   valueobject.StaffRole:
     enum:
@@ -520,11 +525,10 @@ definitions:
 externalDocs:
   description: GitHub Repository
   url: https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2
-host: localhost:8080
 info:
   contact: {}
-  description: '### API de um Fast Food para o Tech Challenge da FIAP - Fase 2'
-  title: FIAP Tech Challenge Fase 2 - 10SOAT - G18
+  description: '### FIAP Tech Challenge Phase 2 - 10SOAT - G18'
+  title: Fast Food API v2
   version: "1"
 paths:
   /customers:
@@ -698,7 +702,7 @@ paths:
       - customers
   /health:
     get:
-      description: Checks application health
+      description: Checks application readiness
       produces:
       - application/json
       responses:
@@ -714,23 +718,76 @@ paths:
           description: Service Unavailable
           schema:
             $ref: '#/definitions/response.HealthCheckResponse'
-      summary: Application HealthCheck
+      summary: Application Readiness
+      tags:
+      - health-check
+  /health/livez:
+    get:
+      description: Checks application liveness
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.HealthCheckLivenessResponse'
+      summary: Application Liveness
+      tags:
+      - health-check
+  /health/readyz:
+    get:
+      description: Checks application readiness
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.HealthCheckResponse'
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/response.HealthCheckResponse'
+      summary: Application Readiness
       tags:
       - health-check
   /orders:
     get:
       consumes:
       - application/json
-      description: List all orders
+      description: |-
+        List all orders
+        ## Order list is sorted by:
+        - **Status** in **descending** order (`READY` > `PREPARING` > `RECEIVED` > `PENDING` > `OPEN`)
+        - **Created date** (CreatedAt) in **ascending** order (oldest first)
+        Obs: Status CANCELLED and COMPLETED are not included in the list by default
       parameters:
-      - description: Filter by name
+      - description: Filter by customer ID
         in: query
-        name: name
-        type: string
-      - description: Filter by category ID
-        in: query
-        name: category_id
+        name: customer_id
         type: integer
+      - description: 'Filter by status (Accept many), options: <sub>OPEN, PENDING,
+          RECEIVED, PREPARING, READY</sub>, ex: <sub>PENDING</sub> or <sub>OPEN,PENDING</sub>'
+        in: query
+        name: status
+        type: string
+      - default: CANCELLED,COMPLETED
+        description: 'Exclude by status (Accept many), options: <sub>NONE, OPEN, PENDING,
+          RECEIVED, PREPARING, READY, CANCELLED, COMPLETED</sub>, ex: <sub>CANCELLED</sub>
+          or <sub>CANCELLED,COMPLETED</sub> (default)'
+        in: query
+        name: status_exclude
+        type: string
+      - default: status:d,created_at
+        description: Sort by field (Accept many). Use `<field_name>:d` for descending,
+          and the default order is ascending
+        in: query
+        name: sort
+        type: string
       - default: 1
         description: Page number
         in: query
@@ -951,7 +1008,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: List all orderHistories
+      description: List all order histories
       parameters:
       - description: Filter by order_id
         in: query
@@ -987,12 +1044,12 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: List orderHistories
+      summary: List order histories
       tags:
       - orders
   /orders/histories/{id}:
     delete:
-      description: Deletes a orderHistory by ID
+      description: Deletes a order history by ID
       parameters:
       - description: OrderHistory ID
         in: path
@@ -1018,13 +1075,13 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Delete orderHistory
+      summary: Delete order history
       tags:
       - orders
     get:
       consumes:
       - application/json
-      description: Search for a orderHistory by ID
+      description: Search for a order history by ID
       parameters:
       - description: OrderHistory ID
         in: path
@@ -1050,14 +1107,14 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Get orderHistory
+      summary: Get order history
       tags:
       - orders
   /orders/products:
     get:
       consumes:
       - application/json
-      description: List all orders
+      description: List all order products
       parameters:
       - description: Filter by order ID
         in: query
@@ -1088,12 +1145,12 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: List orders
+      summary: List order products
       tags:
       - orders
   /orders/products/{order_id}/{product_id}:
     delete:
-      description: Deletes a orderProduct by Order ID and Product ID
+      description: Deletes a order product by Order ID and Product ID
       parameters:
       - description: Order ID
         in: path
@@ -1124,7 +1181,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Delete orderProduct
+      summary: Delete order product
       tags:
       - orders
     get:
@@ -1202,7 +1259,7 @@ paths:
     put:
       consumes:
       - application/json
-      description: Update an existing order
+      description: Update an existing order product
       parameters:
       - description: Order ID
         in: path
@@ -1239,9 +1296,38 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      summary: Update order
+      summary: Update order product
       tags:
       - orders
+  /payments/{order_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a payment given order ID
+      parameters:
+      - description: Order ID
+        in: path
+        name: order_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/presenter.PaymentJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Get a payment given order ID
+      tags:
+      - payments
   /payments/{order_id}/checkout:
     post:
       consumes:
@@ -1281,12 +1367,13 @@ paths:
         Update a new payment (Webhook)
         - resource = external payment id, obtained from the checkout response
         - topic = payment
-        The status of the payment will be set to CONFIRMED if the payment was successful
+
+        > The status of the payment will be set to CONFIRMED if the payment was successful
         ## Possible status:
-        - PROCESSING
-        - CONFIRMED
-        - FAILED
-        - CANCELED
+        - `PROCESSING` (default)
+        - `CONFIRMED`
+        - `FAILED`
+        - `ABORTED`
       parameters:
       - description: Payment data
         in: body

@@ -7,6 +7,7 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
@@ -28,8 +29,8 @@ func (h *OrderHistoryHandler) Register(router *gin.RouterGroup) {
 
 // List godoc
 
-// @Summary		List orderHistories
-// @Description	List all orderHistories
+// @Summary		List order histories
+// @Description	List all order histories
 // @Tags			orders
 // @Accept			json
 // @Produce		json
@@ -46,6 +47,18 @@ func (h *OrderHistoryHandler) List(c *gin.Context) {
 	if err := c.ShouldBindQuery(&query); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
 		return
+	}
+
+	if query.OrderID == 0 {
+		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
+		return
+	}
+
+	if query.Status != "" {
+		if !valueobject.IsValidOrderStatus(query.Status.String()) {
+			_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
+			return
+		}
 	}
 
 	input := dto.ListOrderHistoriesInput{
@@ -70,8 +83,8 @@ func (h *OrderHistoryHandler) List(c *gin.Context) {
 
 // Get godoc
 //
-//	@Summary		Get orderHistory
-//	@Description	Search for a orderHistory by ID
+//	@Summary		Get order history
+//	@Description	Search for a order history by ID
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
@@ -107,8 +120,8 @@ func (h *OrderHistoryHandler) Get(c *gin.Context) {
 
 // Delete godoc
 //
-//	@Summary		Delete orderHistory
-//	@Description	Deletes a orderHistory by ID
+//	@Summary		Delete order history
+//	@Description	Deletes a order history by ID
 //	@Tags			orders
 //	@Produce		json
 //	@Param			id	path		int									true	"OrderHistory ID"

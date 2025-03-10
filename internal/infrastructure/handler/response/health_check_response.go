@@ -22,3 +22,7 @@ const (
 	HealthCheckStatusWarn HealthCheckStatus = "warn"
 	HealthCheckStatusFail HealthCheckStatus = "fail"
 )
+
+type HealthCheckLivenessResponse struct {
+	Status string `json:"status"`
+}

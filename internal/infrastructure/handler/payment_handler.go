@@ -24,6 +24,7 @@ func NewPaymentHandler(controller port.PaymentController) *PaymentHandler {
 func (h *PaymentHandler) Register(router *gin.RouterGroup) {
 	router.POST("/:order_id/checkout", h.Create)
 	router.POST("/callback", h.Update)
+	router.GET("/:order_id", h.Get)
 }
 
 // Create godoc
@@ -63,18 +64,19 @@ func (h *PaymentHandler) Create(c *gin.Context) {
 	c.Data(http.StatusOK, "application/json", output)
 }
 
-// Create godoc
+// Update godoc
 //
 //	@Summary		Update a payment (Webhook) (Reference 1.a.iii)
 //	@Description	Update a new payment (Webhook)
 //	@Description	- resource = external payment id, obtained from the checkout response
 //	@Description	- topic = payment
-//	@Description	The status of the payment will be set to CONFIRMED if the payment was successful
+//	@Description
+//	@Description	> The status of the payment will be set to CONFIRMED if the payment was successful
 //	@Description	## Possible status:
-//	@Description	- PROCESSING
-//	@Description	- CONFIRMED
-//	@Description	- FAILED
-//	@Description	- CANCELED
+//	@Description	- `PROCESSING` (default)
+//	@Description	- `CONFIRMED`
+//	@Description	- `FAILED`
+//	@Description	- `ABORTED`
 //	@Tags			payments
 //	@Accept			json
 //	@Produce		json
@@ -98,6 +100,44 @@ func (h *PaymentHandler) Update(c *gin.Context) {
 	}
 
 	output, err := h.controller.Update(
+		c.Request.Context(),
+		presenter.NewPaymentJsonPresenter(),
+		input,
+	)
+	if err != nil {
+		_ = c.Error(err)
+		return
+	}
+
+	c.Data(http.StatusOK, "application/json", output)
+}
+
+// Get godoc
+//
+//	@Summary		Get a payment given order ID
+//	@Description	Get a payment given order ID
+//	@Tags			payments
+//	@Accept			json
+//	@Produce		json
+//	@Param			order_id				path		int								true	"Order ID"
+//	@Success		201						{object}	presenter.PaymentJsonResponse	"Created"
+//	@Failure		400						{object}	middleware.ErrorJsonResponse	"Bad Request"
+//	@Failure		500						{object}	middleware.ErrorJsonResponse	"Internal Server Error"
+//	@Router			/payments/{order_id}	[get]
+func (h *PaymentHandler) Get(c *gin.Context) {
+
+	var body request.GetPaymentRequest
+	if err := c.ShouldBindUri(&body); err != nil {
+		fmt.Println(err)
+		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
+		return
+	}
+
+	input := dto.GetPaymentInput{
+		OrderID: body.OrderID,
+	}
+
+	output, err := h.controller.Get(
 		c.Request.Context(),
 		presenter.NewPaymentJsonPresenter(),
 		input,

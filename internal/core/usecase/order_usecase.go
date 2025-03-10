@@ -22,7 +22,7 @@ func NewOrderUseCase(gateway port.OrderGateway, orderHistoryUseCase port.OrderHi
 
 // List returns a list of Orders
 func (uc *orderUseCase) List(ctx context.Context, i dto.ListOrdersInput) ([]*entity.Order, int64, error) {
-	orders, total, err := uc.gateway.FindAll(ctx, i.CustomerID, i.Status, i.Page, i.Limit)
+	orders, total, err := uc.gateway.FindAll(ctx, i.CustomerID, i.Status, i.StatusExclude, i.Page, i.Limit, i.Sort)
 	if err != nil {
 		return nil, 0, domain.NewInternalError(err)
 	}
@@ -40,11 +40,11 @@ func (uc *orderUseCase) Create(ctx context.Context, i dto.CreateOrderInput) (*en
 
 	_, err := uc.orderHistoryUseCase.Create(ctx, dto.CreateOrderHistoryInput{
 		OrderID: order.ID,
-		Status:  valueobject.OPEN.String(),
+		Status:  valueobject.OPEN,
 		StaffID: nil,
 	})
 	if err != nil {
-		return nil, err
+		return nil, domain.NewInternalError(err)
 	}
 
 	return order, nil
@@ -79,7 +79,8 @@ func (uc *orderUseCase) Update(ctx context.Context, i dto.UpdateOrderInput) (*en
 		return nil, domain.NewInvalidInputError(domain.ErrInvalidBody)
 	}
 
-	if i.Status != "" && order.Status != i.Status {
+	statusHasChanged := order.Status != i.Status
+	if i.Status != "" && statusHasChanged {
 		if !valueobject.StatusCanTransitionTo(order.Status, i.Status) {
 			return nil, domain.NewInvalidInputError(domain.ErrInvalidBody)
 		}
@@ -97,13 +98,13 @@ func (uc *orderUseCase) Update(ctx context.Context, i dto.UpdateOrderInput) (*en
 	}
 
 	// Restore order products, to calculate total bill in the presenter
-	order.OrderProducts = orderProducts
+	order.OrderProducts = orderProducts // TODO: Remove relations from entities
 
 	// if status has changed, create a new order history
-	if i.Status != "" && order.Status != i.Status {
+	if i.Status != "" && statusHasChanged {
 		if _, err := uc.orderHistoryUseCase.Create(ctx, dto.CreateOrderHistoryInput{
 			OrderID: order.ID,
-			Status:  i.Status.String(),
+			Status:  i.Status,
 			StaffID: &i.StaffID,
 		}); err != nil {
 			return nil, domain.NewInternalError(err)

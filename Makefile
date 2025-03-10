@@ -1,8 +1,10 @@
 .DEFAULT_GOAL := help
 
+# Variables
 APP_NAME=app
 MAIN_FILE=cmd/server/main.go
-DOCKER_REGISTRY=your-registry
+DOCKER_REGISTRY=ghcr.io
+DOCKER_REGISTRY_APP=fiap-soat-g20/fiap-techchallenge-fase2
 VERSION=$(shell git describe --tags --always --dirty)
 NAMESPACE=tech-challenge-system
 TEST_PATH=./internal/...
@@ -10,11 +12,15 @@ TEST_COVERAGE_FILE_NAME=coverage.out
 MIGRATION_PATH = internal/infrastructure/database/migrations
 DB_URL = postgres://postgres:postgres@localhost:5432/fastfood_10soat_g18_tc2?sslmode=disable
 
+# Go commands
 GOCMD=go
 GOBUILD=$(GOCMD) build
 GORUN=$(GOCMD) run
 GOTEST=$(GOCMD) test
 GOCLEAN=$(GOCMD) clean
+GOVET=$(GOCMD) vet
+GOFMT=$(GOCMD) fmt
+GOTIDY=$(GOCMD) mod tidy
 
 # Looks at comments using ## on targets and uses them to produce a help output.
 .PHONY: help
@@ -23,10 +29,14 @@ help: ## Print this message
 	@echo "Usage: make <command>"
 	@awk -F '::? .*## ' -- "/^[^':]+::? .*## /"' { printf "  make '$$(tput bold)'%-$(ALIGN)s'$$(tput sgr0)' - %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
-.PHONY: build
-build: ## Build the application
-	@echo  "🟢 Building the application..."
+.PHONY: fmt
+fmt: ## Format the code
+	@echo  "🟢 Formatting the code..."
 	$(GOCMD) fmt ./...
+
+.PHONY: build
+build: fmt ## Build the application
+	@echo  "🟢 Building the application..."
 	$(GOBUILD) -o bin/$(APP_NAME) $(MAIN_FILE)
 
 .PHONY: run-db
@@ -52,18 +62,25 @@ stop-db: ## Stop the database
 .PHONY: run-air
 run-air: build ## Run the application with Air
 	@echo  "🟢 Running the application with Air..."
-	air -c air.toml
+	@go run github.com/air-verse/air@v1.61.7 -c air.toml
 
 .PHONY: test
-test: ## Run tests
+test: lint ## Run tests
 	@echo  "🟢 Running tests..."
-	$(GOTEST) $(TEST_PATH) -v
+	@$(GOFMT) ./...
+	@$(GOVET) ./...
+	@$(GOTIDY)
+	$(GOTEST) $(TEST_PATH) -race -v
 
 .PHONY: coverage
 coverage: ## Run tests with coverage
 	@echo  "🟢 Running tests with coverage..."
+# remove files that are not meant to be tested
 	$(GOTEST) $(TEST_PATH) -coverprofile=$(TEST_COVERAGE_FILE_NAME).tmp
-	@cat $(TEST_COVERAGE_FILE_NAME).tmp | grep -v "_mock.go" > $(TEST_COVERAGE_FILE_NAME)
+	@cat $(TEST_COVERAGE_FILE_NAME).tmp | grep -v "_mock.go" | grep -v "_request.go" | grep -v "_response.go" \
+	| grep -v "_gateway.go" | grep -v "_datasource.go" | grep -v "_presenter.go" | grep -v "middleware" \
+	| grep -v "config" | grep -v "route" | grep -v "util" | grep -v "database" \
+	| grep -v "server" | grep -v "logger" | grep -v "httpclient" > $(TEST_COVERAGE_FILE_NAME)
 	@rm $(TEST_COVERAGE_FILE_NAME).tmp
 	$(GOCMD) tool cover -html=$(TEST_COVERAGE_FILE_NAME)
 
@@ -72,44 +89,28 @@ clean: ## Clean up binaries and coverage files
 	@echo "🔴 Cleaning up..."
 	$(GOCLEAN)
 	rm -f $(APP_NAME)
-	rm -f coverage.out
+	rm -f $(TEST_COVERAGE_FILE_NAME)
 
 .PHONY: mock
 mock: ## Generate mocks
 	@echo  "🟢 Generating mocks..."
-	mockgen -source=internal/core/port/presenter_port.go -destination=internal/core/port/mocks/presenter_mock.go
-	mockgen -source=internal/core/port/product_gateway_port.go -destination=internal/core/port/mocks/product_gateway_mock.go
-	mockgen -source=internal/core/port/product_usecase_port.go -destination=internal/core/port/mocks/product_usecase_mock.go
-	mockgen -source=internal/core/port/product_controller_port.go -destination=internal/core/port/mocks/product_controller_mock.go
-	mockgen -source=internal/core/port/customer_gateway_port.go -destination=internal/core/port/mocks/customer_gateway_mock.go
-	mockgen -source=internal/core/port/customer_usecase_port.go -destination=internal/core/port/mocks/customer_usecase_mock.go
-	mockgen -source=internal/core/port/customer_controller_port.go -destination=internal/core/port/mocks/customer_controller_mock.go
-	mockgen -source=internal/core/port/order_gateway_port.go -destination=internal/core/port/mocks/order_gateway_mock.go
-	mockgen -source=internal/core/port/order_usecase_port.go -destination=internal/core/port/mocks/order_usecase_mock.go
-	mockgen -source=internal/core/port/order_controller_port.go -destination=internal/core/port/mocks/order_controller_mock.go
-	mockgen -source=internal/core/port/order_product_gateway_port.go -destination=internal/core/port/mocks/order_product_gateway_mock.go
-	mockgen -source=internal/core/port/order_product_controller_port.go -destination=internal/core/port/mocks/order_product_controller_mock.go
-	mockgen -source=internal/core/port/staff_gateway_port.go -destination=internal/core/port/mocks/staff_gateway_mock.go
-	mockgen -source=internal/core/port/staff_usecase_port.go -destination=internal/core/port/mocks/staff_usecase_mock.go
-	mockgen -source=internal/core/port/staff_controller_port.go -destination=internal/core/port/mocks/staff_controller_mock.go
-	mockgen -source=internal/core/port/order_history_gateway_port.go -destination=internal/core/port/mocks/order_history_gateway_mock.go
-	mockgen -source=internal/core/port/order_history_usecase_port.go -destination=internal/core/port/mocks/order_history_usecase_mock.go
-	mockgen -source=internal/core/port/order_history_controller_port.go -destination=internal/core/port/mocks/order_history_controller_mock.go
-	mockgen -source=internal/core/port/payment_gateway_port.go -destination=internal/core/port/mocks/payment_gateway_mock.go
-	mockgen -source=internal/core/port/payment_usecase_port.go -destination=internal/core/port/mocks/payment_usecase_mock.go
-	mockgen -source=internal/core/port/payment_controller_port.go -destination=internal/core/port/mocks/payment_controller_mock.go
-	
+# romove mocks files
+	@rm -rf internal/core/port/mocks/*
+# loop through all files in the port directory and generate mocks
+	@for file in internal/core/port/*.go; do \
+		go run go.uber.org/mock/mockgen@v0.5.0 -source=$$file -destination=internal/core/port/mocks/`basename $$file _port.go`_mock.go; \
+	done
 
 .PHONY: swagger
 swagger: ## Generate Swagger documentation
 	@echo  "🟢 Generating Swagger documentation..."
-	swag fmt ./...
-	swag init -g ${MAIN_FILE} --parseInternal true
+	@go run github.com/swaggo/swag/cmd/swag@v1.16.4 fmt ./...
+	@go run github.com/swaggo/swag/cmd/swag@v1.16.4 init -g ${MAIN_FILE} --parseInternal true
 
 .PHONY: lint
 lint: ## Run linter
 	@echo  "🟢 Running linter..."
-	golangci-lint run
+	@go run github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.5 run --out-format colored-line-number
 
 .PHONY: migrate-create
 migrate-create: ## Create new migration, usage example: make migrate-create name=create_table_products
@@ -134,24 +135,19 @@ migrate-down: ## Roll back migrations
 install: ## Install dependencies
 	@echo  "🟢 Installing dependencies..."
 	go mod download
-	@go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
-	@go install golang.org/x/vuln/cmd/govulncheck@latest
-	@go install github.com/swaggo/swag/cmd/swag@latest
-	@go install go.uber.org/mock/mockgen@latest
-	@go install github.com/air-verse/air@latest
-	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	@go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@v4.18.2
 
 .PHONY: docker-build
 docker-build: ## Build Docker image
 	@echo  "🟢 Building Docker image..."
-	docker build --platform linux/amd64 -t $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) .
-	docker tag $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) $(DOCKER_REGISTRY)/$(APP_NAME):latest
+	docker build --platform linux/amd64 -t $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_APP):$(VERSION) .
+	docker tag $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_APP):$(VERSION) $(DOCKER_REGISTRY)/$(APP_NAME):latest
 
 .PHONY: docker-push
 docker-push: ## Push Docker image
 	@echo  "🟢 Pushing Docker image..."
-	docker push $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION)
-	docker push $(DOCKER_REGISTRY)/$(APP_NAME):latest
+	docker push $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_APP):$(VERSION)
+	docker push $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_APP):latest
 
 .PHONY: k8s-apply
 k8s-apply: ## Apply Kubernetes manifests
@@ -160,6 +156,7 @@ k8s-apply: ## Apply Kubernetes manifests
 	kubectl apply -f k8s/config/
 	kubectl apply -f k8s/postgres/
 	kubectl apply -f k8s/app/
+
 
 .PHONY: k8s-delete
 k8s-delete: ## Delete Kubernetes resources
@@ -185,6 +182,12 @@ k8s-status: ## Show Kubernetes resources status
 	kubectl get deploy -n $(NAMESPACE)
 	@echo "\n=== HPA ==="
 	kubectl get hpa -n $(NAMESPACE)
+	@echo "\n=== Ingress ==="
+	kubectl get ingress -n $(NAMESPACE)
+	@echo "\n=== ConfigMaps ==="
+	kubectl get configmaps -n $(NAMESPACE)
+	@echo "\n=== Secrets ==="
+	kubectl get secrets -n $(NAMESPACE)
 
 .PHONY: compose-build
 compose-build: ## Build the application with Docker Compose
@@ -194,6 +197,7 @@ compose-build: ## Build the application with Docker Compose
 .PHONY: compose-up
 compose-up: ## Start development environment with Docker Compose
 	@echo  "🟢 Starting development environment..."
+	docker compose pull
 	docker-compose up -d --wait --build
 
 .PHONY: compose-down
@@ -209,8 +213,8 @@ compose-clean: ## Clean the application with Docker Compose, removing volumes an
 .PHONY: scan
 scan: ## Run security scan
 	@echo  "🟢 Running security scan..."
-	govulncheck -show verbose ./...
-#	trivy image $(DOCKER_REGISTRY)/$(APP_NAME):$(VERSION) # TODO: Enable when the image is available
+	@go run golang.org/x/vuln/cmd/govulncheck@v1.1.4 -show verbose ./...
+	@go run github.com/aquasecurity/trivy/cmd/trivy@latest image --severity HIGH,CRITICAL $(DOCKER_REGISTRY)/$(DOCKER_REGISTRY_APP):latest
 
 .PHONY: new-branch
 new-branch: ## Create new branch

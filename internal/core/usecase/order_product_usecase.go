@@ -62,11 +62,16 @@ func (uc *orderProductUseCase) Update(ctx context.Context, i dto.UpdateOrderProd
 		return nil, domain.NewNotFoundError(domain.ErrNotFound)
 	}
 
+	order := orderProduct.Order
+	product := orderProduct.Product
 	orderProduct.Update(i.Quantity)
 
 	if err := uc.gateway.Update(ctx, orderProduct); err != nil {
 		return nil, domain.NewInternalError(err)
 	}
+
+	orderProduct.Order = order
+	orderProduct.Product = product
 
 	return orderProduct, nil
 }

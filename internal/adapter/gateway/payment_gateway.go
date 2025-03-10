@@ -24,6 +24,10 @@ func (g *paymentGayeway) FindByOrderID(ctx context.Context, orderID uint64) (*en
 	return g.dataSource.GetByOrderID(ctx, orderID)
 }
 
+func (g *paymentGayeway) FindByOrderIDAndStatusProcessing(ctx context.Context, orderID uint64) (*entity.Payment, error) {
+	return g.dataSource.GetByOrderIDAndStatusProcessing(ctx, orderID)
+}
+
 func (g *paymentGayeway) Create(ctx context.Context, p *entity.Payment) (*entity.Payment, error) {
 	return g.dataSource.Create(ctx, p)
 }

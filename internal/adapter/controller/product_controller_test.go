@@ -1,4 +1,4 @@
-package controller
+package controller_test
 
 import (
 	"context"
@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
@@ -20,7 +21,7 @@ func TestProductController_ListProducts(t *testing.T) {
 
 	mockProductsUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewProductController(mockProductsUseCase)
+	controller := controller.NewProductController(mockProductsUseCase)
 
 	ctx := context.Background()
 	input := dto.ListProductsInput{
@@ -76,7 +77,7 @@ func TestProductController_CreateProduct(t *testing.T) {
 
 	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewProductController(mockProductUseCase)
+	controller := controller.NewProductController(mockProductUseCase)
 
 	ctx := context.Background()
 	input := dto.CreateProductInput{
@@ -113,7 +114,7 @@ func TestProductController_GetProduct(t *testing.T) {
 
 	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewProductController(mockProductUseCase)
+	controller := controller.NewProductController(mockProductUseCase)
 
 	ctx := context.Background()
 	input := dto.GetProductInput{
@@ -147,7 +148,7 @@ func TestProductController_UpdateProduct(t *testing.T) {
 
 	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewProductController(mockProductUseCase)
+	controller := controller.NewProductController(mockProductUseCase)
 
 	ctx := context.Background()
 	input := dto.UpdateProductInput{
@@ -185,7 +186,7 @@ func TestProductController_DeleteProduct(t *testing.T) {
 
 	mockProductUseCase := mockport.NewMockProductUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewProductController(mockProductUseCase)
+	controller := controller.NewProductController(mockProductUseCase)
 
 	ctx := context.Background()
 	input := dto.DeleteProductInput{

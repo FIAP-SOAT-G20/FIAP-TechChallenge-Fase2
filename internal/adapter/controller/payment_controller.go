@@ -32,3 +32,12 @@ func (c *PaymentController) Update(ctx context.Context, p port.Presenter, i dto.
 
 	return p.Present(dto.PresenterInput{Result: payment})
 }
+
+func (c *PaymentController) Get(ctx context.Context, p port.Presenter, i dto.GetPaymentInput) ([]byte, error) {
+	payment, err := c.useCase.Get(ctx, i)
+	if err != nil {
+		return nil, err
+	}
+
+	return p.Present(dto.PresenterInput{Result: payment})
+}

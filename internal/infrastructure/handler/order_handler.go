@@ -3,11 +3,13 @@ package handler
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
@@ -34,16 +36,22 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 //
 //	@Summary		List orders (Reference 1.a.iv)
 //	@Description	List all orders
+//	@Description	## Order list is sorted by:
+//	@Description	- **Status** in **descending** order (`READY` > `PREPARING` > `RECEIVED` > `PENDING` > `OPEN`)
+//	@Description	- **Created date** (CreatedAt) in **ascending** order (oldest first)
+//	@Description	Obs: Status CANCELLED and COMPLETED are not included in the list by default
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
-//	@Param			name		query		string									false	"Filter by name"
-//	@Param			category_id	query		int										false	"Filter by category ID"
-//	@Param			page		query		int										false	"Page number"		default(1)
-//	@Param			limit		query		int										false	"Items per page"	default(10)
-//	@Success		200			{object}	presenter.OrderJsonPaginatedResponse	"OK"
-//	@Failure		400			{object}	middleware.ErrorJsonResponse			"Bad Request"
-//	@Failure		500			{object}	middleware.ErrorJsonResponse			"Internal Server Error"
+//	@Param			customer_id		query		int										false	"Filter by customer ID"
+//	@Param			status			query		string									false	"Filter by status (Accept many), options: <sub>OPEN, PENDING, RECEIVED, PREPARING, READY</sub>, ex: <sub>PENDING</sub> or <sub>OPEN,PENDING</sub>"
+//	@Param			status_exclude	query		string									false	"Exclude by status (Accept many), options: <sub>NONE, OPEN, PENDING, RECEIVED, PREPARING, READY, CANCELLED, COMPLETED</sub>, ex: <sub>CANCELLED</sub> or <sub>CANCELLED,COMPLETED</sub> (default)"	default(CANCELLED,COMPLETED)
+//	@Param			sort			query		string									false	"Sort by field (Accept many). Use `<field_name>:d` for descending, and the default order is ascending"																								default(status:d,created_at)
+//	@Param			page			query		int										false	"Page number"																																														default(1)
+//	@Param			limit			query		int										false	"Items per page"																																													default(10)
+//	@Success		200				{object}	presenter.OrderJsonPaginatedResponse	"OK"
+//	@Failure		400				{object}	middleware.ErrorJsonResponse			"Bad Request"
+//	@Failure		500				{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/orders [get]
 func (h *OrderHandler) List(c *gin.Context) {
 	var query request.ListOrdersQueryRequest
@@ -52,11 +60,44 @@ func (h *OrderHandler) List(c *gin.Context) {
 		return
 	}
 
+	// Default sort
+	if query.Sort == "" {
+		query.Sort = "status:d,created_at"
+	}
+
+	// Default status_exclude
+	var statusExclude []valueobject.OrderStatus
+	if query.StatusExclude == "" {
+		query.StatusExclude = "CANCELLED,COMPLETED"
+	}
+
+	// Convert status_exclude
+	if strings.ToUpper(query.StatusExclude) != "NONE" {
+		for _, s := range strings.Split(query.StatusExclude, ",") {
+			statusExclude = append(statusExclude, valueobject.OrderStatus(strings.TrimSpace(s)))
+		}
+	}
+
+	// Convert status
+	var status []valueobject.OrderStatus
+	if query.Status != "" {
+		for _, s := range strings.Split(query.Status, ",") {
+			orderStatus, ok := valueobject.ToOrderStatus(strings.TrimSpace(s))
+			if !ok {
+				_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
+				return
+			}
+			status = append(status, orderStatus)
+		}
+	}
+
 	input := dto.ListOrdersInput{
-		CustomerID: query.CustomerID,
-		Status:     query.Status,
-		Page:       query.Page,
-		Limit:      query.Limit,
+		CustomerID:    query.CustomerID,
+		Status:        status,
+		StatusExclude: statusExclude,
+		Page:          query.Page,
+		Limit:         query.Limit,
+		Sort:          query.Sort,
 	}
 
 	output, err := h.controller.List(

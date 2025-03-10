@@ -8,7 +8,7 @@ const (
 	PROCESSING   PaymentStatus = "PROCESSING"
 	CONFIRMED    PaymentStatus = "CONFIRMED"
 	FAILED       PaymentStatus = "FAILED"
-	CANCELED     PaymentStatus = "CANCELED"
+	ABORTED      PaymentStatus = "ABORTED"
 	UNDEFINDED_P PaymentStatus = ""
 )
 
@@ -30,8 +30,8 @@ func ToPaymentStatus(status string) PaymentStatus {
 		return CONFIRMED
 	case "FAILED":
 		return FAILED
-	case "CANCELED":
-		return CANCELED
+	case "ABORTED":
+		return ABORTED
 	default:
 		return UNDEFINDED_P
 	}

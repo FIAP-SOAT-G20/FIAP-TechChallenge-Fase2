@@ -1,14 +1,19 @@
 <a name="readme-top"></a>
 
-# <p align="center">FIAP Tech Challenge 2 - G18 Fast Food</p>
+![GitHub CI - Tests](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/actions/workflows/test.yml/badge.svg)
+
+# <p align="center"><b>Fast Food</b> <small>FIAP Tech Challenge 2 - G18</small></p>
 
 <p align="center">
     <img src="https://img.shields.io/badge/Code-Go-informational?style=flat-square&logo=go&color=00ADD8" alt="Go" />
     <img src="https://img.shields.io/badge/Tools-Gin-informational?style=flat-square&logo=go&color=00ADD8" alt="Gin" />
     <img src="https://img.shields.io/badge/Tools-PostgreSQL-informational?style=flat-square&logo=postgresql&color=4169E1" alt="PostgreSQL" />
-    <img src="https://img.shields.io/badge/Tools-Swagger-informational?style=flat-square&logo=swagger&color=85EA2D" alt="Swagger" />
     <img src="https://img.shields.io/badge/Tools-Docker-informational?style=flat-square&logo=docker&color=2496ED" alt="Docker" />
-    <img src="https://img.shields.io/badge/Tools-Kubernetes-informational?style=flat-square&logo=kubernetes&color=326CE5" alt="Kubernetes" />
+    <img src="https://img.shields.io/badge/Tools-Kubernetes-informational?style=flat-square&logo=kubernetes&color=326CE5" alt="Kubernetes" /></br>
+    <img src="https://img.shields.io/badge/Tools-Make-informational?style=flat-square&logo=make&color=6D00CC" alt="Make" />
+    <img src="https://img.shields.io/badge/Tools-GitHub_Actions-informational?style=flat-square&logo=githubactions&color=222222" alt="GitHub Actions" />
+    <img src="https://img.shields.io/badge/Tools-Swagger-informational?style=flat-square&logo=swagger&color=85EA2D" alt="Swagger" />
+    <img src="https://img.shields.io/badge/Tools-Postman-informational?style=flat-square&logo=postman&color=FF6C37" alt="Postman" />
 </p>
 
 
@@ -83,7 +88,8 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 ### **3️⃣ Infrastructure (External layer)**
 
 - `config/`: Application configuration management.
-- `database/`: Configuration and connection to the database. - `server/`: Initialization of the HTTP server.
+- `database/`: Configuration and connection to the database. 
+- `server/`: Initialization of the HTTP server.
 - `route/`: Definition of API routes.
 - `middleware/`: HTTP middlewares for handling requests.
 - `logger/`: Structured logger for detailed logs.
@@ -103,9 +109,12 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - **Database Migrations**: Database migrations were created to manage the database schema. This allows us to version control the database schema and apply changes to the database in a structured way.
 - **HTTP Server**: The HTTP server was created using the Gin framework, a lightweight web framework for Go. This framework provides a fast and easy way to create web applications in Go.
 
+<!-- [Back to top](#readme-top) -->
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### ✨ Features
 
-- [x] Dockerfile: small image with multi-stage docker build, and independent of the host environment
+- [x] Dockerfile: small image with multi-stage docker build, and multi-platform build (Cross-Compilation)
 - [x] Makefile: to simplify the build and run commands
 - [x] Clean architecture
 - [x] PostgreSQL database
@@ -115,6 +124,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 <summary>more (click to expand or collapse ↕️)</summary>
 
 - [x] Unit tests (testify)
+- [x] Tests Suite (testify)
 - [x] Code coverage report (go tool cover)
 - [x] Swagger documentation
 - [x] Postman collection
@@ -128,15 +138,17 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [x] Environment variables
 - [x] Graceful shutdown
 - [x] Kubernetes deployment
-- [x] GitHub Actions
+- [x] GitHub Actions (CI/CD)
+- [x] GitHub Container Registry (GHCR)
 - [x] Structured logs (slog)
 - [x] Database migrations (golang-migrate)
+- [x] Kubernetes best practices (liveness, readiness, HPA, etc.)
 
 </details>
 
 ## :computer: Technologies
 
-- [Go 1.23+](https://golang.org/)
+- [Go](https://golang.org/)
 - [Gin Web Framework](https://gin-gonic.com/)
 - [golangci-lint](https://golangci-lint.run/)
 - [golang-migrate](https://github.com/golang-migrate/migrate)
@@ -171,8 +183,9 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [Go](https://golang.org/)
 - [Docker](https://www.docker.com/)
 
-> [!NOTE]
-> You need to have Go (> 1.23) installed in your machine to build, run and test the application locally
+> [!WARNING]
+> You need to have Go version **1.23 or higher** installed on your machine to run the application locally
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -212,15 +225,53 @@ make compose-up
 > To remove the application, run `compose-clean`  
 
 > [!NOTE]
-> You can check the application swagger documentation at http://localhost:8080/docs/index.html  
-> Alternatively, a postman collection is available at [here](docs/10soat-g20-tech-challenge-1.postman_collection.json)  
+> The application is available at <http://localhost:8080>
+
+> [!IMPORTANT]
+> API Documentation is available at:
+>
+> - Swagger: <http://localhost:8080/docs/index.html>
+> - Postman collection: [here](docs/postman_collection.json)
+> - HTTP Client: [here](docs/tc2.http)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### :gear: Kubernetes
 
 ```bash
-kubectl apply -f k8s/
+make k8s-apply
+```
+
+> [!TIP]
+> To view the application, run `make k8s-status` or `kubectl get all -n tech-challenge-system`  
+> To remove the application, run `make k8s-delete`
+
+> [!NOTE]
+> The application is available at <http://localhost/>  
+> Ex: <http://localhost/api/v1/health>
+
+### :mag: Kubernetes Organization
+
+The Kubernetes organization is divided into three main directories: `app`, `config`, and `postgres`.
+
+- **app**: Contains the Kubernetes resources for the application, such as deployment, service, ingress, and HPA.
+- **config**: Contains the Kubernetes resources for the configuration, such as ConfigMap and Secret.
+- **postgres**: Contains the Kubernetes resources for the PostgreSQL database, such as StatefulSet and Service.
+
+```sh
+.
+├── app
+│   ├── deployment.yaml
+│   ├── hpa.yaml
+│   ├── ingress.yaml
+│   └── service.yaml
+├── config
+│   ├── configmap.yaml
+│   └── secret.yaml
+├── namespace.yaml
+└── postgres
+    ├── service.yaml
+    └── statefulset.yaml
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -235,19 +286,30 @@ kubectl apply -f k8s/
 6. Install dependencies by running `make install`
 7. Run the application by running `make run-air` or `make run`
 8. Access the application at `http://localhost:8080`
-9. Dont forget to run the tests by running `make test`
-10. Check the coverage report by running `make coverage`
-11. Check the lint by running `make lint`
-12. Update the swagger documentation by running `make swagger`
-13. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard
-14. Push to the branch and Open a new PR by running `make pull-request`
-15. After the PR is approved, merge it to the main branch
-16. The GitHub Actions will run the tests, lint, and build the Docker image
-<!-- 17. The Kubernetes deployment will be updated automatically -->
+9. Make your changes 🧑‍💻
+10. Dont forget to run the tests by running `make test`
+11. Check the coverage report by running `make coverage`
+12. Check the lint by running `make lint`
+13. Update the swagger documentation by running `make swagger`
+14. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standard
+15. Push to the branch and Open a new PR by running `make pull-request`
+16. The GitHub Actions will run the tests, lint and vulnerability check automatically
+17. After the PR is approved, merge it to the main branch
+18. Generate a new `release` tag ([here](https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/releases/new)) with [semantic versioning](https://semver.org/)
+<!-- 19. The Kubernetes deployment will be updated automatically -->
 
-> [!NOTE]
-> `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
+> [!TIP]
+> 7: `make run` will run the application locally, and will build and run PostgreSQL container using Docker Compose  
 > Alternatively, you can run `make run-air` to run the application using Air (live reload)
+
+> [!TIP]
+> 18: When a new `release` tag is created, the GitHub Actions will build and push the image to the  
+> GitHub Container Registry (GHCR) from GitHub Packages,  
+> the image will be available at `ghcr.io/fiap-soat-g20/fiap-techchallenge-fase2:latest`  
+> About semantic versioning:  
+> if you are fixing bugs, increment the patch version (0.0.1)  
+> if you are adding new features, increment the minor version (0.1.0)  
+> if you are changing the API, increment the major version (1.0.0)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -272,6 +334,7 @@ make test
 - [Health Check Response Format for HTTP APIs](https://datatracker.ietf.org/doc/html/draft-inadarei-api-health-check-06)
 - [Event Storming](https://www.eventstorming.com/)
 - [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+- [Semantic Versioning](https://semver.org/)
 - [Alistair in the "Hexagone" 1/3](https://www.youtube.com/watch?v=th4AgBcrEHA&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&ab_channel=DDDFR)
 - [Alistair in the "Hexagone" 2/3](https://www.youtube.com/watch?v=iALcE8BPs94&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&index=2&ab_channel=DDDFR)
 - [Alistair in the "Hexagone" 3/3](https://www.youtube.com/watch?v=DAe0Bmcyt-4&list=PLGl1Jc8ErU1w27y8-7Gdcloy1tHO7NriL&index=3&ab_channel=DDDFR)
@@ -295,6 +358,21 @@ make test
 - [GRACEFULL SHUTDOWN EM GOLANG - Finalizando requisições antes de desligar o projeto!](https://www.youtube.com/watch?v=V52Th2h_8FM&ab_channel=HunCoding)
 - [Implement value objects with Domain-Driven Design (DDD)](https://medium.com/@nirajranasinghe/implement-value-objects-with-domain-driven-design-ddd-3aeb4e88cee5)
 - [Entendendo Presenters na Clean Architecture](https://www.youtube.com/watch?v=zrYAnqA-VQs&ab_channel=FullCycle)
+- [RFC 8977 Registration Data Access Protocol (RDAP) Query Parameters for Result Sorting and Paging](https://www.rfc-editor.org/rfc/rfc8977.html#name-sort-parameter)
+- [PostgreSQL - 7.5. Sorting Rows (ORDER BY) #](https://www.postgresql.org/docs/current/queries-order.html#QUERIES-ORDER)
+- [WordPress API Reference - Posts](https://developer.wordpress.org/rest-api/reference/posts/)
+- [Pushing container images to GitHub Container Registry with GitHub Actions](https://dev.to/willvelida/pushing-container-images-to-github-container-registry-with-github-actions-1m6b)
+- [GitHub Packages.. Containers in a GitHub repo?](https://www.youtube.com/watch?v=gqseP_wTZsk&ab_channel=DevOpsJourney)
+- [Docker- Multi-platform builds - Multiple native nodes](https://docs.docker.com/build/building/multi-platform/#multiple-native-nodes)
+- [Faster Multi-Platform Builds: Dockerfile Cross-Compilation Guide](https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/)
+- [Stack Overflow - What does the w flag mean when passed in via the ldflags option to the go command?](https://stackoverflow.com/a/22276273/1403288)
+- [POSTECH_SOAT_KUBERNETES_2 FIAP Repository](https://github.com/FIAP/POSTECH_SOAT_KUBERNETES_2)
+- [Go Testing with testify/suite](https://hsleep.medium.com/about-testify-suite-package-ec818a02b8f)
+- [Melhores práticas na utilização de ENUMs](https://aprendagolang.com.br/melhores-praticas-na-utilizacao-de-enums/)
+- [Testing in Go: Golden Files](https://ieftimov.com/posts/testing-in-go-golden-files/)
+- [Testing in Go: Fixtures](https://ieftimov.com/posts/testing-in-go-fixtures/)
+- [Testing in Go: Intermediate Tips and Techniques](https://betterstack.com/community/guides/testing/intemediate-go-testing/)
+- [TESTES UNITÁRIOS COM GIN GONIC - Como criar testes para os endpoints do seu projeto?](https://www.youtube.com/watch?v=rwReyPLmMs8&ab_channel=HunCoding)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

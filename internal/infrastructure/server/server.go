@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log/slog"
 	"net/http"
 	"os"
 	"os/signal"
@@ -12,6 +11,7 @@ import (
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/route"
 	"github.com/gin-gonic/gin/binding"
 
@@ -21,13 +21,13 @@ import (
 type Server struct {
 	router *route.Router
 	config *config.Config
-	logger *slog.Logger
+	logger *logger.Logger
 }
 
-func NewServer(cfg *config.Config, logger *slog.Logger, handlers *route.Handlers) *Server {
-	router := route.NewRouter(logger, cfg.Environment)
+func NewServer(cfg *config.Config, logger *logger.Logger, handlers *route.Handlers) *Server {
+	router := route.NewRouter(logger, cfg)
 
-	registerCustomValidation()
+	RegisterCustomValidation()
 	router.RegisterRoutes(handlers)
 
 	return &Server{
@@ -46,51 +46,43 @@ func (s *Server) Start() error {
 		IdleTimeout:  s.config.ServerIdleTimeout,
 	}
 
-	chanError := make(chan error)
+	var serverErr error
 
-	go gracefullyShutdown(server, chanError, s)
-
-	if err := <-chanError; err != nil {
-		s.logger.Error("server failed to start", "error", err)
-	}
-
-	return nil
-}
-
-func gracefullyShutdown(server *http.Server, chanError chan error, s *Server) {
-	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
-
-	go func() {
-		<-ctx.Done()
-		s.logger.Info("shutting down server...")
-
-		ctxTimeout, cancel := context.WithTimeout(context.Background(), s.config.ServerGracefulShutdownTimeout)
-
-		defer func() {
-			stop()
-			cancel()
-			close(chanError)
-		}()
-
-		err := server.Shutdown(ctxTimeout)
-		if err != nil {
-			return
-		}
-
-		s.logger.Info("server exited gracefully")
-		fmt.Println("Bye! 👋")
-	}()
+	sigChannel := make(chan os.Signal, 1)
+	signal.Notify(sigChannel, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 
 	go func() {
 		s.logger.Info("server is running", "port", server.Addr)
 		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			chanError <- fmt.Errorf("failed to start server: %w", err)
-			return
+			s.logger.Error("server failed to start", "error", err)
+			serverErr = err
+			sigChannel <- syscall.SIGINT
 		}
 	}()
+
+	<-sigChannel
+
+	gracefullyShutdown(server, s)
+
+	return serverErr
 }
 
-func registerCustomValidation() {
+func gracefullyShutdown(server *http.Server, s *Server) {
+	s.logger.Info("shutting down server...")
+
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), s.config.ServerGracefulShutdownTimeout)
+	defer cancel()
+
+	if err := server.Shutdown(ctxTimeout); err != nil {
+		s.logger.Error("server failed to shutdown", "error", err)
+		panic(err)
+	}
+
+	s.logger.Info("server exited gracefully")
+	fmt.Println("Bye! 👋")
+}
+
+func RegisterCustomValidation() {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		err := v.RegisterValidation("order_status_exists", handler.OrderStatusValidator)
 		if err != nil {

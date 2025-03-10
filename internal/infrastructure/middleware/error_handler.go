@@ -1,12 +1,12 @@
 package middleware
 
 import (
-	"log/slog"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
 )
 
 type ErrorJsonResponse struct {
@@ -19,7 +19,7 @@ type ErrorXmlResponse struct {
 	Message string `xml:"message" example:"Bad Request"`
 }
 
-func ErrorHandler(logger *slog.Logger) gin.HandlerFunc {
+func ErrorHandler(logger *logger.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Next() // Execute all the handlers
 
@@ -31,7 +31,7 @@ func ErrorHandler(logger *slog.Logger) gin.HandlerFunc {
 	}
 }
 
-func handleError(c *gin.Context, err error, logger *slog.Logger) {
+func handleError(c *gin.Context, err error, logger *logger.Logger) {
 	switch e := err.(type) {
 	case *domain.ValidationError:
 		setResponse(c, http.StatusBadRequest, e.Error())
@@ -70,7 +70,7 @@ func setResponse(c *gin.Context, status int, message string) {
 	})
 }
 
-func logError(logger *slog.Logger, msg string, err error, req *http.Request) {
+func logError(logger *logger.Logger, msg string, err error, req *http.Request) {
 	logger.Error(msg,
 		"error", err.Error(),
 		"path", req.URL.Path,
@@ -78,7 +78,7 @@ func logError(logger *slog.Logger, msg string, err error, req *http.Request) {
 	)
 }
 
-func logWarning(logger *slog.Logger, msg string, err error, req *http.Request) {
+func logWarning(logger *logger.Logger, msg string, err error, req *http.Request) {
 	logger.Warn(msg,
 		"error", err.Error(),
 		"path", req.URL.Path,

@@ -10,4 +10,5 @@ import (
 type PaymentUseCase interface {
 	Create(ctx context.Context, input dto.CreatePaymentInput) (*entity.Payment, error)
 	Update(ctx context.Context, payment dto.UpdatePaymentInput) (*entity.Payment, error)
+	Get(ctx context.Context, payment dto.GetPaymentInput) (*entity.Payment, error)
 }

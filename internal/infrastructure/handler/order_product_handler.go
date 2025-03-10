@@ -30,8 +30,8 @@ func (h *OrderProductHandler) Register(router *gin.RouterGroup) {
 
 // List godoc
 //
-//	@Summary		List orders
-//	@Description	List all orders
+//	@Summary		List order products
+//	@Description	List all order products
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
@@ -111,7 +111,7 @@ func (h *OrderProductHandler) Create(c *gin.Context) {
 		return
 	}
 
-	c.Data(http.StatusOK, "application/json", output)
+	c.Data(http.StatusCreated, "application/json", output)
 }
 
 // Get godoc
@@ -150,13 +150,13 @@ func (h *OrderProductHandler) Get(c *gin.Context) {
 		return
 	}
 
-	c.Data(http.StatusCreated, "application/json", output)
+	c.Data(http.StatusOK, "application/json", output)
 }
 
 // Update godoc
 //
-//	@Summary		Update order
-//	@Description	Update an existing order
+//	@Summary		Update order product
+//	@Description	Update an existing order product
 //	@Tags			orders
 //	@Accept			json
 //	@Produce		json
@@ -202,8 +202,8 @@ func (h *OrderProductHandler) Update(c *gin.Context) {
 
 // Delete godoc
 //
-//	@Summary		Delete orderProduct
-//	@Description	Deletes a orderProduct by Order ID and Product ID
+//	@Summary		Delete order product
+//	@Description	Deletes a order product by Order ID and Product ID
 //	@Tags			orders
 //	@Produce		json
 //	@Param			order_id	path		int									true	"Order ID"

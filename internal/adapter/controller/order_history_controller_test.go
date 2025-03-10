@@ -1,10 +1,11 @@
-package controller
+package controller_test
 
 import (
 	"context"
 	"testing"
 	"time"
 
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/controller"
 	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 
 	"github.com/stretchr/testify/assert"
@@ -22,7 +23,7 @@ func TestOrderHistoryController_ListOrderHistories(t *testing.T) {
 
 	mockOrderHistoriesUseCase := mockport.NewMockOrderHistoryUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewOrderHistoryController(mockOrderHistoriesUseCase)
+	controller := controller.NewOrderHistoryController(mockOrderHistoriesUseCase)
 
 	ctx := context.Background()
 	input := dto.ListOrderHistoriesInput{
@@ -78,7 +79,7 @@ func TestOrderHistoryController_CreateOrderHistory(t *testing.T) {
 
 	mockOrderHistoryUseCase := mockport.NewMockOrderHistoryUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewOrderHistoryController(mockOrderHistoryUseCase)
+	controller := controller.NewOrderHistoryController(mockOrderHistoryUseCase)
 
 	ctx := context.Background()
 	input := dto.CreateOrderHistoryInput{
@@ -111,7 +112,7 @@ func TestOrderHistoryController_GetOrderHistory(t *testing.T) {
 
 	mockOrderHistoryUseCase := mockport.NewMockOrderHistoryUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewOrderHistoryController(mockOrderHistoryUseCase)
+	controller := controller.NewOrderHistoryController(mockOrderHistoryUseCase)
 
 	ctx := context.Background()
 	input := dto.GetOrderHistoryInput{
@@ -143,7 +144,7 @@ func TestOrderHistoryController_DeleteOrderHistory(t *testing.T) {
 
 	mockOrderHistoryUseCase := mockport.NewMockOrderHistoryUseCase(ctrl)
 	mockPresenter := mockport.NewMockPresenter(ctrl)
-	controller := NewOrderHistoryController(mockOrderHistoryUseCase)
+	controller := controller.NewOrderHistoryController(mockOrderHistoryUseCase)
 
 	ctx := context.Background()
 	input := dto.DeleteOrderHistoryInput{

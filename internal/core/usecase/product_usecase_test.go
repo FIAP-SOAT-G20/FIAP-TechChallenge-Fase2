@@ -1,9 +1,7 @@
 package usecase_test
 
 import (
-	"context"
 	"testing"
-	"time"
 
 	"go.uber.org/mock/gomock"
 
@@ -12,46 +10,14 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
-	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 )
 
-func TestProductsUseCase_List(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockProductGateway(ctrl)
-	useCase := usecase.NewProductUseCase(mockGateway)
-	ctx := context.Background()
-
-	currentTime := time.Now()
-	mockProducts := []*entity.Product{
-		{
-			ID:          1,
-			Name:        "Test Product 1",
-			Description: "Description 1",
-			Price:       99.99,
-			CategoryID:  1,
-			CreatedAt:   currentTime,
-			UpdatedAt:   currentTime,
-		},
-		{
-			ID:          2,
-			Name:        "Test Product 2",
-			Description: "Description 2",
-			Price:       199.99,
-			CategoryID:  1,
-			CreatedAt:   currentTime,
-			UpdatedAt:   currentTime,
-		},
-	}
-
+func (s *ProductUsecaseSuiteTest) TestProductsUseCase_List() {
 	tests := []struct {
 		name        string
 		input       dto.ListProductsInput
 		setupMocks  func()
-		expectError bool
-		errorType   error
+		checkResult func(*testing.T, []*entity.Product, int64, error)
 	}{
 		{
 			name: "should list products successfully",
@@ -60,11 +26,15 @@ func TestProductsUseCase_List(t *testing.T) {
 				Limit: 10,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindAll(ctx, "", uint64(0), 1, 10).
-					Return(mockProducts, int64(2), nil)
+				s.mockGateway.EXPECT().
+					FindAll(s.ctx, "", uint64(0), 1, 10).
+					Return(s.mockProducts, int64(2), nil)
 			},
-			expectError: false,
+			checkResult: func(t *testing.T, products []*entity.Product, total int64, err error) {
+				assert.NoError(t, err)
+				assert.Equal(t, s.mockProducts, products)
+				assert.Equal(t, int64(2), total)
+			},
 		},
 		{
 			name: "should return error when repository fails",
@@ -73,12 +43,15 @@ func TestProductsUseCase_List(t *testing.T) {
 				Limit: 10,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindAll(ctx, "", uint64(0), 1, 10).
+				s.mockGateway.EXPECT().
+					FindAll(s.ctx, "", uint64(0), 1, 10).
 					Return(nil, int64(0), assert.AnError)
 			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
+			checkResult: func(t *testing.T, products []*entity.Product, total int64, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, products)
+				assert.Equal(t, int64(0), total)
+			},
 		},
 		{
 			name: "should filter by name",
@@ -88,11 +61,15 @@ func TestProductsUseCase_List(t *testing.T) {
 				Limit: 10,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindAll(ctx, "Test", uint64(0), 1, 10).
-					Return(mockProducts, int64(2), nil)
+				s.mockGateway.EXPECT().
+					FindAll(s.ctx, "Test", uint64(0), 1, 10).
+					Return(s.mockProducts, int64(2), nil)
 			},
-			expectError: false,
+			checkResult: func(t *testing.T, products []*entity.Product, total int64, err error) {
+				assert.NoError(t, err)
+				assert.Equal(t, s.mockProducts, products)
+				assert.Equal(t, int64(2), total)
+			},
 		},
 		{
 			name: "should filter by category",
@@ -102,50 +79,38 @@ func TestProductsUseCase_List(t *testing.T) {
 				Limit:      10,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindAll(ctx, "", uint64(1), 1, 10).
-					Return(mockProducts, int64(2), nil)
+				s.mockGateway.EXPECT().
+					FindAll(s.ctx, "", uint64(1), 1, 10).
+					Return(s.mockProducts, int64(2), nil)
 			},
-			expectError: false,
+			checkResult: func(t *testing.T, products []*entity.Product, total int64, err error) {
+				assert.NoError(t, err)
+				assert.Equal(t, s.mockProducts, products)
+				assert.Equal(t, int64(2), total)
+			},
 		},
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
+			// Arrange
 			tt.setupMocks()
 
-			products, total, err := useCase.List(ctx, tt.input)
+			// Act
+			products, total, err := s.useCase.List(s.ctx, tt.input)
 
-			if tt.expectError {
-				assert.Error(t, err)
-				assert.Nil(t, products)
-				if tt.errorType != nil {
-					assert.IsType(t, tt.errorType, err)
-				}
-			} else {
-				assert.NoError(t, err)
-				assert.NotNil(t, products)
-				assert.Equal(t, len(mockProducts), len(products))
-				assert.Equal(t, int64(2), total)
-			}
+			// Assert
+			tt.checkResult(t, products, total, err)
 		})
 	}
 }
 
-func TestProductUseCase_Create(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockProductGateway(ctrl)
-	useCase := usecase.NewProductUseCase(mockGateway)
-	ctx := context.Background()
-
+func (s *ProductUsecaseSuiteTest) TestProductUseCase_Create() {
 	tests := []struct {
 		name        string
 		input       dto.CreateProductInput
 		setupMocks  func()
-		expectError bool
-		errorType   error
+		checkResult func(*testing.T, *entity.Product, error)
 	}{
 		{
 			name: "should create product successfully",
@@ -156,11 +121,18 @@ func TestProductUseCase_Create(t *testing.T) {
 				CategoryID:  1,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					Create(ctx, gomock.Any()).
+				s.mockGateway.EXPECT().
+					Create(s.ctx, gomock.Any()).
 					Return(nil)
 			},
-			expectError: false,
+			checkResult: func(t *testing.T, product *entity.Product, err error) {
+				assert.NoError(t, err)
+				assert.NotNil(t, product)
+				assert.Equal(t, "Test Product", product.Name)
+				assert.Equal(t, "Test Description", product.Description)
+				assert.Equal(t, 99.99, product.Price)
+				assert.Equal(t, uint64(1), product.CategoryID)
+			},
 		},
 		{
 			name: "should return error when gateway fails",
@@ -171,146 +143,103 @@ func TestProductUseCase_Create(t *testing.T) {
 				CategoryID:  1,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					Create(ctx, gomock.Any()).
+				s.mockGateway.EXPECT().
+					Create(s.ctx, gomock.Any()).
 					Return(assert.AnError)
 			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
+			checkResult: func(t *testing.T, product *entity.Product, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, product)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
 		},
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
+			// Arrange
 			tt.setupMocks()
 
-			product, err := useCase.Create(ctx, tt.input)
+			// Act
+			product, err := s.useCase.Create(s.ctx, tt.input)
 
-			if tt.expectError {
-				assert.Error(t, err)
-				assert.Nil(t, product)
-				if tt.errorType != nil {
-					assert.IsType(t, tt.errorType, err)
-				}
-			} else {
-				assert.NoError(t, err)
-				assert.NotNil(t, product)
-				assert.Equal(t, tt.input.Name, product.Name)
-				assert.Equal(t, tt.input.Description, product.Description)
-				assert.Equal(t, tt.input.Price, product.Price)
-				assert.Equal(t, tt.input.CategoryID, product.CategoryID)
-			}
+			// Assert
+			tt.checkResult(t, product, err)
 		})
 	}
 }
 
-func TestProductUseCase_Get(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockProductGateway(ctrl)
-	useCase := usecase.NewProductUseCase(mockGateway)
-	ctx := context.Background()
-
-	currentTime := time.Now()
-	mockProduct := &entity.Product{
-		ID:          1,
-		Name:        "Test Product",
-		Description: "Test Description",
-		Price:       99.99,
-		CategoryID:  1,
-		CreatedAt:   currentTime,
-		UpdatedAt:   currentTime,
-	}
-
+func (s *ProductUsecaseSuiteTest) TestProductUseCase_Get() {
 	tests := []struct {
 		name        string
-		id          uint64
+		input       dto.GetProductInput
 		setupMocks  func()
-		expectError bool
-		errorType   error
+		checkResult func(*testing.T, *entity.Product, error)
 	}{
 		{
-			name: "should get product successfully",
-			id:   1,
+			name:  "should get product successfully",
+			input: dto.GetProductInput{ID: 1},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
-					Return(mockProduct, nil)
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
+					Return(s.mockProducts[0], nil)
 			},
-			expectError: false,
+			checkResult: func(t *testing.T, product *entity.Product, err error) {
+				assert.NoError(t, err)
+				assert.NotNil(t, product)
+				assert.Equal(t, uint64(1), product.ID)
+			},
 		},
 		{
-			name: "should return not found error when product doesn't exist",
-			id:   1,
+			name:  "should return not found error when product doesn't exist",
+			input: dto.GetProductInput{ID: 1},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, nil)
 			},
-			expectError: true,
-			errorType:   &domain.NotFoundError{},
+			checkResult: func(t *testing.T, product *entity.Product, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, product)
+				assert.IsType(t, &domain.NotFoundError{}, err)
+			},
 		},
 		{
-			name: "should return internal error when gateway fails",
-			id:   1,
+			name:  "should return internal error when gateway fails",
+			input: dto.GetProductInput{ID: 1},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, assert.AnError)
 			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
+			checkResult: func(t *testing.T, product *entity.Product, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, product)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
 		},
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
+			// Arrange
 			tt.setupMocks()
 
-			product, err := useCase.Get(ctx, dto.GetProductInput{
-				ID: tt.id,
-			})
+			// Act
+			product, err := s.useCase.Get(s.ctx, tt.input)
 
-			if tt.expectError {
-				assert.Error(t, err)
-				assert.Nil(t, product)
-				if tt.errorType != nil {
-					assert.IsType(t, tt.errorType, err)
-				}
-			} else {
-				assert.NoError(t, err)
-				assert.Equal(t, mockProduct, product)
-			}
+			// Assert
+			tt.checkResult(t, product, err)
 		})
 	}
 }
 
-func TestProductUseCase_Update(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockProductGateway(ctrl)
-	useCase := usecase.NewProductUseCase(mockGateway)
-	ctx := context.Background()
-
-	currentTime := time.Now()
-	existingProduct := &entity.Product{
-		ID:          1,
-		Name:        "Old Name",
-		Description: "Old Description",
-		Price:       10.0,
-		CategoryID:  1,
-		CreatedAt:   currentTime,
-		UpdatedAt:   currentTime,
-	}
-
+func (s *ProductUsecaseSuiteTest) TestProductUseCase_Update() {
 	tests := []struct {
 		name        string
 		input       dto.UpdateProductInput
 		setupMocks  func()
-		expectError bool
-		errorType   error
+		checkResult func(*testing.T, *entity.Product, error)
 	}{
 		{
 			name: "should update product successfully",
@@ -322,21 +251,22 @@ func TestProductUseCase_Update(t *testing.T) {
 				CategoryID:  2,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
-					Return(existingProduct, nil)
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
+					Return(s.mockProducts[0], nil)
 
-				mockGateway.EXPECT().
-					Update(ctx, gomock.Any()).
-					DoAndReturn(func(_ context.Context, p *entity.Product) error {
-						assert.Equal(t, "New Name", p.Name)
-						assert.Equal(t, "New Description", p.Description)
-						assert.Equal(t, 20.0, p.Price)
-						assert.Equal(t, uint64(2), p.CategoryID)
-						return nil
-					})
+				s.mockGateway.EXPECT().
+					Update(s.ctx, gomock.Any()).
+					Return(nil)
 			},
-			expectError: false,
+			checkResult: func(t *testing.T, product *entity.Product, err error) {
+				assert.NoError(t, err)
+				assert.NotNil(t, product)
+				assert.Equal(t, "New Name", product.Name)
+				assert.Equal(t, "New Description", product.Description)
+				assert.Equal(t, 20.0, product.Price)
+				assert.Equal(t, uint64(2), product.CategoryID)
+			},
 		},
 		{
 			name: "should return error when product not found",
@@ -348,12 +278,35 @@ func TestProductUseCase_Update(t *testing.T) {
 				CategoryID:  2,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, nil)
 			},
-			expectError: true,
-			errorType:   &domain.NotFoundError{},
+			checkResult: func(t *testing.T, product *entity.Product, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, product)
+				assert.IsType(t, &domain.NotFoundError{}, err)
+			},
+		},
+		{
+			name: "should return error when gateway find fails",
+			input: dto.UpdateProductInput{
+				ID:          1,
+				Name:        "New Name",
+				Description: "New Description",
+				Price:       20.0,
+				CategoryID:  2,
+			},
+			setupMocks: func() {
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
+					Return(nil, assert.AnError)
+			},
+			checkResult: func(t *testing.T, product *entity.Product, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, product)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
 		},
 		{
 			name: "should return error when gateway update fails",
@@ -365,126 +318,118 @@ func TestProductUseCase_Update(t *testing.T) {
 				CategoryID:  2,
 			},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
-					Return(existingProduct, nil)
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
+					Return(s.mockProducts[0], nil)
 
-				mockGateway.EXPECT().
-					Update(ctx, gomock.Any()).
+				s.mockGateway.EXPECT().
+					Update(s.ctx, gomock.Any()).
 					Return(assert.AnError)
 			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
+			checkResult: func(t *testing.T, product *entity.Product, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, product)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
 		},
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
+			// Arrange
 			tt.setupMocks()
 
-			product, err := useCase.Update(ctx, tt.input)
+			// Act
+			product, err := s.useCase.Update(s.ctx, tt.input)
 
-			if tt.expectError {
-				assert.Error(t, err)
-				assert.Nil(t, product)
-				if tt.errorType != nil {
-					assert.IsType(t, tt.errorType, err)
-				}
-			} else {
-				assert.NoError(t, err)
-				assert.NotNil(t, product)
-				assert.Equal(t, tt.input.Name, product.Name)
-				assert.Equal(t, tt.input.Description, product.Description)
-				assert.Equal(t, tt.input.Price, product.Price)
-			}
+			// Assert
+			tt.checkResult(t, product, err)
 		})
 	}
 }
 
-func TestProductUseCase_Delete(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockGateway := mockport.NewMockProductGateway(ctrl)
-	useCase := usecase.NewProductUseCase(mockGateway)
-	ctx := context.Background()
-
+func (s *ProductUsecaseSuiteTest) TestProductUseCase_Delete() {
 	tests := []struct {
 		name        string
-		id          uint64
+		input       dto.DeleteProductInput
 		setupMocks  func()
-		expectError bool
-		errorType   error
+		checkResult func(*testing.T, *entity.Product, error)
 	}{
 		{
-			name: "should delete _test successfully",
-			id:   1,
+			name:  "should delete _test successfully",
+			input: dto.DeleteProductInput{ID: 1},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(&entity.Product{}, nil)
 
-				mockGateway.EXPECT().
-					Delete(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					Delete(s.ctx, uint64(1)).
 					Return(nil)
 			},
-			expectError: false,
+			checkResult: func(t *testing.T, product *entity.Product, err error) {
+				assert.NoError(t, err)
+				assert.NotNil(t, product)
+			},
 		},
 		{
-			name: "should return not found error when _test doesn't exist",
-			id:   1,
+			name:  "should return not found error when _test doesn't exist",
+			input: dto.DeleteProductInput{ID: 1},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, nil)
 			},
-			expectError: true,
-			errorType:   &domain.NotFoundError{},
+			checkResult: func(t *testing.T, product *entity.Product, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, product)
+				assert.IsType(t, &domain.NotFoundError{}, err)
+			},
 		},
 		{
-			name: "should return error when gateway fails on find",
-			id:   1,
+			name:  "should return error when gateway fails on find",
+			input: dto.DeleteProductInput{ID: 1},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(nil, assert.AnError)
 			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
+			checkResult: func(t *testing.T, product *entity.Product, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, product)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
 		},
 		{
-			name: "should return error when gateway fails on delete",
-			id:   1,
+			name:  "should return error when gateway fails on delete",
+			input: dto.DeleteProductInput{ID: 1},
 			setupMocks: func() {
-				mockGateway.EXPECT().
-					FindByID(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					FindByID(s.ctx, uint64(1)).
 					Return(&entity.Product{}, nil)
 
-				mockGateway.EXPECT().
-					Delete(ctx, uint64(1)).
+				s.mockGateway.EXPECT().
+					Delete(s.ctx, uint64(1)).
 					Return(assert.AnError)
 			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
+			checkResult: func(t *testing.T, product *entity.Product, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, product)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
 		},
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
+			// Arrange
 			tt.setupMocks()
 
-			product, err := useCase.Delete(ctx, dto.DeleteProductInput{ID: tt.id})
+			// Act
+			product, err := s.useCase.Delete(s.ctx, tt.input)
 
-			if tt.expectError {
-				assert.Error(t, err)
-				assert.Nil(t, product)
-				if tt.errorType != nil {
-					assert.IsType(t, tt.errorType, err)
-				}
-			} else {
-				assert.NoError(t, err)
-				assert.NotNil(t, product)
-			}
+			// Assert
+			tt.checkResult(t, product, err)
 		})
 	}
 }
