@@ -1,7 +1,7 @@
 name: cd/push-to-registry-mock-server
 
-on:
-  push
+on: workflow_dispatch
+
 #  release:
 #    types: [created]
 
