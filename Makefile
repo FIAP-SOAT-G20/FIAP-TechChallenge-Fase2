@@ -157,6 +157,10 @@ k8s-apply: ## Apply Kubernetes manifests
 	kubectl apply -f k8s/postgres/
 	kubectl apply -f k8s/app/
 
+.PHONY: aws-eks-auth
+aws-eks-auth: ## Authenticate with AWS EKS with the 10soat aws profile
+	@echo  "🟢 Authenticating with AWS EKS..."
+	aws eks update-kubeconfig --name fiap-10soat-g18-k8s-cluster --profile 10soat
 
 .PHONY: k8s-delete
 k8s-delete: ## Delete Kubernetes resources
