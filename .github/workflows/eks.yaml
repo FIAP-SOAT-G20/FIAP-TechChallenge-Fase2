@@ -1,14 +1,20 @@
 name: cd/deploy-to-cloud
 
-on:
-  push:
-    branches:
-      - feature/deploy_to_eks
+# When testing the workflow
+# on:
+#   push:
+#     branches:
+#       - feature/deploy_to_eks
+
+# When deploying the workflow
 # on:
 #   workflow_run:
-#     workflows: ["CI build"]
+#     workflows: ["cd/push-to-registry"]
 #     types:
 #       - completed
+
+# When deploying the workflow manually
+on: workflow_dispatch
 
 jobs:
   deploy:
