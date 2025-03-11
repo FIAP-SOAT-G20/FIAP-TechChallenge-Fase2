@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mock-server
+  namespace: tech-challenge-system
+spec:
+  selector:
+    app: tech-challenge-api-mock-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP

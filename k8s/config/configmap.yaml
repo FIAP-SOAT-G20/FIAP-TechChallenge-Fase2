@@ -8,3 +8,5 @@ data:
   db_port: "5432"
   db_name: "tech-challenge"
   environment: "tech-challenge"
+  mercado_pago_url: "http://mock-server.tech-challenge-system.svc.cluster.local:80/mercadopago/instore/orders/qr"
+  mercado_pago_notification_url: "http://tech-challenge-api.tech-challenge-system.svc.cluster.local:80/api/v1/payments/callback"
