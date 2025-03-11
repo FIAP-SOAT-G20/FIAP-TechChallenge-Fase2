@@ -308,9 +308,9 @@ The Kubernetes organization is divided into three main directories: `app`, `conf
 > GitHub Container Registry (GHCR) from GitHub Packages,  
 > the image will be available at `ghcr.io/fiap-soat-g20/fiap-techchallenge-fase2:latest`  
 > About semantic versioning:  
-> if you are fixing bugs, increment the patch version (0.0.1)  
-> if you are adding new features, increment the minor version (0.1.0)  
-> if you are changing the API, increment the major version (1.0.0)
+> if you are fixing bugs, increment the patch version (v0.0.1)  
+> if you are adding new features, increment the minor version (v0.1.0)  
+> if you are changing the API, increment the major version (v1.0.0)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -346,6 +346,7 @@ make test
 - [Generate Go Project with Clean Architecture - Thiago Adriano (FIAP)](https://github.com/tadrianonet/go-clean-arch-generator)
 - [POSTECH_SOAT_CleanArchitecture](https://github.com/FIAP/POSTECH_SOAT_CleanArchitecture/blob/main/aula_08/src/index.ts)
 - [Fiap - Clean Architecture Usando Go - Erick Muller (FIAP)](https://github.com/proferickmuller/cleanarch-golang)
+- [Trivy](https://trivy.dev/latest/)
 - [Clean Architecture, o início - Erick Muller (FIAP)](https://medium.com/@oerickmuller/clean-architecture-o-in%C3%ADcio-4fd74578155d)
 - [Building Better Go Applications with Clean Architecture: A Practical Guide for Beginners](https://medium.com/@jamal.kaksouri/building-better-go-applications-with-clean-architecture-a-practical-guide-for-beginners-98ea061bf81a)
 - [Clean Architecture, 2 years later](https://eltonminetto.dev/en/post/2020-07-06-clean-architecture-2years-later/)
