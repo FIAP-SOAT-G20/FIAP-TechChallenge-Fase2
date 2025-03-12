@@ -45,8 +45,13 @@ run-db: ## Run the database
 	@echo  "🟢 Running the database..."
 	docker-compose up -d db dbadmin
 
+.PHONY: run-mockserver
+run-mockserver: ## Run the mock server for payment gateway
+	@echo  "🟢 Running the mock server..."
+	docker-compose up -d mockserver
+
 .PHONY: run
-run: build run-db ## Run the application
+run: build run-db run-mockserver ## Run the application
 	@echo  "🟢 Running the application..."
 	$(GORUN) $(MAIN_FILE) || true
 
@@ -167,6 +172,7 @@ docker-push-mockserver: ## Push Docker image
 k8s-apply: ## Apply Kubernetes manifests
 	@echo  "🟢 Applying Kubernetes manifests..."
 	kubectl apply -f k8s/namespace.yaml
+	kubectl apply -f k8s/mockserver/
 	kubectl apply -f k8s/config/
 	kubectl apply -f k8s/postgres/
 	kubectl apply -f k8s/app/
@@ -179,6 +185,7 @@ aws-eks-auth: ## Authenticate with AWS EKS with the 10soat aws profile
 .PHONY: k8s-delete
 k8s-delete: ## Delete Kubernetes resources
 	@echo  "🔴 Deleting Kubernetes resources..."
+	kubectl apply -f k8s/mockserver/
 	kubectl delete -f k8s/app/
 	kubectl delete -f k8s/postgres/
 	kubectl delete -f k8s/config/
