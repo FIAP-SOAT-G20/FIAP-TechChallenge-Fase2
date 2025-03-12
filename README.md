@@ -216,6 +216,12 @@ make compose-build
 
 ## :runner: Running
 
+> [!IMPORTANT]
+> After running the application, a mock server container will be created to simulate the payment gateway.  
+> When you create a new payment (with `POST payments/:order_id/checkout`) the order status will be updated to `PENDING`,  
+> then the mock server will call the webhook `POST payments/callback`,  
+> and the order status will be updated from `PENDING` to `RECEIVED`.
+
 ### :whale: Docker
 
 ```sh
@@ -226,10 +232,10 @@ make compose-up
 > To remove the application, run `compose-clean`  
 
 > [!NOTE]
-> The application is available at <http://localhost:8080>
+> The application will be available at <http://localhost:8080>
 
 > [!IMPORTANT]
-> API Documentation is available at:
+> API Documentation will be available at:
 >
 > - Swagger: <http://localhost:8080/docs/index.html>
 > - Postman collection: [here](docs/postman_collection.json)
@@ -248,7 +254,7 @@ make k8s-apply
 > To remove the application, run `make k8s-delete`
 
 > [!NOTE]
-> The application is available at <http://localhost/>  
+> The application will be available at <http://localhost>  
 > Ex: <http://localhost/api/v1/health>
 
 ### :mag: Kubernetes Organization
@@ -375,6 +381,7 @@ make test
 - [Testing in Go: Fixtures](https://ieftimov.com/posts/testing-in-go-fixtures/)
 - [Testing in Go: Intermediate Tips and Techniques](https://betterstack.com/community/guides/testing/intemediate-go-testing/)
 - [TESTES UNITÁRIOS COM GIN GONIC - Como criar testes para os endpoints do seu projeto?](https://www.youtube.com/watch?v=rwReyPLmMs8&ab_channel=HunCoding)
+- [@Mockoon/cli](https://github.com/mockoon/mockoon/tree/main/packages/cli)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
