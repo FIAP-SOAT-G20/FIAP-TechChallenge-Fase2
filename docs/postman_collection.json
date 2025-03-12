@@ -2126,6 +2126,127 @@
 							"body": "{\n    \"id\": 1,\n    \"status\": \"CONFIRMED\",\n    \"order_id\": 3,\n    \"external_payment_id\": \"123456\",\n    \"qr_data\": \"https://www.fiap-10-soat-g20.com.br/qr/123456\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Mock Server - Process Payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"external_reference\": \"16\",\n\t\"notification_url\": \"http://host.docker.internal:8080/api/v1/payments/callback\",\n\t\"total_amount\": \"123\",\n\t\"title\": \"New payment title\",\n\t\"description\": \"New payment desc\",\n\t\"items\": [\n\t\t{\n\t\t\t\"category\": \"1\",\n\t\t\t\"title\": \"Item 1 title\",\n\t\t\t\"description\": \"Item 1 desc\",\n\t\t\t\"unit_price\": 10.11,\n\t\t\t\"quantity\": 2,\n\t\t\t\"unit_measure\": \"real\",\n\t\t\t\"total_amount\": 20.22\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/mercadopago/instore/orders/qr",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"mercadopago",
+								"instore",
+								"orders",
+								"qr"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Mock Server - Process Payment",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"external_reference\": \"16\",\n\t\"notification_url\": \"http://localhost/api/v1/payments/callback\",\n\t\"total_amount\": \"123\",\n\t\"title\": \"New payment title\",\n\t\"description\": \"New payment desc\",\n\t\"items\": [\n\t\t{\n\t\t\t\"category\": \"1\",\n\t\t\t\"title\": \"Item 1 title\",\n\t\t\t\"description\": \"Item 1 desc\",\n\t\t\t\"unit_price\": 10.11,\n\t\t\t\"quantity\": 2,\n\t\t\t\"unit_measure\": \"real\",\n\t\t\t\"total_amount\": 20.22\n\t\t}\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3001/mercadopago/instore/orders/qr",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"mercadopago",
+										"instore",
+										"orders",
+										"qr"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+								},
+								{
+									"key": "Content-Length",
+									"value": "197"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 12 Mar 2025 00:56:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"in_store_order_id\": \"16\",\n    \"qr_data\": \"51474612797566176418com.mercadolibre02013068c4ac2ab-0645-46e1-8560-1921f22828cd35150120008326594305204970053030325802AR5910Test Store6004CABA6304DEE5\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Mock Server - healthCheck",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/mercadopago/healthCheck",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"mercadopago",
+								"healthCheck"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
