@@ -41,7 +41,6 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - Order: Represents all items selected by the customer in the store
 - Order Status: Represents the stage of order preparation after payment is confirmed.
 
-
 ## 🏗️ Architecture
 
 ### :art: Flow Diagram
