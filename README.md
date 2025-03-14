@@ -55,6 +55,10 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
 ![Container Diagram](docs/tc2-c4-container.jpeg)
 
+### :whale: Kubernetes
+
+![Kubernetes](docs/tc2-k8s.jpg)
+
 ### :open_file_folder: Project Structure
 
 ```sh
