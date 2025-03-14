@@ -113,9 +113,8 @@ func (uc *paymentUseCase) Update(ctx context.Context, p dto.UpdatePaymentInput) 
 
 func (uc *paymentUseCase) createPaymentPayload(o *entity.Order) *entity.CreatePaymentExternalInput {
 	cfg := config.LoadConfig()
-
+	var totalAmount float32
 	var items []entity.PaymentExternalItemsInput
-
 	externalReference := strconv.FormatUint(o.ID, 10)
 
 	for _, v := range o.OrderProducts {
@@ -126,13 +125,14 @@ func (uc *paymentUseCase) createPaymentPayload(o *entity.Order) *entity.CreatePa
 			Category:    "marketplace",
 			UnitMeasure: "unit",
 			Quantity:    uint64(v.Quantity),
-			TotalAmount: float32(v.Product.Price),
+			TotalAmount: float32(v.Product.Price) * float32(v.Quantity),
 		})
+		totalAmount += float32(v.Product.Price) * float32(v.Quantity)
 	}
 
 	return &entity.CreatePaymentExternalInput{
 		ExternalReference: externalReference,
-		TotalAmount:       o.TotalBill,
+		TotalAmount:       totalAmount,
 		Items:             items,
 		Title:             "FIAP Tech Challenge - Product Order",
 		Description:       "Purchases made at the FIAP Tech Challenge store",
