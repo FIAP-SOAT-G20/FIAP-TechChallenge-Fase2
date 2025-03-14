@@ -27,7 +27,7 @@ const docTemplate = `{
                 "tags": [
                     "customers"
                 ],
-                "summary": "List customers",
+                "summary": "List customers (Reference TC-1 2.b.i)",
                 "parameters": [
                     {
                         "type": "string",
@@ -365,7 +365,7 @@ const docTemplate = `{
                 "tags": [
                     "orders"
                 ],
-                "summary": "List orders (Reference 1.a.iv)",
+                "summary": "List orders (Reference TC-1 2.b.vi; TC-2 1.a.iv)",
                 "parameters": [
                     {
                         "type": "integer",
@@ -1076,7 +1076,7 @@ const docTemplate = `{
                 "tags": [
                     "orders"
                 ],
-                "summary": "Partial update order (Reference 1.a.v)",
+                "summary": "Partial update order (Reference TC-2 1.a.v)",
                 "parameters": [
                     {
                         "type": "integer",
@@ -1135,7 +1135,7 @@ const docTemplate = `{
                 "tags": [
                     "payments"
                 ],
-                "summary": "Update a payment (Webhook) (Reference 1.a.iii)",
+                "summary": "Update a payment (Webhook) (Reference TC-2 1.a.iii)",
                 "parameters": [
                     {
                         "description": "Payment data",
@@ -1181,7 +1181,7 @@ const docTemplate = `{
                 "tags": [
                     "payments"
                 ],
-                "summary": "Get a payment given order ID",
+                "summary": "Get a payment given order ID (Reference TC-2 1.a.ii)",
                 "parameters": [
                     {
                         "type": "integer",
@@ -1225,7 +1225,7 @@ const docTemplate = `{
                 "tags": [
                     "payments"
                 ],
-                "summary": "Create a payment (Checkout) (Reference 1.a.i, 1.a.v)",
+                "summary": "Create a payment (Checkout) (Reference TC-1 2.b.v; TC-2 1.a.i, 1.a.v)",
                 "parameters": [
                     {
                         "type": "integer",
@@ -1270,7 +1270,7 @@ const docTemplate = `{
                 "tags": [
                     "products"
                 ],
-                "summary": "List products",
+                "summary": "List products (Reference TC-1 2.b.iv)",
                 "parameters": [
                     {
                         "type": "string",
@@ -1332,7 +1332,7 @@ const docTemplate = `{
                 "tags": [
                     "products"
                 ],
-                "summary": "Create product",
+                "summary": "Create product (Reference TC-1 2.b.iii)",
                 "parameters": [
                     {
                         "description": "Product data",
@@ -1428,7 +1428,7 @@ const docTemplate = `{
                 "tags": [
                     "products"
                 ],
-                "summary": "Update product",
+                "summary": "Update product (Reference TC-1 2.b.iii)",
                 "parameters": [
                     {
                         "type": "integer",
@@ -1486,7 +1486,7 @@ const docTemplate = `{
                 "tags": [
                     "products"
                 ],
-                "summary": "Delete product",
+                "summary": "Delete product (Reference TC-1 2.b.iii)",
                 "parameters": [
                     {
                         "type": "integer",
