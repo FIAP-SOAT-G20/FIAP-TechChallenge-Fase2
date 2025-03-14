@@ -29,7 +29,7 @@ func (h *PaymentHandler) Register(router *gin.RouterGroup) {
 
 // Create godoc
 //
-//	@Summary		Create a payment (Checkout) (Reference 1.a.i, 1.a.v)
+//	@Summary		Create a payment (Checkout) (Reference TC-1 2.b.v; TC-2 1.a.i, 1.a.v)
 //	@Description	Creates a new payment (Checkout)
 //	@Description	The status of the payment will be set to PROCESSING
 //	@Tags			payments
@@ -66,7 +66,7 @@ func (h *PaymentHandler) Create(c *gin.Context) {
 
 // Update godoc
 //
-//	@Summary		Update a payment (Webhook) (Reference 1.a.iii)
+//	@Summary		Update a payment (Webhook) (Reference TC-2 1.a.iii)
 //	@Description	Update a new payment (Webhook)
 //	@Description	- resource = external payment id, obtained from the checkout response
 //	@Description	- topic = payment
@@ -114,7 +114,7 @@ func (h *PaymentHandler) Update(c *gin.Context) {
 
 // Get godoc
 //
-//	@Summary		Get a payment given order ID
+//	@Summary		Get a payment given order ID (Reference TC-2 1.a.ii)
 //	@Description	Get a payment given order ID
 //	@Tags			payments
 //	@Accept			json

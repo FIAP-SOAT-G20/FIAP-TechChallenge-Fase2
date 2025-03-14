@@ -22,10 +22,14 @@ func NewPaymentExternalDataSource(client *resty.Client) port.PaymentExternalData
 
 func (ds *PaymentExternalDataSource) Create(ctx context.Context, p *entity.CreatePaymentExternalInput) (*entity.CreatePaymentExternalOutput, error) {
 	cfg := config.LoadConfig()
+	p.NotificationUrl = cfg.MercadoPagoNotificationURL
+	paymentRequest := request.NewPaymentRequest(p)
 
 	var result response.CreatePaymentResponse
 	resp, err := ds.httpClient.R().
-		SetBody(request.NewPaymentRequest(p)).
+		SetHeader("Content-Type", "application/json").
+		SetHeader("Authorization", "Bearer "+cfg.MercadoPagoToken).
+		SetBody(paymentRequest).
 		SetResult(&result).
 		Post(cfg.MercadoPagoURL)
 	if err != nil {

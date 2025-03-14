@@ -1,4 +1,4 @@
-name: cd/push-to-registry-mock-server
+name: cd/push-mock-server-to-registry
 
 on: workflow_dispatch
 

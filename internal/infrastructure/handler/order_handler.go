@@ -34,7 +34,7 @@ func (h *OrderHandler) Register(router *gin.RouterGroup) {
 
 // List godoc
 //
-//	@Summary		List orders (Reference 1.a.iv)
+//	@Summary		List orders (Reference TC-1 2.b.vi; TC-2 1.a.iv)
 //	@Description	List all orders
 //	@Description	## Order list is sorted by:
 //	@Description	- **Status** in **descending** order (`READY` > `PREPARING` > `RECEIVED` > `PENDING` > `OPEN`)
@@ -244,7 +244,7 @@ func (h *OrderHandler) Update(c *gin.Context) {
 
 // UpdatePartial godoc
 //
-//	@Summary		Partial update order (Reference 1.a.v)
+//	@Summary		Partial update order (Reference TC-2 1.a.v)
 //	@Description	Partially updates an existing order
 //	@Description	The status are: **OPEN**, **CANCELLED**, **PENDING**, **RECEIVED**, **PREPARING**, **READY**, **COMPLETED**
 //	@Description	## Transition of status:

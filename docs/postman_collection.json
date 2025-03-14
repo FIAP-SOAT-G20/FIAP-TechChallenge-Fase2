@@ -29,21 +29,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/api/v1/products/?page=1",
+							"raw": "{{host}}/api/v1/products",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"products",
-								""
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								}
+								"products"
 							]
 						}
 					},
@@ -160,6 +153,70 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"total\": 5,\n    \"page\": 1,\n    \"limit\": 10,\n    \"products\": [\n        {\n            \"id\": 2,\n            \"name\": \"Coca-Cola 350ml\",\n            \"description\": \"Refrigerante Coca-Cola lata\",\n            \"price\": 6.9,\n            \"category_id\": 2,\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Sundae\",\n            \"description\": \"Sorvete com calda de chocolate\",\n            \"price\": 12.9,\n            \"category_id\": 3,\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Batata Frita\",\n            \"description\": \"Porção de batata frita crocante\",\n            \"price\": 15.9,\n            \"category_id\": 4,\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Combo Big\",\n            \"description\": \"X-Burger + Batata + Refrigerante\",\n            \"price\": 42.9,\n            \"category_id\": 5,\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-02-28T16:28:18Z\"\n        },\n        {\n            \"id\": 1,\n            \"name\": \"Product X UPDATED\",\n            \"description\": \"Product X description UPDATED\",\n            \"price\": 12.11,\n            \"category_id\": 1,\n            \"created_at\": \"2025-02-28T16:28:18Z\",\n            \"updated_at\": \"2025-03-06T18:10:28Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/xml",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/products",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "5e077b79-548e-4328-9a93-12a3443364e8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:05:35 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "939"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 5,\n    \"page\": 1,\n    \"limit\": 10,\n    \"products\": [\n        {\n            \"id\": 1,\n            \"name\": \"X-Burger\",\n            \"description\": \"Hambúrguer com queijo, alface e tomate\",\n            \"price\": 25.9,\n            \"category_id\": 1,\n            \"created_at\": \"2025-03-14T18:02:52Z\",\n            \"updated_at\": \"2025-03-14T18:02:52Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Coca-Cola 350ml\",\n            \"description\": \"Refrigerante Coca-Cola lata\",\n            \"price\": 6.9,\n            \"category_id\": 2,\n            \"created_at\": \"2025-03-14T18:02:52Z\",\n            \"updated_at\": \"2025-03-14T18:02:52Z\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Sundae\",\n            \"description\": \"Sorvete com calda de chocolate\",\n            \"price\": 12.9,\n            \"category_id\": 3,\n            \"created_at\": \"2025-03-14T18:02:52Z\",\n            \"updated_at\": \"2025-03-14T18:02:52Z\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Batata Frita\",\n            \"description\": \"Porção de batata frita crocante\",\n            \"price\": 15.9,\n            \"category_id\": 4,\n            \"created_at\": \"2025-03-14T18:02:52Z\",\n            \"updated_at\": \"2025-03-14T18:02:52Z\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Combo Big\",\n            \"description\": \"X-Burger + Batata + Refrigerante\",\n            \"price\": 42.9,\n            \"category_id\": 5,\n            \"created_at\": \"2025-03-14T18:02:52Z\",\n            \"updated_at\": \"2025-03-14T18:02:52Z\"\n        }\n    ]\n}"
 						}
 					]
 				},
@@ -333,7 +390,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/api/v1/products/1",
+							"raw": "{{host}}/api/v1/products/6",
 							"host": [
 								"{{host}}"
 							],
@@ -341,7 +398,7 @@
 								"api",
 								"v1",
 								"products",
-								"1"
+								"6"
 							]
 						}
 					},
@@ -387,6 +444,71 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": 6,\n    \"name\": \"Product X UPDATED\",\n    \"description\": \"Product X description UPDATED\",\n    \"price\": 12,\n    \"active\": true,\n    \"category_id\": 1,\n    \"category\": {\n        \"id\": 0,\n        \"name\": \"\",\n        \"created_at\": \"0001-01-01T00:00:00Z\"\n    },\n    \"created_at\": \"0001-01-01T00:00:00Z\",\n    \"updated_at\": \"2025-01-21T16:00:55.427872Z\"\n}"
+						},
+						{
+							"name": "Get a product by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/xml",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/products/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "fa1790ac-da03-43e7-91b9-07828ebc937a"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:06:40 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "164"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"Product X\",\n    \"description\": \"Product X description\",\n    \"price\": 13,\n    \"category_id\": 1,\n    \"created_at\": \"2025-03-14T18:06:02Z\",\n    \"updated_at\": \"2025-03-14T18:06:02Z\"\n}"
 						}
 					]
 				},
@@ -405,15 +527,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/products/",
+							"raw": "{{host}}/api/v1/products",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"products",
-								""
+								"products"
 							]
 						}
 					},
@@ -620,7 +741,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/products/1",
+							"raw": "{{host}}/api/v1/products/6",
 							"host": [
 								"{{host}}"
 							],
@@ -628,7 +749,7 @@
 								"api",
 								"v1",
 								"products",
-								"1"
+								"6"
 							]
 						}
 					},
@@ -884,6 +1005,73 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid body\"\n}"
+						},
+						{
+							"name": "Update a product",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Product X UPDATED\",\n    \"description\": \"Product X description UPDATED\",\n    \"price\": 12.11,\n    \"category_id\": 1,\n    \"active\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/products/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "97d35750-4fc3-4551-9ba7-6b73c04a8ee0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:07:14 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "183"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"Product X UPDATED\",\n    \"description\": \"Product X description UPDATED\",\n    \"price\": 12.11,\n    \"category_id\": 1,\n    \"created_at\": \"2025-03-14T18:06:02Z\",\n    \"updated_at\": \"2025-03-14T18:07:14Z\"\n}"
 						}
 					]
 				},
@@ -1123,7 +1311,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"John Doe 1\",\n    \"email\": \"john.doe.1@email.com\",\n    \"cpf\": \"000.000.000-01\"\n}",
+							"raw": "{\n    \"name\": \"John Doe 6\",\n    \"email\": \"john.doe.6@email.com\",\n    \"cpf\": \"000.000.000-06\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1258,6 +1446,72 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid body\"\n}"
+						},
+						{
+							"name": "Create a customer",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe 6\",\n    \"email\": \"john.doe.6@email.com\",\n    \"cpf\": \"000.000.000-06\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/customers",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"customers"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "b3a84e18-c888-4c2d-98d3-d28af5ebd48a"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:03:27 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "154"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"John Doe 6\",\n    \"email\": \"john.doe.6@email.com\",\n    \"cpf\": \"000.000.000-06\",\n    \"created_at\": \"2025-03-14T18:03:27Z\",\n    \"updated_at\": \"2025-03-14T18:03:27Z\"\n}"
 						}
 					]
 				},
@@ -1819,7 +2073,7 @@
 					]
 				},
 				{
-					"name": "Get a customer",
+					"name": "Get a customer by ID",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1894,6 +2148,64 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": 1,\n    \"name\": \"Lucas Mendes\",\n    \"email\": \"lucas@email.com\",\n    \"cpf\": \"123.456.789-00\",\n    \"created_at\": \"2025-02-14T17:49:24Z\",\n    \"updated_at\": \"2025-02-14T17:49:24Z\"\n}"
+						},
+						{
+							"name": "Get a customer",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/customers/6",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"customers",
+										"6"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "9ff45a62-be7d-4fb7-a916-05cc15f17701"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:04:16 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "154"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"John Doe 6\",\n    \"email\": \"john.doe.6@email.com\",\n    \"cpf\": \"000.000.000-06\",\n    \"created_at\": \"2025-03-14T18:03:27Z\",\n    \"updated_at\": \"2025-03-14T18:03:27Z\"\n}"
 						}
 					]
 				},
@@ -1987,7 +2299,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/payments/8/checkout",
+							"raw": "{{host}}/api/v1/payments/15/checkout",
 							"host": [
 								"{{host}}"
 							],
@@ -1995,7 +2307,7 @@
 								"api",
 								"v1",
 								"payments",
-								"8",
+								"15",
 								"checkout"
 							]
 						}
@@ -2043,6 +2355,203 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": 1,\n    \"status\": \"PROCESSING\",\n    \"order_id\": 3,\n    \"external_payment_id\": \"123456\",\n    \"qr_data\": \"https://www.fiap-10-soat-g20.com.br/qr/123456\"\n}"
+						},
+						{
+							"name": "Payments Order Checkout",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/payments/20/checkout",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"payments",
+										"20",
+										"checkout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "02dfe40f-2148-4126-8769-ba182614bdb4"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 03:16:36 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "298"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 20,\n    \"status\": \"PROCESSING\",\n    \"order_id\": 20,\n    \"external_payment_id\": \"bbe209b8-e96e-4ce3-8bfb-2eae46d7beac\",\n    \"qr_data\": \"00020101021226940014BR.GOV.BCB.PIX2572pix-qr.mercadopago.com/instore/o/v2/bbe209b8-e96e-4ce3-8bfb-2eae46d7beac5204000053039865802BR5912Felipe e Cia6009SAO PAULO62070503***63042247\"\n}"
+						},
+						{
+							"name": "Payments Order Checkout",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/payments/15/checkout",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"payments",
+										"15",
+										"checkout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "5ae86650-3549-4a94-9a3f-3efe1d89038f"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:09:50 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "234"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 14,\n    \"status\": \"PROCESSING\",\n    \"order_id\": 15,\n    \"external_payment_id\": \"15\",\n    \"qr_data\": \"53810495130296885571com.mercadolibre0201306d5f02640-187e-4fcb-96f3-94b773d6e5b535150120008326594305204970053030325802AR5910Test Store6004CABA6304DEE5\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Payment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/payments/15",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"payments",
+								"15"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Payment",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/payments/15",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"payments",
+										"15"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "c8d08b7e-3f3d-4e9d-be05-fc143e3b30dd"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:29:07 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "233"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 14,\n    \"status\": \"CONFIRMED\",\n    \"order_id\": 15,\n    \"external_payment_id\": \"15\",\n    \"qr_data\": \"53810495130296885571com.mercadolibre0201306d5f02640-187e-4fcb-96f3-94b773d6e5b535150120008326594305204970053030325802AR5910Test Store6004CABA6304DEE5\"\n}"
 						}
 					]
 				},
@@ -2126,6 +2635,127 @@
 							"body": "{\n    \"id\": 1,\n    \"status\": \"CONFIRMED\",\n    \"order_id\": 3,\n    \"external_payment_id\": \"123456\",\n    \"qr_data\": \"https://www.fiap-10-soat-g20.com.br/qr/123456\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Mock Server - Process Payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"external_reference\": \"16\",\n\t\"notification_url\": \"http://host.docker.internal:8080/api/v1/payments/callback\",\n\t\"total_amount\": \"123\",\n\t\"title\": \"New payment title\",\n\t\"description\": \"New payment desc\",\n\t\"items\": [\n\t\t{\n\t\t\t\"category\": \"1\",\n\t\t\t\"title\": \"Item 1 title\",\n\t\t\t\"description\": \"Item 1 desc\",\n\t\t\t\"unit_price\": 10.11,\n\t\t\t\"quantity\": 2,\n\t\t\t\"unit_measure\": \"real\",\n\t\t\t\"total_amount\": 20.22\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/mercadopago/instore/orders/qr",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"mercadopago",
+								"instore",
+								"orders",
+								"qr"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Mock Server - Process Payment",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"external_reference\": \"16\",\n\t\"notification_url\": \"http://localhost/api/v1/payments/callback\",\n\t\"total_amount\": \"123\",\n\t\"title\": \"New payment title\",\n\t\"description\": \"New payment desc\",\n\t\"items\": [\n\t\t{\n\t\t\t\"category\": \"1\",\n\t\t\t\"title\": \"Item 1 title\",\n\t\t\t\"description\": \"Item 1 desc\",\n\t\t\t\"unit_price\": 10.11,\n\t\t\t\"quantity\": 2,\n\t\t\t\"unit_measure\": \"real\",\n\t\t\t\"total_amount\": 20.22\n\t\t}\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3001/mercadopago/instore/orders/qr",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"mercadopago",
+										"instore",
+										"orders",
+										"qr"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+								},
+								{
+									"key": "Content-Length",
+									"value": "197"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 12 Mar 2025 00:56:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"in_store_order_id\": \"16\",\n    \"qr_data\": \"51474612797566176418com.mercadolibre02013068c4ac2ab-0645-46e1-8560-1921f22828cd35150120008326594305204970053030325802AR5910Test Store6004CABA6304DEE5\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Mock Server - healthCheck",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/mercadopago/healthCheck",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"mercadopago",
+								"healthCheck"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -2148,7 +2778,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customer_id\": 5\n}",
+							"raw": "{\n  \"customer_id\": 6\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2303,6 +2933,81 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": 9,\n    \"customer_id\": 5,\n    \"total_bill\": 0,\n    \"status\": \"OPEN\",\n    \"products\": null,\n    \"created_at\": \"2025-02-15T17:09:18-03:00\",\n    \"updated_at\": \"2025-02-15T17:09:18-03:00\"\n}"
+						},
+						{
+							"name": "Create an order",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customer_id\": 6\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "c666aaac-59f5-4398-bc77-c250ecb1678b"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:08:20 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "133"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 15,\n    \"customer_id\": 6,\n    \"total_bill\": \"0.00\",\n    \"status\": \"OPEN\",\n    \"created_at\": \"2025-03-14T18:08:20Z\",\n    \"updated_at\": \"2025-03-14T18:08:20Z\"\n}"
 						}
 					]
 				},
@@ -2544,7 +3249,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"status\": \"PENDING\"\n}",
+							"raw": "{\n    \"staff_id\": 1,\n    \"status\": \"PREPARING\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2552,7 +3257,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/orders/1",
+							"raw": "{{host}}/api/v1/orders/15",
 							"host": [
 								"{{host}}"
 							],
@@ -2560,11 +3265,213 @@
 								"api",
 								"v1",
 								"orders",
-								"1"
+								"15"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update an order status (preparing)",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"staff_id\": 1,\n    \"status\": \"PREPARING\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/15",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"15"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "efb9eb4d-6431-4248-9a26-e3551cf469f0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:14:55 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "509"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 15,\n    \"customer_id\": 6,\n    \"total_bill\": \"27.60\",\n    \"status\": \"PREPARING\",\n    \"customer\": {\n        \"id\": 6,\n        \"name\": \"John Doe 6\",\n        \"email\": \"john.doe.6@email.com\",\n        \"cpf\": \"000.000.000-06\",\n        \"created_at\": \"2025-03-14T18:03:27Z\",\n        \"updated_at\": \"2025-03-14T18:03:27Z\"\n    },\n    \"products\": [\n        {\n            \"id\": 2,\n            \"name\": \"Coca-Cola 350ml\",\n            \"description\": \"Refrigerante Coca-Cola lata\",\n            \"price\": 6.9,\n            \"category_id\": 2,\n            \"created_at\": \"2025-03-14T18:02:52Z\",\n            \"updated_at\": \"2025-03-14T18:02:52Z\",\n            \"quantity\": 4\n        }\n    ],\n    \"created_at\": \"2025-03-14T18:08:20Z\",\n    \"updated_at\": \"2025-03-14T18:14:55Z\"\n}"
+						},
+						{
+							"name": "Update an order status (ready)",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"staff_id\": 1,\n    \"status\": \"READY\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/15",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"15"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "c92b68bd-cab8-4918-8d67-adc15df12185"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:16:40 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "505"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 15,\n    \"customer_id\": 6,\n    \"total_bill\": \"27.60\",\n    \"status\": \"READY\",\n    \"customer\": {\n        \"id\": 6,\n        \"name\": \"John Doe 6\",\n        \"email\": \"john.doe.6@email.com\",\n        \"cpf\": \"000.000.000-06\",\n        \"created_at\": \"2025-03-14T18:03:27Z\",\n        \"updated_at\": \"2025-03-14T18:03:27Z\"\n    },\n    \"products\": [\n        {\n            \"id\": 2,\n            \"name\": \"Coca-Cola 350ml\",\n            \"description\": \"Refrigerante Coca-Cola lata\",\n            \"price\": 6.9,\n            \"category_id\": 2,\n            \"created_at\": \"2025-03-14T18:02:52Z\",\n            \"updated_at\": \"2025-03-14T18:02:52Z\",\n            \"quantity\": 4\n        }\n    ],\n    \"created_at\": \"2025-03-14T18:08:20Z\",\n    \"updated_at\": \"2025-03-14T18:16:40Z\"\n}"
+						},
+						{
+							"name": "Update an order status (completed)",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"staff_id\": 1,\n    \"status\": \"COMPLETED\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/15",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"15"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "7006a2ef-7415-4895-88c7-921b5dd3992e"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:17:02 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "509"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 15,\n    \"customer_id\": 6,\n    \"total_bill\": \"27.60\",\n    \"status\": \"COMPLETED\",\n    \"customer\": {\n        \"id\": 6,\n        \"name\": \"John Doe 6\",\n        \"email\": \"john.doe.6@email.com\",\n        \"cpf\": \"000.000.000-06\",\n        \"created_at\": \"2025-03-14T18:03:27Z\",\n        \"updated_at\": \"2025-03-14T18:03:27Z\"\n    },\n    \"products\": [\n        {\n            \"id\": 2,\n            \"name\": \"Coca-Cola 350ml\",\n            \"description\": \"Refrigerante Coca-Cola lata\",\n            \"price\": 6.9,\n            \"category_id\": 2,\n            \"created_at\": \"2025-03-14T18:02:52Z\",\n            \"updated_at\": \"2025-03-14T18:02:52Z\",\n            \"quantity\": 4\n        }\n    ],\n    \"created_at\": \"2025-03-14T18:08:20Z\",\n    \"updated_at\": \"2025-03-14T18:17:02Z\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Get orders",
@@ -2666,7 +3573,7 @@
 					]
 				},
 				{
-					"name": "Get an order",
+					"name": "Get an order by ID",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -2676,7 +3583,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/api/v1/orders/1",
+							"raw": "{{host}}/api/v1/orders/15",
 							"host": [
 								"{{host}}"
 							],
@@ -2684,13 +3591,13 @@
 								"api",
 								"v1",
 								"orders",
-								"1"
+								"15"
 							]
 						}
 					},
 					"response": [
 						{
-							"name": "Get an order",
+							"name": "Get an order (open)",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
@@ -2814,6 +3721,258 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": 404,\n    \"message\": \"data not found\"\n}"
+						},
+						{
+							"name": "Get an order (open)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders/15",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"15"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "16fb9038-3b49-47c5-81b9-825560c35a31"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:08:50 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "299"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 15,\n    \"customer_id\": 6,\n    \"total_bill\": \"0.00\",\n    \"status\": \"OPEN\",\n    \"customer\": {\n        \"id\": 6,\n        \"name\": \"John Doe 6\",\n        \"email\": \"john.doe.6@email.com\",\n        \"cpf\": \"000.000.000-06\",\n        \"created_at\": \"2025-03-14T18:03:27Z\",\n        \"updated_at\": \"2025-03-14T18:03:27Z\"\n    },\n    \"created_at\": \"2025-03-14T18:08:20Z\",\n    \"updated_at\": \"2025-03-14T18:08:20Z\"\n}"
+						},
+						{
+							"name": "Get an order (received)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders/15",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"15"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "f64096fa-ad80-4c3a-b152-195b281c437e"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:10:21 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "508"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 15,\n    \"customer_id\": 6,\n    \"total_bill\": \"27.60\",\n    \"status\": \"RECEIVED\",\n    \"customer\": {\n        \"id\": 6,\n        \"name\": \"John Doe 6\",\n        \"email\": \"john.doe.6@email.com\",\n        \"cpf\": \"000.000.000-06\",\n        \"created_at\": \"2025-03-14T18:03:27Z\",\n        \"updated_at\": \"2025-03-14T18:03:27Z\"\n    },\n    \"products\": [\n        {\n            \"id\": 2,\n            \"name\": \"Coca-Cola 350ml\",\n            \"description\": \"Refrigerante Coca-Cola lata\",\n            \"price\": 6.9,\n            \"category_id\": 2,\n            \"created_at\": \"2025-03-14T18:02:52Z\",\n            \"updated_at\": \"2025-03-14T18:02:52Z\",\n            \"quantity\": 4\n        }\n    ],\n    \"created_at\": \"2025-03-14T18:08:20Z\",\n    \"updated_at\": \"2025-03-14T18:09:51Z\"\n}"
+						},
+						{
+							"name": "Get an order (ready)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders/15",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"15"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "3bf07cbc-0edc-41ac-8d9e-ea427545d9d5"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:16:52 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "505"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 15,\n    \"customer_id\": 6,\n    \"total_bill\": \"27.60\",\n    \"status\": \"READY\",\n    \"customer\": {\n        \"id\": 6,\n        \"name\": \"John Doe 6\",\n        \"email\": \"john.doe.6@email.com\",\n        \"cpf\": \"000.000.000-06\",\n        \"created_at\": \"2025-03-14T18:03:27Z\",\n        \"updated_at\": \"2025-03-14T18:03:27Z\"\n    },\n    \"products\": [\n        {\n            \"id\": 2,\n            \"name\": \"Coca-Cola 350ml\",\n            \"description\": \"Refrigerante Coca-Cola lata\",\n            \"price\": 6.9,\n            \"category_id\": 2,\n            \"created_at\": \"2025-03-14T18:02:52Z\",\n            \"updated_at\": \"2025-03-14T18:02:52Z\",\n            \"quantity\": 4\n        }\n    ],\n    \"created_at\": \"2025-03-14T18:08:20Z\",\n    \"updated_at\": \"2025-03-14T18:16:40Z\"\n}"
+						},
+						{
+							"name": "Get an order (completed)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/v1/orders/15",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"15"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "afa50bc5-b926-48fd-b3fd-dba559c1cc2e"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:17:18 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "509"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 15,\n    \"customer_id\": 6,\n    \"total_bill\": \"27.60\",\n    \"status\": \"COMPLETED\",\n    \"customer\": {\n        \"id\": 6,\n        \"name\": \"John Doe 6\",\n        \"email\": \"john.doe.6@email.com\",\n        \"cpf\": \"000.000.000-06\",\n        \"created_at\": \"2025-03-14T18:03:27Z\",\n        \"updated_at\": \"2025-03-14T18:03:27Z\"\n    },\n    \"products\": [\n        {\n            \"id\": 2,\n            \"name\": \"Coca-Cola 350ml\",\n            \"description\": \"Refrigerante Coca-Cola lata\",\n            \"price\": 6.9,\n            \"category_id\": 2,\n            \"created_at\": \"2025-03-14T18:02:52Z\",\n            \"updated_at\": \"2025-03-14T18:02:52Z\",\n            \"quantity\": 4\n        }\n    ],\n    \"created_at\": \"2025-03-14T18:08:20Z\",\n    \"updated_at\": \"2025-03-14T18:17:02Z\"\n}"
 						}
 					]
 				},
@@ -4387,6 +5546,75 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": 400,\n    \"message\": \"invalid body\"\n}"
+						},
+						{
+							"name": "Create an order product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"quantity\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/v1/orders/products/15/2",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"products",
+										"15",
+										"2"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "7d8b57b8-5db3-424c-95c9-d27fe69deb6f"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 18:09:25 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "425"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"order_id\": 15,\n    \"product_id\": 2,\n    \"quantity\": 4,\n    \"order\": {\n        \"id\": 15,\n        \"customer_id\": 6,\n        \"status\": \"OPEN\",\n        \"created_at\": \"2025-03-14T18:08:20Z\",\n        \"updated_at\": \"2025-03-14T18:08:20Z\"\n    },\n    \"product\": {\n        \"id\": 2,\n        \"name\": \"Coca-Cola 350ml\",\n        \"description\": \"Refrigerante Coca-Cola lata\",\n        \"price\": 6.9,\n        \"category_id\": 2,\n        \"created_at\": \"2025-03-14T18:02:52Z\",\n        \"updated_at\": \"2025-03-14T18:02:52Z\"\n    },\n    \"created_at\": \"2025-03-14T18:09:25Z\",\n    \"updated_at\": \"2025-03-14T18:09:25Z\"\n}"
 						}
 					]
 				},
@@ -5828,7 +7056,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"cpf\": \"000.000.000-01\"\n}",
+							"raw": "{\n    \"cpf\": \"000.000.000-06\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

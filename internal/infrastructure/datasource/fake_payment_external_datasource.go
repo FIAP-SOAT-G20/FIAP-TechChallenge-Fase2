@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+
 	datasource_request "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/datasource/request"
 	datasource_response "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/datasource/response"
 
@@ -24,16 +25,19 @@ func NewFakePaymentExternalDataSource(client *httpclient.HTTPClient, cfg *config
 }
 
 func (ds *FakePaymentExternalDataSource) Create(ctx context.Context, p *entity.CreatePaymentExternalInput) (*entity.CreatePaymentExternalOutput, error) {
+	p.NotificationUrl = ds.cfg.FakeMercadoPagoNotificationURL
 	fakeMercadoPagoRequest := datasource_request.NewFakeMercadoPagoRequest(p)
 	fakeMercadoPagoResponse := datasource_response.MercadoPagoResponse{}
 
 	response, err := ds.client.NewRequest().
+		SetHeader("Content-Type", "application/json").
 		SetBody(fakeMercadoPagoRequest).
 		SetResult(&fakeMercadoPagoResponse).
-		Post(ds.cfg.MercadoPagoURL)
+		Post(ds.cfg.FakeMercadoPagoURL)
 	if err != nil {
 		return nil, err
 	}
+
 	if response.StatusCode() != 200 {
 		return nil, errors.New(domain.ErrFailedToCreatePaymentExternal)
 	}

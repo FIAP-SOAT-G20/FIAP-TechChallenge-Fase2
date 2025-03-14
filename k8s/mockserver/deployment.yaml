@@ -16,8 +16,7 @@ spec:
       containers:
         - name: tech-challenge-api-mock-server
           image: ghcr.io/fiap-soat-g20/fiap-techchallenge-fase2-mock-server:latest
-          command:
-            - "--port 3001"
+          args: ["--data", "/data/definition.json", "--port", "3001"]
           ports:
             - containerPort: 3001
           resources:
@@ -30,12 +29,12 @@ spec:
           readinessProbe:
             httpGet:
               path: /mercadopago/healthCheck
-              port: 3000
+              port: 3001
             initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /mercadopago/healthCheck
-              port: 3000
+              port: 3001
             initialDelaySeconds: 15
             periodSeconds: 20

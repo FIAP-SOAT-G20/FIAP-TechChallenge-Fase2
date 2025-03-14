@@ -83,7 +83,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	orderHistoryDS := datasource.NewOrderHistoryDataSource(db.DB)
 	paymentDS := datasource.NewPaymentDataSource(db.DB)
 	// paymentExternalDS := datasource.NewPaymentExternalDataSource(httpClient.Client) // Mercado Pago
-	paymentExternalFakeDS := datasource.NewFakePaymentExternalDataSource(httpClient, cfg) // Fake
+	paymentExternalDS := datasource.NewFakePaymentExternalDataSource(httpClient, cfg) // Fake Mercado Pago
 
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
@@ -92,8 +92,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	orderGateway := gateway.NewOrderGateway(orderDS)
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
 	staffGateway := gateway.NewStaffGateway(staffDS)
-	// paymentGateway := gateway.NewPaymentGateway(paymentDS, paymentExternalDS) // Mercado Pago
-	paymentGateway := gateway.NewPaymentGateway(paymentDS, paymentExternalFakeDS) // Fake
+	paymentGateway := gateway.NewPaymentGateway(paymentDS, paymentExternalDS)
 
 	// Use cases
 	productUC := usecase.NewProductUseCase(productGateway)

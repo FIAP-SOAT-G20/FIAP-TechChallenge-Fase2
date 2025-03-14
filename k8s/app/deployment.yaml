@@ -54,6 +54,16 @@ spec:
                 configMapKeyRef:
                   name: tech-challenge-config
                   key: mercado_pago_notification_url
+            - name: FAKE_MERCADO_PAGO_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: tech-challenge-config
+                  key: fake_mercado_pago_url
+            - name: FAKE_MERCADO_PAGO_NOTIFICATION_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: tech-challenge-config
+                  key: fake_mercado_pago_notification_url
           resources:
             requests:
               memory: "128Mi" # 128 mebibytes = 134,217,728 bytes = 128 * 1024 * 1024 bytes
@@ -65,11 +75,11 @@ spec:
             httpGet:
               path: /api/v1/health/readyz
               port: 8080
-            initialDelaySeconds: 5
-            periodSeconds: 10
+            initialDelaySeconds: 30
+            periodSeconds: 30
           livenessProbe: # verify that the container is running, and restart it if it's not
             httpGet:
               path: /api/v1/health/livez
               port: 8080
-            initialDelaySeconds: 15
-            periodSeconds: 20
+            initialDelaySeconds: 30
+            periodSeconds: 30

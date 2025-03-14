@@ -1,7 +1,11 @@
 # Test with HTTP Rest extension for VS Code 
 # https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
-@baseUrl = http://localhost:8080
+# Local API
+# @baseUrl = http://localhost:8080
+# Local K8s API
+@baseUrl = http://localhost
+
 @num = 6
 @name = John Doe {{num}}
 @email = john.doe.{{num}}@email.com
