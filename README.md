@@ -231,7 +231,14 @@ make compose-build
 > After running the application, a mock server container will be created to simulate the payment gateway.  
 > When you create a new payment (with `POST payments/:order_id/checkout`) the order status will be updated to `PENDING`,  
 > then the mock server will call the webhook `POST payments/callback`,  
-> and the order status will be updated from `PENDING` to `RECEIVED`.
+> and the order status will be updated from `PENDING` to `RECEIVED`.  
+> You can verify mock server logs by running `docker logs mockserver.10soat-g18.dev`.
+
+> [!NOTE]
+> We have tested the integration with the Mercado Pago API,  
+> but we are using the mock server to simulate the payment gateway validation,  
+> avoiding the need to expose the Mercado Pago API credentials,  
+> and to simplify the validation, because our mock server can access our webhook directly.
 
 ### :whale: Docker
 
@@ -393,6 +400,12 @@ make test
 - [Testing in Go: Intermediate Tips and Techniques](https://betterstack.com/community/guides/testing/intemediate-go-testing/)
 - [TESTES UNITÁRIOS COM GIN GONIC - Como criar testes para os endpoints do seu projeto?](https://www.youtube.com/watch?v=rwReyPLmMs8&ab_channel=HunCoding)
 - [@Mockoon/cli](https://github.com/mockoon/mockoon/tree/main/packages/cli)
+- [Mercado Pago Developers - QR Code > Pré-requisitos](https://www.mercadopago.com.br/developers/pt/docs/qr-code/pre-requisites)
+- [Mercado Pago Developers - QR Code > Lojas e caixas](https://www.mercadopago.com.br/developers/pt/docs/qr-code/stores-pos/stores-and-pos)
+- [Mercado Pago Developers - QR Code > Integrar o QR Modelo Dinâmico](https://www.mercadopago.com.br/developers/pt/docs/qr-code/integration-configuration/qr-dynamic/integration)
+- [Mercado Pago Developers - API > Criar loja](https://www.mercadopago.com.br/developers/pt/reference/stores/_users_user_id_stores/post)
+- [Mercado Pago Developers - API > Criar caixa](https://www.mercadopago.com.br/developers/pt/reference/pos/_pos/post)
+- [Mercado Pago Developers - API > Criar um quadro QR](https://www.mercadopago.com.br/developers/pt/reference/qr-dynamic/_instore_orders_qr_seller_collectors_user_id_pos_external_pos_id_qrs/post)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
