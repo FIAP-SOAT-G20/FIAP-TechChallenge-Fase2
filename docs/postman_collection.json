@@ -2043,6 +2043,65 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": 1,\n    \"status\": \"PROCESSING\",\n    \"order_id\": 3,\n    \"external_payment_id\": \"123456\",\n    \"qr_data\": \"https://www.fiap-10-soat-g20.com.br/qr/123456\"\n}"
+						},
+						{
+							"name": "Payments Order Checkout",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/v1/payments/20/checkout",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"payments",
+										"20",
+										"checkout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-Request-Id",
+									"value": "02dfe40f-2148-4126-8769-ba182614bdb4"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 14 Mar 2025 03:16:36 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "298"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 20,\n    \"status\": \"PROCESSING\",\n    \"order_id\": 20,\n    \"external_payment_id\": \"bbe209b8-e96e-4ce3-8bfb-2eae46d7beac\",\n    \"qr_data\": \"00020101021226940014BR.GOV.BCB.PIX2572pix-qr.mercadopago.com/instore/o/v2/bbe209b8-e96e-4ce3-8bfb-2eae46d7beac5204000053039865802BR5912Felipe e Cia6009SAO PAULO62070503***63042247\"\n}"
 						}
 					]
 				},
