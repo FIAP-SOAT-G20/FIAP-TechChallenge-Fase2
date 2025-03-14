@@ -33,6 +33,7 @@ type Config struct {
 	// Mercado Pago
 	MercadoPagoToken           string
 	MercadoPagoURL             string
+	FakeMercadoPagoURL         string
 	MercadoPagoTimeout         time.Duration
 	MercadoPagoRetryCount      int
 	MercadoPagoNotificationURL string
@@ -80,6 +81,7 @@ func LoadConfig() *Config {
 		// Mercado Pago
 		MercadoPagoToken:           getEnv("MERCADO_PAGO_TOKEN", "token"),
 		MercadoPagoURL:             getEnv("MERCADO_PAGO_URL", "url"),
+		FakeMercadoPagoURL:         getEnv("FAKE_MERCADO_PAGO_URL", "url"),
 		MercadoPagoTimeout:         mercadoPagoTimeout,
 		MercadoPagoRetryCount:      mercadoPagoRetryCount,
 		MercadoPagoNotificationURL: getEnv("MERCADO_PAGO_NOTIFICATION_URL", "url"),
