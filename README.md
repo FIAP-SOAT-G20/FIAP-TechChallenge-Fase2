@@ -403,6 +403,7 @@ make test
 - [Mercado Pago Developers - QR Code > Pré-requisitos](https://www.mercadopago.com.br/developers/pt/docs/qr-code/pre-requisites)
 - [Mercado Pago Developers - QR Code > Lojas e caixas](https://www.mercadopago.com.br/developers/pt/docs/qr-code/stores-pos/stores-and-pos)
 - [Mercado Pago Developers - QR Code > Integrar o QR Modelo Dinâmico](https://www.mercadopago.com.br/developers/pt/docs/qr-code/integration-configuration/qr-dynamic/integration)
+- [Mercado Pago Developers - QR Code > Realizar uma compra teste](https://www.mercadopago.com.br/developers/pt/docs/qr-code/integration-test/dynamic-model/test-purchase)
 - [Mercado Pago Developers - API > Criar loja](https://www.mercadopago.com.br/developers/pt/reference/stores/_users_user_id_stores/post)
 - [Mercado Pago Developers - API > Criar caixa](https://www.mercadopago.com.br/developers/pt/reference/pos/_pos/post)
 - [Mercado Pago Developers - API > Criar um quadro QR](https://www.mercadopago.com.br/developers/pt/reference/qr-dynamic/_instore_orders_qr_seller_collectors_user_id_pos_external_pos_id_qrs/post)
