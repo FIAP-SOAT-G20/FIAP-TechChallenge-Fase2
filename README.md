@@ -158,6 +158,8 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [x] Structured logs (slog)
 - [x] Database migrations (golang-migrate)
 - [x] Kubernetes best practices (liveness, readiness, HPA, etc.)
+- [x] API versioning
+- [x] C4 Model diagrams
 
 </details>
 
@@ -414,6 +416,7 @@ make test
 - [Mercado Pago Developers - API > Criar loja](https://www.mercadopago.com.br/developers/pt/reference/stores/_users_user_id_stores/post)
 - [Mercado Pago Developers - API > Criar caixa](https://www.mercadopago.com.br/developers/pt/reference/pos/_pos/post)
 - [Mercado Pago Developers - API > Criar um quadro QR](https://www.mercadopago.com.br/developers/pt/reference/qr-dynamic/_instore_orders_qr_seller_collectors_user_id_pos_external_pos_id_qrs/post)
+- [C4 Model](https://c4model.com/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
