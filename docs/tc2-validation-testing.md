@@ -15,13 +15,13 @@ After following the steps in the [Readme](./README.md) file, you should have the
 
 The following test cases will be used to validate the TC-2 API:
 
-1. **Test Case 1**: Verify that the API health.
+### 1. **Test Case 1**: Verify that the API health.
 
 ```bash
 curl --location --request GET 'http://localhost:8080/api/v1/health'
 ```
 
-2. **Test Case 2**: Create a new customer.
+### 2. **Test Case 2**: Create a new customer.
 
 > TC-1 2.b.i
 
@@ -35,13 +35,13 @@ curl --location 'http://localhost:8080/api/v1/customers' \
 }'
 ```
 
-3. **Test Case 3**: Get a customer by id.
+### 3. **Test Case 3**: Get a customer by id.
 
 ```bash
 curl --location 'http://localhost:8080/api/v1/customers/6'
 ```
 
-4. **Test Case 4**: Sign in a customer with CPF.
+### 4. **Test Case 4**: Sign in a customer with CPF.
 
 > TC-1 2.b.ii
 
@@ -53,13 +53,13 @@ curl --location 'http://localhost:8080/api/v1/sign-in' \
 }'
 ```
 
-5. **Test Case 5**: Get all products.
+### 5. **Test Case 5**: Get all products.
 
 ```bash
 curl --location 'http://localhost:8080/api/v1/products
 ```
 
-6. **Test Case 6**: Create a new product.
+### 6. **Test Case 6**: Create a new product.
 
 > TC-1 2.b.iii
 
@@ -75,13 +75,13 @@ curl --location 'http://localhost:8080/api/v1/products' \
 }'
 ```
 
-7. **Test Case 7**: Get a product by id.
+### 7. **Test Case 7**: Get a product by id.
 
 ```bash
 curl --location 'http://localhost:8080/api/v1/products/6'
 ```
 
-8. **Test Case 8**: Update a product.
+### 8. **Test Case 8**: Update a product.
 
 > TC-1 2.b.iii
 
@@ -97,7 +97,7 @@ curl --location --request PUT 'http://localhost:8080/api/v1/products/6' \
 }'
 ```
 
-9. **Test Case 9**: Delete a product.
+### 9. **Test Case 9**: Delete a product.
 
 > TC-1 2.b.iii
 
@@ -105,7 +105,7 @@ curl --location --request PUT 'http://localhost:8080/api/v1/products/6' \
 curl --location --request DELETE 'http://localhost:8080/api/v1/products/6'
 ```
 
-10. **Test Case 10**: Get all products by category.
+### 10. **Test Case 10**: Get all products by category.
 
 > TC-1 2.b.iv
 
@@ -113,7 +113,7 @@ curl --location --request DELETE 'http://localhost:8080/api/v1/products/6'
 curl --location 'http://localhost:8080/api/v1/products/?category_id=1'
 ```
 
-11. **Test Case 11**: Create a new order.
+### 11. **Test Case 11**: Create a new order.
 
 ```bash
 curl --location 'http://localhost:8080/api/v1/orders' \
@@ -124,7 +124,7 @@ curl --location 'http://localhost:8080/api/v1/orders' \
 }'
 ```
 
-12. **Test Case 12**: Get an order by id.
+### 12. **Test Case 12**: Get an order by id.
 
 ```bash
 curl --location 'http://localhost:8080/api/v1/orders/15' \
@@ -133,7 +133,7 @@ curl --location 'http://localhost:8080/api/v1/orders/15' \
 
 > The order status should be `OPEN`.
 
-13. **Test Case 13**: Add a product to an order.
+### 13. **Test Case 13**: Add a product to an order.
 
 ```bash
 curl --location 'http://localhost:8080/api/v1/orders/products/15/2' \
@@ -143,7 +143,7 @@ curl --location 'http://localhost:8080/api/v1/orders/products/15/2' \
 }'
 ```
 
-14. **Test Case 14**: Checkout an order.
+### 14. **Test Case 14**: Checkout an order.
 
 > TC-1 2.b.v
 > TC-2 1.a.i
@@ -152,7 +152,7 @@ curl --location 'http://localhost:8080/api/v1/orders/products/15/2' \
 curl --location --request POST 'http://localhost:8080/api/v1/payments/15/checkout'
 ```
 
-15. **Test Case 15**: Get payment status.
+### 15. **Test Case 15**: Get payment status.
 
 > TC-2 1.a.ii
 
@@ -160,7 +160,7 @@ curl --location --request POST 'http://localhost:8080/api/v1/payments/15/checkou
 curl --location 'http://localhost:8080/api/v1/payments/15'
 ```
 
-16. **Test Case 16**: Confirm payment via webhook.
+### 16. **Test Case 16**: Confirm payment via webhook.
 
 > TC-2 1.a.iii
 
@@ -185,7 +185,7 @@ curl --location 'http://localhost:8080/api/v1/payments/callback' \
 > The payment gateway service will send a POST request to the API with the payment confirmation.  
 > The API will then update the order status from `PENDING` to `RECEIVED`.
 
-17. **Test Case 17**: Get an order by id.
+### 17. **Test Case 17**: Get an order by id.
 
 ```bash
 curl --location 'http://localhost:8080/api/v1/orders/15' \
@@ -194,7 +194,7 @@ curl --location 'http://localhost:8080/api/v1/orders/15' \
 
 > The order status should be `RECEIVED`.
 
-18. **Test Case 18**: Update an order status with staff.
+### 18. **Test Case 18**: Update an order status with staff.
 
 > TC-2 1.a.v
 
@@ -207,7 +207,7 @@ curl --location --request PATCH 'http://localhost:8080/api/v1/orders/15' \
 }'
 ```
 
-19. **Test Case 19**: Get an order by id.
+### 19. **Test Case 19**: Get an order by id.
 
 
 ```bash
@@ -217,7 +217,7 @@ curl --location 'http://localhost:8080/api/v1/orders/15' \
 
 > The order status should be `PREPARING`.
 
-20. **Test Case 20**: Update an order status with staff.
+### 20. **Test Case 20**: Update an order status with staff.
 
 ```bash
 curl --location --request PATCH 'http://localhost:8080/api/v1/orders/15' \
@@ -228,7 +228,7 @@ curl --location --request PATCH 'http://localhost:8080/api/v1/orders/15' \
 }'
 ```
 
-21. **Test Case 21**: Get an order by id.
+### 21. **Test Case 21**: Get an order by id.
 
 
 ```bash
@@ -238,7 +238,7 @@ curl --location 'http://localhost:8080/api/v1/orders/15' \
 
 > The order status should be `READY`.
 
-22. **Test Case 22**: Update an order status with staff.
+### 22. **Test Case 22**: Update an order status with staff.
 
 ```bash
 curl --location --request PATCH 'http://localhost:8080/api/v1/orders/15' \
@@ -249,7 +249,7 @@ curl --location --request PATCH 'http://localhost:8080/api/v1/orders/15' \
 }'
 ```
 
-23. **Test Case 23**: Get an order by id.
+### 23. **Test Case 23**: Get an order by id.
 
 
 ```bash
@@ -259,7 +259,7 @@ curl --location 'http://localhost:8080/api/v1/orders/15' \
 
 > The order status should be `COMPLETED`.
 
-24. **Test Case 24**: Get all orders.
+### 24. **Test Case 24**: Get all orders.
 
 > TC-1 2.b.vi
 > TC-2 1.a.iv
