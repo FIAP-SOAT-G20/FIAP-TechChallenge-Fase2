@@ -54,6 +54,16 @@ spec:
                 configMapKeyRef:
                   name: tech-challenge-config
                   key: mercado_pago_notification_url
+            - name: FAKE_MERCADO_PAGO_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: tech-challenge-config
+                  key: fake_mercado_pago_url
+            - name: FAKE_MERCADO_PAGO_NOTIFICATION_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: tech-challenge-config
+                  key: fake_mercado_pago_notification_url
           resources:
             requests:
               memory: "128Mi" # 128 mebibytes = 134,217,728 bytes = 128 * 1024 * 1024 bytes
