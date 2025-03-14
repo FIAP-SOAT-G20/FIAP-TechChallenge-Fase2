@@ -47,10 +47,13 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
 ![Flow Diagram](docs/tc2-flow-diagram.png)
 
-### :open_book: Business Rules and Infrastructure
+### :building_construction: System Context
 
-TBD
-<!-- ![Business Rules and Infrastructure](docs/tc2-business-rules-infrastructure.png) -->
+![System Context](docs/tc2-c4-system-context.jpeg)
+
+### :building_construction: Container Diagram
+
+![Container Diagram](docs/tc2-c4-container.jpeg)
 
 ### :open_file_folder: Project Structure
 
