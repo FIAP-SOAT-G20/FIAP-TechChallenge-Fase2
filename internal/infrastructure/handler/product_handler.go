@@ -30,7 +30,7 @@ func (h *ProductHandler) Register(router *gin.RouterGroup) {
 
 // List godoc
 //
-//	@Summary		List products
+//	@Summary		List products (Reference TC-1 2.b.iv)
 //	@Description	List all products
 //	@Description	Response can return JSON or XML format (Accept header: application/json or text/xml)
 //	@Tags			products
@@ -71,7 +71,7 @@ func (h *ProductHandler) List(c *gin.Context) {
 
 // Create godoc
 //
-//	@Summary		Create product
+//	@Summary		Create product (Reference TC-1 2.b.iii)
 //	@Description	Creates a new product
 //	@Description	Response can return JSON or XML format (Accept header: application/json or text/xml)
 //	@Tags			products
@@ -145,7 +145,7 @@ func (h *ProductHandler) Get(c *gin.Context) {
 
 // Update godoc
 //
-//	@Summary		Update product
+//	@Summary		Update product (Reference TC-1 2.b.iii)
 //	@Description	Update an existing product
 //	@Description	Response can return JSON or XML format (Accept header: application/json or text/xml)
 //	@Tags			products
@@ -192,7 +192,7 @@ func (h *ProductHandler) Update(c *gin.Context) {
 
 // Delete godoc
 //
-//	@Summary		Delete product
+//	@Summary		Delete product (Reference TC-1 2.b.iii)
 //	@Description	Deletes a product by ID
 //	@Description	Response can return JSON or XML format (Accept header: application/json or text/xml)
 //	@Tags			products

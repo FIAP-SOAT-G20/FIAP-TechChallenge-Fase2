@@ -30,7 +30,7 @@ func (h *CustomerHandler) Register(router *gin.RouterGroup) {
 
 // List godoc
 //
-//	@Summary		List customers
+//	@Summary		List customers (Reference TC-1 2.b.i)
 //	@Description	List all customers
 //	@Tags			customers
 //	@Accept			json
