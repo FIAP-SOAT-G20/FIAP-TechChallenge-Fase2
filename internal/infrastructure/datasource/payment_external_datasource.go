@@ -22,6 +22,7 @@ func NewPaymentExternalDataSource(client *resty.Client) port.PaymentExternalData
 
 func (ds *PaymentExternalDataSource) Create(ctx context.Context, p *entity.CreatePaymentExternalInput) (*entity.CreatePaymentExternalOutput, error) {
 	cfg := config.LoadConfig()
+	p.NotificationUrl = cfg.MercadoPagoNotificationURL
 	paymentRequest := request.NewPaymentRequest(p)
 
 	var result response.CreatePaymentResponse

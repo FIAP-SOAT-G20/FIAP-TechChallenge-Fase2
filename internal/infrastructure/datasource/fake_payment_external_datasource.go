@@ -25,6 +25,7 @@ func NewFakePaymentExternalDataSource(client *httpclient.HTTPClient, cfg *config
 }
 
 func (ds *FakePaymentExternalDataSource) Create(ctx context.Context, p *entity.CreatePaymentExternalInput) (*entity.CreatePaymentExternalOutput, error) {
+	p.NotificationUrl = ds.cfg.FakeMercadoPagoNotificationURL
 	fakeMercadoPagoRequest := datasource_request.NewFakeMercadoPagoRequest(p)
 	fakeMercadoPagoResponse := datasource_response.MercadoPagoResponse{}
 

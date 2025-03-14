@@ -11,6 +11,8 @@ services:
       - .env
     environment:
       - DB_HOST=db
+      - FAKE_MERCADO_PAGO_URL=http://mockserver:3001/mercadopago/instore/orders/qr
+      - FAKE_MERCADO_PAGO_NOTIFICATION_URL=http://app:8080/api/v1/payments/callback
       - MERCADO_PAGO_URL=http://mockserver:3001/mercadopago/instore/orders/qr
       - MERCADO_PAGO_NOTIFICATION_URL=http://app:8080/api/v1/payments/callback
     depends_on:

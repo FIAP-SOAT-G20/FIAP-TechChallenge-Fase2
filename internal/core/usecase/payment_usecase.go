@@ -11,7 +11,6 @@ import (
 	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 )
 
 type paymentUseCase struct {
@@ -112,7 +111,6 @@ func (uc *paymentUseCase) Update(ctx context.Context, p dto.UpdatePaymentInput) 
 }
 
 func (uc *paymentUseCase) createPaymentPayload(o *entity.Order) *entity.CreatePaymentExternalInput {
-	cfg := config.LoadConfig()
 	var totalAmount float32
 	var items []entity.PaymentExternalItemsInput
 	externalReference := strconv.FormatUint(o.ID, 10)
@@ -136,7 +134,6 @@ func (uc *paymentUseCase) createPaymentPayload(o *entity.Order) *entity.CreatePa
 		Items:             items,
 		Title:             "FIAP Tech Challenge - Product Order",
 		Description:       "Purchases made at the FIAP Tech Challenge store",
-		NotificationUrl:   cfg.MercadoPagoNotificationURL,
 	}
 }
 
