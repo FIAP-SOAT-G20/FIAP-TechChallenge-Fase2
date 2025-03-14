@@ -15,7 +15,7 @@ After following the steps in the [Readme](./README.md) file, you should have the
 
 The following test cases will be used to validate the TC-2 API:
 
-### 1. Verify that the API health
+### 1. Verify API health
 
 ```bash
 curl --location --request GET 'http://localhost:8080/api/v1/health'
@@ -145,7 +145,7 @@ curl --location 'http://localhost:8080/api/v1/orders/products/15/2' \
 
 ### 14. Checkout an order
 
-> TC-1 2.b.v
+> TC-1 2.b.v  
 > TC-2 1.a.i
 
 ```bash
@@ -261,7 +261,7 @@ curl --location 'http://localhost:8080/api/v1/orders/15' \
 
 ### 24. Get all orders
 
-> TC-1 2.b.vi
+> TC-1 2.b.vi  
 > TC-2 1.a.iv
 
 ```bash
@@ -270,7 +270,7 @@ curl --location 'http://localhost:8080/api/v1/orders' \
 ```
 
 > [!NOTE]
-> The list of orders should return them ordered with the following rule:  
+> The list of orders should be sorted by the following criteria:
 > 1. READY > PREPARING > RECEIVED;  
 > 2. Older orders first and newer orders last;  
 > 3. Orders with status COMPLETED should not appear in the list.  
