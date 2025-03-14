@@ -240,6 +240,10 @@ make compose-build
 > avoiding the need to expose the Mercado Pago API credentials,  
 > and to simplify the validation, because our mock server can access our webhook directly.
 
+> [!TIP]
+> We have created a step-by-step guide to test the application,  
+> you can find it [here](docs/tc2-validation-testing.md)
+
 ### :whale: Docker
 
 ```sh
