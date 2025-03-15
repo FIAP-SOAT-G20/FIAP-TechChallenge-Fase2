@@ -39,8 +39,6 @@ import (
 // @tag.description			List, create, update and delete staff
 // @tag.name					health-check
 // @tag.description			Health check
-// @tag.name					auth
-// @tag.description			Authentication
 //
 // @externalDocs.description	GitHub Repository
 // @externalDocs.url			https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2
@@ -88,7 +86,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	// paymentExternalDS := datasource.NewPaymentExternalDataSource(httpClient.Client) // Mercado Pago
 	paymentExternalDS := datasource.NewFakePaymentExternalDataSource(httpClient, cfg) // Fake Mercado Pago
 
-	// Serviços
+	// Services
 	jwtService := service.NewJWTService(cfg)
 
 	// Gateways
@@ -107,7 +105,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	orderUC := usecase.NewOrderUseCase(orderGateway, orderHistoryUC)
 	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
 	staffUC := usecase.NewStaffUseCase(staffGateway)
-	paymentUC := usecase.NewPaymentUseCase(orderGateway, paymentGateway)
+	paymentUC := usecase.NewPaymentUseCase(paymentGateway, orderUC)
 	authUC := usecase.NewAuthUseCase(customerGateway, jwtService, cfg.JWTExpiration)
 
 	// Controllers

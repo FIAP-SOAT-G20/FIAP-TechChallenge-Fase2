@@ -2,6 +2,7 @@ package gateway
 
 import (
 	"context"
+	"time"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	valueobject "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/value_object"
@@ -34,6 +35,10 @@ func (g *orderHistoryGateway) FindAll(ctx context.Context, orderID uint64, statu
 }
 
 func (g *orderHistoryGateway) Create(ctx context.Context, orderHistory *entity.OrderHistory) error {
+	orderHistory.CreatedAt = time.Now()
+	if orderHistory.StaffID != nil && *orderHistory.StaffID <= 0 {
+		orderHistory.StaffID = nil
+	}
 	return g.dataSource.Create(ctx, orderHistory)
 }
 
