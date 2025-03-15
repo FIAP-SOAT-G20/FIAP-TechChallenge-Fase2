@@ -165,47 +165,14 @@ POST {{baseUrl}}/api/v1/payments/callback HTTP/1.1
     "topic": "payment"
 }
 
-###
-
-# @name getOrders
-GET {{baseUrl}}/api/v1/orders HTTP/1.1
-
-###
-
-# @name getOrder
-GET {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
-
-###
-
-# @name updateOrderStatus
-PATCH {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
-
-{
-    "status": "PENDING"
-}
-
-###
-
-# @name getOrder
-GET {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
-
-###
-
-# @name updateOrderStatus2
-PATCH {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
-
-{
-    "status": "RECEIVED"
-}
-
 ### 
 
-# @name getOrder
+# @name getOrderReceived
 GET {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
 
 ###
 
-# @name updateOrderStatusWithStaff
+# @name updateOrderStatusWithStaffToPreparing
 PATCH {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
 
 {
@@ -215,5 +182,40 @@ PATCH {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
 
 ### 
 
-# @name getOrder
+# @name getOrderPreparing
 GET {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
+
+###
+
+# @name updateOrderStatusWithStaffToReady
+PATCH {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
+
+{
+    "staff_id": 1,
+    "status": "READY"
+}
+
+### 
+
+# @name getOrderReady
+GET {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
+
+###
+
+# @name updateOrderStatusWithStaffToCompleted
+PATCH {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
+
+{
+    "staff_id": 1,
+    "status": "COMPLETED"
+}
+
+### 
+
+# @name getOrderCompleted
+GET {{baseUrl}}/api/v1/orders/{{orderId}} HTTP/1.1
+
+### 
+
+# @name getOrders
+GET {{baseUrl}}/api/v1/orders HTTP/1.1
