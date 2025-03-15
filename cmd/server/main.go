@@ -15,6 +15,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/route"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/server"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/service"
 )
 
 // @title						Fast Food API v2
@@ -38,6 +39,8 @@ import (
 // @tag.description			List, create, update and delete staff
 // @tag.name					health-check
 // @tag.description			Health check
+// @tag.name					auth
+// @tag.description			Authentication
 //
 // @externalDocs.description	GitHub Repository
 // @externalDocs.url			https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2
@@ -85,6 +88,9 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	// paymentExternalDS := datasource.NewPaymentExternalDataSource(httpClient.Client) // Mercado Pago
 	paymentExternalDS := datasource.NewFakePaymentExternalDataSource(httpClient, cfg) // Fake Mercado Pago
 
+	// Serviços
+	jwtService := service.NewJWTService(cfg)
+
 	// Gateways
 	productGateway := gateway.NewProductGateway(productDS)
 	customerGateway := gateway.NewCustomerGateway(customerDS)
@@ -102,6 +108,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
 	staffUC := usecase.NewStaffUseCase(staffGateway)
 	paymentUC := usecase.NewPaymentUseCase(orderGateway, paymentGateway)
+	authUC := usecase.NewAuthUseCase(customerGateway, jwtService, cfg.JWTExpiration)
 
 	// Controllers
 	productController := controller.NewProductController(productUC)
@@ -111,6 +118,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	staffController := controller.NewStaffController(staffUC)
 	orderHistoryController := controller.NewOrderHistoryController(orderHistoryUC)
 	paymentController := controller.NewPaymentController(paymentUC)
+	authController := controller.NewAuthController(authUC)
 
 	// Handlers
 	productHandler := handler.NewProductHandler(productController)
@@ -121,6 +129,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	healthCheckHandler := handler.NewHealthCheckHandler()
 	orderHistoryHandler := handler.NewOrderHistoryHandler(orderHistoryController)
 	paymentHandler := handler.NewPaymentHandler(paymentController)
+	authHandler := handler.NewAuthHandler(authController)
 
 	return &route.Handlers{
 		Product:      productHandler,
@@ -131,5 +140,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 		Staff:        staffHandler,
 		HealthCheck:  healthCheckHandler,
 		Payment:      paymentHandler,
+		Auth:         authHandler,
+		JWTService:   jwtService,
 	}
 }

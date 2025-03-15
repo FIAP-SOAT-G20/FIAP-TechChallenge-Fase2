@@ -6,6 +6,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/docs"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
@@ -48,6 +49,7 @@ func (r *Router) RegisterRoutes(handlers *Handlers) {
 	// API v1
 	v1 := r.engine.Group("/api/v1")
 	{
+		handlers.Auth.Register(v1.Group("/auth"))
 		handlers.Product.Register(v1.Group("/products"))
 		handlers.Customer.Register(v1.Group("/customers"))
 		handlers.Staff.Register(v1.Group("/staffs"))
@@ -74,4 +76,6 @@ type Handlers struct {
 	OrderHistory *handler.OrderHistoryHandler
 	HealthCheck  *handler.HealthCheckHandler
 	Payment      *handler.PaymentHandler
+	Auth         *handler.AuthHandler
+	JWTService   port.JWTService
 }
