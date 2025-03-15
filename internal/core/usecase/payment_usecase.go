@@ -3,7 +3,6 @@ package usecase
 import (
 	"context"
 	"errors"
-	"fmt"
 	"strconv"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
@@ -46,7 +45,6 @@ func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) 
 		return nil, domain.NewNotFoundError(domain.ErrOrderWithoutProducts)
 	}
 
-	fmt.Printf("CreatePaymentInput: %+v\n", i)
 	paymentPayload := uc.createPaymentPayload(order)
 
 	extPayment, err := uc.paymentGateway.CreateExternal(ctx, paymentPayload)
