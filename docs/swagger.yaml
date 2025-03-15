@@ -622,16 +622,10 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      security:
-      - BearerAuth: []
       summary: List customers (Reference TC-1 2.b.i)
       tags:
       - customers
@@ -685,10 +679,6 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
@@ -697,8 +687,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      security:
-      - BearerAuth: []
       summary: Delete customer
       tags:
       - customers
@@ -723,10 +711,6 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
@@ -735,8 +719,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      security:
-      - BearerAuth: []
       summary: Get customer
       tags:
       - customers
@@ -767,10 +749,6 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
@@ -779,8 +757,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
-      security:
-      - BearerAuth: []
       summary: Update customer
       tags:
       - customers

@@ -75,11 +75,6 @@ const docTemplate = `{
         },
         "/customers": {
             "get": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
                 "description": "List all customers",
                 "consumes": [
                     "application/json"
@@ -122,12 +117,6 @@ const docTemplate = `{
                     },
                     "400": {
                         "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
@@ -188,11 +177,6 @@ const docTemplate = `{
         },
         "/customers/{id}": {
             "get": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
                 "description": "Search for a customer by ID",
                 "consumes": [
                     "application/json"
@@ -226,12 +210,6 @@ const docTemplate = `{
                             "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
-                        }
-                    },
                     "404": {
                         "description": "Not Found",
                         "schema": {
@@ -247,11 +225,6 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
                 "description": "Update an existing customer",
                 "consumes": [
                     "application/json"
@@ -294,12 +267,6 @@ const docTemplate = `{
                             "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
-                        }
-                    },
                     "404": {
                         "description": "Not Found",
                         "schema": {
@@ -315,11 +282,6 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ],
                 "description": "Deletes a customer by ID",
                 "produces": [
                     "application/json"
@@ -346,12 +308,6 @@ const docTemplate = `{
                     },
                     "400": {
                         "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
