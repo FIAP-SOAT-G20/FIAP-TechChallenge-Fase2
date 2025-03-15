@@ -25,6 +25,9 @@ func (ds *PaymentExternalDataSource) Create(ctx context.Context, p *entity.Creat
 	p.NotificationUrl = cfg.MercadoPagoNotificationURL
 	paymentRequest := request.NewPaymentRequest(p)
 
+	fmt.Printf("MercadoPagoNotificationURL: %s", p.NotificationUrl)
+	fmt.Printf("MercadoPagoURL: %s", cfg.MercadoPagoURL)
+
 	var result response.CreatePaymentResponse
 	resp, err := ds.httpClient.R().
 		SetHeader("Content-Type", "application/json").

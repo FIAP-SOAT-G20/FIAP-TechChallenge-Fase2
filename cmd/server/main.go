@@ -101,7 +101,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	orderUC := usecase.NewOrderUseCase(orderGateway, orderHistoryUC)
 	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
 	staffUC := usecase.NewStaffUseCase(staffGateway)
-	paymentUC := usecase.NewPaymentUseCase(orderGateway, paymentGateway)
+	paymentUC := usecase.NewPaymentUseCase(paymentGateway, orderUC)
 
 	// Controllers
 	productController := controller.NewProductController(productUC)

@@ -3,8 +3,8 @@ package usecase
 import (
 	"context"
 	"errors"
+	"fmt"
 	"strconv"
-	"time"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
@@ -14,16 +14,16 @@ import (
 )
 
 type paymentUseCase struct {
-	orderGateway   port.OrderGateway
 	paymentGateway port.PaymentGateway
+	orderUseCase   port.OrderUseCase
 }
 
 // NewPaymentUseCase create a new payment use case
 func NewPaymentUseCase(
-	orderGateway port.OrderGateway,
 	paymentGateway port.PaymentGateway,
+	orderUseCase port.OrderUseCase,
 ) port.PaymentUseCase {
-	return &paymentUseCase{orderGateway, paymentGateway}
+	return &paymentUseCase{paymentGateway, orderUseCase}
 }
 
 // Create create a new payment
@@ -37,7 +37,7 @@ func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) 
 		return existentPedingPayment, nil
 	}
 
-	order, err := uc.orderGateway.FindByID(ctx, i.OrderID)
+	order, err := uc.orderUseCase.Get(ctx, dto.GetOrderInput{ID: i.OrderID})
 	if err != nil {
 		return nil, domain.NewNotFoundError(domain.ErrOrderIsMandatory)
 	}
@@ -46,6 +46,7 @@ func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) 
 		return nil, domain.NewNotFoundError(domain.ErrOrderWithoutProducts)
 	}
 
+	fmt.Printf("CreatePaymentInput: %+v\n", i)
 	paymentPayload := uc.createPaymentPayload(order)
 
 	extPayment, err := uc.paymentGateway.CreateExternal(ctx, paymentPayload)
@@ -65,15 +66,13 @@ func (uc *paymentUseCase) Create(ctx context.Context, i dto.CreatePaymentInput) 
 		return nil, domain.NewInternalError(err)
 	}
 
-	orderUpdated := &entity.Order{
+	orderInput := dto.UpdateOrderInput{
 		ID:         order.ID,
-		CustomerID: order.CustomerID,
 		Status:     valueobject.PENDING,
-		CreatedAt:  order.CreatedAt,
-		UpdatedAt:  time.Now(),
+		CustomerID: order.CustomerID,
 	}
 
-	if err := uc.orderGateway.Update(ctx, orderUpdated); err != nil {
+	if _, err := uc.orderUseCase.Update(ctx, orderInput); err != nil {
 		return nil, domain.NewInternalError(err)
 	}
 
@@ -90,21 +89,19 @@ func (uc *paymentUseCase) Update(ctx context.Context, p dto.UpdatePaymentInput) 
 		return nil, err
 	}
 
-	order, err := uc.orderGateway.FindByID(ctx, paymentOUT.OrderID)
+	order, err := uc.orderUseCase.Get(ctx, dto.GetOrderInput{ID: paymentOUT.OrderID})
 	if err != nil {
 		return nil, err
 	}
 
-	orderUpdated := &entity.Order{
+	orderInput := dto.UpdateOrderInput{
 		ID:         order.ID,
-		CustomerID: order.CustomerID,
 		Status:     valueobject.RECEIVED,
-		CreatedAt:  order.CreatedAt,
-		UpdatedAt:  time.Now(),
+		CustomerID: order.CustomerID,
 	}
 
-	if err := uc.orderGateway.Update(ctx, orderUpdated); err != nil {
-		return nil, err
+	if _, err := uc.orderUseCase.Update(ctx, orderInput); err != nil {
+		return nil, domain.NewInternalError(err)
 	}
 
 	return paymentOUT, nil

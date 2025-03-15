@@ -18,8 +18,8 @@ func Test_paymentUseCase_Create(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockPaymentGateway := mockport.NewMockPaymentGateway(ctrl)
-	mockOrderGateway := mockport.NewMockOrderGateway(ctrl)
-	useCase := usecase.NewPaymentUseCase(mockOrderGateway, mockPaymentGateway)
+	mockOrderUseCase := mockport.NewMockOrderUseCase(ctrl)
+	useCase := usecase.NewPaymentUseCase(mockPaymentGateway, mockOrderUseCase)
 	ctx := context.Background()
 
 	tests := []struct {
@@ -36,10 +36,10 @@ func Test_paymentUseCase_Create(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockPaymentGateway.EXPECT().FindByOrderIDAndStatusProcessing(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderGateway.EXPECT().FindByID(ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
+				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
 				mockPaymentGateway.EXPECT().CreateExternal(ctx, gomock.Any()).Return(&entity.CreatePaymentExternalOutput{}, nil)
 				mockPaymentGateway.EXPECT().Create(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderGateway.EXPECT().Update(ctx, gomock.Any()).Return(nil)
+				mockOrderUseCase.EXPECT().Update(ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
 			},
 			expectError: false,
 		},
@@ -50,10 +50,10 @@ func Test_paymentUseCase_Create(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockPaymentGateway.EXPECT().FindByOrderIDAndStatusProcessing(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderGateway.EXPECT().FindByID(ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
+				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
 				mockPaymentGateway.EXPECT().CreateExternal(ctx, gomock.Any()).Return(&entity.CreatePaymentExternalOutput{}, nil)
 				mockPaymentGateway.EXPECT().Create(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderGateway.EXPECT().Update(ctx, gomock.Any()).Return(assert.AnError)
+				mockOrderUseCase.EXPECT().Update(ctx, gomock.Any()).Return(nil, &domain.InternalError{})
 			},
 			expectError: true,
 			errorType:   &domain.InternalError{},
@@ -65,9 +65,9 @@ func Test_paymentUseCase_Create(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockPaymentGateway.EXPECT().FindByOrderIDAndStatusProcessing(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderGateway.EXPECT().FindByID(ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
+				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
 				mockPaymentGateway.EXPECT().CreateExternal(ctx, gomock.Any()).Return(&entity.CreatePaymentExternalOutput{}, nil)
-				mockPaymentGateway.EXPECT().Create(ctx, gomock.Any()).Return(&entity.Payment{}, assert.AnError)
+				mockPaymentGateway.EXPECT().Create(ctx, gomock.Any()).Return(&entity.Payment{}, &domain.InternalError{})
 			},
 			expectError: true,
 			errorType:   &domain.InternalError{},
@@ -79,7 +79,7 @@ func Test_paymentUseCase_Create(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockPaymentGateway.EXPECT().FindByOrderIDAndStatusProcessing(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderGateway.EXPECT().FindByID(ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
+				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
 				mockPaymentGateway.EXPECT().CreateExternal(ctx, gomock.Any()).Return(&entity.CreatePaymentExternalOutput{}, assert.AnError)
 			},
 			expectError: true,
@@ -92,7 +92,7 @@ func Test_paymentUseCase_Create(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockPaymentGateway.EXPECT().FindByOrderIDAndStatusProcessing(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderGateway.EXPECT().FindByID(ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
+				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
 			},
 			expectError: true,
 			errorType:   &domain.NotFoundError{},
@@ -104,7 +104,7 @@ func Test_paymentUseCase_Create(t *testing.T) {
 			},
 			setupMocks: func() {
 				mockPaymentGateway.EXPECT().FindByOrderIDAndStatusProcessing(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderGateway.EXPECT().FindByID(ctx, gomock.Any()).Return(&entity.Order{}, assert.AnError)
+				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{}, assert.AnError)
 			},
 			expectError: true,
 			errorType:   &domain.NotFoundError{},
@@ -156,8 +156,8 @@ func Test_paymentUseCase_Get(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockPaymentGateway := mockport.NewMockPaymentGateway(ctrl)
-	mockOrderGateway := mockport.NewMockOrderGateway(ctrl)
-	useCase := usecase.NewPaymentUseCase(mockOrderGateway, mockPaymentGateway)
+	mockOrderUseCase := mockport.NewMockOrderUseCase(ctrl)
+	useCase := usecase.NewPaymentUseCase(mockPaymentGateway, mockOrderUseCase)
 	ctx := context.Background()
 
 	tests := []struct {
@@ -214,8 +214,8 @@ func Test_paymentUseCase_Update(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockPaymentGateway := mockport.NewMockPaymentGateway(ctrl)
-	mockOrderGateway := mockport.NewMockOrderGateway(ctrl)
-	useCase := usecase.NewPaymentUseCase(mockOrderGateway, mockPaymentGateway)
+	mockOrderUseCase := mockport.NewMockOrderUseCase(ctrl)
+	useCase := usecase.NewPaymentUseCase(mockPaymentGateway, mockOrderUseCase)
 	ctx := context.Background()
 
 	tests := []struct {
@@ -234,8 +234,8 @@ func Test_paymentUseCase_Update(t *testing.T) {
 			setupMocks: func() {
 				mockPaymentGateway.EXPECT().Update(ctx, gomock.Any(), gomock.Any()).Return(nil)
 				mockPaymentGateway.EXPECT().FindByExternalPaymentID(ctx, gomock.Any()).Return(&entity.Payment{ID: 1}, nil)
-				mockOrderGateway.EXPECT().FindByID(ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
-				mockOrderGateway.EXPECT().Update(ctx, gomock.Any()).Return(nil)
+				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
+				mockOrderUseCase.EXPECT().Update(ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
 			},
 			expectError: false,
 		},
@@ -248,11 +248,11 @@ func Test_paymentUseCase_Update(t *testing.T) {
 			setupMocks: func() {
 				mockPaymentGateway.EXPECT().Update(ctx, gomock.Any(), gomock.Any()).Return(nil)
 				mockPaymentGateway.EXPECT().FindByExternalPaymentID(ctx, gomock.Any()).Return(&entity.Payment{ID: 1}, nil)
-				mockOrderGateway.EXPECT().FindByID(ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
-				mockOrderGateway.EXPECT().Update(ctx, gomock.Any()).Return(assert.AnError)
+				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
+				mockOrderUseCase.EXPECT().Update(ctx, gomock.Any()).Return(nil, &domain.InternalError{})
 			},
 			expectError: true,
-			errorType:   assert.AnError,
+			errorType:   &domain.InternalError{},
 		},
 		{
 			name: "should return error when gateway fails",
@@ -263,10 +263,10 @@ func Test_paymentUseCase_Update(t *testing.T) {
 			setupMocks: func() {
 				mockPaymentGateway.EXPECT().Update(ctx, gomock.Any(), gomock.Any()).Return(nil)
 				mockPaymentGateway.EXPECT().FindByExternalPaymentID(ctx, gomock.Any()).Return(&entity.Payment{ID: 1}, nil)
-				mockOrderGateway.EXPECT().FindByID(ctx, gomock.Any()).Return(&entity.Order{}, assert.AnError)
+				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{}, &domain.InternalError{})
 			},
 			expectError: true,
-			errorType:   assert.AnError,
+			errorType:   &domain.InternalError{},
 		},
 		{
 			name: "should return error when gateway fails",
