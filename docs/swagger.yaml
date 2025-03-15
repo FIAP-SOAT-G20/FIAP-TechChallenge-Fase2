@@ -273,6 +273,14 @@ definitions:
         example: "2024-02-09T10:00:00Z"
         type: string
     type: object
+  request.AuthenticateBodyRequest:
+    properties:
+      cpf:
+        example: 000.000.000-00
+        type: string
+    required:
+    - cpf
+    type: object
   request.CreateCustomerBodyRequest:
     properties:
       cpf:
@@ -443,6 +451,20 @@ definitions:
     - name
     - role
     type: object
+  response.AuthenticationResponse:
+    properties:
+      access_token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        type: string
+      customer:
+        $ref: '#/definitions/presenter.CustomerJsonResponse'
+      expires_in:
+        example: 86400
+        type: integer
+      token_type:
+        example: Bearer
+        type: string
+    type: object
   response.HealthCheckLivenessResponse:
     properties:
       status:
@@ -531,6 +553,44 @@ info:
   title: Fast Food API v2
   version: "1"
 paths:
+  /auth:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates a user by CPF and returns a JWT token
+      parameters:
+      - description: User CPF
+        in: body
+        name: authentication
+        required: true
+        schema:
+          $ref: '#/definitions/request.AuthenticateBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AuthenticationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Authenticate user
+      tags:
+      - sign-in
   /customers:
     get:
       consumes:
@@ -562,10 +622,16 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
+      security:
+      - BearerAuth: []
       summary: List customers (Reference TC-1 2.b.i)
       tags:
       - customers
@@ -619,6 +685,10 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
@@ -627,6 +697,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
+      security:
+      - BearerAuth: []
       summary: Delete customer
       tags:
       - customers
@@ -651,6 +723,10 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
@@ -659,6 +735,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
+      security:
+      - BearerAuth: []
       summary: Get customer
       tags:
       - customers
@@ -689,6 +767,10 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
         "404":
           description: Not Found
           schema:
@@ -697,6 +779,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/middleware.ErrorJsonResponse'
+      security:
+      - BearerAuth: []
       summary: Update customer
       tags:
       - customers
@@ -1784,3 +1868,5 @@ tags:
   name: staffs
 - description: Health check
   name: health-check
+- description: Authentication
+  name: auth

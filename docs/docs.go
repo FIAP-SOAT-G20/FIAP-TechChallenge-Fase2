@@ -15,8 +15,71 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/auth": {
+            "post": {
+                "description": "Authenticates a user by CPF and returns a JWT token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sign-in"
+                ],
+                "summary": "Authenticate user",
+                "parameters": [
+                    {
+                        "description": "User CPF",
+                        "name": "authentication",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AuthenticateBodyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.AuthenticationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/customers": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "List all customers",
                 "consumes": [
                     "application/json"
@@ -59,6 +122,12 @@ const docTemplate = `{
                     },
                     "400": {
                         "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
@@ -119,6 +188,11 @@ const docTemplate = `{
         },
         "/customers/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Search for a customer by ID",
                 "consumes": [
                     "application/json"
@@ -152,6 +226,12 @@ const docTemplate = `{
                             "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "schema": {
@@ -167,6 +247,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update an existing customer",
                 "consumes": [
                     "application/json"
@@ -209,6 +294,12 @@ const docTemplate = `{
                             "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "schema": {
@@ -224,6 +315,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Deletes a customer by ID",
                 "produces": [
                     "application/json"
@@ -250,6 +346,12 @@ const docTemplate = `{
                     },
                     "400": {
                         "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/middleware.ErrorJsonResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
@@ -2174,6 +2276,18 @@ const docTemplate = `{
                 }
             }
         },
+        "request.AuthenticateBodyRequest": {
+            "type": "object",
+            "required": [
+                "cpf"
+            ],
+            "properties": {
+                "cpf": {
+                    "type": "string",
+                    "example": "000.000.000-00"
+                }
+            }
+        },
         "request.CreateCustomerBodyRequest": {
             "type": "object",
             "required": [
@@ -2418,6 +2532,26 @@ const docTemplate = `{
                 }
             }
         },
+        "response.AuthenticationResponse": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                },
+                "customer": {
+                    "$ref": "#/definitions/presenter.CustomerJsonResponse"
+                },
+                "expires_in": {
+                    "type": "integer",
+                    "example": 86400
+                },
+                "token_type": {
+                    "type": "string",
+                    "example": "Bearer"
+                }
+            }
+        },
         "response.HealthCheckLivenessResponse": {
             "type": "object",
             "properties": {
@@ -2563,6 +2697,10 @@ const docTemplate = `{
         {
             "description": "Health check",
             "name": "health-check"
+        },
+        {
+            "description": "Authentication",
+            "name": "auth"
         }
     ],
     "externalDocs": {
