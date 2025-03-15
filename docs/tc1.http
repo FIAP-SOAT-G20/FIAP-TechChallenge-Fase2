@@ -2,9 +2,9 @@
 # https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
 # Local API
-# @baseUrl = http://localhost:8080
+@baseUrl = http://localhost:8080
 # Local K8s API
-@baseUrl = http://localhost
+# @baseUrl = http://localhost
 
 @num = 6
 @name = John Doe {{num}}
@@ -155,15 +155,15 @@ POST {{baseUrl}}/api/v1/payments/{{orderId}}/checkout HTTP/1.1
 @paymentId = {{checkout.response.body.id}}
 @paymentResource = {{checkout.response.body.external_payment_id}}
 
-###
+# ###
 
-# @name confirmPayment
-POST {{baseUrl}}/api/v1/payments/callback HTTP/1.1
+# # @name confirmPayment
+# POST {{baseUrl}}/api/v1/payments/callback HTTP/1.1
 
-{
-    "resource": "{{paymentResource}}",
-    "topic": "payment"
-}
+# {
+#     "resource": "{{paymentResource}}",
+#     "topic": "payment"
+# }
 
 ### 
 
