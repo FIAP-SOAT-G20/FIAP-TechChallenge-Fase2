@@ -55,6 +55,7 @@ func (r *Router) RegisterRoutes(handlers *Handlers) {
 		handlers.OrderProduct.Register(v1.Group("/orders/products"))
 		handlers.OrderHistory.Register(v1.Group("/orders/histories"))
 		handlers.Payment.Register(v1.Group("/payments"))
+		handlers.Category.Register(v1.Group("/categories"))
 		handlers.HealthCheck.Register(v1.Group("/health"))
 	}
 }
@@ -74,4 +75,5 @@ type Handlers struct {
 	OrderHistory *handler.OrderHistoryHandler
 	HealthCheck  *handler.HealthCheckHandler
 	Payment      *handler.PaymentHandler
+	Category     *handler.CategoryHadnler
 }

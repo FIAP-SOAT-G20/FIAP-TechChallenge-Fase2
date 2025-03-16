@@ -11,6 +11,7 @@ type CreateCustomerBodyRequest struct {
 	Email string `json:"email" binding:"required,email" example:"john.doe@email.com"`
 	CPF   string `json:"cpf" binding:"required" example:"123.456.789-00"`
 }
+
 type UpdateCustomerUriRequest struct {
 	ID uint64 `uri:"id" binding:"required"`
 }

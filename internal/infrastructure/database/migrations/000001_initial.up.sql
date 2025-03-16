@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS categories
 (
     id         SERIAL PRIMARY KEY,
     name       VARCHAR   NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT now()
+    created_at TIMESTAMP NOT NULL DEFAULT now(),
+    updated_at TIMESTAMP NOT NULL DEFAULT now()
 );
 
 CREATE TABLE IF NOT EXISTS staffs
