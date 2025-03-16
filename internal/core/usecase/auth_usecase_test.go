@@ -36,7 +36,6 @@ func TestAuthUseCase_Authenticate(t *testing.T) {
 			CPF:   "12345678901",
 		}
 		mockToken := "test-jwt-token"
-		mockExpiresIn := int64(86400)
 
 		// Set up expectations
 		mockCustomerUseCase.EXPECT().
@@ -44,18 +43,15 @@ func TestAuthUseCase_Authenticate(t *testing.T) {
 			Return(mockCustomer, nil)
 
 		mockJWTService.EXPECT().
-			GenerateToken(mockCustomer.ID, mockCustomer.CPF, mockCustomer.Name).
-			Return(mockToken, mockExpiresIn, nil)
+			GenerateToken(mockCustomer.ID).
+			Return(mockToken, nil)
 
 		// Act
-		customer, token, expiresIn, err := useCase.Authenticate(ctx, input)
+		token, err := useCase.Authenticate(ctx, input)
 
 		// Assert
 		assert.NoError(t, err)
-		assert.NotNil(t, customer)
-		assert.Equal(t, mockCustomer, customer)
 		assert.Equal(t, mockToken, token)
-		assert.Equal(t, mockExpiresIn, expiresIn)
 	})
 
 	t.Run("customer_not_found", func(t *testing.T) {
@@ -77,14 +73,12 @@ func TestAuthUseCase_Authenticate(t *testing.T) {
 			Return(nil, expectedErr)
 
 		// Act
-		customer, token, expiresIn, err := useCase.Authenticate(ctx, input)
+		token, err := useCase.Authenticate(ctx, input)
 
 		// Assert
 		assert.Error(t, err)
 		assert.Equal(t, expectedErr, err)
-		assert.Nil(t, customer)
 		assert.Empty(t, token)
-		assert.Equal(t, int64(0), expiresIn)
 	})
 
 	t.Run("token_generation_error", func(t *testing.T) {
@@ -112,17 +106,15 @@ func TestAuthUseCase_Authenticate(t *testing.T) {
 			Return(mockCustomer, nil)
 
 		mockJWTService.EXPECT().
-			GenerateToken(mockCustomer.ID, mockCustomer.CPF, mockCustomer.Name).
-			Return("", int64(0), expectedErr)
+			GenerateToken(mockCustomer.ID).
+			Return("", expectedErr)
 
 		// Act
-		customer, token, expiresIn, err := useCase.Authenticate(ctx, input)
+		token, err := useCase.Authenticate(ctx, input)
 
 		// Assert
 		assert.Error(t, err)
 		assert.Equal(t, expectedErr, err)
-		assert.Nil(t, customer)
 		assert.Empty(t, token)
-		assert.Equal(t, int64(0), expiresIn)
 	})
 }
