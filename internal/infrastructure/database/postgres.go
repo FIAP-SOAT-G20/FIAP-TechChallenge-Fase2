@@ -5,7 +5,6 @@ import (
 	"embed"
 	"errors"
 	"fmt"
-	"log/slog"
 	"time"
 
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
@@ -14,6 +13,7 @@ import (
 	gormlogger "gorm.io/gorm/logger"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 )
@@ -29,7 +29,7 @@ type Database struct {
 }
 
 type GormLogger struct {
-	*slog.Logger
+	*logger.Logger
 }
 
 func (l *GormLogger) LogMode(gormlogger.LogLevel) gormlogger.Interface {
@@ -69,7 +69,7 @@ func (l *GormLogger) Trace(ctx context.Context, begin time.Time, fc func() (sql 
 	)
 }
 
-func NewPostgresConnection(cfg *config.Config, logger *slog.Logger) (*Database, error) {
+func NewPostgresConnection(cfg *config.Config, logger *logger.Logger) (*Database, error) {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable",
 		cfg.DBHost,
 		cfg.DBUser,
