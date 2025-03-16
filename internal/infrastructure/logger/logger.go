@@ -2,21 +2,20 @@ package logger
 
 import (
 	"context"
+	"flag"
 	"log/slog"
 	"os"
-
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 )
 
 type Logger struct {
 	logger *slog.Logger
 }
 
-func NewLogger(cfg *config.Config) *Logger {
+func NewLogger(env string) *Logger {
 
 	var handler slog.Handler
 
-	if cfg.Environment == "production" {
+	if env == "production" {
 		handler = slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
 			Level:     slog.LevelInfo,
 			AddSource: true,
@@ -27,6 +26,10 @@ func NewLogger(cfg *config.Config) *Logger {
 				Level:     slog.LevelDebug,
 				AddSource: true,
 			}})
+	}
+
+	if flag.Lookup("test.v") != nil {
+		handler = slog.DiscardHandler
 	}
 
 	return &Logger{
