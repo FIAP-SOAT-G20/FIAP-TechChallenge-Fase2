@@ -205,7 +205,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [Docker](https://www.docker.com/)
 
 > [!WARNING]
-> You need to have Go version **1.23 or higher** installed on your machine to run the application locally
+> You need to have Go version **1.24 or higher** installed on your machine to run the application locally
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

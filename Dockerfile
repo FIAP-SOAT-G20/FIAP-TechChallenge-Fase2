@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM golang:1.23.6-alpine AS builder
+FROM --platform=$BUILDPLATFORM golang:1.24-alpine AS builder
 LABEL org.opencontainers.image.source="https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2" \
       org.opencontainers.image.authors="FIAP 10SOAT G18" \
       org.opencontainers.image.title="Fast Food FIAP TC-2" \
