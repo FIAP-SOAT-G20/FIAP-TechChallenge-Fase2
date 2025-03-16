@@ -50,7 +50,7 @@ import (
 func main() {
 	cfg := config.LoadConfig()
 
-	loggerInstance := logger.NewLogger(cfg)
+	loggerInstance := logger.NewLogger(cfg.Environment)
 
 	db, err := database.NewPostgresConnection(cfg, loggerInstance)
 	if err != nil {
