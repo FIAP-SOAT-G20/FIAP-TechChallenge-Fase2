@@ -72,6 +72,21 @@ func (mr *MockCustomerUseCaseMockRecorder) Delete(ctx, input any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockCustomerUseCase)(nil).Delete), ctx, input)
 }
 
+// FindByCPF mocks base method.
+func (m *MockCustomerUseCase) FindByCPF(ctx context.Context, input dto.FindCustomerByCPFInput) (*entity.Customer, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindByCPF", ctx, input)
+	ret0, _ := ret[0].(*entity.Customer)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FindByCPF indicates an expected call of FindByCPF.
+func (mr *MockCustomerUseCaseMockRecorder) FindByCPF(ctx, input any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByCPF", reflect.TypeOf((*MockCustomerUseCase)(nil).FindByCPF), ctx, input)
+}
+
 // Get mocks base method.
 func (m *MockCustomerUseCase) Get(ctx context.Context, input dto.GetCustomerInput) (*entity.Customer, error) {
 	m.ctrl.T.Helper()
