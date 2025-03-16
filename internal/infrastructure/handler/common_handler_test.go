@@ -1,7 +1,6 @@
 package handler_test
 
 import (
-	"log/slog"
 	"maps"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
@@ -14,7 +13,7 @@ import (
 func newRouter() *gin.Engine {
 	router := gin.New()
 	gin.SetMode(gin.TestMode)
-	router.Use(middleware.ErrorHandler(&logger.Logger{Logger: slog.New(slog.DiscardHandler)})) // Remove log output
+	router.Use(middleware.ErrorHandler(logger.NewLogger(""))) // Remove log output
 	server.RegisterCustomValidation()
 	return router
 }
