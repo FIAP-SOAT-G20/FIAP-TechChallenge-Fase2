@@ -62,7 +62,12 @@ func LoadConfig() *Config {
 	mercadoPagoTimeout, _ := time.ParseDuration(getEnv("MERCADO_PAGO_TIMEOUT", "10s"))
 	mercadoPagoRetryCount, _ := strconv.Atoi(getEnv("MERCADO_PAGO_RETRY_COUNT", "2"))
 
-	jwtExpiration, _ := time.ParseDuration(getEnv("JWT_EXPIRATION", "24h"))
+	jwtExpirationStr := getEnv("JWT_EXPIRATION", "24h")
+	jwtExpiration, err := time.ParseDuration(jwtExpirationStr)
+	if err != nil {
+		log.Printf("Warning: invalid JWT_EXPIRATION value %q: %v. Using default value 24h.", jwtExpirationStr, err)
+		jwtExpiration = 24 * time.Hour
+	}
 
 	return &Config{
 		// Database settings
