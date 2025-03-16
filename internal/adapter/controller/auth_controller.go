@@ -22,9 +22,7 @@ func NewAuthController(customerUseCase port.CustomerUseCase, jwtService port.JWT
 }
 
 func (c *authController) Authenticate(ctx context.Context, presenter port.Presenter, input dto.AuthenticateInput) ([]byte, error) {
-	customer, err := c.customerUseCase.FindByCPF(ctx, dto.FindCustomerByCPFInput{
-		CPF: input.CPF,
-	})
+	customer, err := c.customerUseCase.FindByCPF(ctx, dto.FindCustomerByCPFInput(input))
 	if err != nil {
 		return nil, err
 	}
