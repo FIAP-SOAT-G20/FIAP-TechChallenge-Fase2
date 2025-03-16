@@ -11,7 +11,6 @@ package mock_port
 
 import (
 	reflect "reflect"
-	time "time"
 
 	gomock "go.uber.org/mock/gomock"
 )
@@ -40,36 +39,19 @@ func (m *MockJWTService) EXPECT() *MockJWTServiceMockRecorder {
 	return m.recorder
 }
 
-// ExtractClaims mocks base method.
-func (m *MockJWTService) ExtractClaims(token string) (uint64, string, string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ExtractClaims", token)
-	ret0, _ := ret[0].(uint64)
-	ret1, _ := ret[1].(string)
-	ret2, _ := ret[2].(string)
-	ret3, _ := ret[3].(error)
-	return ret0, ret1, ret2, ret3
-}
-
-// ExtractClaims indicates an expected call of ExtractClaims.
-func (mr *MockJWTServiceMockRecorder) ExtractClaims(token any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExtractClaims", reflect.TypeOf((*MockJWTService)(nil).ExtractClaims), token)
-}
-
 // GenerateToken mocks base method.
-func (m *MockJWTService) GenerateToken(customerID uint64, cpf, name string, expiresIn time.Duration) (string, error) {
+func (m *MockJWTService) GenerateToken(customerID uint64) (string, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GenerateToken", customerID, cpf, name, expiresIn)
+	ret := m.ctrl.Call(m, "GenerateToken", customerID)
 	ret0, _ := ret[0].(string)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GenerateToken indicates an expected call of GenerateToken.
-func (mr *MockJWTServiceMockRecorder) GenerateToken(customerID, cpf, name, expiresIn any) *gomock.Call {
+func (mr *MockJWTServiceMockRecorder) GenerateToken(customerID any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GenerateToken", reflect.TypeOf((*MockJWTService)(nil).GenerateToken), customerID, cpf, name, expiresIn)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GenerateToken", reflect.TypeOf((*MockJWTService)(nil).GenerateToken), customerID)
 }
 
 // ValidateToken mocks base method.

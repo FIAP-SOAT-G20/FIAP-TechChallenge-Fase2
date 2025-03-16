@@ -106,6 +106,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
 	staffUC := usecase.NewStaffUseCase(staffGateway)
 	paymentUC := usecase.NewPaymentUseCase(paymentGateway, orderUC)
+	authUC := usecase.NewAuthUseCase(customerUC, jwtService)
 
 	// Controllers
 	productController := controller.NewProductController(productUC)
@@ -115,7 +116,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	staffController := controller.NewStaffController(staffUC)
 	orderHistoryController := controller.NewOrderHistoryController(orderHistoryUC)
 	paymentController := controller.NewPaymentController(paymentUC)
-	authController := controller.NewAuthController(customerUC, jwtService)
+	authController := controller.NewAuthController(authUC)
 
 	// Handlers
 	productHandler := handler.NewProductHandler(productController)
