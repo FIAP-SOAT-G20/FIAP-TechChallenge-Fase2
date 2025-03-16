@@ -3,7 +3,7 @@ package presenter
 import (
 	"errors"
 
-	"github.com/goccy/go-json"
+	"encoding/json"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
