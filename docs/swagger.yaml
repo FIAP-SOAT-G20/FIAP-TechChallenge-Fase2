@@ -9,6 +9,12 @@ definitions:
         example: Bad Request
         type: string
     type: object
+  presenter.AuthenticationResponse:
+    properties:
+      access_token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        type: string
+    type: object
   presenter.CustomerJsonPaginatedResponse:
     properties:
       customers:
@@ -71,6 +77,9 @@ definitions:
         example: 1
         type: integer
       order_id:
+        example: 1
+        type: integer
+      staff_id:
         example: 1
         type: integer
       status:
@@ -451,20 +460,6 @@ definitions:
     - name
     - role
     type: object
-  response.AuthenticationResponse:
-    properties:
-      access_token:
-        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-        type: string
-      customer:
-        $ref: '#/definitions/presenter.CustomerJsonResponse'
-      expires_in:
-        example: 86400
-        type: integer
-      token_type:
-        example: Bearer
-        type: string
-    type: object
   response.HealthCheckLivenessResponse:
     properties:
       status:
@@ -571,7 +566,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.AuthenticationResponse'
+            $ref: '#/definitions/presenter.AuthenticationResponse'
         "400":
           description: Bad Request
           schema:
@@ -1844,5 +1839,3 @@ tags:
   name: staffs
 - description: Health check
   name: health-check
-- description: Authentication
-  name: auth

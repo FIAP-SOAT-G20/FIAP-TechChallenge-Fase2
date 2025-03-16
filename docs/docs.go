@@ -43,7 +43,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.AuthenticationResponse"
+                            "$ref": "#/definitions/presenter.AuthenticationResponse"
                         }
                     },
                     "400": {
@@ -1856,6 +1856,15 @@ const docTemplate = `{
                 }
             }
         },
+        "presenter.AuthenticationResponse": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                }
+            }
+        },
         "presenter.CustomerJsonPaginatedResponse": {
             "type": "object",
             "properties": {
@@ -1943,6 +1952,10 @@ const docTemplate = `{
                     "example": 1
                 },
                 "order_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "staff_id": {
                     "type": "integer",
                     "example": 1
                 },
@@ -2488,26 +2501,6 @@ const docTemplate = `{
                 }
             }
         },
-        "response.AuthenticationResponse": {
-            "type": "object",
-            "properties": {
-                "access_token": {
-                    "type": "string",
-                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                },
-                "customer": {
-                    "$ref": "#/definitions/presenter.CustomerJsonResponse"
-                },
-                "expires_in": {
-                    "type": "integer",
-                    "example": 86400
-                },
-                "token_type": {
-                    "type": "string",
-                    "example": "Bearer"
-                }
-            }
-        },
         "response.HealthCheckLivenessResponse": {
             "type": "object",
             "properties": {
@@ -2653,10 +2646,6 @@ const docTemplate = `{
         {
             "description": "Health check",
             "name": "health-check"
-        },
-        {
-            "description": "Authentication",
-            "name": "auth"
         }
     ],
     "externalDocs": {

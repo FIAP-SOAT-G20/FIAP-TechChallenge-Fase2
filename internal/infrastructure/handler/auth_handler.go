@@ -31,7 +31,7 @@ func (h *AuthHandler) Register(router *gin.RouterGroup) {
 //	@Tags			sign-in
 //	@Accept			json
 //	@Produce		json
-//	@Param			authentication	body		request.AuthenticateBodyRequest	true	"User CPF"
+//	@Param			authentication	body		request.AuthenticateBodyRequest		true	"User CPF"
 //	@Success		200				{object}	presenter.AuthenticationResponse	"OK"
 //	@Failure		400				{object}	middleware.ErrorJsonResponse		"Bad Request"
 //	@Failure		401				{object}	middleware.ErrorJsonResponse		"Unauthorized"
