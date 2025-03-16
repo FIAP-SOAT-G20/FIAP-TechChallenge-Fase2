@@ -51,7 +51,7 @@ func main() {
 
 	loggerInstance := logger.NewLogger(cfg)
 
-	db, err := database.NewPostgresConnection(cfg, loggerInstance.Logger)
+	db, err := database.NewPostgresConnection(cfg, loggerInstance)
 	if err != nil {
 		loggerInstance.Error("failed to connect to database", "error", err)
 		os.Exit(1)
@@ -62,7 +62,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	httpClient := httpclient.NewRestyClient(cfg, loggerInstance.Logger)
+	httpClient := httpclient.NewRestyClient(cfg, loggerInstance)
 
 	handlers := setupHandlers(db, httpClient, cfg)
 
