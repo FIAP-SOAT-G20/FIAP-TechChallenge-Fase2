@@ -25,7 +25,7 @@ func NewJWTService(cfg *config.Config) port.JWTService {
 
 func (s *jwtService) GenerateToken(id uint64) (string, error) {
 	expiresAt := time.Now().Add(s.expiration)
-	idStr := strconv.FormatUint(id, 64)
+	idStr := strconv.FormatUint(id, 10)
 
 	tokenClaims := jwt.RegisteredClaims{
 		ExpiresAt: jwt.NewNumericDate(expiresAt),
