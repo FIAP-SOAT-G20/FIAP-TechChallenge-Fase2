@@ -2,47 +2,49 @@ package controller
 
 import (
 	"context"
-	"encoding/json"
+	"time"
 
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
 type authController struct {
-	useCase port.AuthUseCase
+	customerUseCase port.CustomerUseCase
+	jwtService      port.JWTService
 }
 
-func NewAuthController(useCase port.AuthUseCase) port.AuthController {
-	return &authController{useCase}
+func NewAuthController(customerUseCase port.CustomerUseCase, jwtService port.JWTService) port.AuthController {
+	return &authController{
+		customerUseCase: customerUseCase,
+		jwtService:      jwtService,
+	}
 }
 
-func (c *authController) Authenticate(ctx context.Context, p port.Presenter, i dto.AuthenticateInput) ([]byte, error) {
-	authOutput, err := c.useCase.Authenticate(ctx, i)
+func (c *authController) Authenticate(ctx context.Context, presenter port.Presenter, input dto.AuthenticateInput) ([]byte, error) {
+	customer, err := c.customerUseCase.FindByCPF(ctx, dto.FindCustomerByCPFInput{
+		CPF: input.CPF,
+	})
 	if err != nil {
 		return nil, err
 	}
 
-	customerBytes, err := p.Present(dto.PresenterInput{Result: authOutput.Customer})
+	token, err := c.jwtService.GenerateToken(
+		customer.ID,
+		customer.CPF,
+		customer.Name,
+		24*time.Hour,
+	)
 	if err != nil {
-		return nil, err
+		return nil, domain.NewInternalError(err)
 	}
 
-	var customerMap map[string]interface{}
-	if err := json.Unmarshal(customerBytes, &customerMap); err != nil {
-		return nil, err
-	}
-
-	response := map[string]interface{}{
-		"customer":     customerMap,
-		"access_token": authOutput.AccessToken,
-		"token_type":   authOutput.TokenType,
-		"expires_in":   authOutput.ExpiresIn,
-	}
-
-	responseBytes, err := json.Marshal(response)
-	if err != nil {
-		return nil, err
-	}
-
-	return responseBytes, nil
+	return presenter.Present(dto.PresenterInput{
+		Result: map[string]interface{}{
+			"customer":     customer,
+			"access_token": token,
+			"token_type":   "Bearer",
+			"expires_in":   int64((24 * time.Hour).Seconds()),
+		},
+	})
 }

@@ -13,4 +13,5 @@ type CustomerUseCase interface {
 	Get(ctx context.Context, input dto.GetCustomerInput) (*entity.Customer, error)
 	Update(ctx context.Context, input dto.UpdateCustomerInput) (*entity.Customer, error)
 	Delete(ctx context.Context, input dto.DeleteCustomerInput) (*entity.Customer, error)
+	FindByCPF(ctx context.Context, input dto.FindCustomerByCPFInput) (*entity.Customer, error)
 }

@@ -32,11 +32,11 @@ func (h *AuthHandler) Register(router *gin.RouterGroup) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			authentication	body		request.AuthenticateBodyRequest	true	"User CPF"
-//	@Success		200				{object}	response.AuthenticationResponse	"OK"
-//	@Failure		400				{object}	middleware.ErrorJsonResponse	"Bad Request"
-//	@Failure		401				{object}	middleware.ErrorJsonResponse	"Unauthorized"
-//	@Failure		404				{object}	middleware.ErrorJsonResponse	"Not Found"
-//	@Failure		500				{object}	middleware.ErrorJsonResponse	"Internal Server Error"
+//	@Success		200				{object}	presenter.AuthenticationResponse	"OK"
+//	@Failure		400				{object}	middleware.ErrorJsonResponse		"Bad Request"
+//	@Failure		401				{object}	middleware.ErrorJsonResponse		"Unauthorized"
+//	@Failure		404				{object}	middleware.ErrorJsonResponse		"Not Found"
+//	@Failure		500				{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/auth [post]
 func (h *AuthHandler) Authenticate(c *gin.Context) {
 	var body request.AuthenticateBodyRequest
@@ -51,7 +51,7 @@ func (h *AuthHandler) Authenticate(c *gin.Context) {
 
 	output, err := h.controller.Authenticate(
 		c.Request.Context(),
-		presenter.NewCustomerJsonPresenter(),
+		presenter.NewAuthPresenter(),
 		input,
 	)
 	if err != nil {

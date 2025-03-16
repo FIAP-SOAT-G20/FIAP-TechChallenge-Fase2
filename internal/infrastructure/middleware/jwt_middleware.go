@@ -25,16 +25,11 @@ func JWTAuthMiddleware(jwtService port.JWTService) gin.HandlerFunc {
 			return
 		}
 
-		claims, err := jwtService.ValidateToken(parts[1])
-		if err != nil {
+		if err := jwtService.ValidateToken(parts[1]); err != nil {
 			_ = c.Error(domain.NewUnauthorizedError(domain.ErrInvalidToken))
 			c.Abort()
 			return
 		}
-
-		c.Set("customerID", claims.CustomerID)
-		c.Set("customerCPF", claims.CPF)
-		c.Set("customerName", claims.Name)
 
 		c.Next()
 	}

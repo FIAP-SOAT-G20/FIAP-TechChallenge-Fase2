@@ -6,7 +6,6 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/docs"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/config"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
@@ -77,5 +76,4 @@ type Handlers struct {
 	HealthCheck  *handler.HealthCheckHandler
 	Payment      *handler.PaymentHandler
 	Auth         *handler.AuthHandler
-	JWTService   port.JWTService
 }

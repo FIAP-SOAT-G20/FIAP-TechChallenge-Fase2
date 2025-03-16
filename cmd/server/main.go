@@ -106,7 +106,6 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
 	staffUC := usecase.NewStaffUseCase(staffGateway)
 	paymentUC := usecase.NewPaymentUseCase(paymentGateway, orderUC)
-	authUC := usecase.NewAuthUseCase(customerGateway, jwtService, cfg.JWTExpiration)
 
 	// Controllers
 	productController := controller.NewProductController(productUC)
@@ -116,7 +115,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	staffController := controller.NewStaffController(staffUC)
 	orderHistoryController := controller.NewOrderHistoryController(orderHistoryUC)
 	paymentController := controller.NewPaymentController(paymentUC)
-	authController := controller.NewAuthController(authUC)
+	authController := controller.NewAuthController(customerUC, jwtService)
 
 	// Handlers
 	productHandler := handler.NewProductHandler(productController)
@@ -129,16 +128,17 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	paymentHandler := handler.NewPaymentHandler(paymentController)
 	authHandler := handler.NewAuthHandler(authController)
 
-	return &route.Handlers{
+	handlers := &route.Handlers{
 		Product:      productHandler,
 		Customer:     customerHandler,
+		Staff:        staffHandler,
 		Order:        orderHandler,
 		OrderProduct: orderProductHandler,
 		OrderHistory: orderHistoryHandler,
-		Staff:        staffHandler,
 		HealthCheck:  healthCheckHandler,
 		Payment:      paymentHandler,
 		Auth:         authHandler,
-		JWTService:   jwtService,
 	}
+
+	return handlers
 }

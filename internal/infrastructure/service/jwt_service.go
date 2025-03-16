@@ -27,11 +27,12 @@ func NewJWTService(cfg *config.Config) port.JWTService {
 	}
 }
 
-func (s *jwtService) GenerateToken(claims port.JWTClaims, expiresIn time.Duration) (string, error) {
+func (s *jwtService) GenerateToken(customerID uint64, cpf string, name string, expiresIn time.Duration) (string, error) {
+	// Create claims directly with primitive parameters
 	tokenClaims := customClaims{
-		CustomerID: claims.CustomerID,
-		CPF:        claims.CPF,
-		Name:       claims.Name,
+		CustomerID: customerID,
+		CPF:        cpf,
+		Name:       name,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(expiresIn)),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
@@ -47,28 +48,42 @@ func (s *jwtService) GenerateToken(claims port.JWTClaims, expiresIn time.Duratio
 	return signedToken, nil
 }
 
-// ValidateToken valida um token JWT e retorna os claims
-func (s *jwtService) ValidateToken(tokenString string) (*port.JWTClaims, error) {
-	claims := &customClaims{}
-
-	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+func (s *jwtService) ValidateToken(tokenString string) error {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, errors.New("método de assinatura inválido")
+			return nil, errors.New("invalid signature method")
 		}
 		return s.secretKey, nil
 	})
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	if !token.Valid {
-		return nil, errors.New("token inválido")
+		return errors.New("invalid token")
 	}
 
-	return &port.JWTClaims{
-		CustomerID: claims.CustomerID,
-		CPF:        claims.CPF,
-		Name:       claims.Name,
-	}, nil
+	return nil
+}
+
+func (s *jwtService) ExtractClaims(tokenString string) (uint64, string, string, error) {
+	claims := &customClaims{}
+
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, errors.New("invalid signature method")
+		}
+		return s.secretKey, nil
+	})
+
+	if err != nil {
+		return 0, "", "", err
+	}
+
+	if !token.Valid {
+		return 0, "", "", errors.New("invalid token")
+	}
+
+	return claims.CustomerID, claims.CPF, claims.Name, nil
 }
