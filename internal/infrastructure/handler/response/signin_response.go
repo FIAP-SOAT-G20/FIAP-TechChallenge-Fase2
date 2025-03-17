@@ -1,15 +1,7 @@
-package dto
+package response
 
-import (
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
-)
+import "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 
-// Request DTOs
-type SignInRequest struct {
-	CPF string `json:"cpf" binding:"required" example:"123.456.789-00"`
-}
-
-// Response DTOs
 type SignInResponse struct {
 	Customer CustomerResponse `json:"customer"`
 }
