@@ -1,46 +1,47 @@
 package usecase
 
 import (
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
 )
 
 type CategoryUsecase struct {
-	categoryDatasource port.CategoryDatasourcePort
+	categoryGateway port.CategoryGateway
 }
 
-func NewCategoryUsecase(categoryDatasource port.CategoryDatasourcePort) port.CategoryUsecasePort {
+func NewCategoryUsecase(categoryGateway port.CategoryGateway) port.CategoryUsecasePort {
 	return &CategoryUsecase{
-		categoryDatasource: categoryDatasource,
+		categoryGateway: categoryGateway,
 	}
 }
 
 func (cu *CategoryUsecase) Create(category *entity.Category) error {
-	return cu.categoryDatasource.Insert(category)
+	return cu.categoryGateway.Insert(category)
 }
 
 func (cu *CategoryUsecase) GetByID(id uint64) (*entity.Category, error) {
-	return cu.categoryDatasource.GetByID(id)
+	return cu.categoryGateway.GetByID(id)
 }
 
 func (cu *CategoryUsecase) List(name string, page, limit int) ([]entity.Category, int64, error) {
-	return cu.categoryDatasource.GetAll(name, page, limit)
+	return cu.categoryGateway.GetAll(name, page, limit)
 }
 
 func (cu *CategoryUsecase) Update(category *entity.Category) error {
-	_, err := cu.categoryDatasource.GetByID(category.ID)
+	_, err := cu.categoryGateway.GetByID(category.ID)
 	if err != nil {
-		return entity.ErrNotFound
+		return domain.ErrNotFound
 	}
 
-	return cu.categoryDatasource.Update(category)
+	return cu.categoryGateway.Update(category)
 }
 
 func (cu *CategoryUsecase) Delete(id uint64) error {
-	_, err := cu.categoryDatasource.GetByID(id)
+	_, err := cu.categoryGateway.GetByID(id)
 	if err != nil {
-		return entity.ErrNotFound
+		return domain.ErrNotFound
 	}
 
-	return cu.categoryDatasource.Delete(id)
+	return cu.categoryGateway.Delete(id)
 }
