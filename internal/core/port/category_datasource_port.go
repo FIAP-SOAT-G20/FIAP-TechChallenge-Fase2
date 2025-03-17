@@ -4,7 +4,7 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 )
 
-type CategoryDatasourcePort interface {
+type CategoryDatasource interface {
 	Insert(category *entity.Category) error
 	GetByID(id uint64) (*entity.Category, error)
 	GetAll(name string, page, limit int) ([]entity.Category, int64, error)
