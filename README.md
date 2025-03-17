@@ -127,6 +127,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - **Database Connection**: The database connection was created using GORM, a popular ORM library for Go. This library provides an easy way to interact with the database and perform CRUD operations.
 - **Database Migrations**: Database migrations were created to manage the database schema. This allows us to version control the database schema and apply changes to the database in a structured way.
 - **HTTP Server**: The HTTP server was created using the Gin framework, a lightweight web framework for Go. This framework provides a fast and easy way to create web applications in Go.
+- **Mock Payment Gateway**: A mock payment gateway was created with Mockoon (docker) to simulate the payment process. This mock server is used to test the payment process without interacting with the real payment gateway. We have tested the integration with the Mercado Pago API, but we are using the mock server to simulate the payment gateway validation, avoiding the need to expose the Mercado Pago API credentials, and to simplify the validation, because our mock server can access our webhook directly.
 
 <!-- [Back to top](#readme-top) -->
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -238,23 +239,17 @@ make compose-build
 
 > [!IMPORTANT]
 > After running the application, a mock server container will be created to simulate the payment gateway.  
-> When you create a new payment (with `POST payments/:order_id/checkout`) the order status will be updated to `PENDING`,  
+> When you create a new payment (with `POST payments/:order_id/checkout`) the order status will be updated from `OPEN` to `PENDING`,  
 > then the mock server will call the webhook `POST payments/callback`,  
 > and the order status will be updated from `PENDING` to `RECEIVED`.  
 > You can verify mock server logs by running `docker logs mockserver.10soat-g18.dev`.
-
-> [!NOTE]
-> We have tested the integration with the Mercado Pago API,  
-> but we are using the mock server to simulate the payment gateway validation,  
-> avoiding the need to expose the Mercado Pago API credentials,  
-> and to simplify the validation, because our mock server can access our webhook directly.
 
 > [!TIP]
 > We have created a step-by-step guide to test the application, you can find it [here](docs/tc2-validation-testing.md).  
 >
 > API Documentation will be available at:
 >
-> - Swagger: 
+> - Swagger:
 >   - Docker: <http://localhost:8080/docs/index.html>
 >   - K8s: <http://localhost/docs/index.html>
 > - Postman collection: [here](docs/postman_collection.json)
@@ -427,7 +422,7 @@ make test
 
 ## :busts_in_silhouette: Contributors
 
-<p align="center">
+<div align="center">
   <table>
     <tbody>
       <tr>
@@ -439,6 +434,6 @@ make test
       </tr>
     </tbody>
   </table>
-</p>
+</div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
