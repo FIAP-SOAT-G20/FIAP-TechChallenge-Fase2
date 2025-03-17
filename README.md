@@ -270,7 +270,7 @@ make compose-up
 >
 > - Swagger: <http://localhost:8080/docs/index.html>
 > - Postman collection: [here](docs/postman_collection.json)
-> - HTTP Client: [here](docs/tc2.http)
+> - [Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client): [here](docs/tc2.http)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
