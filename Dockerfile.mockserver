@@ -1,4 +1,4 @@
-FROM mockoon/cli
+FROM mockoon/cli:9.2.0
 
 LABEL org.opencontainers.image.source="https://github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2" \
       org.opencontainers.image.authors="FIAP 10SOAT G18" \
