@@ -183,10 +183,12 @@ func Test_paymentUseCase_Get(t *testing.T) {
 				OrderID: uint64(1),
 			},
 			setupMocks: func() {
-				mockPaymentGateway.EXPECT().FindByOrderID(ctx, gomock.Any()).Return(&entity.Payment{}, assert.AnError)
+				mockPaymentGateway.EXPECT().
+					FindByOrderID(ctx, gomock.Any()).
+					Return(nil, assert.AnError)
 			},
 			expectError: true,
-			errorType:   assert.AnError,
+			errorType:   &domain.InternalError{},
 		},
 	}
 	for _, tt := range tests {

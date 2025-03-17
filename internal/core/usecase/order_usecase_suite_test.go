@@ -35,7 +35,6 @@ func (s *OrderUsecaseSuiteTest) SetupTest() {
 		{
 			ID:         1,
 			CustomerID: uint64(1),
-			TotalBill:  99.99,
 			Status:     valueobject.PENDING,
 			CreatedAt:  currentTime,
 			UpdatedAt:  currentTime,
@@ -43,7 +42,6 @@ func (s *OrderUsecaseSuiteTest) SetupTest() {
 		{
 			ID:         2,
 			CustomerID: uint64(2),
-			TotalBill:  199.99,
 			Status:     valueobject.RECEIVED,
 			CreatedAt:  currentTime,
 			UpdatedAt:  currentTime,
