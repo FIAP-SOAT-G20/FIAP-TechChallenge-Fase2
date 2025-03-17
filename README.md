@@ -250,12 +250,13 @@ make compose-build
 > and to simplify the validation, because our mock server can access our webhook directly.
 
 > [!TIP]
-> We have created a step-by-step guide to test the application,  
-> you can find it [here](docs/tc2-validation-testing.md)  
+> We have created a step-by-step guide to test the application, you can find it [here](docs/tc2-validation-testing.md).  
 >
 > API Documentation will be available at:
 >
-> - Swagger: <http://localhost:8080/docs/index.html> (docker) OR <http://localhost/docs/index.html> (k8s)
+> - Swagger: 
+>   - Docker: <http://localhost:8080/docs/index.html>
+>   - K8s: <http://localhost/docs/index.html>
 > - Postman collection: [here](docs/postman_collection.json)
 > - [Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client): [here](docs/tc2.http)
 
