@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"context"
-	"errors"
 	"strconv"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
@@ -135,7 +134,12 @@ func (uc *paymentUseCase) createPaymentPayload(o *entity.Order) *entity.CreatePa
 func (uc *paymentUseCase) Get(ctx context.Context, input dto.GetPaymentInput) (*entity.Payment, error) {
 	payment, err := uc.paymentGateway.FindByOrderID(ctx, input.OrderID)
 	if err != nil {
-		return nil, errors.New(domain.ErrNotFound)
+		return nil, domain.NewInternalError(err)
 	}
+
+	if payment == nil {
+		return nil, domain.NewNotFoundError(domain.ErrNotFound)
+	}
+
 	return payment, nil
 }
