@@ -23,8 +23,8 @@ func toStaffJsonResponse(staff *entity.Staff) StaffJsonResponse {
 		ID:        staff.ID,
 		Name:      staff.Name,
 		Role:      staff.Role.String(),
-		CreatedAt: staff.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
-		UpdatedAt: staff.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
+		CreatedAt: staff.CreatedAt.UTC().Format("2006-01-02T15:04:05Z07:00"),
+		UpdatedAt: staff.UpdatedAt.UTC().Format("2006-01-02T15:04:05Z07:00"),
 	}
 }
 
