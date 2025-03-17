@@ -4,7 +4,7 @@
 
 This document describes how to perform validation testing on the TC-2 API. Validation testing is the process of ensuring that the API meets the requirements specified in the [Software Requirements Specification](./tc2-spec.pdf) document. This document will guide you through the process of testing the API to ensure that it meets the requirements.
 
-After following the steps in the [Readme](./README.md) file, you should have the API running on your local machine.
+After following the steps in the [Readme](../README.md) file, you should have the API running on your local machine.
 
 > [!IMPORTANT]
 > Use `http://localhost:8080` as the base URL for the API if you are running it locally via Docker Compose (`make compose-up`).  
