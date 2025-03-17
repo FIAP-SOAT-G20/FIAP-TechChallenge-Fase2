@@ -29,7 +29,6 @@ Table categories {
 Table orders {
   id int [pk, increment]
   customer_id int [null, ref: > customers.id]
-  total_bill decimal(19,2)
   created_at datetime [not null, default: `now()`]
   updated_at datetime [not null, default: `now()`]
 }
