@@ -3,9 +3,10 @@ package controller
 import (
 	"net/http"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/response"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,7 +14,7 @@ type SignInController struct {
 	signinUsecase port.SignInUsecasePort
 }
 
-func NewSignInController(signinUsecase port.SignInUsecasePort) port.SignInControllerPort {
+func NewSignInController(signinUsecase port.SignInUsecasePort) *SignInController {
 	return &SignInController{
 		signinUsecase: signinUsecase,
 	}
@@ -36,31 +37,31 @@ func (sc *SignInController) GroupRouterPattern() string {
 //	@Tags			sign-in
 //	@Accept			json
 //	@Produce		json
-//	@Param			request	body		dto.SignInRequest	true	"SignIn Request"
-//	@Success		200		{object}	dto.SignInResponse	"Successfully signed in"
-//	@Failure		400		{object}	dto.ErrorResponse	"Validation error"
-//	@Failure		401		{object}	dto.ErrorResponse	"Unauthorized error"
-//	@Failure		500		{object}	dto.ErrorResponse	"Internal server error"
+//	@Param			request	body		request.SignInRequest	true	"SignIn Request"
+//	@Success		200		{object}	response.SignInResponse	"Successfully signed in"
+//	@Failure		400		{object}	response.ErrorResponse	"Validation error"
+//	@Failure		401		{object}	response.ErrorResponse	"Unauthorized error"
+//	@Failure		500		{object}	response.ErrorResponse	"Internal server error"
 //	@Router			/api/v1/sign-in [post]
 func (sc *SignInController) SignIn(ctx *gin.Context) {
-	var req dto.SignInRequest
+	var req request.SignInRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, dto.ErrorResponse{Message: err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, response.ErrorResponse{Message: err.Error()})
 		return
 	}
 
 	customer, err := sc.signinUsecase.GetByCPF(req.CPF)
 	if err != nil {
 		switch err {
-		case entity.ErrNotFound:
-			ctx.AbortWithStatusJSON(http.StatusNotFound, dto.ErrorResponse{Message: "customer not found"})
-		case entity.ErrInvalidInput:
-			ctx.AbortWithStatusJSON(http.StatusBadRequest, dto.ErrorResponse{Message: err.Error()})
+		case domain.NewNotFoundError(domain.ErrNotFound):
+			ctx.AbortWithStatusJSON(http.StatusNotFound, response.ErrorResponse{Message: "customer not found"})
+		case domain.NewInvalidInputError(domain.ErrInvalidInput):
+			ctx.AbortWithStatusJSON(http.StatusBadRequest, response.ErrorResponse{Message: err.Error()})
 		default:
-			ctx.AbortWithStatusJSON(http.StatusInternalServerError, dto.ErrorResponse{Message: "internal server error"})
+			ctx.AbortWithStatusJSON(http.StatusInternalServerError, response.ErrorResponse{Message: "internal server error"})
 		}
 		return
 	}
 
-	ctx.JSON(http.StatusOK, dto.NewSignInResponse(customer))
+	ctx.JSON(http.StatusOK, response.NewSignInResponse(customer))
 }

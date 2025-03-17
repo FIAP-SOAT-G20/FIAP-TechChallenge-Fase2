@@ -4,8 +4,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/response"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,7 +14,7 @@ type CategoryController struct {
 	categoryUsecase port.CategoryUsecasePort
 }
 
-func NewCategoryController(categoryUsecase port.CategoryUsecasePort) port.CategoryControllerPort {
+func NewCategoryController(categoryUsecase port.CategoryUsecasePort) *CategoryController {
 	return &CategoryController{
 		categoryUsecase: categoryUsecase,
 	}
@@ -32,9 +33,9 @@ func (cc *CategoryController) GroupRouterPattern() string {
 }
 
 func (cc *CategoryController) CreateCategory(ctx *gin.Context) {
-	var req dto.CreateCategoryRequest
+	var req request.CreateCategoryRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, dto.ErrorResponse{Message: err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, response.ErrorResponse{Message: err.Error()})
 		return
 	}
 
@@ -42,27 +43,27 @@ func (cc *CategoryController) CreateCategory(ctx *gin.Context) {
 
 	err := cc.categoryUsecase.Create(category)
 	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, dto.ErrorResponse{Message: err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, response.ErrorResponse{Message: err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, dto.NewCategoryResponse(category))
+	ctx.JSON(http.StatusCreated, response.NewCategoryResponse(category))
 }
 
 func (cc *CategoryController) GetCategory(ctx *gin.Context) {
-	var req dto.GetCategoryRequest
+	var req request.GetCategoryRequest
 	if err := ctx.ShouldBindUri(&req); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, dto.ErrorResponse{Message: err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, response.ErrorResponse{Message: err.Error()})
 		return
 	}
 
 	category, err := cc.categoryUsecase.GetByID(req.ID)
 	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusNotFound, dto.ErrorResponse{Message: err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusNotFound, response.ErrorResponse{Message: err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, dto.NewCategoryResponse(category))
+	ctx.JSON(http.StatusOK, response.NewCategoryResponse(category))
 }
 
 func (cc *CategoryController) ListCategories(ctx *gin.Context) {
@@ -72,36 +73,36 @@ func (cc *CategoryController) ListCategories(ctx *gin.Context) {
 
 	pageInt, err := strconv.Atoi(page)
 	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, dto.ErrorResponse{Message: "invalid page parameter"})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, response.ErrorResponse{Message: "invalid page parameter"})
 		return
 	}
 
 	limitInt, err := strconv.Atoi(limit)
 	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, dto.ErrorResponse{Message: "invalid limit parameter"})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, response.ErrorResponse{Message: "invalid limit parameter"})
 		return
 	}
 
 	categories, total, err := cc.categoryUsecase.List(name, pageInt, limitInt)
 	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, dto.ErrorResponse{Message: err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, response.ErrorResponse{Message: err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, dto.NewCategoriesPaginatedResponse(categories, total, pageInt, limitInt))
+	ctx.JSON(http.StatusOK, response.NewCategoriesPaginatedResponse(categories, total, pageInt, limitInt))
 }
 
 func (cc *CategoryController) UpdateCategory(ctx *gin.Context) {
-	var req dto.UpdateCategoryRequest
+	var req request.UpdateCategoryRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, dto.ErrorResponse{Message: err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, response.ErrorResponse{Message: err.Error()})
 		return
 	}
 
 	idStr := ctx.Param("id")
 	id, err := strconv.ParseUint(idStr, 10, 64)
 	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, dto.ErrorResponse{Message: err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, response.ErrorResponse{Message: err.Error()})
 		return
 	}
 
@@ -109,23 +110,23 @@ func (cc *CategoryController) UpdateCategory(ctx *gin.Context) {
 
 	err = cc.categoryUsecase.Update(category)
 	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusNotFound, dto.ErrorResponse{Message: err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusNotFound, response.ErrorResponse{Message: err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, dto.NewCategoryResponse(category))
+	ctx.JSON(http.StatusOK, response.NewCategoryResponse(category))
 }
 
 func (cc *CategoryController) DeleteCategory(ctx *gin.Context) {
-	var req dto.DeleteCategoryRequest
+	var req request.DeleteCategoryRequest
 	if err := ctx.ShouldBindUri(&req); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, dto.ErrorResponse{Message: err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, response.ErrorResponse{Message: err.Error()})
 		return
 	}
 
 	err := cc.categoryUsecase.Delete(req.ID)
 	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusNotFound, dto.ErrorResponse{Message: err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusNotFound, response.ErrorResponse{Message: err.Error()})
 		return
 	}
 
