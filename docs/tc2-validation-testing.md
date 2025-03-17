@@ -45,7 +45,7 @@ curl --location 'http://localhost:8080/api/v1/customers/6'
 > TC-1 2.b.ii
 
 ```bash
-curl --location 'http://localhost:8080/api/v1/sign-in' \
+curl --location 'http://localhost:8080/api/v1/auth' \
 --header 'Content-Type: application/json' \
 --data '{
     "cpf": "000.000.000-06"
