@@ -1,231 +1,196 @@
 package usecase_test
 
 import (
-	"context"
 	"testing"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/dto"
-	mockport "github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/port/mocks"
-	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/usecase"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 )
 
-func Test_paymentUseCase_Create(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockPaymentGateway := mockport.NewMockPaymentGateway(ctrl)
-	mockOrderUseCase := mockport.NewMockOrderUseCase(ctrl)
-	useCase := usecase.NewPaymentUseCase(mockPaymentGateway, mockOrderUseCase)
-	ctx := context.Background()
-
+func (s *PaymentUsecaseSuiteTest) Test_paymentUseCase_Create() {
 	tests := []struct {
 		name        string
 		input       dto.CreatePaymentInput
 		setupMocks  func()
-		expectError bool
-		errorType   error
+		checkResult func(*testing.T, *entity.Payment, error)
 	}{
 		{
-			name: "should create payment successfully",
-			input: dto.CreatePaymentInput{
-				OrderID: uint64(1),
-			},
+			name:  "should create payment successfully",
+			input: dto.CreatePaymentInput{OrderID: uint64(1)},
 			setupMocks: func() {
-				mockPaymentGateway.EXPECT().FindByOrderIDAndStatusProcessing(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
-				mockPaymentGateway.EXPECT().CreateExternal(ctx, gomock.Any()).Return(&entity.CreatePaymentExternalOutput{}, nil)
-				mockPaymentGateway.EXPECT().Create(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderUseCase.EXPECT().Update(ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
+				s.mockGateway.EXPECT().FindByOrderIDAndStatusProcessing(s.ctx, gomock.Any()).Return(&entity.Payment{}, nil)
+				s.mockOrderUseCase.EXPECT().Get(s.ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
+				s.mockGateway.EXPECT().CreateExternal(s.ctx, gomock.Any()).Return(&entity.CreatePaymentExternalOutput{}, nil)
+				s.mockGateway.EXPECT().Create(s.ctx, gomock.Any()).Return(&entity.Payment{}, nil)
+				s.mockOrderUseCase.EXPECT().Update(s.ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
 			},
-			expectError: false,
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.NoError(t, err)
+				assert.NotNil(t, payment)
+			},
 		},
 		{
-			name: "should return error when gateway fails",
-			input: dto.CreatePaymentInput{
-				OrderID: uint64(1),
-			},
+			name:  "should return error when update from order use case fails",
+			input: dto.CreatePaymentInput{OrderID: uint64(1)},
 			setupMocks: func() {
-				mockPaymentGateway.EXPECT().FindByOrderIDAndStatusProcessing(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
-				mockPaymentGateway.EXPECT().CreateExternal(ctx, gomock.Any()).Return(&entity.CreatePaymentExternalOutput{}, nil)
-				mockPaymentGateway.EXPECT().Create(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderUseCase.EXPECT().Update(ctx, gomock.Any()).Return(nil, &domain.InternalError{})
+				s.mockGateway.EXPECT().FindByOrderIDAndStatusProcessing(s.ctx, gomock.Any()).Return(&entity.Payment{}, nil)
+				s.mockOrderUseCase.EXPECT().Get(s.ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
+				s.mockGateway.EXPECT().CreateExternal(s.ctx, gomock.Any()).Return(&entity.CreatePaymentExternalOutput{}, nil)
+				s.mockGateway.EXPECT().Create(s.ctx, gomock.Any()).Return(&entity.Payment{}, nil)
+				s.mockOrderUseCase.EXPECT().Update(s.ctx, gomock.Any()).Return(nil, &domain.InternalError{})
 			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, payment)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
 		},
 		{
-			name: "should return error when gateway fails",
-			input: dto.CreatePaymentInput{
-				OrderID: uint64(1),
-			},
+			name:  "should return error when create from gateway fails",
+			input: dto.CreatePaymentInput{OrderID: uint64(1)},
 			setupMocks: func() {
-				mockPaymentGateway.EXPECT().FindByOrderIDAndStatusProcessing(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
-				mockPaymentGateway.EXPECT().CreateExternal(ctx, gomock.Any()).Return(&entity.CreatePaymentExternalOutput{}, nil)
-				mockPaymentGateway.EXPECT().Create(ctx, gomock.Any()).Return(&entity.Payment{}, &domain.InternalError{})
+				s.mockGateway.EXPECT().FindByOrderIDAndStatusProcessing(s.ctx, gomock.Any()).Return(&entity.Payment{}, nil)
+				s.mockOrderUseCase.EXPECT().Get(s.ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
+				s.mockGateway.EXPECT().CreateExternal(s.ctx, gomock.Any()).Return(&entity.CreatePaymentExternalOutput{}, nil)
+				s.mockGateway.EXPECT().Create(s.ctx, gomock.Any()).Return(&entity.Payment{}, &domain.InternalError{})
 			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, payment)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
 		},
 		{
-			name: "should return error when gateway fails",
-			input: dto.CreatePaymentInput{
-				OrderID: uint64(1),
-			},
+			name:  "should return error when CreateExternal from gateway fails",
+			input: dto.CreatePaymentInput{OrderID: uint64(1)},
 			setupMocks: func() {
-				mockPaymentGateway.EXPECT().FindByOrderIDAndStatusProcessing(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
-				mockPaymentGateway.EXPECT().CreateExternal(ctx, gomock.Any()).Return(&entity.CreatePaymentExternalOutput{}, assert.AnError)
+				s.mockGateway.EXPECT().FindByOrderIDAndStatusProcessing(s.ctx, gomock.Any()).Return(&entity.Payment{}, nil)
+				s.mockOrderUseCase.EXPECT().Get(s.ctx, gomock.Any()).Return(&entity.Order{ID: uint64(1), OrderProducts: []entity.OrderProduct{{OrderID: 1, ProductID: 1}}}, nil)
+				s.mockGateway.EXPECT().CreateExternal(s.ctx, gomock.Any()).Return(&entity.CreatePaymentExternalOutput{}, assert.AnError)
 			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, payment)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
 		},
 		{
-			name: "should return error when dont have order product",
-			input: dto.CreatePaymentInput{
-				OrderID: uint64(1),
-			},
+			name:  "should return error when dont have order product",
+			input: dto.CreatePaymentInput{OrderID: uint64(1)},
 			setupMocks: func() {
-				mockPaymentGateway.EXPECT().FindByOrderIDAndStatusProcessing(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
+				s.mockGateway.EXPECT().FindByOrderIDAndStatusProcessing(s.ctx, gomock.Any()).Return(&entity.Payment{}, nil)
+				s.mockOrderUseCase.EXPECT().Get(s.ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
 			},
-			expectError: true,
-			errorType:   &domain.NotFoundError{},
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, payment)
+				assert.IsType(t, &domain.NotFoundError{}, err)
+			},
 		},
 		{
-			name: "should return error when gateway fails",
-			input: dto.CreatePaymentInput{
-				OrderID: uint64(1),
-			},
+			name:  "should return error when get from order use case fails",
+			input: dto.CreatePaymentInput{OrderID: uint64(1)},
 			setupMocks: func() {
-				mockPaymentGateway.EXPECT().FindByOrderIDAndStatusProcessing(ctx, gomock.Any()).Return(&entity.Payment{}, nil)
-				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{}, assert.AnError)
+				s.mockGateway.EXPECT().FindByOrderIDAndStatusProcessing(s.ctx, gomock.Any()).Return(&entity.Payment{}, nil)
+				s.mockOrderUseCase.EXPECT().Get(s.ctx, gomock.Any()).Return(&entity.Order{}, assert.AnError)
 			},
-			expectError: true,
-			errorType:   &domain.NotFoundError{},
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, payment)
+				assert.IsType(t, &domain.NotFoundError{}, err)
+			},
 		},
 		{
-			name: "should return error when gateway fails",
-			input: dto.CreatePaymentInput{
-				OrderID: uint64(1),
-			},
+			name:  "should return error when FindByOrderIDAndStatusProcessing from gateway fails",
+			input: dto.CreatePaymentInput{OrderID: uint64(1)},
 			setupMocks: func() {
-				mockPaymentGateway.EXPECT().FindByOrderIDAndStatusProcessing(ctx, gomock.Any()).Return(&entity.Payment{}, assert.AnError)
+				s.mockGateway.EXPECT().FindByOrderIDAndStatusProcessing(s.ctx, gomock.Any()).Return(&entity.Payment{}, assert.AnError)
 			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, payment)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
 		},
 		{
-			name: "should return the existing payment",
-			input: dto.CreatePaymentInput{
-				OrderID: uint64(1),
-			},
+			name:  "should return the existing payment when already exists",
+			input: dto.CreatePaymentInput{OrderID: uint64(1)},
 			setupMocks: func() {
-				mockPaymentGateway.EXPECT().FindByOrderIDAndStatusProcessing(ctx, gomock.Any()).Return(&entity.Payment{ID: 1}, nil)
+				s.mockGateway.EXPECT().FindByOrderIDAndStatusProcessing(s.ctx, gomock.Any()).Return(&entity.Payment{ID: 1}, nil)
 			},
-			expectError: false,
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.NoError(t, err)
+				assert.NotNil(t, payment)
+				assert.Equal(t, uint64(1), payment.ID)
+			},
 		},
 	}
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			payment, err := useCase.Create(ctx, tt.input)
+			payment, err := s.useCase.Create(s.ctx, tt.input)
 
-			if tt.expectError {
-				assert.Error(t, err)
-				assert.Nil(t, payment)
-				if tt.errorType != nil {
-					assert.IsType(t, tt.errorType, err)
-				}
-			} else {
-				assert.NoError(t, err)
-				assert.NotNil(t, payment)
-			}
+			tt.checkResult(t, payment, err)
 		})
 	}
 }
 
-func Test_paymentUseCase_Get(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockPaymentGateway := mockport.NewMockPaymentGateway(ctrl)
-	mockOrderUseCase := mockport.NewMockOrderUseCase(ctrl)
-	useCase := usecase.NewPaymentUseCase(mockPaymentGateway, mockOrderUseCase)
-	ctx := context.Background()
-
+func (s *PaymentUsecaseSuiteTest) Test_paymentUseCase_Get() {
 	tests := []struct {
 		name        string
 		input       dto.GetPaymentInput
 		setupMocks  func()
-		expectError bool
-		errorType   error
+		checkResult func(*testing.T, *entity.Payment, error)
 	}{
 		{
-			name: "should return the payment",
-			input: dto.GetPaymentInput{
-				OrderID: uint64(1),
-			},
+			name:  "should return the payment successfully",
+			input: dto.GetPaymentInput{OrderID: uint64(1)},
 			setupMocks: func() {
-				mockPaymentGateway.EXPECT().FindByOrderID(ctx, gomock.Any()).Return(&entity.Payment{ID: 1}, nil)
+				s.mockGateway.EXPECT().
+					FindByOrderID(s.ctx, gomock.Any()).
+					Return(&entity.Payment{ID: 1}, nil)
 			},
-			expectError: false,
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.NoError(t, err)
+				assert.NotNil(t, payment)
+			},
 		},
 		{
-			name: "should return error when gateway fails",
-			input: dto.GetPaymentInput{
-				OrderID: uint64(1),
-			},
+			name:  "should return error when gateway fails",
+			input: dto.GetPaymentInput{OrderID: uint64(1)},
 			setupMocks: func() {
-				mockPaymentGateway.EXPECT().
-					FindByOrderID(ctx, gomock.Any()).
+				s.mockGateway.EXPECT().
+					FindByOrderID(s.ctx, gomock.Any()).
 					Return(nil, assert.AnError)
 			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, payment)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
 		},
 	}
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			payment, err := useCase.Get(ctx, tt.input)
+			payment, err := s.useCase.Get(s.ctx, tt.input)
 
-			if tt.expectError {
-				assert.Error(t, err)
-				assert.Nil(t, payment)
-				if tt.errorType != nil {
-					assert.IsType(t, tt.errorType, err)
-				}
-			} else {
-				assert.NoError(t, err)
-				assert.NotNil(t, payment)
-			}
+			tt.checkResult(t, payment, err)
 		})
 	}
 }
 
-func Test_paymentUseCase_Update(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-
-	mockPaymentGateway := mockport.NewMockPaymentGateway(ctrl)
-	mockOrderUseCase := mockport.NewMockOrderUseCase(ctrl)
-	useCase := usecase.NewPaymentUseCase(mockPaymentGateway, mockOrderUseCase)
-	ctx := context.Background()
-
+func (s *PaymentUsecaseSuiteTest) Test_paymentUseCase_Update() {
 	tests := []struct {
 		name        string
 		input       dto.UpdatePaymentInput
 		setupMocks  func()
-		expectError bool
-		errorType   error
+		checkResult func(*testing.T, *entity.Payment, error)
 	}{
 		{
 			name: "should update the payment",
@@ -234,12 +199,66 @@ func Test_paymentUseCase_Update(t *testing.T) {
 				Topic:    "payment",
 			},
 			setupMocks: func() {
-				mockPaymentGateway.EXPECT().Update(ctx, gomock.Any(), gomock.Any()).Return(nil)
-				mockPaymentGateway.EXPECT().FindByExternalPaymentID(ctx, gomock.Any()).Return(&entity.Payment{ID: 1}, nil)
-				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
-				mockOrderUseCase.EXPECT().Update(ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
+				s.mockGateway.EXPECT().Update(s.ctx, gomock.Any(), gomock.Any()).Return(nil)
+				s.mockGateway.EXPECT().FindByExternalPaymentID(s.ctx, gomock.Any()).Return(&entity.Payment{ID: 1}, nil)
+				s.mockOrderUseCase.EXPECT().Get(s.ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
+				s.mockOrderUseCase.EXPECT().Update(s.ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
 			},
-			expectError: false,
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.NoError(t, err)
+				assert.NotNil(t, payment)
+			},
+		},
+		{
+			name: "should return error when update from order use case fails",
+			input: dto.UpdatePaymentInput{
+				Resource: "389d873a-436b-4ef2-a47a-0abf9b3e9924",
+				Topic:    "payment",
+			},
+			setupMocks: func() {
+				s.mockGateway.EXPECT().Update(s.ctx, gomock.Any(), gomock.Any()).Return(nil)
+				s.mockGateway.EXPECT().FindByExternalPaymentID(s.ctx, gomock.Any()).Return(&entity.Payment{ID: 1}, nil)
+				s.mockOrderUseCase.EXPECT().Get(s.ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
+				s.mockOrderUseCase.EXPECT().Update(s.ctx, gomock.Any()).Return(nil, &domain.InternalError{})
+			},
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, payment)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
+		},
+		{
+			name: "should return error when get from order use case fails",
+			input: dto.UpdatePaymentInput{
+				Resource: "389d873a-436b-4ef2-a47a-0abf9b3e9924",
+				Topic:    "payment",
+			},
+			setupMocks: func() {
+				s.mockGateway.EXPECT().Update(s.ctx, gomock.Any(), gomock.Any()).Return(nil)
+				s.mockGateway.EXPECT().FindByExternalPaymentID(s.ctx, gomock.Any()).Return(&entity.Payment{ID: 1}, nil)
+				s.mockOrderUseCase.EXPECT().Get(s.ctx, gomock.Any()).Return(&entity.Order{}, &domain.InternalError{})
+			},
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, payment)
+				assert.IsType(t, &domain.InternalError{}, err)
+			},
+		},
+		{
+			name: "should return error when FindByExternalPaymentID from gateway fails",
+			input: dto.UpdatePaymentInput{
+				Resource: "389d873a-436b-4ef2-a47a-0abf9b3e9924",
+				Topic:    "payment",
+			},
+			setupMocks: func() {
+				s.mockGateway.EXPECT().Update(s.ctx, gomock.Any(), gomock.Any()).Return(nil)
+				s.mockGateway.EXPECT().FindByExternalPaymentID(s.ctx, gomock.Any()).Return(&entity.Payment{}, assert.AnError)
+			},
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, payment)
+				assert.IsType(t, assert.AnError, err)
+			},
 		},
 		{
 			name: "should return error when gateway fails",
@@ -248,70 +267,22 @@ func Test_paymentUseCase_Update(t *testing.T) {
 				Topic:    "payment",
 			},
 			setupMocks: func() {
-				mockPaymentGateway.EXPECT().Update(ctx, gomock.Any(), gomock.Any()).Return(nil)
-				mockPaymentGateway.EXPECT().FindByExternalPaymentID(ctx, gomock.Any()).Return(&entity.Payment{ID: 1}, nil)
-				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{ID: 1}, nil)
-				mockOrderUseCase.EXPECT().Update(ctx, gomock.Any()).Return(nil, &domain.InternalError{})
+				s.mockGateway.EXPECT().Update(s.ctx, gomock.Any(), gomock.Any()).Return(assert.AnError)
 			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
-		},
-		{
-			name: "should return error when gateway fails",
-			input: dto.UpdatePaymentInput{
-				Resource: "389d873a-436b-4ef2-a47a-0abf9b3e9924",
-				Topic:    "payment",
+			checkResult: func(t *testing.T, payment *entity.Payment, err error) {
+				assert.Error(t, err)
+				assert.Nil(t, payment)
+				assert.IsType(t, assert.AnError, err)
 			},
-			setupMocks: func() {
-				mockPaymentGateway.EXPECT().Update(ctx, gomock.Any(), gomock.Any()).Return(nil)
-				mockPaymentGateway.EXPECT().FindByExternalPaymentID(ctx, gomock.Any()).Return(&entity.Payment{ID: 1}, nil)
-				mockOrderUseCase.EXPECT().Get(ctx, gomock.Any()).Return(&entity.Order{}, &domain.InternalError{})
-			},
-			expectError: true,
-			errorType:   &domain.InternalError{},
-		},
-		{
-			name: "should return error when gateway fails",
-			input: dto.UpdatePaymentInput{
-				Resource: "389d873a-436b-4ef2-a47a-0abf9b3e9924",
-				Topic:    "payment",
-			},
-			setupMocks: func() {
-				mockPaymentGateway.EXPECT().Update(ctx, gomock.Any(), gomock.Any()).Return(nil)
-				mockPaymentGateway.EXPECT().FindByExternalPaymentID(ctx, gomock.Any()).Return(&entity.Payment{}, assert.AnError)
-			},
-			expectError: true,
-			errorType:   assert.AnError,
-		},
-		{
-			name: "should return error when gateway fails",
-			input: dto.UpdatePaymentInput{
-				Resource: "389d873a-436b-4ef2-a47a-0abf9b3e9924",
-				Topic:    "payment",
-			},
-			setupMocks: func() {
-				mockPaymentGateway.EXPECT().Update(ctx, gomock.Any(), gomock.Any()).Return(assert.AnError)
-			},
-			expectError: true,
-			errorType:   assert.AnError,
 		},
 	}
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		s.T().Run(tt.name, func(t *testing.T) {
 			tt.setupMocks()
 
-			payment, err := useCase.Update(ctx, tt.input)
+			payment, err := s.useCase.Update(s.ctx, tt.input)
 
-			if tt.expectError {
-				assert.Error(t, err)
-				assert.Nil(t, payment)
-				if tt.errorType != nil {
-					assert.IsType(t, tt.errorType, err)
-				}
-			} else {
-				assert.NoError(t, err)
-				assert.NotNil(t, payment)
-			}
+			tt.checkResult(t, payment, err)
 		})
 	}
 }
