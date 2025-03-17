@@ -251,7 +251,13 @@ make compose-build
 
 > [!TIP]
 > We have created a step-by-step guide to test the application,  
-> you can find it [here](docs/tc2-validation-testing.md)
+> you can find it [here](docs/tc2-validation-testing.md)  
+>
+> API Documentation will be available at:
+>
+> - Swagger: <http://localhost:8080/docs/index.html> (docker) OR <http://localhost/docs/index.html> (k8s)
+> - Postman collection: [here](docs/postman_collection.json)
+> - [Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client): [here](docs/tc2.http)
 
 ### :whale: Docker
 
@@ -265,12 +271,6 @@ make compose-up
 > [!NOTE]
 > The application will be available at <http://localhost:8080>
 
-> [!IMPORTANT]
-> API Documentation will be available at:
->
-> - Swagger: <http://localhost:8080/docs/index.html>
-> - Postman collection: [here](docs/postman_collection.json)
-> - [Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client): [here](docs/tc2.http)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
