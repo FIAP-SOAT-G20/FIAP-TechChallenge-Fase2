@@ -254,3 +254,31 @@ new-branch: ## Create new branch
 pull-request: ## Create pull request
 	@echo "🟢 Creating pull request..."
 	./scripts/pull-request.sh
+
+.PHONY: helm-install
+helm-install: ## Install Helm chart
+	@echo "🟢 Installing Helm chart..."
+	kubectl apply -f k8s/namespaces/monitoring.yaml
+	helm repo update
+	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+	helm repo add grafana https://grafana.github.io/helm-charts
+	helm install prometheus prometheus-community/prometheus --namespace monitoring
+	helm install grafana grafana/grafana --namespace monitoring
+	kubectl expose service prometheus-server --namespace monitoring --type=NodePort --target-port=9090 --name=prometheus-server-ext
+	kubectl expose service grafana --namespace monitoring --type=NodePort --target-port=3000 --name=grafana-ext
+	@echo "🟢 Grafana password for login 'admin':"
+	kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+
+
+.PHONY: helm-uninstall
+helm-uninstall: ## Uninstall Helm chart
+	@echo "🔴 Uninstalling Helm chart..."
+	kubectl delete -f k8s/monitoring/ -n monitoring --ignore-not-found=true
+	helm uninstall prometheus-community --namespace monitoring --ignore-not-found
+	helm uninstall grafana --namespace monitoring --ignore-not-found
+	helm repo remove prometheus-community --namespace monitoring  
+	helm repo remove grafana --namespace monitoring  
+	kubectl delete ns monitoring --ignore-not-found=true
+	
+

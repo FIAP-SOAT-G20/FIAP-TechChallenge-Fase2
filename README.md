@@ -290,10 +290,11 @@ make k8s-apply
 
 ### :mag: Kubernetes Organization
 
-The Kubernetes organization is divided into three main directories: `app`, `config`, and `postgres`.
+The Kubernetes organization is divided into four main directories: `app`, `config`, `mockserver` and `postgres`.
 
 - **app**: Contains the Kubernetes resources for the application, such as deployment, service, ingress, and HPA.
 - **config**: Contains the Kubernetes resources for the configuration, such as ConfigMap and Secret.
+- **mockserver**: Contains the Kubernetes resources for the mockserver, such as deployment, service and HPA.
 - **postgres**: Contains the Kubernetes resources for the PostgreSQL database, such as StatefulSet and Service.
 
 ```sh
