@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        VARIANT: "1.23-bookworm"
+        VARIANT: "dev-1.24-bookworm"
         NODE_VERSION: "none"
     volumes:
       - ..:/workspace:cached

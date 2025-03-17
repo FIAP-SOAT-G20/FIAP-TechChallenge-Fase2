@@ -48,6 +48,7 @@ func (r *Router) RegisterRoutes(handlers *Handlers) {
 	// API v1
 	v1 := r.engine.Group("/api/v1")
 	{
+		handlers.Auth.Register(v1.Group("/auth"))
 		handlers.Product.Register(v1.Group("/products"))
 		handlers.Customer.Register(v1.Group("/customers"))
 		handlers.Staff.Register(v1.Group("/staffs"))
@@ -74,4 +75,5 @@ type Handlers struct {
 	OrderHistory *handler.OrderHistoryHandler
 	HealthCheck  *handler.HealthCheckHandler
 	Payment      *handler.PaymentHandler
+	Auth         *handler.AuthHandler
 }

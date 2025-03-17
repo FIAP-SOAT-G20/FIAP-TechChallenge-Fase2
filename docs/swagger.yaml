@@ -9,6 +9,12 @@ definitions:
         example: Bad Request
         type: string
     type: object
+  presenter.AuthenticationResponse:
+    properties:
+      access_token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        type: string
+    type: object
   presenter.CustomerJsonPaginatedResponse:
     properties:
       customers:
@@ -71,6 +77,9 @@ definitions:
         example: 1
         type: integer
       order_id:
+        example: 1
+        type: integer
+      staff_id:
         example: 1
         type: integer
       status:
@@ -272,6 +281,14 @@ definitions:
       updated_at:
         example: "2024-02-09T10:00:00Z"
         type: string
+    type: object
+  request.AuthenticateBodyRequest:
+    properties:
+      cpf:
+        example: 000.000.000-00
+        type: string
+    required:
+    - cpf
     type: object
   request.CreateCustomerBodyRequest:
     properties:
@@ -531,6 +548,44 @@ info:
   title: Fast Food API v2
   version: "1"
 paths:
+  /auth:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates a user by CPF and returns a JWT token
+      parameters:
+      - description: User CPF
+        in: body
+        name: authentication
+        required: true
+        schema:
+          $ref: '#/definitions/request.AuthenticateBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.AuthenticationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Authenticate user
+      tags:
+      - sign-in
   /customers:
     get:
       consumes:

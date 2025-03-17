@@ -88,3 +88,17 @@ func (uc *customerUseCase) Delete(ctx context.Context, i dto.DeleteCustomerInput
 
 	return customer, nil
 }
+
+// FindByCPF returns a Customer by CPF
+func (uc *customerUseCase) FindByCPF(ctx context.Context, input dto.FindCustomerByCPFInput) (*entity.Customer, error) {
+	customer, err := uc.gateway.FindByCPF(ctx, input.CPF)
+	if err != nil {
+		return nil, domain.NewInternalError(err)
+	}
+
+	if customer == nil {
+		return nil, domain.NewNotFoundError(domain.ErrNotFound)
+	}
+
+	return customer, nil
+}

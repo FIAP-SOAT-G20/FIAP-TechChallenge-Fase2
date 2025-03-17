@@ -45,6 +45,10 @@ func handleError(c *gin.Context, err error, logger *logger.Logger) {
 		setResponse(c, http.StatusBadRequest, e.Error())
 		logWarning(logger, domain.ErrInvalidInput, e, c.Request)
 
+	case *domain.UnauthorizedError:
+		setResponse(c, http.StatusUnauthorized, e.Error())
+		logWarning(logger, domain.ErrUnauthorized, e, c.Request)
+
 	case *domain.InternalError:
 		setResponse(c, http.StatusInternalServerError, domain.ErrInternalError)
 		logError(logger, domain.ErrInternalError, e, c.Request)

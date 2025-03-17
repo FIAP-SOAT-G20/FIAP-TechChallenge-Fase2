@@ -35,3 +35,7 @@ type ListCustomersInput struct {
 	Page  int
 	Limit int
 }
+
+type FindCustomerByCPFInput struct {
+	CPF string
+}

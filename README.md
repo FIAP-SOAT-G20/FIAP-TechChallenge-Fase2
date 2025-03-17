@@ -127,6 +127,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - **Database Connection**: The database connection was created using GORM, a popular ORM library for Go. This library provides an easy way to interact with the database and perform CRUD operations.
 - **Database Migrations**: Database migrations were created to manage the database schema. This allows us to version control the database schema and apply changes to the database in a structured way.
 - **HTTP Server**: The HTTP server was created using the Gin framework, a lightweight web framework for Go. This framework provides a fast and easy way to create web applications in Go.
+- **Mock Payment Gateway**: A mock payment gateway was created with Mockoon (docker) to simulate the payment process. This mock server is used to test the payment process without interacting with the real payment gateway. We have tested the integration with the Mercado Pago API, but we are using the mock server to simulate the payment gateway validation, avoiding the need to expose the Mercado Pago API credentials, and to simplify the validation, because our mock server can access our webhook directly.
 
 <!-- [Back to top](#readme-top) -->
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -205,7 +206,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [Docker](https://www.docker.com/)
 
 > [!WARNING]
-> You need to have Go version **1.23 or higher** installed on your machine to run the application locally
+> You need to have Go version **1.24 or higher** installed on your machine to run the application locally
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -238,20 +239,21 @@ make compose-build
 
 > [!IMPORTANT]
 > After running the application, a mock server container will be created to simulate the payment gateway.  
-> When you create a new payment (with `POST payments/:order_id/checkout`) the order status will be updated to `PENDING`,  
+> When you create a new payment (with `POST payments/:order_id/checkout`) the order status will be updated from `OPEN` to `PENDING`,  
 > then the mock server will call the webhook `POST payments/callback`,  
 > and the order status will be updated from `PENDING` to `RECEIVED`.  
 > You can verify mock server logs by running `docker logs mockserver.10soat-g18.dev`.
 
-> [!NOTE]
-> We have tested the integration with the Mercado Pago API,  
-> but we are using the mock server to simulate the payment gateway validation,  
-> avoiding the need to expose the Mercado Pago API credentials,  
-> and to simplify the validation, because our mock server can access our webhook directly.
-
 > [!TIP]
-> We have created a step-by-step guide to test the application,  
-> you can find it [here](docs/tc2-validation-testing.md)
+> We have created a step-by-step guide to test the application, you can find it [here](docs/tc2-validation-testing.md).  
+>
+> API Documentation will be available at:
+>
+> - Swagger:
+>   - Docker: <http://localhost:8080/docs/index.html>
+>   - K8s: <http://localhost/docs/index.html>
+> - Postman collection: [here](docs/postman_collection.json)
+> - [Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client): [here](docs/tc2.http)
 
 ### :whale: Docker
 
@@ -265,12 +267,6 @@ make compose-up
 > [!NOTE]
 > The application will be available at <http://localhost:8080>
 
-> [!IMPORTANT]
-> API Documentation will be available at:
->
-> - Swagger: <http://localhost:8080/docs/index.html>
-> - Postman collection: [here](docs/postman_collection.json)
-> - HTTP Client: [here](docs/tc2.http)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -426,16 +422,18 @@ make test
 
 ## :busts_in_silhouette: Contributors
 
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/atomaz"><img src="https://github.com/atomaz.png" width="100px;" alt=""/><br /><sub><b>Alice Tomaz</b></sub></a><br />
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/filipe1309"><img src="https://github.com/filipe1309.png" width="100px;" alt=""/><br /><sub><b>Filipe Leuch Bonfim</b></sub></a><br />
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/hugokishi"><img src="https://github.com/hugokishi.png" width="100px;" alt=""/><br /><sub><b>Hugo Kishi</b></sub></a><br />
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/marcos-nsantos"><img src="https://github.com/marcos-nsantos.png" width="100px;" alt=""/><br /><sub><b>Marcos Santos</b></sub></a><br />
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/vitorparras"><img src="https://github.com/vitorparras.png" width="100px;" alt=""/><br /><sub><b>Vitor Parras</b></sub></a><br />
-    </tr>
-  </tbody>
-</table>
+<div align="center">
+  <table>
+    <tbody>
+      <tr>
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/atomaz"><img src="https://github.com/atomaz.png" width="100px;" alt=""/><br /><sub><b>Alice Tomaz</b></sub></a><br />
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/filipe1309"><img src="https://github.com/filipe1309.png" width="100px;" alt=""/><br /><sub><b>Filipe Leuch Bonfim</b></sub></a><br />
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/hugokishi"><img src="https://github.com/hugokishi.png" width="100px;" alt=""/><br /><sub><b>Hugo Kishi</b></sub></a><br />
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/marcos-nsantos"><img src="https://github.com/marcos-nsantos.png" width="100px;" alt=""/><br /><sub><b>Marcos Santos</b></sub></a><br />
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/vitorparras"><img src="https://github.com/vitorparras.png" width="100px;" alt=""/><br /><sub><b>Vitor Parras</b></sub></a><br />
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
