@@ -40,7 +40,7 @@ func (h *CategoryHandler) Register(router *gin.RouterGroup) {
 //	@Success		200		{object}	presenter.CategoryJsonPaginatedResponse	"OK"
 //	@Failure		400		{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse			"Internal Server Error"
-//	@Router			/ [get]
+//	@Router			/categories [get]
 func (h *CategoryHandler) List(c *gin.Context) {
 	var query request.ListCategoriesQueryRequest
 	if err := c.ShouldBindQuery(&query); err != nil {
@@ -78,7 +78,7 @@ func (h *CategoryHandler) List(c *gin.Context) {
 //	@Success		201			{object}	presenter.CategoryJsonResponse		"Created"
 //	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
-//	@Router			/ [post]
+//	@Router			/categories [post]
 func (h *CategoryHandler) Create(c *gin.Context) {
 	var body request.CreateCategoryBodyRequest
 	if err := c.ShouldBindJSON(&body); err != nil {
@@ -115,7 +115,7 @@ func (h *CategoryHandler) Create(c *gin.Context) {
 //	@Failure		400	{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
-//	@Router			/{id} [get]
+//	@Router			/categories/{id} [get]
 func (h *CategoryHandler) Get(c *gin.Context) {
 	var uri request.GetCategoryUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
@@ -153,7 +153,7 @@ func (h *CategoryHandler) Get(c *gin.Context) {
 //	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
 //	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
-//	@Router			/{id} [put]
+//	@Router			/categories/{id} [put]
 func (h *CategoryHandler) Update(c *gin.Context) {
 	var uri request.UpdateCategoryUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
@@ -196,7 +196,7 @@ func (h *CategoryHandler) Update(c *gin.Context) {
 //	@Failure		400	{object}	middleware.ErrorJsonResponse	"Bad Request"
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
-//	@Router			/{id} [delete]
+//	@Router			/categories/{id} [delete]
 func (h *CategoryHandler) Delete(c *gin.Context) {
 	var uri request.DeleteCategoryUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {

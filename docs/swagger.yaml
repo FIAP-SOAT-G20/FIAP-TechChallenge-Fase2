@@ -9,6 +9,37 @@ definitions:
         example: Bad Request
         type: string
     type: object
+  presenter.CategoryJsonPaginatedResponse:
+    properties:
+      categories:
+        items:
+          $ref: '#/definitions/presenter.CategoryJsonResponse'
+        type: array
+      limit:
+        example: 10
+        type: integer
+      page:
+        example: 1
+        type: integer
+      total:
+        example: 100
+        type: integer
+    type: object
+  presenter.CategoryJsonResponse:
+    properties:
+      created_at:
+        example: "2024-02-09T10:00:00Z"
+        type: string
+      id:
+        example: 1
+        type: integer
+      name:
+        example: John Doe
+        type: string
+      updated_at:
+        example: "2024-02-09T10:00:00Z"
+        type: string
+    type: object
   presenter.CustomerJsonPaginatedResponse:
     properties:
       customers:
@@ -71,6 +102,9 @@ definitions:
         example: 1
         type: integer
       order_id:
+        example: 1
+        type: integer
+      staff_id:
         example: 1
         type: integer
       status:
@@ -273,6 +307,16 @@ definitions:
         example: "2024-02-09T10:00:00Z"
         type: string
     type: object
+  request.CreateCategoryBodyRequest:
+    properties:
+      name:
+        example: Foods
+        maxLength: 100
+        minLength: 3
+        type: string
+    required:
+    - name
+    type: object
   request.CreateCustomerBodyRequest:
     properties:
       cpf:
@@ -344,6 +388,14 @@ definitions:
     required:
     - name
     - role
+    type: object
+  request.UpdateCategoryBodyRequest:
+    properties:
+      name:
+        example: Beverages
+        type: string
+    required:
+    - name
     type: object
   request.UpdateCustomerBodyRequest:
     properties:
@@ -531,6 +583,170 @@ info:
   title: Fast Food API v2
   version: "1"
 paths:
+  /categories:
+    get:
+      consumes:
+      - application/json
+      description: List all categories
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.CategoryJsonPaginatedResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: List categories
+      tags:
+      - category
+    post:
+      consumes:
+      - application/json
+      description: Creates a new category
+      parameters:
+      - description: Category data
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateCategoryBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/presenter.CategoryJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Create category
+      tags:
+      - category
+  /categories/{id}:
+    delete:
+      description: Deletes a category by ID
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.CategoryJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Delete category
+      tags:
+      - category
+    get:
+      consumes:
+      - application/json
+      description: Search for a category by ID
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.CategoryJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Get category
+      tags:
+      - category
+    put:
+      consumes:
+      - application/json
+      description: Update an existing category
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Category data
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateCategoryBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.CategoryJsonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/middleware.ErrorJsonResponse'
+      summary: Update category
+      tags:
+      - category
   /customers:
     get:
       consumes:
