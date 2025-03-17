@@ -3,6 +3,7 @@ package dto
 import (
 	"time"
 
+	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/adapter/presenter"
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/core/domain/entity"
 )
 
@@ -59,7 +60,7 @@ func NewCategoryResponse(category *entity.Category) *CategoryResponse {
 }
 
 type CategoriesPaginatedResponse struct {
-	PaginatedResponse
+	presenter.JsonPagination
 	Categories []CategoryResponse `json:"categories"`
 }
 
@@ -73,7 +74,7 @@ func NewCategoriesPaginatedResponse(categories []entity.Category, total int64, p
 	}
 
 	return &CategoriesPaginatedResponse{
-		PaginatedResponse: PaginatedResponse{
+		JsonPagination: presenter.JsonPagination{
 			Total: total,
 			Page:  page,
 			Limit: limit,
