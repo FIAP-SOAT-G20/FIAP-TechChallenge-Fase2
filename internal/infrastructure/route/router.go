@@ -75,5 +75,5 @@ type Handlers struct {
 	OrderHistory *handler.OrderHistoryHandler
 	HealthCheck  *handler.HealthCheckHandler
 	Payment      *handler.PaymentHandler
-	Category     *handler.CategoryHadnler
+	Category     *handler.CategoryHandler
 }

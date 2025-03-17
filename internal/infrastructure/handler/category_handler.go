@@ -12,15 +12,15 @@ import (
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/handler/request"
 )
 
-type CategoryHadnler struct {
+type CategoryHandler struct {
 	controller port.CategoryController
 }
 
-func NewCategoryHandler(controller port.CategoryController) *CategoryHadnler {
-	return &CategoryHadnler{controller}
+func NewCategoryHandler(controller port.CategoryController) *CategoryHandler {
+	return &CategoryHandler{controller}
 }
 
-func (h *CategoryHadnler) Register(router *gin.RouterGroup) {
+func (h *CategoryHandler) Register(router *gin.RouterGroup) {
 	router.GET("/", h.List)
 	router.POST("/", h.Create)
 	router.GET("/:id", h.Get)
@@ -30,7 +30,7 @@ func (h *CategoryHadnler) Register(router *gin.RouterGroup) {
 
 // List godoc
 //
-//	@Summary		List categories (Reference TC-1 2.b.i)
+//	@Summary		List categories
 //	@Description	List all categories
 //	@Tags			category
 //	@Accept			json
@@ -41,7 +41,7 @@ func (h *CategoryHadnler) Register(router *gin.RouterGroup) {
 //	@Failure		400		{object}	middleware.ErrorJsonResponse			"Bad Request"
 //	@Failure		500		{object}	middleware.ErrorJsonResponse			"Internal Server Error"
 //	@Router			/ [get]
-func (h *CategoryHadnler) List(c *gin.Context) {
+func (h *CategoryHandler) List(c *gin.Context) {
 	var query request.ListCategoriesQueryRequest
 	if err := c.ShouldBindQuery(&query); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidQueryParams))
@@ -74,12 +74,12 @@ func (h *CategoryHadnler) List(c *gin.Context) {
 //	@Tags			category
 //	@Accept			json
 //	@Produce		json
-//	@Param			customer	body		request.CreateCategoryBodyRequest	true	"Customer data"
+//	@Param			category	body		request.CreateCategoryBodyRequest	true	"Category data"
 //	@Success		201			{object}	presenter.CategoryJsonResponse		"Created"
 //	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/ [post]
-func (h *CategoryHadnler) Create(c *gin.Context) {
+func (h *CategoryHandler) Create(c *gin.Context) {
 	var body request.CreateCategoryBodyRequest
 	if err := c.ShouldBindJSON(&body); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidBody))
@@ -116,7 +116,7 @@ func (h *CategoryHadnler) Create(c *gin.Context) {
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/{id} [get]
-func (h *CategoryHadnler) Get(c *gin.Context) {
+func (h *CategoryHandler) Get(c *gin.Context) {
 	var uri request.GetCategoryUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -148,13 +148,13 @@ func (h *CategoryHadnler) Get(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id			path		int									true	"Category ID"
-//	@Param			customer	body		request.UpdateCategoryBodyRequest	true	"Category data"
+//	@Param			category	body		request.UpdateCategoryBodyRequest	true	"Category data"
 //	@Success		200			{object}	presenter.CategoryJsonResponse		"OK"
 //	@Failure		400			{object}	middleware.ErrorJsonResponse		"Bad Request"
 //	@Failure		404			{object}	middleware.ErrorJsonResponse		"Not Found"
 //	@Failure		500			{object}	middleware.ErrorJsonResponse		"Internal Server Error"
 //	@Router			/{id} [put]
-func (h *CategoryHadnler) Update(c *gin.Context) {
+func (h *CategoryHandler) Update(c *gin.Context) {
 	var uri request.UpdateCategoryUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))
@@ -197,7 +197,7 @@ func (h *CategoryHadnler) Update(c *gin.Context) {
 //	@Failure		404	{object}	middleware.ErrorJsonResponse	"Not Found"
 //	@Failure		500	{object}	middleware.ErrorJsonResponse	"Internal Server Error"
 //	@Router			/{id} [delete]
-func (h *CategoryHadnler) Delete(c *gin.Context) {
+func (h *CategoryHandler) Delete(c *gin.Context) {
 	var uri request.DeleteCategoryUriRequest
 	if err := c.ShouldBindUri(&uri); err != nil {
 		_ = c.Error(domain.NewInvalidInputError(domain.ErrInvalidParam))

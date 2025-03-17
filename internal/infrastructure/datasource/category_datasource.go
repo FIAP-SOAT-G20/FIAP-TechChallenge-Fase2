@@ -14,8 +14,6 @@ type categoryDataSource struct {
 	db *gorm.DB
 }
 
-type categoryKey string
-
 func NewCategoryDataSource(db *gorm.DB) port.CategoryDataSource {
 	return &categoryDataSource{db}
 }
