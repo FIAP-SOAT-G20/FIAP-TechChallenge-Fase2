@@ -51,7 +51,7 @@ func toProductXmlResponse(product *entity.Product) ProductXmlResponse {
 		Description: product.Description,
 		Price:       product.Price,
 		CategoryID:  product.CategoryID,
-		CreatedAt:   product.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
-		UpdatedAt:   product.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
+		CreatedAt:   product.CreatedAt.UTC().Format("2006-01-02T15:04:05Z07:00"),
+		UpdatedAt:   product.UpdatedAt.UTC().Format("2006-01-02T15:04:05Z07:00"),
 	}
 }

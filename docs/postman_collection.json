@@ -1311,7 +1311,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"John Doe 6\",\n    \"email\": \"john.doe.6@email.com\",\n    \"cpf\": \"000.000.000-06\"\n}",
+							"raw": "{\n    \"name\": \"John Doe 6\",\n    \"email\": \"john.doe.6@email.com\",\n    \"cpf\": \"123.456.789-06\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2078,7 +2078,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/customers/1",
+							"raw": "{{host}}/api/v1/customers/6",
 							"host": [
 								"{{host}}"
 							],
@@ -2086,7 +2086,7 @@
 								"api",
 								"v1",
 								"customers",
-								"1"
+								"6"
 							]
 						}
 					},
@@ -6613,7 +6613,10 @@
 					"name": "Get staff",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": [
 						{
@@ -7056,7 +7059,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"cpf\": \"000.000.000-06\"\n}",
+							"raw": "{\n    \"cpf\": \"123.456.789-06\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -7064,14 +7067,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/sign-in",
+							"raw": "{{host}}/api/v1/auth",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"sign-in"
+								"auth"
 							]
 						}
 					},
@@ -7083,7 +7086,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"cpf\": \"000.000.000-00\"\n}",
+									"raw": "{\n    \"cpf\": \"123.456.789-06\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -7091,14 +7094,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/api/v1/sign-in",
+									"raw": "{{host}}/api/v1/auth",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
 										"api",
 										"v1",
-										"sign-in"
+										"auth"
 									]
 								}
 							},
@@ -7107,24 +7110,40 @@
 							"_postman_previewlanguage": "json",
 							"header": [
 								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, OPTIONS, GET, PUT, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
 									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
+									"value": "application/json"
 								},
 								{
 									"key": "X-Request-Id",
-									"value": "19803c19-9ba3-40f9-9bb5-dd3b62c6fa1d"
+									"value": "88a0e29e-c16e-49b1-9942-be33e95b7d96"
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 11 Jan 2025 21:03:37 GMT"
+									"value": "Mon, 17 Mar 2025 01:55:34 GMT"
 								},
 								{
 									"key": "Content-Length",
-									"value": "78"
+									"value": "160"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"id\": 1,\n    \"name\": \"John Doe\",\n    \"email\": \"john.doe@email.com\",\n    \"cpf\": \"000.000.000-00\"\n}"
+							"body": "{\n    \"access_token\": \"{{vault:json-web-token}}\"\n}"
 						}
 					]
 				}

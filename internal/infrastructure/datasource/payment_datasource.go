@@ -33,7 +33,7 @@ func (ds *paymentDataSource) GetByOrderID(ctx context.Context, orderID uint64) (
 	var p entity.Payment
 	if err := ds.db.WithContext(ctx).Where("order_id = ?", orderID).First(&p).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return &p, nil
+			return nil, nil
 		}
 		return nil, err
 	}

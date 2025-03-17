@@ -9,7 +9,6 @@ import (
 type Order struct {
 	ID            uint64
 	CustomerID    uint64
-	TotalBill     float32 // TODO: change to virtual field
 	Status        valueobject.OrderStatus
 	Payment       Payment
 	Customer      Customer

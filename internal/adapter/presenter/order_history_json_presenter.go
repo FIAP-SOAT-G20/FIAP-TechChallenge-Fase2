@@ -24,7 +24,7 @@ func toOrderHistoryJsonResponse(orderHistory *entity.OrderHistory) OrderHistoryJ
 		OrderID:   orderHistory.OrderID,
 		StaffID:   orderHistory.StaffID,
 		Status:    orderHistory.Status.String(),
-		CreatedAt: orderHistory.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
+		CreatedAt: orderHistory.CreatedAt.UTC().Format("2006-01-02T15:04:05Z07:00"),
 	}
 }
 

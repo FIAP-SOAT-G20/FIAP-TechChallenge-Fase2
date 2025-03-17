@@ -36,13 +36,11 @@ func TestOrderController_ListOrders(t *testing.T) {
 			ID:         1,
 			CustomerID: 1,
 			Status:     "PENDING",
-			TotalBill:  100.0,
 		},
 		{
 			ID:         2,
 			CustomerID: 1,
 			Status:     "PENDING",
-			TotalBill:  200.0,
 		},
 	}
 
@@ -81,7 +79,6 @@ func TestOrderController_CreateOrder(t *testing.T) {
 		ID:         1,
 		CustomerID: 1,
 		Status:     "OPEN",
-		TotalBill:  0.0,
 	}
 
 	mokOrdercUseCase.EXPECT().
@@ -114,7 +111,6 @@ func TestOrderController_GetOrder(t *testing.T) {
 		ID:         1,
 		CustomerID: 1,
 		Status:     "PENDING",
-		TotalBill:  100.0,
 	}
 
 	mokOrdercUseCase.EXPECT().
@@ -149,7 +145,6 @@ func TestOrderController_UpdateOrder(t *testing.T) {
 		ID:         1,
 		CustomerID: 1,
 		Status:     "PENDING",
-		TotalBill:  100.0,
 	}
 
 	mokOrdercUseCase.EXPECT().
@@ -182,7 +177,6 @@ func TestOrderController_DeleteOrder(t *testing.T) {
 		ID:         1,
 		CustomerID: 1,
 		Status:     "PENDING",
-		TotalBill:  100.0,
 	}
 
 	mokOrdercUseCase.EXPECT().
