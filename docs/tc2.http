@@ -9,7 +9,7 @@
 # @host = http://localhost:8080
 
 # Local K8s API
-# @host = http://localhost
+@host = http://localhost
 
 @num = 6
 @name = John Doe {{num}}
