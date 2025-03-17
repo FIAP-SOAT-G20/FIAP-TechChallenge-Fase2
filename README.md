@@ -43,17 +43,21 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
 ## 🏗️ Architecture
 
-### :art: Flow Diagram
+### Flow Diagram
 
 ![Flow Diagram](docs/tc2-flow-diagram.png)
 
-### :building_construction: System Context
+### L1 - C4 Model - System Context
 
 ![System Context](docs/tc2-c4-system-context.jpeg)
 
-### :building_construction: Container Diagram
+### L2 - C4 Model - Container Diagram
 
 ![Container Diagram](docs/tc2-c4-container.jpeg)
+
+### L3 - C4 Model - Component Diagram
+
+![Component Diagram](docs/tc2-c4-component.jpeg)
 
 ### :whale: Kubernetes
 
