@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="Ht1M8jgEwFfnCIfOTk4-" name="Infrastructure Diagram">
-        <mxGraphModel dx="1169" dy="1334" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="1769" dy="1306" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -327,16 +327,10 @@
         </mxGraphModel>
     </diagram>
     <diagram name="C4 Model - L3 Components" id="aG4mnLuodMAdnCOPhAQK">
-        <mxGraphModel dx="3252" dy="1744" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="6697" dy="1597" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="AHOczKP4Tpv3Gd1YOSbh-0"/>
                 <mxCell id="AHOczKP4Tpv3Gd1YOSbh-1" parent="AHOczKP4Tpv3Gd1YOSbh-0"/>
-                <mxCell id="AHOczKP4Tpv3Gd1YOSbh-11" style="edgeStyle=none;html=1;" parent="AHOczKP4Tpv3Gd1YOSbh-1" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="1220" y="585" as="targetPoint"/>
-                        <mxPoint x="1429.9999999999995" y="585" as="sourcePoint"/>
-                    </mxGeometry>
-                </mxCell>
                 <mxCell id="AHOczKP4Tpv3Gd1YOSbh-12" style="edgeStyle=none;html=1;" parent="AHOczKP4Tpv3Gd1YOSbh-1" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="1879.9999999999995" y="588.6666666666665" as="targetPoint"/>
@@ -384,25 +378,25 @@
                 <mxCell id="5XONT18Spy3aDExhdSqh-12" style="edgeStyle=none;html=1;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="WHdR6jFd35SEse9fPfib-0" target="WHdR6jFd35SEse9fPfib-7" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <object placeholders="1" c4Name="Customer Controller" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage customers." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-0">
+                <object placeholders="1" c4Name="Customer Handler" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage customers requests. You can perform creating, updating, list and delete operations." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-0">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="925" y="840" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="1194" y="842" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
                 <object placeholders="1" c4Name="Fast Food Components" c4Type="ComponentScopeBoundary" c4Application="Components" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left&quot;&gt;[%c4Application%]&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-1">
                     <mxCell style="rounded=1;fontSize=11;whiteSpace=wrap;html=1;dashed=1;arcSize=20;fillColor=none;strokeColor=#666666;fontColor=#333333;labelBackgroundColor=none;align=left;verticalAlign=bottom;labelBorderColor=none;spacingTop=0;spacing=10;dashPattern=8 4;metaEdit=1;rotatable=0;perimeter=rectanglePerimeter;noLabel=0;labelPadding=0;allowArrows=0;connectable=0;expand=0;recursiveResize=0;editable=1;pointerEvents=0;absoluteArcSize=1;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="-310" y="770" width="2110" height="1080" as="geometry"/>
+                        <mxGeometry x="-310" y="770" width="2889" height="1080" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Staff Handler" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage staffs." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-2">
+                <object placeholders="1" c4Name="Staff Handler" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage staffs requests. You can perform creating, updating, list and delete operations." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-2">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="1220" y="840" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="1807" y="839" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
                 <mxCell id="5XONT18Spy3aDExhdSqh-4" value="" style="edgeStyle=none;html=1;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="WHdR6jFd35SEse9fPfib-3" target="WHdR6jFd35SEse9fPfib-9" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <object placeholders="1" c4Name="Order Handler" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage orders." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-3">
+                <object placeholders="1" c4Name="Order Handler" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage orders requests. You can create orders, transition between status, list order ordered by status (READY, PREPARING, COMPLETED), delete or filter." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-3">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="350" y="840" width="240" height="120" as="geometry"/>
                     </mxCell>
@@ -410,57 +404,57 @@
                 <mxCell id="5XONT18Spy3aDExhdSqh-6" style="edgeStyle=none;html=1;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="WHdR6jFd35SEse9fPfib-4" target="WHdR6jFd35SEse9fPfib-10" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <object placeholders="1" c4Name="Order History Handler" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage order histories." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-4">
+                <object placeholders="1" c4Name="Order History Handler" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage order histories requests, such as list and get a specific history." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-4">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="640" y="840" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Payment Handler" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage payment." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-5">
+                <object placeholders="1" c4Name="Payment Handler" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage payment requests, including, payment status, filter paymens, checkout and postback." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-5">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="60" y="840" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Product Handler" c4Type="Component" c4Technology="Golang" c4Description="Responsible to receive product requests." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-6">
+                <object placeholders="1" c4Name="Product Handler" c4Type="Component" c4Technology="Golang" c4Description="Responsible to receive product requests. You can perform creating, updating, list and delete operations." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-6">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="1511" y="844" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="2098" y="843" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Customer Controller" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage customers." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-7">
+                <object placeholders="1" c4Name="Customer Controller" c4Type="Component" c4Technology="Golang" c4Description="Entrypoint of customers use cases." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-7">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="925" y="1030" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="1194" y="1032" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
                 <mxCell id="5XONT18Spy3aDExhdSqh-11" style="edgeStyle=none;html=1;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="WHdR6jFd35SEse9fPfib-8" target="WHdR6jFd35SEse9fPfib-14" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <object placeholders="1" c4Name="Staff Controller" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage staffs." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-8">
+                <object placeholders="1" c4Name="Staff Controller" c4Type="Component" c4Technology="Golang" c4Description="Entrypoint of staffs use cases." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-8">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="1220" y="1030" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="1807" y="1029" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Order Controller" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage orders." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-9">
+                <object placeholders="1" c4Name="Order Controller" c4Type="Component" c4Technology="Golang" c4Description="Entrypoint of orders use cases." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-9">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="350" y="1030" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Order History Controller" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage order histories." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-10">
+                <object placeholders="1" c4Name="Order History Controller" c4Type="Component" c4Technology="Golang" c4Description="Entrypoint of order histories use cases." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-10">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="640" y="1030" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Payment Controller" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage payment." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-11">
+                <object placeholders="1" c4Name="Payment Controller" c4Type="Component" c4Technology="Golang" c4Description="Entrypoint of payment use cases. " label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-11">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="60" y="1030" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Product Controller" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage product." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-12">
+                <object placeholders="1" c4Name="Product Controller" c4Type="Component" c4Technology="Golang" c4Description="Entrypoint of product use cases." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-12">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="1511" y="1034" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="2098" y="1033" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
                 <object placeholders="1" c4Name="Customer Controller" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage customers." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-13">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="925" y="1220" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="1194" y="1222" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
                 <mxCell id="5XONT18Spy3aDExhdSqh-26" value="" style="edgeStyle=none;html=1;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="WHdR6jFd35SEse9fPfib-14" target="5XONT18Spy3aDExhdSqh-15" edge="1">
@@ -468,13 +462,13 @@
                 </mxCell>
                 <object placeholders="1" c4Name="Staff UseCases" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage staffs." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-14">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="1220" y="1220" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="1807" y="1219" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
                 <mxCell id="5XONT18Spy3aDExhdSqh-23" style="edgeStyle=none;html=1;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="WHdR6jFd35SEse9fPfib-15" target="5XONT18Spy3aDExhdSqh-16" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <object placeholders="1" c4Name="Order UseCases" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage orders." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-15">
+                <object placeholders="1" c4Name="Order UseCases" c4Type="Component" c4Technology="Golang" c4Description="Core of order management. It&#39;s possible to create a new order, transition between status (updating a order), deleting or filter. " label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-15">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="350" y="1220" width="240" height="120" as="geometry"/>
                     </mxCell>
@@ -484,14 +478,14 @@
                         <mxGeometry x="640" y="1220" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Payment UseCases" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage payment." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-17">
+                <object placeholders="1" c4Name="Payment UseCases" c4Type="Component" c4Technology="Golang" c4Description="Core of payment management. You can create a new payment by providing an order and receive a postback from an external payment system confirming or denying the transaction." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-17">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="60" y="1220" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
                 <object placeholders="1" c4Name="Product UseCases" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage product." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-18">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="1511" y="1224" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="2098" y="1223" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
                 <object placeholders="1" c4Type="Relationship" c4Description="uses" label="&lt;div style=&quot;text-align: left&quot;&gt;&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;" id="WHdR6jFd35SEse9fPfib-20">
@@ -539,37 +533,37 @@
                 <mxCell id="5XONT18Spy3aDExhdSqh-41" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="5XONT18Spy3aDExhdSqh-14" target="5XONT18Spy3aDExhdSqh-28" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <object placeholders="1" c4Name="Customer Gateway" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage customers." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-14">
+                <object placeholders="1" c4Name="Customer Gateway" c4Type="Component" c4Technology="Golang" c4Description="Customer Gateway Data Provider" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-14">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="925" y="1420" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="1194" y="1422" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Staff Gateway" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage staffs." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-15">
+                <object placeholders="1" c4Name="Staff Gateway" c4Type="Component" c4Technology="Golang" c4Description="Staff Gateway Data Provider" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-15">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="1220" y="1420" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="1807" y="1419" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
                 <mxCell id="5XONT18Spy3aDExhdSqh-37" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="5XONT18Spy3aDExhdSqh-16" target="5XONT18Spy3aDExhdSqh-30" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <object placeholders="1" c4Name="Order Gateway" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage orders." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-16">
+                <object placeholders="1" c4Name="Order Gateway" c4Type="Component" c4Technology="Golang" c4Description="Order Gateway Data Provider" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-16">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="350" y="1420" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Order History Gateway" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage order histories." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-17">
+                <object placeholders="1" c4Name="Order History Gateway" c4Type="Component" c4Technology="Golang" c4Description="Order History Data Provider" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-17">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="640" y="1420" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Payment Gateway" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage payment." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-18">
+                <object placeholders="1" c4Name="Payment Gateway" c4Type="Component" c4Technology="Golang" c4Description="Payment Gateway Data Provider" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-18">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="60" y="1420" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Product Gateway" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage product." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-19">
+                <object placeholders="1" c4Name="Product Gateway" c4Type="Component" c4Technology="Golang" c4Description="Product Gateway Data Provider" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-19">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="1511" y="1424" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="2098" y="1423" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
                 <mxCell id="5XONT18Spy3aDExhdSqh-22" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="WHdR6jFd35SEse9fPfib-17" target="5XONT18Spy3aDExhdSqh-18" edge="1">
@@ -584,37 +578,37 @@
                 <mxCell id="5XONT18Spy3aDExhdSqh-27" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="WHdR6jFd35SEse9fPfib-13" target="5XONT18Spy3aDExhdSqh-14" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <object placeholders="1" c4Name="Customer Datasource" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage customers." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-28">
+                <object placeholders="1" c4Name="Customer Datasource" c4Type="Component" c4Technology="Golang" c4Description="Layer responsible to communicate with database." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-28">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="925" y="1620" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="1194" y="1622" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Staff Datasource" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage staffs." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-29">
+                <object placeholders="1" c4Name="Staff Datasource" c4Type="Component" c4Technology="Golang" c4Description="Layer responsible to communicate with database." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-29">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="1220" y="1620" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="1807" y="1619" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Order Datasource" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage orders." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-30">
+                <object placeholders="1" c4Name="Order Datasource" c4Type="Component" c4Technology="Golang" c4Description="Layer responsible to communicate with database." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-30">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="350" y="1620" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Order History Datasource" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage order histories." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-31">
+                <object placeholders="1" c4Name="Order History Datasource" c4Type="Component" c4Technology="Golang" c4Description="Layer responsible to communicate with database." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-31">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="640" y="1620" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Payment Datasource" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage payment." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-32">
+                <object placeholders="1" c4Name="Payment Datasource" c4Type="Component" c4Technology="Golang" c4Description="Layer responsible to communicate with database." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-32">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="60" y="1620" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="Product Datasource" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage product." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-33">
+                <object placeholders="1" c4Name="Product Datasource" c4Type="Component" c4Technology="Golang" c4Description="Layer responsible to communicate with database." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-33">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
-                        <mxGeometry x="1511" y="1624" width="240" height="120" as="geometry"/>
+                        <mxGeometry x="2098" y="1623" width="240" height="120" as="geometry"/>
                     </mxCell>
                 </object>
-                <object placeholders="1" c4Name="External Payment Datasource" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage payment." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-34">
+                <object placeholders="1" c4Name="External Payment Datasource" c4Type="Component" c4Technology="Golang" c4Description="Communicates with external payment service." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="5XONT18Spy3aDExhdSqh-34">
                     <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                         <mxGeometry x="-230" y="1620" width="240" height="120" as="geometry"/>
                     </mxCell>
@@ -673,7 +667,7 @@
                 <mxCell id="5XONT18Spy3aDExhdSqh-48" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="5XONT18Spy3aDExhdSqh-33" target="5XONT18Spy3aDExhdSqh-42" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
-                            <mxPoint x="1623" y="1920"/>
+                            <mxPoint x="2218" y="1920"/>
                             <mxPoint x="760" y="1920"/>
                         </Array>
                     </mxGeometry>
@@ -681,7 +675,7 @@
                 <mxCell id="5XONT18Spy3aDExhdSqh-49" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="5XONT18Spy3aDExhdSqh-29" target="5XONT18Spy3aDExhdSqh-42" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
-                            <mxPoint x="1340" y="1920"/>
+                            <mxPoint x="1927" y="1920"/>
                             <mxPoint x="760" y="1920"/>
                         </Array>
                     </mxGeometry>
@@ -717,11 +711,27 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="5XONT18Spy3aDExhdSqh-71" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="5XONT18Spy3aDExhdSqh-56" target="WHdR6jFd35SEse9fPfib-6" edge="1">
+                <mxCell id="5XONT18Spy3aDExhdSqh-71" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="5XONT18Spy3aDExhdSqh-56" target="WHdR6jFd35SEse9fPfib-2" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1080" y="798"/>
+                            <mxPoint x="1927" y="798"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="J-lzOcCUCQJlhR2-DVTr-14" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="5XONT18Spy3aDExhdSqh-56" target="J-lzOcCUCQJlhR2-DVTr-2">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1080" y="770"/>
+                            <mxPoint x="1080" y="770"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="J-lzOcCUCQJlhR2-DVTr-25" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="5XONT18Spy3aDExhdSqh-56" target="J-lzOcCUCQJlhR2-DVTr-15">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="1080" y="802"/>
-                            <mxPoint x="1631" y="802"/>
+                            <mxPoint x="1627" y="802"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
@@ -748,10 +758,10 @@
                         </mxGeometry>
                     </mxCell>
                 </object>
-                <mxCell id="5XONT18Spy3aDExhdSqh-60" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="5XONT18Spy3aDExhdSqh-28" target="5XONT18Spy3aDExhdSqh-42" edge="1">
+                <mxCell id="5XONT18Spy3aDExhdSqh-60" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="5XONT18Spy3aDExhdSqh-28" target="5XONT18Spy3aDExhdSqh-42" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
-                            <mxPoint x="1045" y="1921"/>
+                            <mxPoint x="1314" y="1921"/>
                             <mxPoint x="760" y="1921"/>
                         </Array>
                     </mxGeometry>
@@ -765,6 +775,8 @@
                             <Array as="points">
                                 <mxPoint x="470" y="707"/>
                                 <mxPoint x="1045" y="707"/>
+                                <mxPoint x="1045" y="798"/>
+                                <mxPoint x="1314" y="798"/>
                             </Array>
                         </mxGeometry>
                     </mxCell>
@@ -778,18 +790,118 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="5XONT18Spy3aDExhdSqh-69" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.646;entryY=0.026;entryDx=0;entryDy=0;entryPerimeter=0;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="5XONT18Spy3aDExhdSqh-56" target="WHdR6jFd35SEse9fPfib-0" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1080" y="805"/>
+                            <mxPoint x="1349" y="805"/>
+                        </Array>
+                    </mxGeometry>
                 </mxCell>
-                <mxCell id="5XONT18Spy3aDExhdSqh-70" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="5XONT18Spy3aDExhdSqh-56" target="WHdR6jFd35SEse9fPfib-2" edge="1">
+                <mxCell id="5XONT18Spy3aDExhdSqh-70" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="5XONT18Spy3aDExhdSqh-56" target="WHdR6jFd35SEse9fPfib-6" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="1080" y="800"/>
-                            <mxPoint x="1340" y="800"/>
+                            <mxPoint x="2213" y="800"/>
+                            <mxPoint x="2213" y="843"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="5XONT18Spy3aDExhdSqh-72" value="Access to all management endpoints&lt;br&gt;[JSON/HTTP]" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="AHOczKP4Tpv3Gd1YOSbh-1" vertex="1">
                     <mxGeometry x="1084" y="605" width="214" height="41" as="geometry"/>
+                </mxCell>
+                <mxCell id="J-lzOcCUCQJlhR2-DVTr-1" style="edgeStyle=none;html=1;" edge="1" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="J-lzOcCUCQJlhR2-DVTr-2" target="J-lzOcCUCQJlhR2-DVTr-3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <object placeholders="1" c4Name="Order Product Handler" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage order products requests, add, update or remove products to an order." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="J-lzOcCUCQJlhR2-DVTr-2">
+                    <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1" parent="AHOczKP4Tpv3Gd1YOSbh-1">
+                        <mxGeometry x="917" y="836" width="240" height="120" as="geometry"/>
+                    </mxCell>
+                </object>
+                <object placeholders="1" c4Name="Order Product Controller" c4Type="Component" c4Technology="Golang" c4Description="Entrypoint of order products use cases." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="J-lzOcCUCQJlhR2-DVTr-3">
+                    <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1" parent="AHOczKP4Tpv3Gd1YOSbh-1">
+                        <mxGeometry x="917" y="1032" width="240" height="120" as="geometry"/>
+                    </mxCell>
+                </object>
+                <object placeholders="1" c4Name="Order Product UseCases" c4Type="Component" c4Technology="Golang" c4Description="Responsible to manage order products." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="J-lzOcCUCQJlhR2-DVTr-4">
+                    <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1" parent="AHOczKP4Tpv3Gd1YOSbh-1">
+                        <mxGeometry x="917" y="1216" width="240" height="120" as="geometry"/>
+                    </mxCell>
+                </object>
+                <mxCell id="J-lzOcCUCQJlhR2-DVTr-5" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="J-lzOcCUCQJlhR2-DVTr-3" target="J-lzOcCUCQJlhR2-DVTr-4">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <object placeholders="1" c4Name="Order Product Gateway" c4Type="Component" c4Technology="Golang" c4Description="Order Product Gateway Data Provider" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="J-lzOcCUCQJlhR2-DVTr-6">
+                    <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1" parent="AHOczKP4Tpv3Gd1YOSbh-1">
+                        <mxGeometry x="917" y="1416" width="240" height="120" as="geometry"/>
+                    </mxCell>
+                </object>
+                <mxCell id="J-lzOcCUCQJlhR2-DVTr-7" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="J-lzOcCUCQJlhR2-DVTr-4" target="J-lzOcCUCQJlhR2-DVTr-6">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <object placeholders="1" c4Name="Order Product Datasource" c4Type="Component" c4Technology="Golang" c4Description="Layer responsible to communicate with database." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="J-lzOcCUCQJlhR2-DVTr-8">
+                    <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1" parent="AHOczKP4Tpv3Gd1YOSbh-1">
+                        <mxGeometry x="917" y="1616" width="240" height="120" as="geometry"/>
+                    </mxCell>
+                </object>
+                <mxCell id="J-lzOcCUCQJlhR2-DVTr-9" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="J-lzOcCUCQJlhR2-DVTr-6" target="J-lzOcCUCQJlhR2-DVTr-8">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="J-lzOcCUCQJlhR2-DVTr-12" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="J-lzOcCUCQJlhR2-DVTr-8" target="5XONT18Spy3aDExhdSqh-42">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1039" y="1920"/>
+                            <mxPoint x="760" y="1920"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <object placeholders="1" c4Type="Relationship" c4Description="uses" label="&lt;div style=&quot;text-align: left&quot;&gt;&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;" id="J-lzOcCUCQJlhR2-DVTr-13">
+                    <mxCell style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1;endFill=1;strokeColor=#828282;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;entryX=0.25;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.75;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="WHdR6jFd35SEse9fPfib-15" target="J-lzOcCUCQJlhR2-DVTr-4">
+                        <mxGeometry x="-0.5319" y="-8" width="240" relative="1" as="geometry">
+                            <mxPoint x="562.0400000000001" y="1361.4" as="sourcePoint"/>
+                            <mxPoint x="947.3599999999998" y="1357.9999999999998" as="targetPoint"/>
+                            <mxPoint as="offset"/>
+                            <Array as="points">
+                                <mxPoint x="530" y="1373"/>
+                                <mxPoint x="977" y="1373"/>
+                            </Array>
+                        </mxGeometry>
+                    </mxCell>
+                </object>
+                <object placeholders="1" c4Name="Auth Handler" c4Type="Component" c4Technology="Golang" c4Description="Responsible autenticate and register customers." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="J-lzOcCUCQJlhR2-DVTr-15">
+                    <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1" parent="AHOczKP4Tpv3Gd1YOSbh-1">
+                        <mxGeometry x="1507" y="839" width="240" height="120" as="geometry"/>
+                    </mxCell>
+                </object>
+                <object placeholders="1" c4Name="Auth Controller" c4Type="Component" c4Technology="Golang" c4Description="Entrypoint of auth use cases." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="J-lzOcCUCQJlhR2-DVTr-16">
+                    <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1" parent="AHOczKP4Tpv3Gd1YOSbh-1">
+                        <mxGeometry x="1507" y="1029" width="240" height="120" as="geometry"/>
+                    </mxCell>
+                </object>
+                <object placeholders="1" c4Name="Auth UseCase" c4Type="Component" c4Technology="Golang" c4Description="Responsible to register and authenticate customers." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="J-lzOcCUCQJlhR2-DVTr-17">
+                    <mxCell style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#63BEF2;fontColor=#ffffff;align=center;arcSize=6;strokeColor=#2086C9;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1" parent="AHOczKP4Tpv3Gd1YOSbh-1">
+                        <mxGeometry x="1507" y="1221" width="240" height="120" as="geometry"/>
+                    </mxCell>
+                </object>
+                <mxCell id="J-lzOcCUCQJlhR2-DVTr-18" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="J-lzOcCUCQJlhR2-DVTr-15" target="J-lzOcCUCQJlhR2-DVTr-16">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="J-lzOcCUCQJlhR2-DVTr-19" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="J-lzOcCUCQJlhR2-DVTr-16" target="J-lzOcCUCQJlhR2-DVTr-17">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <object placeholders="1" c4Type="Relationship" c4Description="uses" label="&lt;div style=&quot;text-align: left&quot;&gt;&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;" id="J-lzOcCUCQJlhR2-DVTr-24">
+                    <mxCell style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1;endFill=1;strokeColor=#828282;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="AHOczKP4Tpv3Gd1YOSbh-1" source="J-lzOcCUCQJlhR2-DVTr-17" target="WHdR6jFd35SEse9fPfib-13">
+                        <mxGeometry x="-0.2449" y="10" width="240" relative="1" as="geometry">
+                            <mxPoint x="600" y="1290" as="sourcePoint"/>
+                            <mxPoint x="1612" y="1432" as="targetPoint"/>
+                            <mxPoint as="offset"/>
+                            <Array as="points">
+                                <mxPoint x="1507" y="1282"/>
+                            </Array>
+                        </mxGeometry>
+                    </mxCell>
+                </object>
+                <mxCell id="J-lzOcCUCQJlhR2-DVTr-26" value="Text" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="AHOczKP4Tpv3Gd1YOSbh-1">
+                    <mxGeometry x="2534" y="775" width="40" height="26" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
