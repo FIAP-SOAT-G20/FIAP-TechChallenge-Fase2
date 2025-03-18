@@ -47,7 +47,6 @@ CREATE TABLE IF NOT EXISTS orders
     id          SERIAL PRIMARY KEY,
     customer_id INT REFERENCES customers (id),
     status     order_status DEFAULT 'OPEN',
-    total_bill  DECIMAL(19, 2), -- TODO: REMOVE
     created_at  TIMESTAMP NOT NULL DEFAULT now(),
     updated_at  TIMESTAMP NOT NULL DEFAULT now()
 );
@@ -111,21 +110,21 @@ VALUES ('Lucas Mendes', 'lucas@email.com', '123.456.789-00'),
        ('Mariana Lima', 'mariana@email.com', '789.123.456-00'),
        ('Bruno Oliveira', 'bruno@email.com', '321.654.987-00');
 
-INSERT INTO orders (id, customer_id, total_bill, status, created_at)
-VALUES (1, 1, 32.80, 'OPEN', now()),
-       (2, 2, 42.90, 'PENDING', now()),
-       (3, 3, 25.90, 'CANCELLED', '2021-10-01 10:00:00.467'),
-       (4, 4, 58.70, 'RECEIVED', '2021-10-01 10:00:00.467'),
-       (5, 5, 19.80, 'PREPARING', '2021-10-01 10:00:00.467'),
-       (6, 1, 25.90, 'READY', '2021-10-01 10:00:00.467'),
-       (7, 2, 6.90, 'COMPLETED', '2021-01-01 10:00:00.467'),
-       (8, 4, 59.70, 'RECEIVED', '2021-10-01 11:00:00.467'),
-       (9, 4, 60.70, 'RECEIVED', '2021-10-01 12:00:00.467'),
-       (10, 5, 20.80, 'PREPARING', '2021-10-01 08:00:00.467'),
-       (11, 5, 21.80, 'PREPARING', '2021-10-01 09:00:00.467'),
-       (12, 1, 26.90, 'READY', '2021-10-01 10:00:01.467'),
-       (13, 1, 27.90, 'READY', '2021-10-01 09:59:59.467'),
-       (14, 1, 28.90, 'CANCELLED', '2021-10-01 09:59:59.467');
+INSERT INTO orders (id, customer_id, status, created_at)
+VALUES (1, 1, 'OPEN', now()),
+       (2, 2, 'PENDING', now()),
+       (3, 3, 'CANCELLED', '2021-10-01 10:00:00.467'),
+       (4, 4, 'RECEIVED', '2021-10-01 10:00:00.467'),
+       (5, 5, 'PREPARING', '2021-10-01 10:00:00.467'),
+       (6, 1, 'READY', '2021-10-01 10:00:00.467'),
+       (7, 2, 'COMPLETED', '2021-01-01 10:00:00.467'),
+       (8, 4, 'RECEIVED', '2021-10-01 11:00:00.467'),
+       (9, 4, 'RECEIVED', '2021-10-01 12:00:00.467'),
+       (10, 5, 'PREPARING', '2021-10-01 08:00:00.467'),
+       (11, 5, 'PREPARING', '2021-10-01 09:00:00.467'),
+       (12, 1, 'READY', '2021-10-01 10:00:01.467'),
+       (13, 1, 'READY', '2021-10-01 09:59:59.467'),
+       (14, 1, 'CANCELLED', '2021-10-01 09:59:59.467');
 
 
 INSERT INTO order_products (order_id, product_id, quantity)

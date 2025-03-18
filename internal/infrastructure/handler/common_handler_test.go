@@ -1,8 +1,6 @@
 package handler_test
 
 import (
-	"io"
-	"log/slog"
 	"maps"
 
 	"github.com/FIAP-SOAT-G20/FIAP-TechChallenge-Fase2/internal/infrastructure/logger"
@@ -15,8 +13,7 @@ import (
 func newRouter() *gin.Engine {
 	router := gin.New()
 	gin.SetMode(gin.TestMode)
-	router.Use(middleware.ErrorHandler(&logger.Logger{Logger: slog.New(slog.NewJSONHandler(io.Discard, nil))})) // Remove log output
-	// router.Use(middleware.ErrorHandler(&Logger{Logger: slog.New(slog.DiscardHandler)})) // TODO: Replace above line with this line, when updating go to 1.24 or higher
+	router.Use(middleware.ErrorHandler(logger.NewLogger(""))) // Remove log output
 	server.RegisterCustomValidation()
 	return router
 }

@@ -67,6 +67,9 @@ const docTemplate = `{
             },
             "post": {
                 "description": "Creates a new category",
+        "/auth": {
+            "post": {
+                "description": "Authenticates a user by CPF and returns a JWT token",
                 "consumes": [
                     "application/json"
                 ],
@@ -85,6 +88,17 @@ const docTemplate = `{
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/request.CreateCategoryBodyRequest"
+                    "sign-in"
+                ],
+                "summary": "Authenticate user",
+                "parameters": [
+                    {
+                        "description": "User CPF",
+                        "name": "authentication",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AuthenticateBodyRequest"
                         }
                     }
                 ],
@@ -137,6 +151,10 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/presenter.CategoryJsonResponse"
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/presenter.AuthenticationResponse"
                         }
                     },
                     "400": {
@@ -243,6 +261,8 @@ const docTemplate = `{
                     },
                     "400": {
                         "description": "Bad Request",
+                    "401": {
+                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/middleware.ErrorJsonResponse"
                         }
@@ -2086,6 +2106,12 @@ const docTemplate = `{
                 "updated_at": {
                     "type": "string",
                     "example": "2024-02-09T10:00:00Z"
+        "presenter.AuthenticationResponse": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
                 }
             }
         },
@@ -2480,6 +2506,15 @@ const docTemplate = `{
                     "maxLength": 100,
                     "minLength": 3,
                     "example": "Foods"
+        "request.AuthenticateBodyRequest": {
+            "type": "object",
+            "required": [
+                "cpf"
+            ],
+            "properties": {
+                "cpf": {
+                    "type": "string",
+                    "example": "000.000.000-00"
                 }
             }
         },

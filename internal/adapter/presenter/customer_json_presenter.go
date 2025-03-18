@@ -24,8 +24,8 @@ func ToCustomerJsonResponse(customer *entity.Customer) CustomerJsonResponse {
 		Name:      customer.Name,
 		Email:     customer.Email,
 		CPF:       customer.CPF,
-		CreatedAt: customer.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
-		UpdatedAt: customer.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
+		CreatedAt: customer.CreatedAt.UTC().Format("2006-01-02T15:04:05Z07:00"),
+		UpdatedAt: customer.UpdatedAt.UTC().Format("2006-01-02T15:04:05Z07:00"),
 	}
 }
 

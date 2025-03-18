@@ -58,8 +58,8 @@ func ToOrderJsonResponse(order *entity.Order) OrderJsonResponse {
 		Status:     string(order.Status),
 		Customer:   c,
 		Products:   ToProductsJsonResponse(order.OrderProducts),
-		CreatedAt:  order.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
-		UpdatedAt:  order.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
+		CreatedAt:  order.CreatedAt.UTC().Format("2006-01-02T15:04:05Z07:00"),
+		UpdatedAt:  order.UpdatedAt.UTC().Format("2006-01-02T15:04:05Z07:00"),
 	}
 }
 

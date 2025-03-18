@@ -30,8 +30,8 @@ func (s *CustomerControllerSuiteTest) SetupTest() {
 	defer ctrl.Finish()
 	s.mockUseCase = mockport.NewMockCustomerUseCase(ctrl)
 	s.mockPresenter = presenter.NewCustomerJsonPresenter()
-	mockDateAt2, _ := time.Parse(time.RFC3339, "2025-03-06T17:03:28-03:00")
-	mockDateAt3, _ := time.Parse(time.RFC3339, "2025-03-06T17:03:58-03:00")
+	mockDateAt2, _ := time.Parse(time.RFC3339, "2025-03-06T17:03:28Z")
+	mockDateAt3, _ := time.Parse(time.RFC3339, "2025-03-06T17:03:58Z")
 	s.mockCustomer = &entity.Customer{
 		ID:        6,
 		Name:      "John Doe 6",

@@ -38,6 +38,10 @@ type Config struct {
 	MercadoPagoTimeout             time.Duration
 	MercadoPagoRetryCount          int
 	MercadoPagoNotificationURL     string
+
+	// JWT Settings
+	JWTSecret     string
+	JWTExpiration time.Duration
 }
 
 func LoadConfig() *Config {
@@ -57,6 +61,13 @@ func LoadConfig() *Config {
 
 	mercadoPagoTimeout, _ := time.ParseDuration(getEnv("MERCADO_PAGO_TIMEOUT", "10s"))
 	mercadoPagoRetryCount, _ := strconv.Atoi(getEnv("MERCADO_PAGO_RETRY_COUNT", "2"))
+
+	jwtExpirationStr := getEnv("JWT_EXPIRATION", "24h")
+	jwtExpiration, err := time.ParseDuration(jwtExpirationStr)
+	if err != nil {
+		log.Printf("Warning: invalid JWT_EXPIRATION value %q: %v. Using default value 24h.", jwtExpirationStr, err)
+		jwtExpiration = 24 * time.Hour
+	}
 
 	return &Config{
 		// Database settings
@@ -87,6 +98,10 @@ func LoadConfig() *Config {
 		MercadoPagoTimeout:             mercadoPagoTimeout,
 		MercadoPagoRetryCount:          mercadoPagoRetryCount,
 		MercadoPagoNotificationURL:     getEnv("MERCADO_PAGO_NOTIFICATION_URL", "url"),
+
+		// JWT Settings
+		JWTSecret:     getEnv("JWT_SECRET", "SUPER_SECRET_KEY_DONT_TELL_ANYONE"),
+		JWTExpiration: jwtExpiration,
 	}
 }
 

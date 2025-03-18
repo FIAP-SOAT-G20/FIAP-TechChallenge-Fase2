@@ -53,7 +53,7 @@ func ToOrderProductJsonResponse(orderProduct *entity.OrderProduct) OrderProductJ
 		Quantity:  orderProduct.Quantity,
 		Order:     order,
 		Product:   ToProductJsonResponse(&orderProduct.Product),
-		CreatedAt: orderProduct.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
-		UpdatedAt: orderProduct.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
+		CreatedAt: orderProduct.CreatedAt.UTC().Format("2006-01-02T15:04:05Z07:00"),
+		UpdatedAt: orderProduct.UpdatedAt.UTC().Format("2006-01-02T15:04:05Z07:00"),
 	}
 }

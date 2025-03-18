@@ -43,17 +43,21 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
 ## 🏗️ Architecture
 
-### :art: Flow Diagram
+### Flow Diagram
 
 ![Flow Diagram](docs/tc2-flow-diagram.png)
 
-### :building_construction: System Context
+### L1 - C4 Model - System Context
 
 ![System Context](docs/tc2-c4-system-context.jpeg)
 
-### :building_construction: Container Diagram
+### L2 - C4 Model - Container Diagram
 
 ![Container Diagram](docs/tc2-c4-container.jpeg)
+
+### L3 - C4 Model - Component Diagram
+
+![Component Diagram](docs/tc2-c4-component.jpeg)
 
 ### :whale: Kubernetes
 
@@ -95,8 +99,9 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 ### **1️⃣ Core (Innermost layer)**
 
 - `domain/`: Central business entities and rules.
-- `usecase/`: Application use cases.
+- `dto/`: Data transfer objects.
 - `port/`: Interfaces that define contracts between layers, ensuring independence.
+- `usecase/`: Application use cases.
 
 ### **2️⃣ Adapter (Middle layer)**
 
@@ -108,12 +113,14 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 
 - `config/`: Application configuration management.
 - `database/`: Configuration and connection to the database. 
-- `server/`: Initialization of the HTTP server.
-- `route/`: Definition of API routes.
-- `middleware/`: HTTP middlewares for handling requests.
-- `logger/`: Structured logger for detailed logs.
-- `handler/`: Handling of HTTP requests.
 - `datasource/`: Concrete implementations of data sources.
+- `handler/`: Handling of HTTP requests.
+- `httpclient/`: HTTP client for external requests.
+- `logger/`: Structured logger for detailed logs.
+- `middleware/`: HTTP middlewares for handling requests.
+- `route/`: Definition of API routes.
+- `server/`: Initialization of the HTTP server.
+- `service/`: Infra level services.
 
 </details>
 
@@ -127,8 +134,8 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - **Database Connection**: The database connection was created using GORM, a popular ORM library for Go. This library provides an easy way to interact with the database and perform CRUD operations.
 - **Database Migrations**: Database migrations were created to manage the database schema. This allows us to version control the database schema and apply changes to the database in a structured way.
 - **HTTP Server**: The HTTP server was created using the Gin framework, a lightweight web framework for Go. This framework provides a fast and easy way to create web applications in Go.
+- **Mock Payment Gateway**: A mock payment gateway was created with Mockoon (docker) to simulate the payment process. This mock server is used to test the payment process without interacting with the real payment gateway. We have tested the integration with the Mercado Pago API, but we are using the mock server to simulate the payment gateway validation, avoiding the need to expose the Mercado Pago API credentials, and to simplify the validation, because our mock server can access our webhook directly.
 
-<!-- [Back to top](#readme-top) -->
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### ✨ Features
@@ -140,7 +147,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [x] Conventional commits
 
 <details>
-<summary>more (click to expand or collapse ↕️)</summary>
+<summary>more</summary>
 
 - [x] Unit tests (testify)
 - [x] Tests Suite (testify)
@@ -150,7 +157,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [x] Feature branch workflow
 - [x] Live reload (air)
 - [x] Pagination
-- [x] Health Check
+- [x] Health Check (liveness, readiness)
 - [x] Lint (golangci-lint)
 - [x] Vulnerability check (govulncheck)
 - [x] Mocks (gomock)
@@ -164,6 +171,10 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [x] Kubernetes best practices (liveness, readiness, HPA, etc.)
 - [x] API versioning
 - [x] C4 Model diagrams
+- [x] Dev Container (VS Code)
+- [x] Semantic Versioning
+- [x] Golden Files
+- [x] Fixtures
 
 </details>
 
@@ -176,7 +187,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [govulncheck](https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck)
 
 <details>
-<summary>more (click to expand or collapse ↕️)</summary>
+<summary>more</summary>
 
 - [gomock](https://github.com/uber-go/mock)
 - [go-playground/validator](https://github.com/go-playground/validator)
@@ -205,7 +216,7 @@ Tech Challenge 2 specifications can be found [here](docs/tc2-spec.pdf).
 - [Docker](https://www.docker.com/)
 
 > [!WARNING]
-> You need to have Go version **1.23 or higher** installed on your machine to run the application locally
+> You need to have Go version **1.24 or higher** installed on your machine to run the application locally
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -238,20 +249,21 @@ make compose-build
 
 > [!IMPORTANT]
 > After running the application, a mock server container will be created to simulate the payment gateway.  
-> When you create a new payment (with `POST payments/:order_id/checkout`) the order status will be updated to `PENDING`,  
+> When you create a new payment (with `POST payments/:order_id/checkout`) the order status will be updated from `OPEN` to `PENDING`,  
 > then the mock server will call the webhook `POST payments/callback`,  
 > and the order status will be updated from `PENDING` to `RECEIVED`.  
 > You can verify mock server logs by running `docker logs mockserver.10soat-g18.dev`.
 
-> [!NOTE]
-> We have tested the integration with the Mercado Pago API,  
-> but we are using the mock server to simulate the payment gateway validation,  
-> avoiding the need to expose the Mercado Pago API credentials,  
-> and to simplify the validation, because our mock server can access our webhook directly.
-
 > [!TIP]
-> We have created a step-by-step guide to test the application,  
-> you can find it [here](docs/tc2-validation-testing.md)
+> We have created a step-by-step guide to test the application, you can find it [here](docs/tc2-validation-testing.md).  
+>
+> API Documentation will be available at:
+>
+> - Swagger:
+>   - Docker: <http://localhost:8080/docs/index.html>
+>   - K8s: <http://localhost/docs/index.html>
+> - Postman collection: [here](docs/postman_collection.json)
+> - [Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client): [here](docs/tc2.http)
 
 ### :whale: Docker
 
@@ -259,18 +271,14 @@ make compose-build
 make compose-up
 ```
 
+> [!TIP]
 > To stop the application, run `compose-down`  
 > To remove the application, run `compose-clean`  
 
 > [!NOTE]
 > The application will be available at <http://localhost:8080>
+> Ex: <http://localhost:8080/api/v1/health>
 
-> [!IMPORTANT]
-> API Documentation will be available at:
->
-> - Swagger: <http://localhost:8080/docs/index.html>
-> - Postman collection: [here](docs/postman_collection.json)
-> - HTTP Client: [here](docs/tc2.http)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -279,6 +287,8 @@ make compose-up
 ```bash
 make k8s-apply
 ```
+
+> The resources will be created in the `tech-challenge-system` namespace
 
 > [!TIP]
 > To view the application, run `make k8s-status` or `kubectl get all -n tech-challenge-system`  
@@ -294,6 +304,7 @@ The Kubernetes organization is divided into three main directories: `app`, `conf
 
 - **app**: Contains the Kubernetes resources for the application, such as deployment, service, ingress, and HPA.
 - **config**: Contains the Kubernetes resources for the configuration, such as ConfigMap and Secret.
+- **mockserver**: Contains the Kubernetes resources for the Mock Server, such as deployment, service, and HPA.
 - **postgres**: Contains the Kubernetes resources for the PostgreSQL database, such as StatefulSet and Service.
 
 ```sh
@@ -306,6 +317,10 @@ The Kubernetes organization is divided into three main directories: `app`, `conf
 ├── config
 │   ├── configmap.yaml
 │   └── secret.yaml
+├── mockserver
+│   ├── deployment.yaml
+│   ├── hpa.yaml
+│   └── service.yaml
 ├── namespace.yaml
 └── postgres
     ├── service.yaml
@@ -426,16 +441,18 @@ make test
 
 ## :busts_in_silhouette: Contributors
 
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/atomaz"><img src="https://github.com/atomaz.png" width="100px;" alt=""/><br /><sub><b>Alice Tomaz</b></sub></a><br />
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/filipe1309"><img src="https://github.com/filipe1309.png" width="100px;" alt=""/><br /><sub><b>Filipe Leuch Bonfim</b></sub></a><br />
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/hugokishi"><img src="https://github.com/hugokishi.png" width="100px;" alt=""/><br /><sub><b>Hugo Kishi</b></sub></a><br />
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/marcos-nsantos"><img src="https://github.com/marcos-nsantos.png" width="100px;" alt=""/><br /><sub><b>Marcos Santos</b></sub></a><br />
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/vitorparras"><img src="https://github.com/vitorparras.png" width="100px;" alt=""/><br /><sub><b>Vitor Parras</b></sub></a><br />
-    </tr>
-  </tbody>
-</table>
+<div align="center">
+  <table>
+    <tbody>
+      <tr>
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/atomaz"><img src="https://github.com/atomaz.png" width="100px;" alt=""/><br /><sub><b>Alice Tomaz</b></sub></a><br />
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/filipe1309"><img src="https://github.com/filipe1309.png" width="100px;" alt=""/><br /><sub><b>Filipe Leuch Bonfim</b></sub></a><br />
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/hugokishi"><img src="https://github.com/hugokishi.png" width="100px;" alt=""/><br /><sub><b>Hugo Kishi</b></sub></a><br />
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/marcos-nsantos"><img src="https://github.com/marcos-nsantos.png" width="100px;" alt=""/><br /><sub><b>Marcos Santos</b></sub></a><br />
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/vitorparras"><img src="https://github.com/vitorparras.png" width="100px;" alt=""/><br /><sub><b>Vitor Parras</b></sub></a><br />
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

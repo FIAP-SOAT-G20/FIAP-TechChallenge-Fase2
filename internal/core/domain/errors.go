@@ -3,14 +3,14 @@ package domain
 var (
 	ErrConflict           = "data conflicts with existing data"
 	ErrNotFound           = "data not found"
+	ErrUnauthorized       = "unauthorized"
 	ErrInvalidParam       = "invalid parameter"
 	ErrInvalidQueryParams = "invalid query parameters"
 	ErrInvalidBody        = "invalid body"
 
-	ErrTokenDuration = "invalid token duration format"
-	ErrTokenCreation = "error creating token"
-	ErrExpiredToken  = "access token has expired"
-	ErrInvalidToken  = "access token is invalid"
+	ErrInvalidToken      = "access token is invalid"
+	ErrMissingAuthHeader = "authorization header is required"
+	ErrInvalidAuthHeader = "invalid authorization header format"
 
 	ErrOrderInvalidStatusTransition = "invalid status transition"
 	ErrOrderWithoutProducts         = "order without products"
@@ -71,6 +71,14 @@ func (e *InvalidInputError) Error() string {
 	return e.Message
 }
 
+type UnauthorizedError struct {
+	Message string
+}
+
+func (e *UnauthorizedError) Error() string {
+	return e.Message
+}
+
 func NewValidationError(err error) *ValidationError {
 	return &ValidationError{
 		Message: ErrValidationError,
@@ -93,6 +101,12 @@ func NewInternalError(err error) *InternalError {
 
 func NewInvalidInputError(message string) *InvalidInputError {
 	return &InvalidInputError{
+		Message: message,
+	}
+}
+
+func NewUnauthorizedError(message string) *UnauthorizedError {
+	return &UnauthorizedError{
 		Message: message,
 	}
 }

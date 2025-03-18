@@ -4,12 +4,11 @@
 
 This document describes how to perform validation testing on the TC-2 API. Validation testing is the process of ensuring that the API meets the requirements specified in the [Software Requirements Specification](./tc2-spec.pdf) document. This document will guide you through the process of testing the API to ensure that it meets the requirements.
 
-After following the steps in the [Readme](./README.md) file, you should have the API running on your local machine.
+After following the steps in the [Readme](../README.md) file, you should have the API running on your local machine.
 
 > [!IMPORTANT]
 > Use `http://localhost:8080` as the base URL for the API if you are running it locally via Docker Compose (`make compose-up`).  
 > Alternatively, you can use `http://localhost` if you are running it locally via Kubernetes (`make k8s-apply`).  
-
 
 ## Test Cases
 
@@ -46,7 +45,7 @@ curl --location 'http://localhost:8080/api/v1/customers/6'
 > TC-1 2.b.ii
 
 ```bash
-curl --location 'http://localhost:8080/api/v1/sign-in' \
+curl --location 'http://localhost:8080/api/v1/auth' \
 --header 'Content-Type: application/json' \
 --data '{
     "cpf": "000.000.000-06"
@@ -185,7 +184,14 @@ curl --location 'http://localhost:8080/api/v1/payments/callback' \
 > The payment gateway service will send a POST request to the API with the payment confirmation.  
 > The API will then update the order status from `PENDING` to `RECEIVED`.
 
-### 17. Get an order by id
+### 17. Get order histories
+
+```bash
+curl --request GET \
+--url 'http://localhost/api/v1/orders/histories/?order_id=15'
+``` 
+
+### 18. Get an order by id (RECEIVED)
 
 ```bash
 curl --location 'http://localhost:8080/api/v1/orders/15' \
@@ -194,7 +200,7 @@ curl --location 'http://localhost:8080/api/v1/orders/15' \
 
 > The order status should be `RECEIVED`.
 
-### 18. Update an order status with staff
+### 19. Update an order status with staff to PREPARING
 
 > TC-2 1.a.v
 
@@ -207,7 +213,7 @@ curl --location --request PATCH 'http://localhost:8080/api/v1/orders/15' \
 }'
 ```
 
-### 19. Get an order by id
+### 20. Get an order by id (PREPARING)
 
 
 ```bash
@@ -217,7 +223,7 @@ curl --location 'http://localhost:8080/api/v1/orders/15' \
 
 > The order status should be `PREPARING`.
 
-### 20. Update an order status with staff
+### 21. Update an order status with staff to READY
 
 ```bash
 curl --location --request PATCH 'http://localhost:8080/api/v1/orders/15' \
@@ -228,7 +234,7 @@ curl --location --request PATCH 'http://localhost:8080/api/v1/orders/15' \
 }'
 ```
 
-### 21. Get an order by id
+### 22. Get an order by id (READY)
 
 
 ```bash
@@ -238,7 +244,7 @@ curl --location 'http://localhost:8080/api/v1/orders/15' \
 
 > The order status should be `READY`.
 
-### 22. Update an order status with staff
+### 23. Update an order status with staff to COMPLETED
 
 ```bash
 curl --location --request PATCH 'http://localhost:8080/api/v1/orders/15' \
@@ -249,7 +255,7 @@ curl --location --request PATCH 'http://localhost:8080/api/v1/orders/15' \
 }'
 ```
 
-### 23. Get an order by id
+### 24. Get an order by id (COMPLETED)
 
 
 ```bash
@@ -259,7 +265,7 @@ curl --location 'http://localhost:8080/api/v1/orders/15' \
 
 > The order status should be `COMPLETED`.
 
-### 24. Get all orders
+### 25. Get all orders (excluding COMPLETED)
 
 > TC-1 2.b.vi  
 > TC-2 1.a.iv
@@ -274,4 +280,6 @@ curl --location 'http://localhost:8080/api/v1/orders' \
 > 1. READY > PREPARING > RECEIVED;  
 > 2. Older orders first and newer orders last;  
 > 3. Orders with status COMPLETED should not appear in the list.  
+>
+> Order 15 should not appear in the list.
 
