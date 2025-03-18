@@ -4,7 +4,7 @@ import { sleep, check } from 'k6';
 export const options = {
   stages: [
     { duration: '30s', target: 20 }, // Ramp-up para 20 usuários em 30 segundos
-    { duration: '1m', target: 20 }, // Manter 20 usuários por 1 minuto
+    { duration: '10m', target: 20 }, // Manter 20 usuários por 1 minuto
     { duration: '30s', target: 0 }, // Ramp-down para 0 usuários em 30 segundos 
   ],
   thresholds: {

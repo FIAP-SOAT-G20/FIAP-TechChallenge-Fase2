@@ -4,29 +4,16 @@ metadata:
   name: k6-config
   namespace: k6
 data:
-  script.js: |
-    import http from 'k6/http';
-    import { sleep, check } from 'k6';
+  script.js: "import http from 'k6/http';\nimport { sleep, check } from 'k6';\n\nexport
+    const options = {\n  stages: [\n    { duration: '30s', target: 20 }, // Ramp-up
+    para 20 usuários em 30 segundos\n    { duration: '10m', target: 20 }, // Manter
+    20 usuários por 1 minuto\n    { duration: '30s', target: 0 }, // Ramp-down para
+    0 usuários em 30 segundos \n  ],\n  thresholds: {\n    http_req_duration: ['p(95)<500'],
+    // 95% das requisições devem ser completadas em menos de 500ms\n    'http_req_duration{staticAsset:yes}':
+    ['p(95)<100'], // 95% dos assets estáticos devem ser completados em menos de 100ms\n
+    \   http_req_failed: ['rate<0.01'], // Menos de 1% das requisições podem falhar\n
+    \ }\n};\n\nexport default function() {\n    const BASE_URL = 'https://quickpizza.grafana.com';\n
+    \   const response = http.get(`${BASE_URL}`);\n    check(response, {\n        'status
+    is 200': (r) => r.status === 200,\n        'tempo de resposta < 200ms': (r) =>
+    r.timings.duration < 200\n    });\n    sleep(1);\n}\n"
 
-    export const options = {
-      stages: [
-        { duration: '30s', target: 20 }, // Ramp-up para 20 usuários em 30 segundos
-        { duration: '1m', target: 20 }, // Manter 20 usuários por 1 minuto
-        { duration: '30s', target: 0 }, // Ramp-down para 0 usuários em 30 segundos 
-      ],
-      thresholds: {
-        http_req_duration: ['p(95)<500'], // 95% das requisições devem ser completadas em menos de 500ms
-        'http_req_duration{staticAsset:yes}': ['p(95)<100'], // 95% dos assets estáticos devem ser completados em menos de 100ms
-        http_req_failed: ['rate<0.01'], // Menos de 1% das requisições podem falhar
-      }
-    };
-
-    export default function() {
-        const BASE_URL = 'http://tech-challenge-api.default.svc.cluster.local:8080/api/v1';
-        const response = http.get(`${BASE_URL}/products`);
-        check(response, {
-            'status is 200': (r) => r.status === 200,
-            'tempo de resposta < 200ms': (r) => r.timings.duration < 200
-        });
-        sleep(1);
-    }
