@@ -85,6 +85,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	paymentDS := datasource.NewPaymentDataSource(db.DB)
 	// paymentExternalDS := datasource.NewPaymentExternalDataSource(httpClient.Client) // Mercado Pago
 	paymentExternalDS := datasource.NewFakePaymentExternalDataSource(httpClient, cfg) // Fake Mercado Pago
+	categoryDS := datasource.NewCategoryDataSource(db.DB)
 
 	// Services
 	jwtService := service.NewJWTService(cfg)
@@ -97,6 +98,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	orderProductGateway := gateway.NewOrderProductGateway(orderProductDS)
 	staffGateway := gateway.NewStaffGateway(staffDS)
 	paymentGateway := gateway.NewPaymentGateway(paymentDS, paymentExternalDS)
+	categoryGateway := gateway.NewCategoryGateway(categoryDS)
 
 	// Use cases
 	productUC := usecase.NewProductUseCase(productGateway)
@@ -106,6 +108,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	orderProductUC := usecase.NewOrderProductUseCase(orderProductGateway)
 	staffUC := usecase.NewStaffUseCase(staffGateway)
 	paymentUC := usecase.NewPaymentUseCase(paymentGateway, orderUC)
+	categoryUC := usecase.NewCategoryUseCase(categoryGateway)
 	authUC := usecase.NewAuthUseCase(customerUC, jwtService)
 
 	// Controllers
@@ -116,6 +119,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	staffController := controller.NewStaffController(staffUC)
 	orderHistoryController := controller.NewOrderHistoryController(orderHistoryUC)
 	paymentController := controller.NewPaymentController(paymentUC)
+	categoryController := controller.NewCategoryController(categoryUC)
 	authController := controller.NewAuthController(authUC)
 
 	// Handlers
@@ -127,6 +131,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 	healthCheckHandler := handler.NewHealthCheckHandler()
 	orderHistoryHandler := handler.NewOrderHistoryHandler(orderHistoryController)
 	paymentHandler := handler.NewPaymentHandler(paymentController)
+	categoryHandler := handler.NewCategoryHandler(categoryController)
 	authHandler := handler.NewAuthHandler(authController)
 
 	handlers := &route.Handlers{
@@ -138,6 +143,7 @@ func setupHandlers(db *database.Database, httpClient *httpclient.HTTPClient, cfg
 		OrderHistory: orderHistoryHandler,
 		HealthCheck:  healthCheckHandler,
 		Payment:      paymentHandler,
+		Category:     categoryHandler,
 		Auth:         authHandler,
 	}
 
