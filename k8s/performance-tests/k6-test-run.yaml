@@ -8,4 +8,4 @@ spec:
       name: k6-config
       file: script.js
   parallelism: 2  
-  arguments: --out influxdb=http://influx:8086/k6
+  arguments: --out influxdb=http://influxdb.monitoring.svc.cluster.local:8086/k6

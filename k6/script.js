@@ -15,7 +15,7 @@ export const options = {
 };
 
 export default function() {
-    const BASE_URL = 'https://quickpizza.grafana.com';
+    const BASE_URL = 'https://localhost:8080/api/v1/healthCheck';
     const response = http.get(`${BASE_URL}`);
     check(response, {
         'status is 200': (r) => r.status === 200,

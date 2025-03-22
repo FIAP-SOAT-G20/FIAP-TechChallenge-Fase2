@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: telegraf
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: telegraf
+  template:
+    metadata:
+      labels:
+        app: telegraf
+    spec:
+      containers:
+        - name: telegraf
+          image: telegraf:latest
+          env:
+            - name: INFLUXDB_URL
+              value: "http://influxdb.monitoring.svc.cluster.local:8086/k6"
+              # - name: INFLUXDB_TOKEN
+              #   value: "your-token"
+

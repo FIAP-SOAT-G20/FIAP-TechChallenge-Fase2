@@ -11,5 +11,5 @@ spec:
       port: 80
       targetPort: 8080
       nodePort: 30001
-  # type: NodePort # To run locally
-  type: LoadBalancer # To run on cloud, or locally (http://localhost/api/v1/health)
+  type: NodePort # To run locally
+#  type: LoadBalancer # To run on cloud, or locally (http://localhost/api/v1/health)
